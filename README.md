@@ -46,6 +46,10 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - [IFC](https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-0/profile-guided-optimization.html)
   - [IBM](https://www.ibm.com/docs/en/openxl-fortran-aix/17.1.0?topic=compatibility-profile-guided-optimization-pgo)
   - [AOCC](https://www.amd.com/en/developer/aocc.html#documentation) (supports, but the documentation right now exists only as PDF files)
+* C#:
+  - [Gist](https://gist.github.com/EgorBo/dc181796683da3d905a5295bfd3dd95b) from [EgorBo](https://gist.github.com/EgorBo)
+  - [MS Blog](https://devblogs.microsoft.com/dotnet/conversation-about-pgo/)
+  - [.Net 7](https://petabridge.com/blog/dotnet7-pgo-performance-improvements/)
 * Java:
   - [GraalVM](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) (only in Enterprise edition)
 * Go:
