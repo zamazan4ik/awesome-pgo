@@ -44,10 +44,13 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - [Flang](https://clang.llvm.org/docs/UsersManual.html#profile-guided-optimization)
   - [IFC](https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-0/profile-guided-optimization.html)
   - [IBM](https://www.ibm.com/docs/en/openxl-fortran-aix/17.1.0?topic=compatibility-profile-guided-optimization-pgo)
+  - [AOCC](https://www.amd.com/en/developer/aocc.html#documentation) (supports, but the documentation right now exists only as PDF files)
 * Java:
   - [GraalVM](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) (only in Enterprise edition)
 * Go:
   - [Go compiler](https://go.dev/doc/pgo) since Go 1.20, still in preview
+* Ada:
+  - GNAT: same as GCC
 
 Possibly other compilers support PGO too. If you know any, please let me know.
 
