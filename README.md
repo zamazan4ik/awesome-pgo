@@ -17,6 +17,7 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
 * [YDB](https://ydb.tech/): https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715
 * [YugabyteDB](https://www.yugabyte.com/): https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d
 * [GreptimeDB](https://greptime.com/product/db): https://github.com/GreptimeTeam/greptimedb/issues/1218
+* [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
 
 ## Projects with already integrated PGO into their builds
 
@@ -57,12 +58,15 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 ## Beyond PGO
 
 * AutoFDO:
-  - [Paper](https://research.google/pubs/pub45290/)
+  - [Paper](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45290.pdf)
   - [GitHub](https://github.com/google/autofdo)
 * BOLT:
   - [Original paper](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
   - [VESPA](https://research.facebook.com/publications/vespa-static-profiling-for-binary-optimization/)
   - [GitHub](https://github.com/llvm/llvm-project/blob/main/bolt/README.md)
+* Propeller
+  - [Propeller: A Profile Guided, Relinking Optimizer for
+Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/578a590c3d797cd5d3fcd98f39657819997d9932.pdf)
 
 ## Are we PGO yet?
 
@@ -96,6 +100,19 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Tesseract: https://github.com/tesseract-ocr/tesseract/issues/3744
 * Deno: https://github.com/denoland/rusty_v8/pull/1063
 * Firecracker: https://github.com/firecracker-microvm/firecracker/issues/3456
+
+## Traps
+
+* PGO
+  - Requires multiple builds
+  - Instrumented binaries work too slow, so rarely could be used in production -> you need to prepare "sample" workload
+* AutoFDO
+  - Supports only `perf`, so cannot be used with other profilers from different like Windows/macOS
+  - "Support" from Google is at least questionable: no regular releases, compilation [issues](https://github.com/google/autofdo/issues/157)
+* Bolt
+  - Huge memory usage during build: https://github.com/llvm/llvm-project/issues/61711
+* Propeller:
+  - Too Google-oriented - could be hard to use outside Google
 
 ## Useful links
 
