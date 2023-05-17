@@ -15,19 +15,23 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
 * [Linux kernel](https://kernel.org/): https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf
 * [Vector](https://vector.dev/): https://github.com/vectordotdev/vector/issues/15631
 * [YDB](https://ydb.tech/): https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715
+* [MariaDB](https://mariadb.org/): https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf
+* [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
 * [YugabyteDB](https://www.yugabyte.com/): https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d
 * [GreptimeDB](https://greptime.com/product/db): https://github.com/GreptimeTeam/greptimedb/issues/1218
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
+* [Wordpress](https://wordpress.com/): https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html
 
 ## Projects with already integrated PGO into their builds
 
 * Rustc
 * GCC
 * Clang
-* Python
-* V8
+* Python (`cpython`)
+* V8 - [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * Chromium
 * Firefox
+* PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138)
 
 ## PGO support in programming languages
 
@@ -54,8 +58,10 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - [GraalVM](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) (only in Enterprise edition)
 * Go:
   - [Go compiler](https://go.dev/doc/pgo) since Go 1.20, still in preview
+  - [GoLLVM](https://go.googlesource.com/gollvm) - [not yet](https://go.googlesource.com/gollvm/#thinltofdo)
+  - GCCGO - unknown, but it should be possible to try
 * Ada:
-  - GNAT: same as GCC
+  - GNAT: should be possible, same as GCC
 
 Possibly other compilers support PGO too. If you know any, please let me know.
 
@@ -109,18 +115,25 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 
 * PGO
   - Requires multiple builds
-  - Instrumented binaries work too slow, so rarely could be used in production -> you need to prepare "sample" workload
+  - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare "sample" workload
+  - For services sometimes PGO reports are not flushed to the disk properly, so you need to do it manually like [here](https://github.com/scylladb/scylladb/pull/10808/files#diff-bf1eacd22947b4daf9f4c2639427b8593d489f093eb1acfbba3e4cc1c9b0288bR427)
 * AutoFDO
-  - Supports only `perf`, so cannot be used with other profilers from different like Windows/macOS
+  - Huge memory consumption during profile conversion: https://github.com/google/autofdo/issues/162
+  - Supports only `perf`, so cannot be used with other profilers from different like Windows/macOS (support for other profilers could be implemented manually)
   - "Support" from Google is at least questionable: no regular releases, compilation [issues](https://github.com/google/autofdo/issues/157)
 * Bolt
   - Huge memory usage during build: https://github.com/llvm/llvm-project/issues/61711
+  - For better results you need hardware/software with LBR/BRS support
+  - There are a lot of bugs - be careful
 * Propeller:
-  - Too Google-oriented - could be hard to use outside Google
+  - Too Google-oriented - could be hard to use outside of Google
+  - Relies on the latest compiler developments, also could be unstable
 
 ## Useful links
 
-* https://rigtorp.se/notes/pgo/
+* [Some notes about PGO](https://rigtorp.se/notes/pgo/)
+* A rejected idea to integrate BOLT into `cpython` build: [link](https://github.com/faster-cpython/ideas/issues/224#issuecomment-1022371595)
+* [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
 
 ## Related projects
 
@@ -128,5 +141,5 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 
 ## TODO
 
-* Add information about caveats of each method: PGO, AutoFDO, Bolt, more advanced techniques
-* Add more info about PGO state for packages in different Linux distros
+* Add information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
+* Add more info about LTO and PGO state for packages in different Linux distros
