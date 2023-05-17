@@ -12,7 +12,11 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html
 * [Python](https://www.python.org/): https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/
 * [ScyllaDB](https://www.scylladb.com/): https://github.com/scylladb/scylladb/pull/10808
-* [Linux kernel](https://kernel.org/): https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf
+* [Linux kernel](https://kernel.org/):
+  - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
+  - [Microsoft presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
+  - [Phoronix post](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next)
+  - Yet another attemp to PGO Linux kernel: http://coolypf.com/kpgo.htm
 * [Vector](https://vector.dev/): https://github.com/vectordotdev/vector/issues/15631
 * [YDB](https://ydb.tech/): https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715
 * [MariaDB](https://mariadb.org/): https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf
