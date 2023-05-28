@@ -5,7 +5,7 @@ Here I want to share my results with LTO + PGO PostgreSQL optimization.
 ## Test environment
 
 * Fedora 38
-* Linux kernel 6.2.15 (из поставки Fedora)
+* Linux kernel 6.2.15
 * AMD Ryzen 9 5800x
 * 48 Gib RAM
 * SSD Samsung 980 Pro 2 Tib

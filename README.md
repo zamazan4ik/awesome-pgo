@@ -1,6 +1,14 @@
 # awesome-pgo
 Various materials about Profile Guided Optimization (PGO) and other similar stuff like AutoFDO, Bolt, etc.
 
+## Theory (a little bit)
+
+* What is PGO:
+  - [Wiki](https://en.wikipedia.org/wiki/Profile-guided_optimization)
+  - [Microsoft docs](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations)
+
+Also I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it.
+
 ## Showcases
 
 * [Chromium](https://www.chromium.org/Home/): 
@@ -16,8 +24,9 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
   - [Microsoft presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
   - [Phoronix post](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next)
-  - Yet another attemp to PGO Linux kernel: http://coolypf.com/kpgo.htm
+  - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
   - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
+  - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results (tested on Redis and PostgreSQL)
 * [Vector](https://vector.dev/): https://github.com/vectordotdev/vector/issues/15631
 * [YDB](https://ydb.tech/): https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715
 * [MariaDB](https://mariadb.org/): https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf
@@ -30,9 +39,9 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
 
 ## Projects with already integrated PGO into their builds
 
-* Rustc
-* GCC
-* Clang
+* Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
+* GCC: a [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in "wonderful" `configure` script 
+* [Clang](https://llvm.org/docs/HowToBuildWithPGO.html) 
 * Python (`cpython`)
 * V8 - [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * Chromium
@@ -71,19 +80,6 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
 
 Possibly other compilers support PGO too. If you know any, please let me know.
 
-## Beyond PGO
-
-* AutoFDO:
-  - [Paper](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45290.pdf)
-  - [GitHub](https://github.com/google/autofdo)
-* BOLT:
-  - [Original paper](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
-  - [VESPA](https://research.facebook.com/publications/vespa-static-profiling-for-binary-optimization/)
-  - [GitHub](https://github.com/llvm/llvm-project/blob/main/bolt/README.md)
-* Propeller
-  - [Propeller: A Profile Guided, Relinking Optimizer for
-Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/578a590c3d797cd5d3fcd98f39657819997d9932.pdf)
-
 ## Are we PGO yet?
 
 * ScyllaDB: https://github.com/scylladb/scylladb/pull/10808
@@ -116,6 +112,7 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 * Tesseract: https://github.com/tesseract-ocr/tesseract/issues/3744
 * Deno: https://github.com/denoland/rusty_v8/pull/1063
 * Firecracker: https://github.com/firecracker-microvm/firecracker/issues/3456
+* Codon: https://github.com/exaloop/codon/issues/137
 
 ## Traps
 
@@ -140,6 +137,20 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 * [Some notes about PGO](https://rigtorp.se/notes/pgo/)
 * A rejected idea to integrate BOLT into `cpython` build: [link](https://github.com/faster-cpython/ideas/issues/224#issuecomment-1022371595)
 * [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
+* Great bag of bugs in different software with LTO: [GitHub](https://github.com/InBetweenNames/gentooLTO/issues)
+
+## Beyond PGO (could be covered here later as well)
+
+* AutoFDO:
+  - [Paper](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45290.pdf)
+  - [GitHub](https://github.com/google/autofdo)
+* BOLT:
+  - [Original paper](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
+  - [VESPA](https://research.facebook.com/publications/vespa-static-profiling-for-binary-optimization/)
+  - [GitHub](https://github.com/llvm/llvm-project/blob/main/bolt/README.md)
+* Propeller
+  - [Propeller: A Profile Guided, Relinking Optimizer for
+Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/578a590c3d797cd5d3fcd98f39657819997d9932.pdf)
 
 ## Related projects
 
@@ -147,6 +158,6 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 
 ## TODO
 
-* Add information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
+* Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add links to the existing projects how PGO is integrated into them
