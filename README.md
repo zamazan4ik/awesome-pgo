@@ -113,6 +113,8 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Deno: https://github.com/denoland/rusty_v8/pull/1063
 * Firecracker: https://github.com/firecracker-microvm/firecracker/issues/3456
 * Codon: https://github.com/exaloop/codon/issues/137
+* YTSaurus: https://github.com/ytsaurus/ytsaurus/issues/40
+* DuckDB: https://github.com/duckdb/duckdb/discussions/7721
 
 ## Traps
 
