@@ -17,6 +17,7 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - [Microsoft presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
   - [Phoronix post](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next)
   - Yet another attemp to PGO Linux kernel: http://coolypf.com/kpgo.htm
+  - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
 * [Vector](https://vector.dev/): https://github.com/vectordotdev/vector/issues/15631
 * [YDB](https://ydb.tech/): https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715
 * [MariaDB](https://mariadb.org/): https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf
@@ -25,6 +26,7 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
 * [GreptimeDB](https://greptime.com/product/db): https://github.com/GreptimeTeam/greptimedb/issues/1218
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
 * [Wordpress](https://wordpress.com/): https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html
+* [Databend](https://databend.rs/): https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063
 
 ## Projects with already integrated PGO into their builds
 
@@ -147,3 +149,4 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 
 * Add information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
+* Add links to the existing projects how PGO is integrated into them
