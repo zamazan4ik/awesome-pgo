@@ -7,7 +7,7 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - [Wiki](https://en.wikipedia.org/wiki/Profile-guided_optimization)
   - [Microsoft docs](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations)
 
-Also I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it.
+Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it.
 
 ## Showcases
 
@@ -30,12 +30,17 @@ Also I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/w
 * [Vector](https://vector.dev/): https://github.com/vectordotdev/vector/issues/15631
 * [YDB](https://ydb.tech/): https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715
 * [MariaDB](https://mariadb.org/): https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf
+* [MySQL](https://www.mysql.com/): 
+  - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
+  - [A user report](https://bugs.mysql.com/bug.php?id=99781)
 * [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
-* [YugabyteDB](https://www.yugabyte.com/): https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d
+* [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [GreptimeDB](https://greptime.com/product/db): https://github.com/GreptimeTeam/greptimedb/issues/1218
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
 * [Wordpress](https://wordpress.com/): https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html
 * [Databend](https://databend.rs/): https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063
+* [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
+* [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
 
 ## Projects with already integrated PGO into their builds
 
@@ -47,6 +52,8 @@ Also I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/w
 * Chromium
 * Firefox
 * PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138)
+* MySQL: [CMake script](https://github.com/mysql/mysql-server/blob/8.0/cmake/fprofile.cmake)
+* YugabyteDB: [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 
 ## PGO support in programming languages
 
@@ -115,6 +122,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Codon: https://github.com/exaloop/codon/issues/137
 * YTSaurus: https://github.com/ytsaurus/ytsaurus/issues/40
 * DuckDB: https://github.com/duckdb/duckdb/discussions/7721
+* OpenObserve: https://github.com/openobserve/openobserve/issues/911
 
 ## Traps
 
