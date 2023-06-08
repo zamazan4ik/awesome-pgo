@@ -7,6 +7,8 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - [Wiki](https://en.wikipedia.org/wiki/Profile-guided_optimization)
   - [Microsoft docs](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations)
 
+Also, you could find PDO (Profile Directed Optimization), FDO (Feedback Driven Optimization), PDF (Profile Directed Feedback) - do not worry, that's just a PGO but with a different name. 
+
 Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it.
 
 ## Showcases
@@ -16,10 +18,11 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - https://blog.chromium.org/2020/08/chrome-just-got-faster-with-profile.html
 * [Firefox](https://www.mozilla.org/en-US/firefox/new/): https://groups.google.com/g/mozilla.dev.platform/c/wwO48xXFx0A/m/ztg4i0DYAAAJ
 * [Rust](https://www.rust-lang.org/) (`rustc` compiler):
-  - https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html
-  - https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html
-* [Python](https://www.python.org/): https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/
-* [ScyllaDB](https://www.scylladb.com/): https://github.com/scylladb/scylladb/pull/10808
+  - [Rust Lang blog](https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html)
+  - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
+* [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
+* [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
+* [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
 * [Linux kernel](https://kernel.org/):
   - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
   - [Microsoft presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
@@ -27,33 +30,36 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
   - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
   - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results (tested on Redis and PostgreSQL)
-* [Vector](https://vector.dev/): https://github.com/vectordotdev/vector/issues/15631
-* [YDB](https://ydb.tech/): https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715
-* [MariaDB](https://mariadb.org/): https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf
+* [Vector](https://vector.dev/): [GitHub issue](https://github.com/vectordotdev/vector/issues/15631)
+* [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
+* [MariaDB](https://mariadb.org/): [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
 * [MySQL](https://www.mysql.com/): 
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
 * [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
-* [GreptimeDB](https://greptime.com/product/db): https://github.com/GreptimeTeam/greptimedb/issues/1218
+* [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
-* [Wordpress](https://wordpress.com/): https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html
-* [Databend](https://databend.rs/): https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063
+* [Wordpress](https://wordpress.com/): [Bitnami blog](https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html)
+* [Databend](https://databend.rs/): [GitHub issue](https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063)
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
+* Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
+* Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
 
 ## Projects with already integrated PGO into their builds
 
 * Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
-* GCC: a [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in "wonderful" `configure` script 
-* [Clang](https://llvm.org/docs/HowToBuildWithPGO.html) 
-* Python (`cpython`)
+* GCC: a [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
+* Clang: [Docs](https://llvm.org/docs/HowToBuildWithPGO.html) 
+* Python (`cpython`): [README](https://github.com/python/cpython#profile-guided-optimization)
 * V8 - [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
-* Chromium
-* Firefox
+* Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
+* Firefox: [Docs](https://firefox-source-docs.mozilla.org/build/buildsystem/pgo.html)
 * PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138)
 * MySQL: [CMake script](https://github.com/mysql/mysql-server/blob/8.0/cmake/fprofile.cmake)
 * YugabyteDB: [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
+* [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
 
 ## PGO support in programming languages
 
@@ -62,7 +68,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [Clang](https://clang.llvm.org/docs/UsersManual.html#profile-guided-optimization)
   - [MSVC](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations)
   - [ICC](https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-8/profile-guided-optimization-pgo.html)
-  - [AOCC](https://www.amd.com/en/developer/aocc.html#documentation) (supports, but the documentation right now exists only as PDF files)
+  - [AOCC](https://www.amd.com/en/developer/aocc.html#documentation) (supports but the documentation right now exists only as PDF files)
 * Rust:
   - [rustc](https://doc.rust-lang.org/rustc/profile-guided-optimization.html)
   - [cargo-pgo](https://github.com/Kobzol/cargo-pgo)
@@ -84,6 +90,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - GCCGO - unknown, but it should be possible to try
 * Ada:
   - GNAT: should be possible, same as GCC
+* Ocaml: [almost no](https://github.com/ocaml/ocaml/issues/12200)
 
 Possibly other compilers support PGO too. If you know any, please let me know.
 
@@ -124,11 +131,24 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * DuckDB: https://github.com/duckdb/duckdb/discussions/7721
 * OpenObserve: https://github.com/openobserve/openobserve/issues/911
 
+## Beyond PGO (could be covered here later as well)
+
+* AutoFDO:
+  - [Paper](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45290.pdf)
+  - [GitHub](https://github.com/google/autofdo)
+* BOLT:
+  - [Original paper](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
+  - [VESPA](https://research.facebook.com/publications/vespa-static-profiling-for-binary-optimization/)
+  - [GitHub](https://github.com/llvm/llvm-project/blob/main/bolt/README.md)
+* Propeller
+  - [Propeller: A Profile Guided, Relinking Optimizer for
+Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/578a590c3d797cd5d3fcd98f39657819997d9932.pdf)
+
 ## Traps
 
 * PGO
   - Requires multiple builds
-  - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare "sample" workload
+  - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare a "sample" workload
   - For services sometimes PGO reports are not flushed to the disk properly, so you need to do it manually like [here](https://github.com/scylladb/scylladb/pull/10808/files#diff-bf1eacd22947b4daf9f4c2639427b8593d489f093eb1acfbba3e4cc1c9b0288bR427)
 * AutoFDO
   - Huge memory consumption during profile conversion: https://github.com/google/autofdo/issues/162
@@ -144,23 +164,11 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 
 ## Useful links
 
+* Implementation details of different PGO approaches in Clang: [Youtube](https://www.youtube.com/watch?v=GBtQrYx_Jbc), [slides](https://llvm.org/devmtg/2020-09/slides/PGO_Instrumentation.pdf)
 * [Some notes about PGO](https://rigtorp.se/notes/pgo/)
 * A rejected idea to integrate BOLT into `cpython` build: [link](https://github.com/faster-cpython/ideas/issues/224#issuecomment-1022371595)
 * [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
 * Great bag of bugs in different software with LTO: [GitHub](https://github.com/InBetweenNames/gentooLTO/issues)
-
-## Beyond PGO (could be covered here later as well)
-
-* AutoFDO:
-  - [Paper](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45290.pdf)
-  - [GitHub](https://github.com/google/autofdo)
-* BOLT:
-  - [Original paper](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
-  - [VESPA](https://research.facebook.com/publications/vespa-static-profiling-for-binary-optimization/)
-  - [GitHub](https://github.com/llvm/llvm-project/blob/main/bolt/README.md)
-* Propeller
-  - [Propeller: A Profile Guided, Relinking Optimizer for
-Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/578a590c3d797cd5d3fcd98f39657819997d9932.pdf)
 
 ## Related projects
 
