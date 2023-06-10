@@ -22,6 +22,9 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
+  - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
+* [GCC](https://gcc.gnu.org/): [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 ... Sorry, I have no numbers for a newer version yet.
+* [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
 * [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
 * [Linux kernel](https://kernel.org/):
   - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
@@ -32,7 +35,9 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results (tested on Redis and PostgreSQL)
 * [Vector](https://vector.dev/): [GitHub issue](https://github.com/vectordotdev/vector/issues/15631)
 * [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
-* [MariaDB](https://mariadb.org/): [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
+* [MariaDB](https://mariadb.org/):
+  - [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
+  - [ClearLinux benchmarks](https://clearlinux.org/news-blogs/profile-guided-optimization-mariadb-benchmarks)
 * [MySQL](https://www.mysql.com/): 
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
@@ -44,8 +49,10 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Databend](https://databend.rs/): [GitHub issue](https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063)
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
+* Zstd and LZ4: [Blosc blog](https://www.blosc.org/posts/codecs-pgo/)
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
 * Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
+* Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
 
 ## Projects with already integrated PGO into their builds
 
@@ -53,12 +60,13 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * GCC: a [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
 * Clang: [Docs](https://llvm.org/docs/HowToBuildWithPGO.html) 
 * Python (`cpython`): [README](https://github.com/python/cpython#profile-guided-optimization)
-* V8 - [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
+* V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
 * Firefox: [Docs](https://firefox-source-docs.mozilla.org/build/buildsystem/pgo.html)
-* PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138)
+* PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138) and old Centminmod [scripts](https://github.com/centminmod/php_pgo_training_scripts)
 * MySQL: [CMake script](https://github.com/mysql/mysql-server/blob/8.0/cmake/fprofile.cmake)
 * YugabyteDB: [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
+* Zstd: [Makefile](https://github.com/facebook/zstd/blob/dev/programs/Makefile#L232)
 * [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
 
 ## PGO support in programming languages
@@ -90,6 +98,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - GCCGO - unknown, but it should be possible to try
 * Ada:
   - GNAT: should be possible, same as GCC
+* Nim: [Nim forum](https://forum.nim-lang.org/t/6295)
 * Ocaml: [almost no](https://github.com/ocaml/ocaml/issues/12200)
 
 Possibly other compilers support PGO too. If you know any, please let me know.
@@ -170,6 +179,13 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 * [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
 * Great bag of bugs in different software with LTO: [GitHub](https://github.com/InBetweenNames/gentooLTO/issues)
 
+## Communities
+
+Here are the *incomplete* community list where you can find PGO-related advice with higher probability:
+
+* Gentoo (chats, forums)
+* ClearLinux (chats, forums)
+
 ## Related projects
 
 * [Awesome Machine learning in compilers](https://github.com/zwang4/awesome-machine-learning-in-compilers)
@@ -179,3 +195,4 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add links to the existing projects how PGO is integrated into them
+* For some reason, ClickHouse does not show performance improvements from PGO. Continue investigating the issue
