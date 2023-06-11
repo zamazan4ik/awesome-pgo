@@ -59,7 +59,9 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
 * GCC: a [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
 * Clang: [Docs](https://llvm.org/docs/HowToBuildWithPGO.html) 
-* Python (`cpython`): [README](https://github.com/python/cpython#profile-guided-optimization)
+* Python: 
+  - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
+  - Pyston: [README](https://github.com/pyston/pyston#building)
 * V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
 * Firefox: [Docs](https://firefox-source-docs.mozilla.org/build/buildsystem/pgo.html)
@@ -93,13 +95,17 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * Java:
   - [GraalVM](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) (only in Enterprise edition)
 * Go:
-  - [Go compiler](https://go.dev/doc/pgo) since Go 1.20, still in preview
+  - [Go compiler](https://go.dev/doc/pgo) since Go 1.20, still in early stages
   - [GoLLVM](https://go.googlesource.com/gollvm) - [not yet](https://go.googlesource.com/gollvm/#thinltofdo)
   - GCCGO - unknown, but it should be possible to try
 * Ada:
   - GNAT: should be possible, same as GCC
+* [D](https://dlang.org/): [LDC docs](https://wiki.dlang.org/LDC_LLVM_profiling_instrumentation)
 * Nim: [Nim forum](https://forum.nim-lang.org/t/6295)
 * Ocaml: [almost no](https://github.com/ocaml/ocaml/issues/12200)
+* [Zig](https://ziglang.org/): [no](https://github.com/ziglang/zig/issues/237)
+* [V](https://vlang.io/): [kind of](https://github.com/vlang/v/issues/7024)
+* [Red](https://www.red-lang.org/): [seems like not](https://github.com/red/red/issues/5333)
 
 Possibly other compilers support PGO too. If you know any, please let me know.
 
@@ -117,7 +123,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * SurrealDB: https://github.com/surrealdb/surrealdb/issues/1547
 * Skytable: https://github.com/skytable/skytable/issues/300
 * TiKV: https://github.com/tikv/tikv/issues/13990
-* mongoDB: https://feedback.mongodb.com/forums/924280-database/suggestions/46127320-build-mongodb-with-pgo
+* MongoDB: https://feedback.mongodb.com/forums/924280-database/suggestions/46127320-build-mongodb-with-pgo
 * Greptimedb: https://github.com/GreptimeTeam/greptimedb/issues/1218
 * Vector: https://github.com/vectordotdev/vector/issues/15631
 * Fluent-bit: https://github.com/fluent/fluent-bit/issues/6577
@@ -127,7 +133,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Ruby: https://bugs.ruby-lang.org/issues/19256
 * Clippy: https://github.com/rust-lang/rust-clippy/issues/10121
 * mold: https://github.com/rui314/mold/issues/250
-* databend: https://github.com/datafuselabs/databend/issues/9387
+* Databend: https://github.com/datafuselabs/databend/issues/9387
 * Alacritty: https://github.com/alacritty/alacritty/issues/6598
 * Envoy: https://github.com/envoyproxy/envoy/issues/25500
 * linkerd-proxy: https://github.com/linkerd/linkerd2/issues/10308
@@ -139,6 +145,14 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * YTSaurus: https://github.com/ytsaurus/ytsaurus/issues/40
 * DuckDB: https://github.com/duckdb/duckdb/discussions/7721
 * OpenObserve: https://github.com/openobserve/openobserve/issues/911
+* RustPython: https://github.com/RustPython/RustPython/issues/5000
+* Red: https://github.com/red/red/issues/5333
+* [Elena-lang](https://elena-lang.github.io/): https://github.com/ELENA-LANG/elena-lang/issues/578
+* BOLT: https://github.com/llvm/llvm-project/issues/63245
+
+## LTO and PGO in provided binaries
+
+Well, it's hard to say, is your binary already LTO/PGO optimized or not. It depends on the multiple factors like upstream support for LTO/PGO, maintainers willing to enable these optimizations, etc. Usually the most obvious way to check it - just ask the question "Is the binary LTO/PGO optimized?" from the binary author (a person who built the binary). It could be your colleague (if you build programs on your own), build scripts from CI, maintainers from your favourite OS/repository (if you use provided by repos binaries), software developers (if you use downloaded from a site "official" binaries). Do not hesitate to ask!
 
 ## Beyond PGO (could be covered here later as well)
 
@@ -156,15 +170,15 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 ## Traps
 
 * PGO
-  - Requires multiple builds
+  - Requires multiple builds (at least two stages, in Context-Sensitive LLVM PGO (CSPGO) - three stages)
   - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare a "sample" workload
   - For services sometimes PGO reports are not flushed to the disk properly, so you need to do it manually like [here](https://github.com/scylladb/scylladb/pull/10808/files#diff-bf1eacd22947b4daf9f4c2639427b8593d489f093eb1acfbba3e4cc1c9b0288bR427)
 * AutoFDO
-  - Huge memory consumption during profile conversion: https://github.com/google/autofdo/issues/162
+  - Huge memory consumption during profile conversion: [GitHub issue](https://github.com/google/autofdo/issues/162)
   - Supports only `perf`, so cannot be used with other profilers from different like Windows/macOS (support for other profilers could be implemented manually)
   - "Support" from Google is at least questionable: no regular releases, compilation [issues](https://github.com/google/autofdo/issues/157)
 * Bolt
-  - Huge memory usage during build: https://github.com/llvm/llvm-project/issues/61711
+  - Huge memory usage during build: [GitHub issue](https://github.com/llvm/llvm-project/issues/61711)
   - For better results you need hardware/software with LBR/BRS support
   - There are a lot of bugs - be careful
 * Propeller:
@@ -196,3 +210,4 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add links to the existing projects how PGO is integrated into them
 * For some reason, ClickHouse does not show performance improvements from PGO. Continue investigating the issue
+  - Actually, there are measurable improvements according to my latest tests, however there are some regressions too. Need to be carefully tested once again and written somewhere for the history. 
