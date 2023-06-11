@@ -54,7 +54,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
 * Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
 
-## Projects with already integrated PGO into their builds
+## Projects with already integrated PGO into their build scripts
 
 * Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
 * GCC: a [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
@@ -150,9 +150,30 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * [Elena-lang](https://elena-lang.github.io/): https://github.com/ELENA-LANG/elena-lang/issues/578
 * BOLT: https://github.com/llvm/llvm-project/issues/63245
 
-## LTO and PGO in provided binaries
+## LTO, PGO, BOLT, etc and provided by someone binaries
 
 Well, it's hard to say, is your binary already LTO/PGO optimized or not. It depends on the multiple factors like upstream support for LTO/PGO, maintainers willing to enable these optimizations, etc. Usually the most obvious way to check it - just ask the question "Is the binary LTO/PGO optimized?" from the binary author (a person who built the binary). It could be your colleague (if you build programs on your own), build scripts from CI, maintainers from your favourite OS/repository (if you use provided by repos binaries), software developers (if you use downloaded from a site "official" binaries). Do not hesitate to ask!
+
+### LTO state
+
+LTO is not widely used in the distributions. However, more and more OS enables LTo by default for their packages. Is it enabled by default on your distribution - ask your maintainers.
+
+Is LTO enabled in other binaries - ask their authors. Do not forget that enabling LTO could uncover some bugs: [GentooLTO](https://github.com/InBetweenNames/gentooLTO/issues).
+
+State across distrubutions:
+
+* Debian: [link](https://wiki.debian.org/ToolChain/LTO)
+* Ubuntu: [link](https://wiki.ubuntu.com/ToolChain/LTO)
+* Fedora: [link](https://fedoraproject.org/wiki/LTOByDefault)
+* OpenSUSE: [link](https://en.opensuse.org/openSUSE:LTO)
+
+### PGO state
+
+PGO usually is **not** enabled by the upstream developers due to lack of support for sample load or lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
+
+### Other optimization techniques like BOLT
+
+BOLT and others certainly are not enabled by default anywhere right now. SO if you see a performance improvement from it - contact the upstream.
 
 ## Beyond PGO (could be covered here later as well)
 
@@ -191,7 +212,6 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 * [Some notes about PGO](https://rigtorp.se/notes/pgo/)
 * A rejected idea to integrate BOLT into `cpython` build: [link](https://github.com/faster-cpython/ideas/issues/224#issuecomment-1022371595)
 * [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
-* Great bag of bugs in different software with LTO: [GitHub](https://github.com/InBetweenNames/gentooLTO/issues)
 
 ## Communities
 
