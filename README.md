@@ -190,6 +190,16 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 
 ## Traps
 
+The biggest problem is "How to collect a good profile?". There are multiple ways for doing this:
+- Prepare a reference workload. It could be quite difficult to create and maintain (since during the time it could become more and more different from your actual workload). However, for some loads like compilers load is usually predictable (compiling programs) so this way is good enough in this case. For other cases like databases the workload could hugely depend on the actual input from your users and users can change their queries for some reason. So be careful.
+- Collect profile from your actual production. It could be difficult to do with a usual PGO since it's requires an instrumentation, and instrumentation binaries could work too slowly. If it's your case - you could try to use AutoFDO since it has a low overhead due to the underlying `perf` nature. But it also has its own limitations (usually Linux-only, less efficient than usual PGO, could be more buggy). E.g. Google uses AutoFDO for profiling all their services and has a lot of automation around sampling profiles at their scale, storing them, integration into CI pipelines, etc. But all these tooling is closed-source so you need to implement it from the scratch.
+
+In my opinion, usually you should start with simple PGO via Instrumentation mode, especially if you upgrade your binaries seldomly. And only if Instrumentation starts to hurt you - start thinking about AutoFDO.
+
+Another issue could be reproducibility. Since you are injecting some information from runtime (some execution counters based on your sample workload) you get more variables that could influence your binary. In this case you need to store somewhere in VCS your sample workload, probably collected profiles based on this workload, etc.
+
+Other pitfalls include the following things:
+
 * PGO
   - Requires multiple builds (at least two stages, in Context-Sensitive LLVM PGO (CSPGO) - three stages)
   - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare a "sample" workload
