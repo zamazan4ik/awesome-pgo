@@ -14,9 +14,11 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 ## Showcases
 
 * [Chromium](https://www.chromium.org/Home/): 
-  - https://blog.chromium.org/2016/10/making-chrome-on-windows-faster-with-pgo.html
-  - https://blog.chromium.org/2020/08/chrome-just-got-faster-with-profile.html
-* [Firefox](https://www.mozilla.org/en-US/firefox/new/): https://groups.google.com/g/mozilla.dev.platform/c/wwO48xXFx0A/m/ztg4i0DYAAAJ
+  - [Chromium blog 1](https://blog.chromium.org/2016/10/making-chrome-on-windows-faster-with-pgo.html)
+  - [Chromium blog 2](https://blog.chromium.org/2020/08/chrome-just-got-faster-with-profile.html)
+* [Firefox](https://www.mozilla.org/en-US/firefox/new/): [Google Groups thread](https://groups.google.com/g/mozilla.dev.platform/c/wwO48xXFx0A/m/ztg4i0DYAAAJ)
+* [Edge](https://www.microsoft.com/en-us/edge): [MS Blog](https://blogs.windows.com/msedgedev/2020/09/23/faster-leaner-more-efficient-microsoft-edge/)
+* [Opera](https://www.opera.com/): [Blog about PGO on Windows](https://blogs.opera.com/desktop/2016/12/even-faster-opera-for-windows-with-pgo/)
 * [Rust](https://www.rust-lang.org/) (`rustc` compiler):
   - [Rust Lang blog](https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html)
   - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
@@ -34,7 +36,8 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [Phoronix post](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next)
   - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
   - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
-  - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results (tested on Redis and PostgreSQL)
+  - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results for 3rd party applications(tested on Redis and PostgreSQL). Further testing is needed.
+* Windows: 5-20% improvement according to the [presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
 * [Vector](https://vector.dev/): [GitHub issue](https://github.com/vectordotdev/vector/issues/15631)
 * [ClickHouse](https://clickhouse.com/): [GitHub issue](https://github.com/ClickHouse/ClickHouse/issues/44567#issuecomment-1589541199)
 * [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
@@ -53,6 +56,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
 * Zstd and LZ4: [Blosc blog](https://www.blosc.org/posts/codecs-pgo/)
+* Windows terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
 * Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
 * Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
@@ -119,7 +123,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * ArangoDB: https://github.com/arangodb/arangodb/issues/17861
 * DragonflyDB: https://github.com/dragonflydb/dragonfly/issues/592
 * YDB: https://github.com/ydb-platform/ydb/issues/140
-* Quickwit: https://github.com/quickwit-oss/quickwit/issues/794
+* Quickwit: https://github.com/quickwit-oss/quickwit/issues/3548
 * YugabyteDB: https://github.com/yugabyte/yugabyte-db/issues/12763
 * comdb2: https://github.com/bloomberg/comdb2/issues/3597
 * ClickHouse: https://github.com/ClickHouse/ClickHouse/issues/44567
@@ -157,7 +161,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 
 Well, it's hard to say, is your binary already LTO/PGO optimized or not. It depends on the multiple factors like upstream support for LTO/PGO, maintainers willing to enable these optimizations, etc. Usually the most obvious way to check it - just ask the question "Is the binary LTO/PGO optimized?" from the binary author (a person who built the binary). It could be your colleague (if you build programs on your own), build scripts from CI, maintainers from your favourite OS/repository (if you use provided by repos binaries), software developers (if you use downloaded from a site "official" binaries). Do not hesitate to ask!
 
-### PGO state
+### PGO adoption across projects
 
 PGO usually is **not** enabled by the upstream developers due to lack of support for sample load or lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
 
@@ -220,5 +224,4 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add links to the existing projects how PGO is integrated into them
-* For some reason, ClickHouse does not show performance improvements from PGO. Continue investigating the issue
-  - Actually, there are measurable improvements according to my latest tests, however there are some regressions too. Need to be carefully tested once again and written somewhere for the history. 
+* ClickHouse shows less improvements on more time-consuming queries. Need to be investigated, what is going on there
