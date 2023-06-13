@@ -29,6 +29,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 - be careful.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
 * [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
+* Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
 * [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
 * [Linux kernel](https://kernel.org/):
   - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
