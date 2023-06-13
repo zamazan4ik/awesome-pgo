@@ -9,7 +9,7 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
 
 Also, you could find PDO (Profile Directed Optimization), FDO (Feedback Driven Optimization), PDF (Profile Directed Feedback) - do not worry, that's just a PGO but with a different name. 
 
-Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it.
+Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it. More information about LTO you could find in `lto.md`.
 
 ## Showcases
 
@@ -23,7 +23,9 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
   - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
-* [GCC](https://gcc.gnu.org/): [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 ... Sorry, I have no numbers for a newer version yet.
+* [GCC](https://gcc.gnu.org/): 
+  - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 - be careful.
+  - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
 * [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
 * [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
 * [Linux kernel](https://kernel.org/):
@@ -34,6 +36,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
   - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results (tested on Redis and PostgreSQL)
 * [Vector](https://vector.dev/): [GitHub issue](https://github.com/vectordotdev/vector/issues/15631)
+* [ClickHouse](https://clickhouse.com/): [GitHub issue](https://github.com/ClickHouse/ClickHouse/issues/44567#issuecomment-1589541199)
 * [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
 * [MariaDB](https://mariadb.org/):
   - [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
@@ -154,19 +157,6 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 
 Well, it's hard to say, is your binary already LTO/PGO optimized or not. It depends on the multiple factors like upstream support for LTO/PGO, maintainers willing to enable these optimizations, etc. Usually the most obvious way to check it - just ask the question "Is the binary LTO/PGO optimized?" from the binary author (a person who built the binary). It could be your colleague (if you build programs on your own), build scripts from CI, maintainers from your favourite OS/repository (if you use provided by repos binaries), software developers (if you use downloaded from a site "official" binaries). Do not hesitate to ask!
 
-### LTO state
-
-LTO is not widely used in the distributions. However, more and more OS enables LTo by default for their packages. Is it enabled by default on your distribution - ask your maintainers.
-
-Is LTO enabled in other binaries - ask their authors. Do not forget that enabling LTO could uncover some bugs: [GentooLTO](https://github.com/InBetweenNames/gentooLTO/issues).
-
-State across distrubutions:
-
-* Debian: [link](https://wiki.debian.org/ToolChain/LTO)
-* Ubuntu: [link](https://wiki.ubuntu.com/ToolChain/LTO)
-* Fedora: [link](https://fedoraproject.org/wiki/LTOByDefault)
-* OpenSUSE: [link](https://en.opensuse.org/openSUSE:LTO)
-
 ### PGO state
 
 PGO usually is **not** enabled by the upstream developers due to lack of support for sample load or lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
@@ -194,6 +184,7 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
   - Requires multiple builds (at least two stages, in Context-Sensitive LLVM PGO (CSPGO) - three stages)
   - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare a "sample" workload
   - For services sometimes PGO reports are not flushed to the disk properly, so you need to do it manually like [here](https://github.com/scylladb/scylladb/pull/10808/files#diff-bf1eacd22947b4daf9f4c2639427b8593d489f093eb1acfbba3e4cc1c9b0288bR427)
+  - Reproducubility issues - could be important for some use-cases even more than performance
 * AutoFDO
   - Huge memory consumption during profile conversion: [GitHub issue](https://github.com/google/autofdo/issues/162)
   - Supports only `perf`, so cannot be used with other profilers from different like Windows/macOS (support for other profilers could be implemented manually)
