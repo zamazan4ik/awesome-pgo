@@ -162,6 +162,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * [Elena-lang](https://elena-lang.github.io/): https://github.com/ELENA-LANG/elena-lang/issues/578
 * BOLT: https://github.com/llvm/llvm-project/issues/63245
 * Redscript: https://github.com/jac3km4/redscript/issues/94
+* Nushell: https://github.com/nushell/nushell/issues/6943
 
 ## LTO, PGO, BOLT, etc and provided by someone binaries
 
