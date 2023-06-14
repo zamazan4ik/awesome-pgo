@@ -82,6 +82,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * YugabyteDB: [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * Zstd: [Makefile](https://github.com/facebook/zstd/blob/dev/programs/Makefile#L232)
 * [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
+* Windows Terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 
 ## PGO support in programming languages
 
