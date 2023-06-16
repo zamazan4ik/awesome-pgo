@@ -25,10 +25,12 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
   - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
+  - BOLT effects on Clang speed: [Slides](https://llvm.org/devmtg/2022-11/slides/Lightning15-OptimizingClangWithBOLTUsingCMake.pdf) or [Android](https://android-review.linaro.org/plugins/gitiles/toolchain/llvm_android/+/f36c64eeddf531b7b1a144c40f61d6c9a78eee7a) experience
 * [GCC](https://gcc.gnu.org/): 
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 - be careful.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegra, chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
+* [clangd](https://clangd.llvm.org/): [JetBrains blog](https://blog.jetbrains.com/clion/2022/05/testing-3-approaches-performance-cpp_apps/)
 * [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
 * Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
 * [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
@@ -60,6 +62,8 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Databend](https://databend.rs/): [GitHub issue](https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063)
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
+* [Handbrake](https://handbrake.fr/): [GitHub issue comment](https://github.com/HandBrake/HandBrake/issues/1072#issuecomment-865630524)
+* [CP2K](https://www.cp2k.org/): [Docs](https://www.cp2k.org/howto:pgo)
 * Zstd and LZ4: [Blosc blog](https://www.blosc.org/posts/codecs-pgo/)
 * Windows terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
@@ -142,6 +146,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Vector: https://github.com/vectordotdev/vector/issues/15631
 * Fluent-bit: https://github.com/fluent/fluent-bit/issues/6577
 * rsyslog: https://github.com/rsyslog/rsyslog/issues/5048
+* syslog-ng: https://github.com/syslog-ng/syslog-ng/issues/4511
 * Redpanda: https://github.com/redpanda-data/redpanda/issues/7945
 * parseable: https://github.com/parseablehq/parseable/issues/224
 * Ruby: https://bugs.ruby-lang.org/issues/19256
@@ -158,6 +163,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Codon: https://github.com/exaloop/codon/issues/137
 * YTSaurus: https://github.com/ytsaurus/ytsaurus/issues/40
 * DuckDB: https://github.com/duckdb/duckdb/discussions/7721
+* Firebird: https://github.com/FirebirdSQL/firebird/issues/7631
 * OpenObserve: https://github.com/openobserve/openobserve/issues/911
 * RustPython: https://github.com/RustPython/RustPython/issues/5000
 * Red: https://github.com/red/red/issues/5333
@@ -165,6 +171,11 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * BOLT: https://github.com/llvm/llvm-project/issues/63245
 * Redscript: https://github.com/jac3km4/redscript/issues/94
 * Nushell: https://github.com/nushell/nushell/issues/6943
+* mrustc: https://github.com/thepowersgang/mrustc/issues/304
+
+# Are we BOLT yet?
+
+* Clang in Gentoo: https://bugs.gentoo.org/907931
 
 ## LTO, PGO, BOLT, etc and provided by someone binaries
 
@@ -242,5 +253,6 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
-* Add links to the existing projects how PGO is integrated into them
-* ClickHouse shows less improvements on more time-consuming queries. Need to be investigated, what is going on there
+* Add more links to the existing projects how PGO is integrated into them
+* Perform PGO tests for MongoDB
+
