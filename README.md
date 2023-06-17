@@ -141,7 +141,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * SurrealDB: https://github.com/surrealdb/surrealdb/issues/1547
 * Skytable: https://github.com/skytable/skytable/issues/300
 * TiKV: https://github.com/tikv/tikv/issues/13990
-* MongoDB: https://feedback.mongodb.com/forums/924280-database/suggestions/46127320-build-mongodb-with-pgo
+* MongoDB: https://feedback.mongodb.com/forums/924280-database/suggestions/46127320-build-mongodb-with-pgo or https://jira.mongodb.org/browse/SERVER-3733
 * Greptimedb: https://github.com/GreptimeTeam/greptimedb/issues/1218
 * Vector: https://github.com/vectordotdev/vector/issues/15631
 * Fluent-bit: https://github.com/fluent/fluent-bit/issues/6577
@@ -172,6 +172,10 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Redscript: https://github.com/jac3km4/redscript/issues/94
 * Nushell: https://github.com/nushell/nushell/issues/6943
 * mrustc: https://github.com/thepowersgang/mrustc/issues/304
+* PgCat: https://github.com/postgresml/pgcat/issues/479
+* Cemu: https://github.com/cemu-project/Cemu/issues/797
+* Odyssey: https://github.com/yandex/odyssey/issues/507
+* AutoFDO: https://github.com/google/autofdo/issues/170
 
 # Are we BOLT yet?
 
