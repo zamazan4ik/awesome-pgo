@@ -24,6 +24,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
+  - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
   - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
   - BOLT effects on Clang speed: [Slides](https://llvm.org/devmtg/2022-11/slides/Lightning15-OptimizingClangWithBOLTUsingCMake.pdf) or [Android](https://android-review.linaro.org/plugins/gitiles/toolchain/llvm_android/+/f36c64eeddf531b7b1a144c40f61d6c9a78eee7a) experience
 * [GCC](https://gcc.gnu.org/): 
@@ -55,6 +56,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
 * [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
+* [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
@@ -176,6 +178,8 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Cemu: https://github.com/cemu-project/Cemu/issues/797
 * Odyssey: https://github.com/yandex/odyssey/issues/507
 * AutoFDO: https://github.com/google/autofdo/issues/170
+* Flang: https://github.com/llvm/llvm-project/issues/63376
+* Sccache: https://github.com/mozilla/sccache/issues/1811
 
 # Are we BOLT yet?
 
@@ -241,6 +245,7 @@ Other pitfalls include the following things:
 * [Some notes about PGO](https://rigtorp.se/notes/pgo/)
 * A rejected idea to integrate BOLT into `cpython` build: [link](https://github.com/faster-cpython/ideas/issues/224#issuecomment-1022371595)
 * [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
+* `.profraw` internal details: [blog](https://leodido.dev/demystifying-profraw/)
 
 ## Communities
 
