@@ -32,7 +32,7 @@ So a default PostgreSQL configuration I use a provided by `initdb -D data` excep
 
 ## Results
 
-Here are results of running ClickBench test suite on different configurations. All configurations are benchmarked on the same machine, with the same PostgreSQL configuration, multiple times, etc.
+Here are results of running ClickBench test suite on different configurations. All configurations are benchmarked on the same machine, with the same PostgreSQL configuration, multiple times, etc. Results are shown in seconds (per query). Each query is repeated 3 times to get a more precise time measure.
 
 Also, I shared results for Instrumentation mode so you would be able to estimate how slow PostgreSQL is in Instrumentation mode for PGO.
 

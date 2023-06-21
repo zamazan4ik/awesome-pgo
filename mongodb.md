@@ -37,7 +37,7 @@ So MongoDB with launched with "default" flags like `mongod --dbpath some_path`.
 
 ## Results
 
-Here are results of running ClickBench test suite on different configurations. All configurations are benchmarked on the same machine with the same "background" load, with the same MongoDB configuration, multiple times, etc.
+Here are results of running ClickBench test suite on different configurations. All configurations are benchmarked on the same machine with the same "background" load, with the same MongoDB configuration, multiple times, etc. Results are shown in seconds (per query). Each query is repeated 3 times to get a more precise time measure. Usually the first query is quite slower - I guess it's because some disk caching or something like that.
 
 <details>
   <summary>Release + LTO</summary>

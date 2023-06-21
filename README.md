@@ -56,6 +56,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
 * [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
+* [SQLite](https://www.sqlite.org/index.html): see "sqlite.md" file in the repo
 * [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
@@ -113,7 +114,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [MS Blog](https://devblogs.microsoft.com/dotnet/conversation-about-pgo/)
   - [.Net 7](https://petabridge.com/blog/dotnet7-pgo-performance-improvements/)
 * Java:
-  - [GraalVM](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) (only in Enterprise edition)
+  - [GraalVM](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) (already [free to use](https://medium.com/graalvm/a-new-graalvm-release-and-new-free-license-4aab483692f5))
 * Go:
   - [Go compiler](https://go.dev/doc/pgo) since Go 1.20, still in early stages
   - [GoLLVM](https://go.googlesource.com/gollvm) - [not yet](https://go.googlesource.com/gollvm/#thinltofdo)
@@ -223,7 +224,7 @@ Another issue could be reproducibility. Since you are injecting some information
 Other pitfalls include the following things:
 
 * PGO
-  - Requires multiple builds (at least two stages, in Context-Sensitive LLVM PGO (CSPGO) - three stages)
+  - Requires multiple builds (at least two stages, in Context-Sensitive LLVM PGO ([CSPGO](https://reviews.llvm.org/D54175)) - three stages)
   - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare a "sample" workload
   - For services sometimes PGO reports are not flushed to the disk properly, so you need to do it manually like [here](https://github.com/scylladb/scylladb/pull/10808/files#diff-bf1eacd22947b4daf9f4c2639427b8593d489f093eb1acfbba3e4cc1c9b0288bR427)
   - Reproducubility issues - could be important for some use-cases even more than performance
@@ -263,5 +264,5 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add more links to the existing projects how PGO is integrated into them
-* Perform PGO tests for MongoDB
-
+* Write about PGO and library development. Maybe DuckDB as good examples?
+* Check emscripten PGO support
