@@ -181,6 +181,10 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * AutoFDO: https://github.com/google/autofdo/issues/170
 * Flang: https://github.com/llvm/llvm-project/issues/63376
 * Sccache: https://github.com/mozilla/sccache/issues/1811
+* Emscripten: https://github.com/emscripten-core/emscripten/issues/19671
+* Tensorflow: https://github.com/tensorflow/tensorflow/issues/60944
+* SerenityOS: https://github.com/SerenityOS/serenity/issues/19549
+* pgvector: https://github.com/pgvector/pgvector/issues/168
 
 # Are we BOLT yet?
 
@@ -265,4 +269,4 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add more links to the existing projects how PGO is integrated into them
 * Write about PGO and library development. Maybe DuckDB as good examples?
-* Check emscripten PGO support
+* SQLite PGO results post on SQLite forum: https://sqlite.org/forum/forumpost/19870fae95
