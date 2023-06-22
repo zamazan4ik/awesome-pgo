@@ -116,7 +116,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * Java:
   - [GraalVM](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) (already [free to use](https://medium.com/graalvm/a-new-graalvm-release-and-new-free-license-4aab483692f5))
 * Go:
-  - [Go compiler](https://go.dev/doc/pgo) since Go 1.20, still in early stages
+  - [Go compiler](https://go.dev/doc/pgo) in Preview since Go 1.20, GA in [1.21](https://go.dev/blog/go1.21rc)
   - [GoLLVM](https://go.googlesource.com/gollvm) - [not yet](https://go.googlesource.com/gollvm/#thinltofdo)
   - GCCGO - unknown, but it should be possible to try
 * Ada:
