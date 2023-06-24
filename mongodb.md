@@ -14,7 +14,7 @@ Seems like `r6.3.1` MongoDB tag builds fine with Clang 16. The tests will contin
 
 * Fedora 38
 * Linux kernel 6.3.7 (default Linux kernel from Fedora repos)
-* AMD Ryzen 9 5800x
+* AMD Ryzen 9 5900x
 * 48 Gib RAM
 * SSD Samsung 980 Pro 2 Tib
 * Clang 16 (from the Fedora repositories). I use Clang just because I prefer LLVM-based tooling

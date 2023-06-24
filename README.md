@@ -31,7 +31,9 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 - be careful.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegra, chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
-* [clangd](https://clangd.llvm.org/): [JetBrains blog](https://blog.jetbrains.com/clion/2022/05/testing-3-approaches-performance-cpp_apps/)
+* [clangd](https://clangd.llvm.org/):
+  - [JetBrains blog](https://blog.jetbrains.com/clion/2022/05/testing-3-approaches-performance-cpp_apps/)
+  - [GitHub issue](https://github.com/llvm/llvm-project/issues/63486)
 * [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
 * Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
 * [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
@@ -56,7 +58,10 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
 * [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
-* [SQLite](https://www.sqlite.org/index.html): see "sqlite.md" file in the repo
+* [SQLite](https://www.sqlite.org/index.html):
+  - See "sqlite.md" file in the repo for the detailed report
+  - [SQLite forum discussion](https://sqlite.org/forum/forumpost/d26f4eba26)
+* [DuckDB](https://duckdb.org/): [GitHub comment](https://github.com/duckdb/duckdb/discussions/7721#discussioncomment-6254284)
 * [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
@@ -185,6 +190,8 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Tensorflow: https://github.com/tensorflow/tensorflow/issues/60944
 * SerenityOS: https://github.com/SerenityOS/serenity/issues/19549
 * pgvector: https://github.com/pgvector/pgvector/issues/168
+* Tauri: https://github.com/tauri-apps/tauri/issues/7284
+* clangd: https://github.com/llvm/llvm-project/issues/63486
 
 # Are we BOLT yet?
 
@@ -269,4 +276,4 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add more links to the existing projects how PGO is integrated into them
 * Write about PGO and library development. Maybe DuckDB as good examples?
-* SQLite PGO results post on SQLite forum: https://sqlite.org/forum/forumpost/19870fae95
+* Check static analyzers like clang-tidy, Clang Static Analyzer, cppcheck

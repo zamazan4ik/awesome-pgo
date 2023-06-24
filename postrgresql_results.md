@@ -6,7 +6,7 @@ Here I want to share my results with LTO + PGO PostgreSQL optimization.
 
 * Fedora 38
 * Linux kernel 6.2.15
-* AMD Ryzen 9 5800x
+* AMD Ryzen 9 5900x
 * 48 Gib RAM
 * SSD Samsung 980 Pro 2 Tib
 * Clang 16 (from the Fedora repositories). I use Clang just because I prefer LLVM-based tooling
