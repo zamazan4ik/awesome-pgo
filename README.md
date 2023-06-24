@@ -22,6 +22,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Rust](https://www.rust-lang.org/) (`rustc` compiler):
   - [Rust Lang blog](https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html)
   - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
+* [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/)9412#issuecomment-1298188709)
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
   - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
@@ -192,6 +193,12 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * pgvector: https://github.com/pgvector/pgvector/issues/168
 * Tauri: https://github.com/tauri-apps/tauri/issues/7284
 * clangd: https://github.com/llvm/llvm-project/issues/63486
+* cppcheck: https://trac.cppcheck.net/ticket/11672
+* Rust Analyzer: https://github.com/rust-lang/rust-analyzer/issues/9412
+* ccls: https://github.com/MaskRay/ccls/issues/942
+* Gleam: https://github.com/gleam-lang/gleam/issues/2237
+* Gluon: https://github.com/gluon-lang/gluon/issues/954
+* Millet: https://github.com/azdavis/millet/issues/37
 
 # Are we BOLT yet?
 
