@@ -32,9 +32,12 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 - be careful.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegra, chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
-* [clangd](https://clangd.llvm.org/):
+* [Clangd](https://clangd.llvm.org/):
   - [JetBrains blog](https://blog.jetbrains.com/clion/2022/05/testing-3-approaches-performance-cpp_apps/)
   - [GitHub issue](https://github.com/llvm/llvm-project/issues/63486)
+* [Clang-Tidy](https://clang.llvm.org/extra/clang-tidy/): [GitHub issue](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1606147035) 
+* [lld](https://lld.llvm.org/): [GitHub issue](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028)
+* [Uncrustify](https://uncrustify.sourceforge.net/): [GitHub issue](https://github.com/uncrustify/uncrustify/issues/4045)
 * [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
 * Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
 * [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
@@ -192,13 +195,17 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * SerenityOS: https://github.com/SerenityOS/serenity/issues/19549
 * pgvector: https://github.com/pgvector/pgvector/issues/168
 * Tauri: https://github.com/tauri-apps/tauri/issues/7284
-* clangd: https://github.com/llvm/llvm-project/issues/63486
+* LLVM projects (like Clangd, Clang-Tidy, lld): https://github.com/llvm/llvm-project/issues/63486
 * cppcheck: https://trac.cppcheck.net/ticket/11672
 * Rust Analyzer: https://github.com/rust-lang/rust-analyzer/issues/9412
 * ccls: https://github.com/MaskRay/ccls/issues/942
 * Gleam: https://github.com/gleam-lang/gleam/issues/2237
 * Gluon: https://github.com/gluon-lang/gluon/issues/954
 * Millet: https://github.com/azdavis/millet/issues/37
+* Sorbet: https://github.com/sorbet/sorbet/issues/7102
+* loxcraft: https://github.com/ajeetdsouza/loxcraft/issues/18
+* Godot: https://github.com/godotengine/godot-proposals/issues/2610
+* Uncrustify: https://github.com/uncrustify/uncrustify/issues/4045
 
 # Are we BOLT yet?
 
