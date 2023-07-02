@@ -68,6 +68,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [DuckDB](https://duckdb.org/): [GitHub comment](https://github.com/duckdb/duckdb/discussions/7721#discussioncomment-6254284)
 * [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
 * [Redis](https://redis.io/): see "redis.md" file in the repo
+* [Memcached](https://memcached.org/): [GitHub issue](https://github.com/memcached/memcached/issues/1054)
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
@@ -209,6 +210,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Uncrustify: https://github.com/uncrustify/uncrustify/issues/4045
 * Redis: https://github.com/redis/redis/issues/12371
 * KeyDB: https://github.com/Snapchat/KeyDB/issues/683
+* Memcached: https://github.com/memcached/memcached/issues/1054
 
 # Are we BOLT yet?
 
@@ -290,7 +292,7 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 
 ## Where PGO did not help (according to my tests)
 
-* Catboost - I think this is due to highly math-oriented nature of this. I did a test on `fit` and `calc` modes (trainig and evaluation, respectively). In `calc` mode PGO for some reason made things even worse.
+* [Catboost](https://catboost.ai/) - I think this is due to highly math-oriented nature of this. I did a test on `fit` and `calc` modes (trainig and evaluation, respectively) on `epsilon` dataset. In `calc` mode PGO for some reason made things even worse. Maybe, PGO could help in other modes but I didn't test it (yet).
 
 ## TODO
 
