@@ -22,7 +22,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Rust](https://www.rust-lang.org/) (`rustc` compiler):
   - [Rust Lang blog](https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html)
   - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
-* [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/)9412#issuecomment-1298188709)
+* [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
   - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
