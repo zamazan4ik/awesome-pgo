@@ -208,6 +208,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Godot: https://github.com/godotengine/godot-proposals/issues/2610
 * Uncrustify: https://github.com/uncrustify/uncrustify/issues/4045
 * Redis: https://github.com/redis/redis/issues/12371
+* KeyDB: https://github.com/Snapchat/KeyDB/issues/683
 
 # Are we BOLT yet?
 
