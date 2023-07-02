@@ -33,7 +33,6 @@ Also, I shared results for Instrumentation mode so you would be able to estimate
   <summary>Release</summary>
 
   ```
-taskset -c 1-3 ../redis_release/redis-benchmark -n 1000000 --threads 3
 ====== PING_INLINE ======                                                     
   1000000 requests completed in 3.25 seconds
   50 parallel clients

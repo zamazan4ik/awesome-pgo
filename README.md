@@ -7,7 +7,7 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
   - [Wiki](https://en.wikipedia.org/wiki/Profile-guided_optimization)
   - [Microsoft docs](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations)
 
-Also, you could find PDO (Profile Directed Optimization), FDO (Feedback Driven Optimization), PDF (Profile Directed Feedback) - do not worry, that's just a PGO but with a different name. 
+Also, you could find PDO (Profile Directed Optimization), FDO (Feedback Driven Optimization), FBO (Feedback Based Optimization), PDF (Profile Directed Feedback), PBO (Profile Based Optimization) - do not worry, that's just a PGO but with a different name. 
 
 Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it. More information about LTO you could find in `lto.md`.
 
@@ -67,6 +67,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [SQLite forum discussion](https://sqlite.org/forum/forumpost/d26f4eba26)
 * [DuckDB](https://duckdb.org/): [GitHub comment](https://github.com/duckdb/duckdb/discussions/7721#discussioncomment-6254284)
 * [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
+* [Redis](https://redis.io/): see "redis.md" file in the repo
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
@@ -206,6 +207,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * loxcraft: https://github.com/ajeetdsouza/loxcraft/issues/18
 * Godot: https://github.com/godotengine/godot-proposals/issues/2610
 * Uncrustify: https://github.com/uncrustify/uncrustify/issues/4045
+* Redis: https://github.com/redis/redis/issues/12371
 
 # Are we BOLT yet?
 
@@ -272,6 +274,7 @@ Other pitfalls include the following things:
 * A rejected idea to integrate BOLT into `cpython` build: [link](https://github.com/faster-cpython/ideas/issues/224#issuecomment-1022371595)
 * [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
 * `.profraw` internal details: [blog](https://leodido.dev/demystifying-profraw/)
+* Slides about PGO: [link](https://assets.ctfassets.net/oxjq45e8ilak/41KrMkvfzUDEu6MDOEQL7q/dd4575d45a19aef27eebae411faa7952/PGO-___________________________________________________________.pdf) (in Russian)
 
 ## Communities
 
@@ -284,10 +287,24 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 
 * [Awesome Machine learning in compilers](https://github.com/zwang4/awesome-machine-learning-in-compilers)
 
+## Where PGO did not help (according to my tests)
+
+* Catboost - I think this is due to highly math-oriented nature of this. I did a test on `fit` and `calc` modes (trainig and evaluation, respectively). In `calc` mode PGO for some reason made things even worse.
+
 ## TODO
 
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add more links to the existing projects how PGO is integrated into them
 * Write about PGO and library development. Maybe DuckDB as good examples?
-* Check static analyzers like clang-tidy, Clang Static Analyzer, cppcheck
+* Check machine-learning stuff like Catboost (it has command-line tooling so would easier to PGOify it)
+* Add a chapter about PGO tips:
+  - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile` if you use Clang)
+  - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example)
+  - Merging multiple profiles - works well
+  - Running on a test suite - generally is not a good idea. Real-life workload usually would differ and a profile from the tests would not be so useful
+  - PGO works well with libraries. However, will be a question - how to collect and distribute a profile for them? Especially if we are talking about general-purpose builds like in OS distros. Also, it's not easy to collect a profile from instrumented but non-instrumented binary (e.g. instrumented .so library which is used from Python software). Needs to be clarified but writing an instrumented wrapper right now is a recommended option.
+  - PGO profiles does not depend on time! However, if your code has time-dependent paths, PGO profiles could differ due to time "stuff" like time issue on a build machine, different speed of different build machines, etc - be careful with that
+  - PGO works fine without PGO (in normal compilers. MSVC does not belong to this family - you cannot use PGO without LTO there). So if LTO is too expensive to your build resources - just use PGO without LTO, that's completely fine
+  - It's hard to estimate how slow would be your application in the Instrumentation mode without actual testing. It hugely depends on the hot paths of your application, number of branches, etc. It's possible to predict based on some metrics of the application. But much easier just to test it :) Be careful, some application could be too slow in Instrumentation mode (like ClickHouse, Clangd or LLD)
+  - When recompile software, would be useful to recompile 3rd parties with PGO as well. Here could be a challenge since often provided by OS packages dependencies are used. And it could be challenging to recompile them as well from the scratch (especially if we are talking about C and C++). Also, not for every software is obvious to understand - which 3rd parties are rebuilt from the scratch and which are taken from another place (like OS-provided or some package manager like Conan).

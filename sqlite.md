@@ -27,7 +27,7 @@ I use [ClickBench](https://github.com/ClickHouse/ClickBench/tree/main/sqlite) as
 
 ## Results
 
-Here are results of running ClickBench test suite on different configurations. All configurations are benchmarked on the same machine, with the same SQLite configuration, multiple times, etc. Results are shown in `time` format (per query). Each query is repeated 3 times to get a more precise time measure. The most interesting time to check is `user` time.
+Here are the results of running ClickBench test suite on different configurations. All configurations are benchmarked on the same machine, with the same SQLite configuration, multiple times, etc. Results are shown in `time` format (per query). Each query is repeated 3 times to get a more precise time measure. The most interesting time to check is `user` time.
  
 Also, I shared results for Instrumentation mode so you would be able to estimate how slow SQLite is in Instrumentation mode for PGO.
 
