@@ -69,6 +69,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
 * [Redis](https://redis.io/): see "redis.md" file in the repo
 * [Memcached](https://memcached.org/): [GitHub issue](https://github.com/memcached/memcached/issues/1054)
+* [DragonflyDB](https://www.dragonflydb.io/): [GitHub comment](https://github.com/dragonflydb/dragonfly/issues/592#issuecomment-1616777005)
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
