@@ -11,7 +11,7 @@ Also, you could find PDO (Profile Directed Optimization), FDO (Feedback Driven O
 
 Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it. More information about LTO you could find in `lto.md`.
 
-## Showcases
+## PGO Showcases
 
 * [Chromium](https://www.chromium.org/Home/): 
   - [Chromium blog 1](https://blog.chromium.org/2016/10/making-chrome-on-windows-faster-with-pgo.html)
@@ -35,8 +35,9 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Clangd](https://clangd.llvm.org/):
   - [JetBrains blog](https://blog.jetbrains.com/clion/2022/05/testing-3-approaches-performance-cpp_apps/)
   - [GitHub issue](https://github.com/llvm/llvm-project/issues/63486)
-* [Clang-Tidy](https://clang.llvm.org/extra/clang-tidy/): [GitHub issue](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1606147035) 
+* [Clang-Tidy](https://clang.llvm.org/extra/clang-tidy/): [GitHub issue](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1606147035)
 * [lld](https://lld.llvm.org/): [GitHub issue](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028)
+* [clang-format](https://clang.llvm.org/docs/ClangFormat.html): [GitHub comment](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1617008106)
 * [Uncrustify](https://uncrustify.sourceforge.net/): [GitHub issue](https://github.com/uncrustify/uncrustify/issues/4045)
 * [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
 * Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
@@ -62,6 +63,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
 * [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
+* [FoundationDB](https://www.foundationdb.org/): [GitHub issue](https://github.com/apple/foundationdb/issues/1334)
 * [SQLite](https://www.sqlite.org/index.html):
   - See "sqlite.md" file in the repo for the detailed report
   - [SQLite forum discussion](https://sqlite.org/forum/forumpost/d26f4eba26)
@@ -72,7 +74,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [DragonflyDB](https://www.dragonflydb.io/): [GitHub comment](https://github.com/dragonflydb/dragonfly/issues/592#issuecomment-1616777005)
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
-* [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef)
+* [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef). In these results you need to interpret performance decrease as "Release version is slower than PGOed" and performance increase as "Release version is faster than PGOed".
 * [Wordpress](https://wordpress.com/): [Bitnami blog](https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html)
 * [Databend](https://databend.rs/): [GitHub issue](https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063)
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
@@ -212,8 +214,16 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Redis: https://github.com/redis/redis/issues/12371
 * KeyDB: https://github.com/Snapchat/KeyDB/issues/683
 * Memcached: https://github.com/memcached/memcached/issues/1054
+* SPIRV-Tools: https://github.com/KhronosGroup/SPIRV-Tools/issues/5303
+* kphp: https://github.com/VKCOM/kphp/issues/862
+* RocksDB: https://groups.google.com/g/rocksdb/c/j9iMFskUnpA
+* FoundationDB: https://github.com/apple/foundationdb/issues/1334 or https://forums.foundationdb.org/t/profile-guided-optimization/4043
 
-# Are we BOLT yet?
+## BOLT showcases
+
+* YDB: [GitHub comment](https://github.com/ydb-platform/ydb/issues/140)
+
+## Are we BOLT yet?
 
 * Clang in Gentoo: https://bugs.gentoo.org/907931
 
@@ -227,7 +237,7 @@ PGO usually is **not** enabled by the upstream developers due to lack of support
 
 ### Other optimization techniques like BOLT
 
-BOLT and others certainly are not enabled by default anywhere right now. SO if you see a performance improvement from it - contact the upstream.
+BOLT and others certainly are not enabled by default anywhere right now. So if you see a performance improvement from it - contact the upstream.
 
 ## Beyond PGO (could be covered here later as well)
 
@@ -265,7 +275,7 @@ Other pitfalls include the following things:
   - "Support" from Google is at least questionable: no regular releases, compilation [issues](https://github.com/google/autofdo/issues/157)
 * Bolt
   - Huge memory usage during build: [GitHub issue](https://github.com/llvm/llvm-project/issues/61711)
-  - For better results you need hardware/software with LBR/BRS support
+  - For better results you need hardware/software with [LBR](https://lwn.net/Articles/680985/)/[BRS](https://lwn.net/Articles/877245/) support
   - There are a lot of bugs - be careful
 * Propeller:
   - Too Google-oriented - could be hard to use outside of Google
@@ -300,15 +310,16 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add more links to the existing projects how PGO is integrated into them
-* Write about PGO and library development. Maybe DuckDB as good examples?
-* Check machine-learning stuff like Catboost (it has command-line tooling so would easier to PGOify it)
+* Write about PGO and library development. Maybe RocksDB or LevelDB as good examples of popular libraries?
+* Try to use PGO on some modules like Nginx VTS (https://github.com/vozlt/nginx-module-vts)
 * Add a chapter about PGO tips:
-  - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile` if you use Clang)
-  - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example)
-  - Merging multiple profiles - works well
-  - Running on a test suite - generally is not a good idea. Real-life workload usually would differ and a profile from the tests would not be so useful
+  - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
+  - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
+  - Merging multiple profiles - works well.
+  - Running on a test suite - generally is not a good idea. Real-life workload usually would differ and a profile from the tests would not be so useful. However, if you have "real-life" tests - it's fine to use them as a profile workload.
   - PGO works well with libraries. However, will be a question - how to collect and distribute a profile for them? Especially if we are talking about general-purpose builds like in OS distros. Also, it's not easy to collect a profile from instrumented but non-instrumented binary (e.g. instrumented .so library which is used from Python software). Needs to be clarified but writing an instrumented wrapper right now is a recommended option.
-  - PGO profiles does not depend on time! However, if your code has time-dependent paths, PGO profiles could differ due to time "stuff" like time issue on a build machine, different speed of different build machines, etc - be careful with that
-  - PGO works fine without PGO (in normal compilers. MSVC does not belong to this family - you cannot use PGO without LTO there). So if LTO is too expensive to your build resources - just use PGO without LTO, that's completely fine
+  - PGO profiles does not depend on time! However, if your code has time-dependent paths, PGO profiles could differ due to "time stuff" like time issues on a build machine, different speed of different build machines, etc - be careful with that
+  - PGO works fine without LTO (in normal compilers. MSVC does not belong to this family - you cannot use PGO without LTO there). So if LTO is too expensive to your build resources (especially if we are talking about FatLTO that consumes A LOT of RAM) - just use PGO without LTO, that's completely fine
   - It's hard to estimate how slow would be your application in the Instrumentation mode without actual testing. It hugely depends on the hot paths of your application, number of branches, etc. It's possible to predict based on some metrics of the application. But much easier just to test it :) Be careful, some application could be too slow in Instrumentation mode (like ClickHouse, Clangd or LLD)
   - When recompile software, would be useful to recompile 3rd parties with PGO as well. Here could be a challenge since often provided by OS packages dependencies are used. And it could be challenging to recompile them as well from the scratch (especially if we are talking about C and C++). Also, not for every software is obvious to understand - which 3rd parties are rebuilt from the scratch and which are taken from another place (like OS-provided or some package manager like Conan).
+  - For reproducibility purposes you can just collect profile and commit it to the repo
