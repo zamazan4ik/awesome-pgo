@@ -13,17 +13,20 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 
 ## PGO Showcases
 
+### Browsers
+
 * [Chromium](https://www.chromium.org/Home/): 
   - [Chromium blog 1](https://blog.chromium.org/2016/10/making-chrome-on-windows-faster-with-pgo.html)
   - [Chromium blog 2](https://blog.chromium.org/2020/08/chrome-just-got-faster-with-profile.html)
 * [Firefox](https://www.mozilla.org/en-US/firefox/new/): [Google Groups thread](https://groups.google.com/g/mozilla.dev.platform/c/wwO48xXFx0A/m/ztg4i0DYAAAJ)
 * [Edge](https://www.microsoft.com/en-us/edge): [MS Blog](https://blogs.windows.com/msedgedev/2020/09/23/faster-leaner-more-efficient-microsoft-edge/)
 * [Opera](https://www.opera.com/): [Blog about PGO on Windows](https://blogs.opera.com/desktop/2016/12/even-faster-opera-for-windows-with-pgo/)
+
+### Compilers and interpreters
+
 * [Rust](https://www.rust-lang.org/) (`rustc` compiler):
   - [Rust Lang blog](https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html)
   - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
-* [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
-* [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
   - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
   - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
@@ -32,6 +35,12 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 - be careful.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegra, chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
+* [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
+* [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
+* Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
+
+### Developer tooling
+
 * [Clangd](https://clangd.llvm.org/):
   - [JetBrains blog](https://blog.jetbrains.com/clion/2022/05/testing-3-approaches-performance-cpp_apps/)
   - [GitHub issue](https://github.com/llvm/llvm-project/issues/63486)
@@ -39,9 +48,9 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [lld](https://lld.llvm.org/): [GitHub issue](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028)
 * [clang-format](https://clang.llvm.org/docs/ClangFormat.html): [GitHub comment](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1617008106)
 * [Uncrustify](https://uncrustify.sourceforge.net/): [GitHub issue](https://github.com/uncrustify/uncrustify/issues/4045)
-* [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
-* Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
-* [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
+
+### Operating systems
+
 * [Linux kernel](https://kernel.org/):
   - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
   - [Microsoft presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
@@ -51,36 +60,46 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - Optimizing Linux kernel with Clang. An [article](https://habr.com/ru/companies/ruvds/articles/696236/)(in Russian) and [results](https://github.com/h0tc0d3/linux_pgo)
   - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results for 3rd party applications(tested on Redis and PostgreSQL). Further testing is needed.
 * Windows: 5-20% improvement according to the [presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
+
+### Virtual machines
+
 * [QEMU](https://www.qemu.org/): [Blog](https://www.talospace.com/2021/03/juicing-qemu-for-fun-and-profit.html)
 * [CrosVM](https://crosvm.dev/book/): [Intel blog](https://www.intel.com/content/www/us/en/developer/articles/technical/enhance-vm-workloads-performance-with-pgo.html)
-* [Vector](https://vector.dev/): [GitHub issue](https://github.com/vectordotdev/vector/issues/15631)
-* [ClickHouse](https://clickhouse.com/): [GitHub issue](https://github.com/ClickHouse/ClickHouse/issues/44567#issuecomment-1589541199)
-* [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
+
+### Databases
+
+* [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
 * [MariaDB](https://mariadb.org/):
   - [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
   - [ClearLinux benchmarks](https://clearlinux.org/news-blogs/profile-guided-optimization-mariadb-benchmarks)
 * [MySQL](https://www.mysql.com/): 
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
-* [PostgreSQL](https://www.postgresql.org/): see "postgresql_results.md" file in the repo
-* [FoundationDB](https://www.foundationdb.org/): [GitHub issue](https://github.com/apple/foundationdb/issues/1334)
+* [ClickHouse](https://clickhouse.com/): [GitHub issue](https://github.com/ClickHouse/ClickHouse/issues/44567#issuecomment-1589541199)
+* [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
+* [Redis](https://redis.io/): see "redis.md" file in the repo
 * [SQLite](https://www.sqlite.org/index.html):
   - See "sqlite.md" file in the repo for the detailed report
   - [SQLite forum discussion](https://sqlite.org/forum/forumpost/d26f4eba26)
+* [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
+* [FoundationDB](https://www.foundationdb.org/): [GitHub issue](https://github.com/apple/foundationdb/issues/1334)
 * [DuckDB](https://duckdb.org/): [GitHub comment](https://github.com/duckdb/duckdb/discussions/7721#discussioncomment-6254284)
-* [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
-* [Redis](https://redis.io/): see "redis.md" file in the repo
 * [Memcached](https://memcached.org/): [GitHub issue](https://github.com/memcached/memcached/issues/1054)
 * [DragonflyDB](https://www.dragonflydb.io/): [GitHub comment](https://github.com/dragonflydb/dragonfly/issues/592#issuecomment-1616777005)
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
+* [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
-* [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef). In these results you need to interpret performance decrease as "Release version is slower than PGOed" and performance increase as "Release version is faster than PGOed".
-* [Wordpress](https://wordpress.com/): [Bitnami blog](https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html)
 * [Databend](https://databend.rs/): [GitHub issue](https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063)
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
+
+### Other
+
+* [Vector](https://vector.dev/): [GitHub issue](https://github.com/vectordotdev/vector/issues/15631)
 * [Handbrake](https://handbrake.fr/): [GitHub issue comment](https://github.com/HandBrake/HandBrake/issues/1072#issuecomment-865630524)
 * [CP2K](https://www.cp2k.org/): [Docs](https://www.cp2k.org/howto:pgo)
+* [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef). In these results you need to interpret performance decrease as "Release version is slower than PGOed" and performance increase as "Release version is faster than PGOed".
+* [Wordpress](https://wordpress.com/): [Bitnami blog](https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html)
 * Zstd and LZ4: [Blosc blog](https://www.blosc.org/posts/codecs-pgo/)
 * Windows terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
@@ -312,6 +331,7 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Add more links to the existing projects how PGO is integrated into them
 * Write about PGO and library development. Maybe RocksDB or LevelDB as good examples of popular libraries?
 * Try to use PGO on some modules like Nginx VTS (https://github.com/vozlt/nginx-module-vts)
+* There is another PGO - PostGreSQL Operator from CrunchyDate ([GitHub](https://github.com/CrunchyData/postgres-operator)). It makes a bit harder to find information about Profile-Guided Optimization :)
 * Add a chapter about PGO tips:
   - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
   - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).

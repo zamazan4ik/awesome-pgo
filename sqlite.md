@@ -4062,4 +4062,6 @@ sys	0m0,168s
   ```
 </details>
 
-The measured improvement is quite consistent so it makes sense to optimize SQLite with PGO. The results are quite controversial with the official SQLite [note](https://www.sqlite.org/footprint.html) about PGO. It needs to be clarified.
+More benchmarks you can find [here](https://sqlite.org/forum/forumpost/7ce7a5f03d).
+
+The measured improvement is quite consistent so it makes sense to optimize SQLite with PGO.
