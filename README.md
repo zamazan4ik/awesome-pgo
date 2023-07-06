@@ -58,7 +58,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
   - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
   - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
   - Optimizing Linux kernel with Clang. An [article](https://habr.com/ru/companies/ruvds/articles/696236/)(in Russian) and [results](https://github.com/h0tc0d3/linux_pgo)
-  - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results for 3rd party applications(tested on Redis and PostgreSQL). Further testing is needed.
+  - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results for 3rd party applications(tested on Redis and PostgreSQL). Further testing is needed. One possible idea - PGO was not applied right with GCC due to some .gcda find path issues. The test must be repeated with GCC and Clang.
 * Windows: 5-20% improvement according to the [presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
 
 ### Virtual machines
@@ -176,7 +176,7 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * ClickHouse: https://github.com/ClickHouse/ClickHouse/issues/44567
 * SurrealDB: https://github.com/surrealdb/surrealdb/issues/1547
 * Skytable: https://github.com/skytable/skytable/issues/300
-* TiKV: https://github.com/tikv/tikv/issues/13990
+* TiKV: https://github.com/tikv/tikv/issues/13990 (RocksDB in TiKV: https://github.com/tikv/rocksdb/issues/339)
 * MongoDB: https://feedback.mongodb.com/forums/924280-database/suggestions/46127320-build-mongodb-with-pgo or https://jira.mongodb.org/browse/SERVER-3733
 * Greptimedb: https://github.com/GreptimeTeam/greptimedb/issues/1218
 * Vector: https://github.com/vectordotdev/vector/issues/15631
@@ -236,7 +236,14 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * SPIRV-Tools: https://github.com/KhronosGroup/SPIRV-Tools/issues/5303
 * kphp: https://github.com/VKCOM/kphp/issues/862
 * RocksDB: https://groups.google.com/g/rocksdb/c/j9iMFskUnpA
+* LevelDB: https://github.com/google/leveldb/issues/1133
 * FoundationDB: https://github.com/apple/foundationdb/issues/1334 or https://forums.foundationdb.org/t/profile-guided-optimization/4043
+* LanceDB: https://github.com/lancedb/lancedb/issues/255
+* CeresDB: https://github.com/CeresDB/ceresdb/issues/1051
+* CnosDB: https://github.com/cnosdb/cnosdb/issues/1327
+* ReDB: https://github.com/cberner/redb/issues/638
+* Memgraph: https://github.com/memgraph/memgraph/issues/1066
+* ManticoreSearch: https://github.com/manticoresoftware/manticoresearch/issues/1247
 
 ## BOLT showcases
 
