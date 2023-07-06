@@ -244,6 +244,23 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * ReDB: https://github.com/cberner/redb/issues/638
 * Memgraph: https://github.com/memgraph/memgraph/issues/1066
 * ManticoreSearch: https://github.com/manticoresoftware/manticoresearch/issues/1247
+* kvrocks: https://github.com/apache/kvrocks/issues/1551
+* RethinkDB: https://github.com/rethinkdb/rethinkdb/issues/7123
+* BaikalDB: https://github.com/baidu/BaikalDB/issues/222
+* GridDB: https://github.com/griddb/griddb/issues/425
+* FlashDB: https://github.com/armink/FlashDB/issues/223
+* Aerospike: https://discuss.aerospike.com/t/profile-guided-optimization-pgo/10301
+* Agensgraph: https://github.com/bitnine-oss/agensgraph/issues/622
+* Hydra: https://github.com/hydradatabase/hydra/issues/108
+* RonDB: https://github.com/logicalclocks/rondb/issues/335
+* Kunlun: https://github.com/zettadb/kunlun/issues/912
+* Lingo-DB: https://github.com/lingo-db/lingo-db/issues/2
+* Cachegrand: https://github.com/danielealbano/cachegrand/issues/430
+* Citus: https://github.com/citusdata/citus/issues/7046
+* SplinterDB: https://github.com/vmware/splinterdb/issues/589
+* TDengine: https://github.com/taosdata/TDengine/issues/21979
+* MonetDB: https://github.com/MonetDB/MonetDB/issues/7392
+* Neon: https://github.com/neondatabase/neon/issues/4649
 
 ## BOLT showcases
 
