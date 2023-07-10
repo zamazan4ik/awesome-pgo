@@ -92,6 +92,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Databend](https://databend.rs/): [GitHub issue](https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063)
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
+* [RonDB](https://www.rondb.com/): [GitHub comment](https://github.com/logicalclocks/rondb/issues/335#issuecomment-1624188886)
 
 ### Other
 
@@ -102,6 +103,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Wordpress](https://wordpress.com/): [Bitnami blog](https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html)
 * Zstd and LZ4: [Blosc blog](https://www.blosc.org/posts/codecs-pgo/)
 * Windows terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
+* Drill: [GitHub issue](https://github.com/fcsonline/drill/issues/185)
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
 * Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
 * Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
@@ -261,6 +263,17 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * TDengine: https://github.com/taosdata/TDengine/issues/21979
 * MonetDB: https://github.com/MonetDB/MonetDB/issues/7392
 * Neon: https://github.com/neondatabase/neon/issues/4649
+* Rspamd: https://github.com/rspamd/rspamd/issues/4534
+* Open Watcom: https://github.com/open-watcom/open-watcom-v2/issues/1113
+* IWYU: https://github.com/include-what-you-use/include-what-you-use/issues/1273
+* Micropython: https://github.com/micropython/micropython/issues/11965
+* Protobuf (`protoc`): https://github.com/protocolbuffers/protobuf/issues/13248
+* Cling: https://github.com/root-project/cling/issues/508
+* RetDec: https://github.com/avast/retdec/issues/1165
+* Speedb: https://github.com/speedb-io/speedb/issues/602
+* Radare2: https://github.com/radareorg/radare2/issues/22032
+* AFLplusplus: https://github.com/AFLplusplus/AFLplusplus/issues/1803
+* Drill: https://github.com/fcsonline/drill/issues/185
 
 ## BOLT showcases
 
