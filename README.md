@@ -97,6 +97,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 ### Other
 
 * [Vector](https://vector.dev/): [GitHub issue](https://github.com/vectordotdev/vector/issues/15631)
+* [Fluent-Bit](https://fluentbit.io/): [GitHub comment](https://github.com/fluent/fluent-bit/discussions/6638#discussioncomment-6419880)
 * [Handbrake](https://handbrake.fr/): [GitHub issue comment](https://github.com/HandBrake/HandBrake/issues/1072#issuecomment-865630524)
 * [CP2K](https://www.cp2k.org/): [Docs](https://www.cp2k.org/howto:pgo)
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef). In these results you need to interpret performance decrease as "Release version is slower than PGOed" and performance increase as "Release version is faster than PGOed".
@@ -104,6 +105,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * Zstd and LZ4: [Blosc blog](https://www.blosc.org/posts/codecs-pgo/)
 * Windows terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 * Drill: [GitHub issue](https://github.com/fcsonline/drill/issues/185)
+* [Goose](https://www.tag1consulting.com/goose-podcasts-blogs-presentations-more): [Article](https://www.tag1consulting.com/blog/golden-goose-egg-compile-time-adventure)
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
 * Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
 * Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
@@ -274,6 +276,8 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Radare2: https://github.com/radareorg/radare2/issues/22032
 * AFLplusplus: https://github.com/AFLplusplus/AFLplusplus/issues/1803
 * Drill: https://github.com/fcsonline/drill/issues/185
+* Oha: https://github.com/hatoo/oha/issues/264
+* Compressonator: https://github.com/GPUOpen-Tools/compressonator/issues/260
 
 ## BOLT showcases
 
@@ -345,6 +349,7 @@ Other pitfalls include the following things:
 * [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
 * `.profraw` internal details: [blog](https://leodido.dev/demystifying-profraw/)
 * Slides about PGO: [link](https://assets.ctfassets.net/oxjq45e8ilak/41KrMkvfzUDEu6MDOEQL7q/dd4575d45a19aef27eebae411faa7952/PGO-___________________________________________________________.pdf) (in Russian)
+* Overview of all kinds of PGO in LLVM: [link](https://aaupov.github.io/blog/2023/07/09/pgo)
 
 ## Communities
 
@@ -366,9 +371,10 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add more links to the existing projects how PGO is integrated into them
-* Write about PGO and library development. Maybe RocksDB or LevelDB as good examples of popular libraries?
+* Write more about PGO and library development.
 * Try to use PGO on some modules like Nginx VTS (https://github.com/vozlt/nginx-module-vts)
 * There is another PGO - PostGreSQL Operator from CrunchyDate ([GitHub](https://github.com/CrunchyData/postgres-operator)). It makes a bit harder to find information about Profile-Guided Optimization :)
+* PGO helps with optimizing binary size since we can inline less for actually cold paths of our programs (and it can help with performance as well since our program will be smaller and more friendly for CPU I-cache)
 * Add a chapter about PGO tips:
   - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
   - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
