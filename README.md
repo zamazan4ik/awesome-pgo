@@ -13,6 +13,8 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 
 ## PGO Showcases
 
+Here I collect links to the articles/benchmarks/etc. with PGO on multiple projects (with numbers!).
+
 ### Browsers
 
 * [Chromium](https://www.chromium.org/Home/): 
@@ -94,22 +96,27 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
 * [RonDB](https://www.rondb.com/): [GitHub comment](https://github.com/logicalclocks/rondb/issues/335#issuecomment-1624188886)
 
-### Other
+### Logging
 
 * [Vector](https://vector.dev/): [GitHub issue](https://github.com/vectordotdev/vector/issues/15631)
 * [Fluent-Bit](https://fluentbit.io/): [GitHub comment](https://github.com/fluent/fluent-bit/discussions/6638#discussioncomment-6419880)
+* [Rsyslog](https://www.rsyslog.com/): [GitHub comment](https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1631807664)
+* Some logs parsing routines: [Blog](https://andre.arko.net/2022/03/13/parsing-logs-faster-with-rust-revisited/)
+
+### Other
+
 * [Handbrake](https://handbrake.fr/): [GitHub issue comment](https://github.com/HandBrake/HandBrake/issues/1072#issuecomment-865630524)
 * [CP2K](https://www.cp2k.org/): [Docs](https://www.cp2k.org/howto:pgo)
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef). In these results you need to interpret performance decrease as "Release version is slower than PGOed" and performance increase as "Release version is faster than PGOed".
 * [Wordpress](https://wordpress.com/): [Bitnami blog](https://blog.bitnami.com/2016/08/intel-pgo-optimizations-lead-to-20.html)
 * Zstd and LZ4: [Blosc blog](https://www.blosc.org/posts/codecs-pgo/)
 * Windows terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
-* Drill: [GitHub issue](https://github.com/fcsonline/drill/issues/185)
+* [Drill](https://github.com/fcsonline/drill): [GitHub issue](https://github.com/fcsonline/drill/issues/185)
 * [Goose](https://www.tag1consulting.com/goose-podcasts-blogs-presentations-more): [Article](https://www.tag1consulting.com/blog/golden-goose-egg-compile-time-adventure)
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
 * Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
 * Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
-* Some logs parsing routines: [Blog](https://andre.arko.net/2022/03/13/parsing-logs-faster-with-rust-revisited/)
+* Bunch of LLVM test suite algorithms benchmarks: [Blog](https://johnnysswlab.com/tune-your-programs-speed-with-profile-guided-optimizations/) 
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -129,7 +136,7 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 * [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
 * Windows Terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 
-## PGO support in programming languages
+## PGO support in programming languages and compilers
 
 * C and C++:
   - [GCC](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#Instrumentation-Options)
@@ -168,6 +175,8 @@ Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipe
 Possibly other compilers support PGO too. If you know any, please let me know.
 
 ## Are we PGO yet?
+
+Just a list of PGO-related issues in different projects. So you can estimate the PGO state in your favourite open-source product.
 
 * ScyllaDB: https://github.com/scylladb/scylladb/pull/10808
 * Tarantool: https://github.com/tarantool/tarantool/issues/8089
@@ -278,12 +287,19 @@ Possibly other compilers support PGO too. If you know any, please let me know.
 * Drill: https://github.com/fcsonline/drill/issues/185
 * Oha: https://github.com/hatoo/oha/issues/264
 * Compressonator: https://github.com/GPUOpen-Tools/compressonator/issues/260
+* EventStoreDb: https://github.com/EventStore/EventStore/issues/3897
+* sqld: https://github.com/libsql/sqld/issues/524
+* mvsqlite: https://github.com/losfair/mvsqlite/issues/118
 
 ## BOLT showcases
+
+Here I collect all results with applying BOLT to the projects (with numbers).
 
 * YDB: [GitHub comment](https://github.com/ydb-platform/ydb/issues/140)
 
 ## Are we BOLT yet?
+
+Just a list of BOLT-related issues in different projects. So you can estimate the BOLT state in your favourite open-source product.
 
 * Clang in Gentoo: https://bugs.gentoo.org/907931
 
