@@ -116,7 +116,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
 * Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
 * Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
-* Bunch of LLVM test suite algorithms benchmarks: [Blog](https://johnnysswlab.com/tune-your-programs-speed-with-profile-guided-optimizations/) 
+* Bunch of LLVM test suite algorithms benchmarks: [Blog](https://johnnysswlab.com/tune-your-programs-speed-with-profile-guided-optimizations/)
+* [ClamAV](https://www.clamav.net/): [BLog](https://nikkhokkho.sourceforge.io/static.php?page=ClamAVOpt)
+* Mesa: [Mailing list](https://lists.freedesktop.org/archives/mesa-dev/2020-February/224096.html) about OpenGL benchmark. Worth reading the whole thread though.
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -127,8 +129,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
   - Pyston: [README](https://github.com/pyston/pyston#building)
 * V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
+* ChakraCore: [Scripts](https://github.com/chakra-core/ChakraCore/tree/master/Build/scripts/pgo)
 * Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
 * Firefox: [Docs](https://firefox-source-docs.mozilla.org/build/buildsystem/pgo.html)
+   - Thunderbird has PGO support too
 * PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138) and old Centminmod [scripts](https://github.com/centminmod/php_pgo_training_scripts)
 * MySQL: [CMake script](https://github.com/mysql/mysql-server/blob/8.0/cmake/fprofile.cmake)
 * YugabyteDB: [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
@@ -290,6 +294,17 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * EventStoreDb: https://github.com/EventStore/EventStore/issues/3897
 * sqld: https://github.com/libsql/sqld/issues/524
 * mvsqlite: https://github.com/losfair/mvsqlite/issues/118
+* Janet: https://github.com/janet-lang/janet/issues/1221
+* Espruino: https://github.com/espruino/Espruino/issues/2392
+* Hashlink: https://github.com/HaxeFoundation/hashlink/issues/606
+* Boa: https://github.com/boa-dev/boa/issues/3139
+* Arroyo: https://github.com/ArroyoSystems/arroyo/issues/202
+* Clazy: https://bugs.kde.org/show_bug.cgi?id=472265
+* ClamAV: didn;t find yet a good way to report an idea to the upstream
+* Klee: https://github.com/klee/klee/issues/1653
+* SVF: https://github.com/SVF-tools/SVF/issues/1152
+* IKOS: https://github.com/NASA-SW-VnV/ikos/issues/211
+* C2Rust: https://github.com/immunant/c2rust/issues/989
 
 ## BOLT showcases
 
@@ -392,7 +407,7 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * There is another PGO - PostGreSQL Operator from CrunchyDate ([GitHub](https://github.com/CrunchyData/postgres-operator)). It makes a bit harder to find information about Profile-Guided Optimization :)
 * PGO helps with optimizing binary size since we can inline less for actually cold paths of our programs (and it can help with performance as well since our program will be smaller and more friendly for CPU I-cache)
 * Add a chapter about PGO tips:
-  - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
+  - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile()` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
   - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
   - Merging multiple profiles - works well.
   - Running on a test suite - generally is not a good idea. Real-life workload usually would differ and a profile from the tests would not be so useful. However, if you have "real-life" tests - it's fine to use them as a profile workload.
