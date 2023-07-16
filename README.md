@@ -38,8 +38,11 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegra, chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
-* [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
+* [PHP](https://www.php.net/):
+  - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
+  - [Phoronix benchmarks](https://www.phoronix.com/news/Clear-Linux-PHP7-PGO-Opt)
 * Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
+* [Ruby](https://www.ruby-lang.org/): [Ruby Forum (post from 2006 with GCC 4.1)](https://www.ruby-forum.com/t/compiling-ruby-w-profile-guided-optimization/60564)
 * [tfcompile](https://www.tensorflow.org/xla/tfcompile): [GitHub comment](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591)
 
 ### Developer tooling
@@ -321,6 +324,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Typesense: https://github.com/typesense/typesense/issues/1103
 * Groonga: https://github.com/groonga/groonga/issues/1585
 * Piccolo: https://github.com/triplehex/piccolo/issues/30
+* Artichoke: https://github.com/artichoke/artichoke/issues/2627
+* Fullstaq-ruby: https://github.com/fullstaq-ruby/server-edition/issues/5
+* Lua: https://www.reddit.com/r/lua/comments/151dtyu/profileguided_optimization_pgo_on_lua_interpreters/
 
 ## BOLT showcases
 
