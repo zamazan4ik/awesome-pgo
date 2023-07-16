@@ -40,6 +40,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [PHP](https://www.php.net/): [Alibaba post](https://www.alibabacloud.com/forum/read-539)
 * Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
+* [tfcompile](https://www.tensorflow.org/xla/tfcompile): [GitHub comment](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591)
 
 ### Developer tooling
 
@@ -315,6 +316,11 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * OpenVino: https://github.com/openvinotoolkit/openvino/issues/18572
 * ApacheTVM: https://discuss.tvm.apache.org/t/profile-guided-optimization-pgo-and-apache-tvm/15332
 * OnnxRuntime: https://github.com/microsoft/onnxruntime/discussions/16726
+* Ruffle: https://github.com/ruffle-rs/ruffle/issues/12094
+* CephFS: https://tracker.ceph.com/issues/62032
+* Typesense: https://github.com/typesense/typesense/issues/1103
+* Groonga: https://github.com/groonga/groonga/issues/1585
+* Piccolo: https://github.com/triplehex/piccolo/issues/30
 
 ## BOLT showcases
 
