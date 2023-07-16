@@ -119,6 +119,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Bunch of LLVM test suite algorithms benchmarks: [Blog](https://johnnysswlab.com/tune-your-programs-speed-with-profile-guided-optimizations/)
 * [ClamAV](https://www.clamav.net/): [BLog](https://nikkhokkho.sourceforge.io/static.php?page=ClamAVOpt)
 * Mesa: [Mailing list](https://lists.freedesktop.org/archives/mesa-dev/2020-February/224096.html) about OpenGL benchmark. Worth reading the whole thread though.
+* [hck](https://github.com/sstadick/hck): [README note](https://github.com/sstadick/hck#profile-guided-optimization)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -305,6 +306,15 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SVF: https://github.com/SVF-tools/SVF/issues/1152
 * IKOS: https://github.com/NASA-SW-VnV/ikos/issues/211
 * C2Rust: https://github.com/immunant/c2rust/issues/989
+* OpenZFS: https://github.com/openzfs/zfs/issues/15069
+* FreeBSD: https://www.reddit.com/r/freebsd/comments/150codp/profileguided_optimization_pgo_on_freebsd_kernel/
+* uutils: https://github.com/uutils/coreutils/issues/2730
+* PyTorch: https://github.com/pytorch/pytorch/issues/105281
+* Glow: https://github.com/pytorch/glow/issues/6106
+* PlaidML: https://github.com/plaidml/plaidml/issues/1996
+* OpenVino: https://github.com/openvinotoolkit/openvino/issues/18572
+* ApacheTVM: https://discuss.tvm.apache.org/t/profile-guided-optimization-pgo-and-apache-tvm/15332
+* OnnxRuntime: https://github.com/microsoft/onnxruntime/discussions/16726
 
 ## BOLT showcases
 
@@ -392,6 +402,7 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 ## Related projects
 
 * [Awesome Machine learning in compilers](https://github.com/zwang4/awesome-machine-learning-in-compilers)
+* [CompilerGym](https://compilergym.com/): https://github.com/facebookresearch/CompilerGym/ (an interesting project about applying ML on compiler optimization flags)
 
 ## Where PGO did not help (according to my tests)
 
@@ -406,6 +417,7 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * Try to use PGO on some modules like Nginx VTS (https://github.com/vozlt/nginx-module-vts)
 * There is another PGO - PostGreSQL Operator from CrunchyDate ([GitHub](https://github.com/CrunchyData/postgres-operator)). It makes a bit harder to find information about Profile-Guided Optimization :)
 * PGO helps with optimizing binary size since we can inline less for actually cold paths of our programs (and it can help with performance as well since our program will be smaller and more friendly for CPU I-cache)
+* Add an issue to LLVM upstream about writing a difference between PGO implementations (Frontend vs IR vs Context-Sensitive), pros and cons of each, which to use by default. Probably add a link to the blog post of a person who described all these stuff.
 * Add a chapter about PGO tips:
   - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile()` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
   - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
