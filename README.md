@@ -43,6 +43,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [Phoronix benchmarks](https://www.phoronix.com/news/Clear-Linux-PHP7-PGO-Opt)
 * Perl ([cperl](https://github.com/perl11/cperl)): [Blog](https://perl11.github.io/blog/bolt.html)
 * [Ruby](https://www.ruby-lang.org/): [Ruby Forum (post from 2006 with GCC 4.1)](https://www.ruby-forum.com/t/compiling-ruby-w-profile-guided-optimization/60564)
+* [Lua](https://www.lua.org/): [Lua interpeter results - Reddit](https://www.reddit.com/r/lua/comments/151dtyu/profileguided_optimization_pgo_on_lua_interpreters/)
 * [tfcompile](https://www.tensorflow.org/xla/tfcompile): [GitHub comment](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591)
 
 ### Developer tooling
@@ -60,6 +61,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Linux kernel](https://kernel.org/):
   - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
   - [Microsoft presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
+  - [ASOS (Application Specific Operating System)](http://scis.scichina.com/en/2018/092102.pdf)
   - [Phoronix post](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next)
   - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
   - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
@@ -153,6 +155,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [MSVC](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations)
   - [ICC](https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-8/profile-guided-optimization-pgo.html)
   - [AOCC](https://www.amd.com/en/developer/aocc.html#documentation) (supports but the documentation right now exists only as PDF files)
+  - [Circle](https://www.circle-lang.org/) (not exactly a C++ compiler): no PGO support
 * Rust:
   - [rustc](https://doc.rust-lang.org/rustc/profile-guided-optimization.html)
   - [cargo-pgo](https://github.com/Kobzol/cargo-pgo)
@@ -327,12 +330,25 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Artichoke: https://github.com/artichoke/artichoke/issues/2627
 * Fullstaq-ruby: https://github.com/fullstaq-ruby/server-edition/issues/5
 * Lua: https://www.reddit.com/r/lua/comments/151dtyu/profileguided_optimization_pgo_on_lua_interpreters/
+* OrioleDB: https://github.com/orioledb/postgres/issues/4
+* ROCm: https://github.com/RadeonOpenCompute/ROCm/issues/2325
+* Embox: https://github.com/embox/embox/issues/2848
+
+## Are proprietary vendors PGO yet?
+
+Here I collect some requests to the proprietary companies about supporting PGO in their tooling and optimizing their tooling with PGO before distribution to the users.
+
+* Nvidia (Nvidia HPC compilers) - sent an email via support
+* AMD (AOCC compilers) - sent an email via support
+* Intel (general question) - sent an email
+* EDG (a C++ compiler) - sent an email via support
 
 ## BOLT showcases
 
-Here I collect all results with applying BOLT to the projects (with numbers).
+Here I collect all results with applying LLVM BOLT to the projects (with numbers).
 
 * YDB: [GitHub comment](https://github.com/ydb-platform/ydb/issues/140)
+* Clang: [Slides](https://llvm.org/devmtg/2022-11/slides/Lightning15-OptimizingClangWithBOLTUsingCMake.pdf)
 
 ## Are we BOLT yet?
 
@@ -430,6 +446,11 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * There is another PGO - PostGreSQL Operator from CrunchyDate ([GitHub](https://github.com/CrunchyData/postgres-operator)). It makes a bit harder to find information about Profile-Guided Optimization :)
 * PGO helps with optimizing binary size since we can inline less for actually cold paths of our programs (and it can help with performance as well since our program will be smaller and more friendly for CPU I-cache)
 * Add an issue to LLVM upstream about writing a difference between PGO implementations (Frontend vs IR vs Context-Sensitive), pros and cons of each, which to use by default. Probably add a link to the blog post of a person who described all these stuff.
+* Contact with more proprietary vendors regarding PGO support in their compilers and PGO optimization their compilers itself before distribution to the customers. Possible compilers list: https://en.wikipedia.org/wiki/List_of_compilers
+* Points of the software supply chain, where PGO can be applied (we can influence any of them with different methods and priorities):
+  - Software itself (add PGO to the build scripts)
+  - Maintainers (work with different distributions about enabling PGO for the packages)
+  - In-house builds (if we build binary somewhere in a closed perimeter)
 * Add a chapter about PGO tips:
   - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile()` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
   - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
