@@ -89,6 +89,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [SQLite](https://www.sqlite.org/index.html):
   - See "sqlite.md" file in the repo for the detailed report
   - [SQLite forum discussion](https://sqlite.org/forum/forumpost/d26f4eba26)
+  - [SQLite docs update](https://sqlite.org/forum/forumpost/7fd3c9a43a)
 * [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
 * [FoundationDB](https://www.foundationdb.org/): [GitHub issue](https://github.com/apple/foundationdb/issues/1334)
 * [DuckDB](https://duckdb.org/): [GitHub comment](https://github.com/duckdb/duckdb/discussions/7721#discussioncomment-6254284)
@@ -101,6 +102,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
 * [RonDB](https://www.rondb.com/): [GitHub comment](https://github.com/logicalclocks/rondb/issues/335#issuecomment-1624188886)
+* [ReDB](https://www.redb.org/): [GitHub comment](https://github.com/cberner/redb/issues/638#issuecomment-1641380707)
 
 ### Logging
 
@@ -111,6 +113,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 ### Other
 
+* [Suricata](https://suricata.io/): [Slides](https://suricon.net/wp-content/uploads/2019/11/SURICON2019_Tools-and-Techniques-to-Simplify-Suricata-Performance-Testing.pdf)
 * [Handbrake](https://handbrake.fr/): [GitHub issue comment](https://github.com/HandBrake/HandBrake/issues/1072#issuecomment-865630524)
 * [CP2K](https://www.cp2k.org/): [Docs](https://www.cp2k.org/howto:pgo)
 * [Bevy](https://bevyengine.org/): PGO-run (first) vs non-PGO (second) - [Pastebin](https://gist.github.com/zamazan4ik/bbffbdf9b10e2a281f5d5373347f48ef). In these results you need to interpret performance decrease as "Release version is slower than PGOed" and performance increase as "Release version is faster than PGOed".
@@ -130,7 +133,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 ## Projects with already integrated PGO into their build scripts
 
 * Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
-* GCC: a [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
+* GCC:
+  - Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
+  - A [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
 * Clang: [Docs](https://llvm.org/docs/HowToBuildWithPGO.html) 
 * Python: 
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
@@ -178,7 +183,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Ada:
   - GNAT: should be possible, same as GCC
 * [D](https://dlang.org/): [LDC docs](https://wiki.dlang.org/LDC_LLVM_profiling_instrumentation)
-* Nim: [Nim forum](https://forum.nim-lang.org/t/6295)
+* [Nim](https://nim-lang.org/): [Nim forum](https://forum.nim-lang.org/t/6295)
 * Ocaml: [almost no](https://github.com/ocaml/ocaml/issues/12200)
 * [Zig](https://ziglang.org/): [no](https://github.com/ziglang/zig/issues/237)
 * [V](https://vlang.io/): [kind of](https://github.com/vlang/v/issues/7024)
@@ -260,9 +265,13 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Memcached: https://github.com/memcached/memcached/issues/1054
 * SPIRV-Tools: https://github.com/KhronosGroup/SPIRV-Tools/issues/5303
 * kphp: https://github.com/VKCOM/kphp/issues/862
-* RocksDB: https://groups.google.com/g/rocksdb/c/j9iMFskUnpA
+* RocksDB:
+  - https://groups.google.com/g/rocksdb/c/j9iMFskUnpA
+  - Created a post on https://www.facebook.com/groups/rocksdb.dev/
 * LevelDB: https://github.com/google/leveldb/issues/1133
-* FoundationDB: https://github.com/apple/foundationdb/issues/1334 or https://forums.foundationdb.org/t/profile-guided-optimization/4043
+* FoundationDB:
+  - https://github.com/apple/foundationdb/issues/1334
+  - https://forums.foundationdb.org/t/profile-guided-optimization/4043
 * LanceDB: https://github.com/lancedb/lancedb/issues/255
 * CeresDB: https://github.com/CeresDB/ceresdb/issues/1051
 * CnosDB: https://github.com/cnosdb/cnosdb/issues/1327
@@ -333,15 +342,11 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * OrioleDB: https://github.com/orioledb/postgres/issues/4
 * ROCm: https://github.com/RadeonOpenCompute/ROCm/issues/2325
 * Embox: https://github.com/embox/embox/issues/2848
-
-## Are proprietary vendors PGO yet?
-
-Here I collect some requests to the proprietary companies about supporting PGO in their tooling and optimizing their tooling with PGO before distribution to the users.
-
-* Nvidia (Nvidia HPC compilers) - sent an email via support
-* AMD (AOCC compilers) - sent an email via support
-* Intel (general question) - sent an email
-* EDG (a C++ compiler) - sent an email via support
+* KDevelop: https://bugs.kde.org/show_bug.cgi?id=472554
+* GreenplumDB: https://github.com/greenplum-db/gpdb/issues/16046
+* Prql: https://github.com/PRQL/prql/issues/3116
+* InfluxDB Iox: https://github.com/influxdata/influxdb_iox/issues/8366
+* LPython: https://github.com/lcompilers/lpython/issues/2217
 
 ## BOLT showcases
 
@@ -363,6 +368,34 @@ Well, it's hard to say, is your binary already LTO/PGO optimized or not. It depe
 ### PGO adoption across projects
 
 PGO usually is **not** enabled by the upstream developers due to lack of support for sample load or lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
+
+### PGO adoption across Linux distros
+
+Even if PGO is supported by a project, it does not mean that your favourite Linux distro builds this project with PGO enbaled. For this there are a lot of reasons: maintainer burden (because we are humans (yet)), build machines burden (in general you need to compile twice), reproducibility issues (like profile is an additional input to the build process and you need to make it reproducible), a maintainer just don't know about PGO, etc.
+
+So here I will try to collect an information about the PGO status across the Linux distros for the projects that supports PGO in the upstream. If you didn't find your distro - don't worry! Just check it somehow (probably in some chats/distros' build systems, etc.) and report it here (e.g. via Issues) - I will add it to the list.
+
+* GCC:
+  - Note: PGO for GCC usually is not enabled for all architectures since it requires too much from the build systems
+  - Debian: yes
+  - Ubuntu: same as Debian
+  - RedHat: Yes. And that is the reason why PGO is enabled for GCC in all RedHat-based distros.
+  - Fedora: [yes](https://src.fedoraproject.org/rpms/gcc/blob/rawhide/f/gcc.spec#_1182)
+  - Rocky Linux: [yes](https://git.rockylinux.org/staging/rpms/gcc-toolset-11-gcc/-/blob/r8/SPECS/gcc.spec#L1130)
+  - Alma Linux: [yes](https://git.almalinux.org/rpms/gcc/src/branch/c8/SPECS/gcc.spec#L1164)
+  - NixOS: [no](https://github.com/NixOS/nixpkgs/pull/112928)
+  - OpenSUSE: [yes](https://build.opensuse.org/package/view_file/openSUSE:Factory/gcc12/gcc12.spec), see line `2414`
+  - AltLinux: TODO: check :D
+* Clang:
+  - Binaries from LLVM are already PGO-optimized (according to the [note](https://apt.llvm.org/) about using "stage2" build - it's PGO-optimized build)
+  - RedHat (CentOS Stream): [no](https://bugzilla.redhat.com/show_bug.cgi?id=2224925)
+  - Fedora: [no](https://bugzilla.redhat.com/show_bug.cgi?id=2156679)
+  - AlmaLinux: [no](https://bugs.almalinux.org/view.php?id=350)
+  - Rocky Linux: [no](https://bugs.rockylinux.org/view.php?id=1618)
+  - NixOS: [no](https://github.com/NixOS/nixpkgs/issues/208188)
+  - Arch Linux: sent an email to the Clang maintainer in Arch Linux - no response yet
+* CPython:
+  - Fedora: [yes](https://src.fedoraproject.org/rpms/python3.11/blob/f38/f/python3.11.spec#_73). Also check [this](https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/2H4ZDRR326XAZ2EPCQKTNRMQYG5YZQ2K/) discussion. I guess other RedHat-based distros builds are the same for this package (however I didn't check it but Rocky Linux is the [same](https://git.rockylinux.org/staging/rpms/python3.11/-/blame/r8/SPECS/python3.11.spec#L70)).
 
 ### Other optimization techniques like BOLT
 
@@ -431,6 +464,7 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 
 * [Awesome Machine learning in compilers](https://github.com/zwang4/awesome-machine-learning-in-compilers)
 * [CompilerGym](https://compilergym.com/): https://github.com/facebookresearch/CompilerGym/ (an interesting project about applying ML on compiler optimization flags)
+* MLGO: A Machine Learning Framework for Compiler Optimization: [Google blog](https://ai.googleblog.com/2022/07/mlgo-machine-learning-framework-for.html)
 
 ## Where PGO did not help (according to my tests)
 
@@ -447,10 +481,12 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * PGO helps with optimizing binary size since we can inline less for actually cold paths of our programs (and it can help with performance as well since our program will be smaller and more friendly for CPU I-cache)
 * Add an issue to LLVM upstream about writing a difference between PGO implementations (Frontend vs IR vs Context-Sensitive), pros and cons of each, which to use by default. Probably add a link to the blog post of a person who described all these stuff.
 * Contact with more proprietary vendors regarding PGO support in their compilers and PGO optimization their compilers itself before distribution to the customers. Possible compilers list: https://en.wikipedia.org/wiki/List_of_compilers
+* Write to Mike Pall (LuaJIT author) about "How to benchmark LuaJIT performance itself - without benchmarking the load"
 * Points of the software supply chain, where PGO can be applied (we can influence any of them with different methods and priorities):
   - Software itself (add PGO to the build scripts)
   - Maintainers (work with different distributions about enabling PGO for the packages)
   - In-house builds (if we build binary somewhere in a closed perimeter)
+* From time to time I hear from different people something like "Algorithms always beat compilers". That's could be true but that's not a question actually because you can (and should) always use compiler optimizations WITH algorithms. Just let compiler (in this case - with PGO) do their job. And free time spend on that humans do best (yet) - write algorithmic optimizations for your favourite software.
 * Add a chapter about PGO tips:
   - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile()` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
   - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
@@ -462,3 +498,6 @@ Here are the *incomplete* community list where you can find PGO-related advice w
   - It's hard to estimate how slow would be your application in the Instrumentation mode without actual testing. It hugely depends on the hot paths of your application, number of branches, etc. It's possible to predict based on some metrics of the application. But much easier just to test it :) Be careful, some application could be too slow in Instrumentation mode (like ClickHouse, Clangd or LLD)
   - When recompile software, would be useful to recompile 3rd parties with PGO as well. Here could be a challenge since often provided by OS packages dependencies are used. And it could be challenging to recompile them as well from the scratch (especially if we are talking about C and C++). Also, not for every software is obvious to understand - which 3rd parties are rebuilt from the scratch and which are taken from another place (like OS-provided or some package manager like Conan).
   - For reproducibility purposes you can just collect profile and commit it to the repo
+* Add notes about system-wide PGO:
+  - Google approach with AutoFDO: run `perf` on a subset of nodes, collect profiles for all running applications and use these profiles on CI
+  - Ad-hoc approach: use AutoFDO approach from Google or "just" rebuild all packages with Instrumentation PGO, run on a real-life workload, then collect the profiles and use them during the optimized build
