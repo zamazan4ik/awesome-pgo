@@ -129,6 +129,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [ClamAV](https://www.clamav.net/): [BLog](https://nikkhokkho.sourceforge.io/static.php?page=ClamAVOpt)
 * Mesa: [Mailing list](https://lists.freedesktop.org/archives/mesa-dev/2020-February/224096.html) about OpenGL benchmark. Worth reading the whole thread though.
 * [hck](https://github.com/sstadick/hck): [README note](https://github.com/sstadick/hck#profile-guided-optimization)
+* [Typst](https://typst.app/): [GitHub issue](https://github.com/typst/typst/issues/1733)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -347,6 +348,19 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Prql: https://github.com/PRQL/prql/issues/3116
 * InfluxDB Iox: https://github.com/influxdata/influxdb_iox/issues/8366
 * LPython: https://github.com/lcompilers/lpython/issues/2217
+* LFortran: https://github.com/lcompilers/lpython/issues/2217
+* Cap'n Proto: https://github.com/capnproto/capnproto/issues/1734
+* BlazingMQ: https://github.com/bloomberg/blazingmq/issues/42
+* Typst: https://github.com/typst/typst/issues/1733
+* Tectonic: https://github.com/tectonic-typesetting/tectonic/issues/1072
+* Miktex: https://github.com/MiKTeX/miktex/issues/1360
+* Qdrant: https://github.com/qdrant/qdrant/issues/2354
+* Meilisearch: https://github.com/meilisearch/meilisearch/issues/3958
+* Nebula: https://github.com/vesoft-inc/nebula/issues/5661
+* Netdata: https://github.com/netdata/netdata/issues/15338#issuecomment-1629460584
+* Wazuh: https://github.com/wazuh/wazuh/issues/18151
+* Zephyr: https://github.com/zephyrproject-rtos/zephyr/issues/60953
+* Brave: https://github.com/brave/brave-browser/issues/20560
 
 ## BOLT showcases
 
@@ -470,11 +484,16 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 
 * [Catboost](https://catboost.ai/) - I think this is due to highly math-oriented nature of this. I did a test on `fit` and `calc` modes (trainig and evaluation, respectively) on `epsilon` dataset. In `calc` mode PGO for some reason made things even worse. Maybe, PGO could help in other modes but I didn't test it (yet).
 
+## Contribute
+
+If you have an example where PGO shines (and where doesn't) - please open an issue and/or PR to the repo. It's important to collect as much as possible showcases about PGO!
+
 ## TODO
 
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add more links to the existing projects how PGO is integrated into them
+* Get more information about PGO states in other browsers like Safari, Brave, Yandex.Browser and others
 * Write more about PGO and library development.
 * Try to use PGO on some modules like Nginx VTS (https://github.com/vozlt/nginx-module-vts)
 * There is another PGO - PostGreSQL Operator from CrunchyDate ([GitHub](https://github.com/CrunchyData/postgres-operator)). It makes a bit harder to find information about Profile-Guided Optimization :)
