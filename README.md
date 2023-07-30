@@ -36,7 +36,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [GCC](https://gcc.gnu.org/): 
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 - be careful.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
-  - According to the experiments from a person in a local Telegra, chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
+  - According to the experiments from a person in a local Telegram chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
 * [PHP](https://www.php.net/):
   - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
