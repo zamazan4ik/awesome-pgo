@@ -32,6 +32,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * loxcraft: https://github.com/ajeetdsouza/loxcraft/issues/18
 * Deno: https://github.com/denoland/rusty_v8/pull/1063
 * Piccolo: https://github.com/triplehex/piccolo/issues/30
+* HHVM: https://github.com/facebook/hhvm/issues/9385
 
 ## Developer tooling
 
@@ -67,6 +68,11 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SVF: https://github.com/SVF-tools/SVF/issues/1152
 * IKOS: https://github.com/NASA-SW-VnV/ikos/issues/211
 * Emscripten: https://github.com/emscripten-core/emscripten/issues/19671
+* Redex: https://github.com/facebook/redex/issues/820
+* Mariana-Trench: https://github.com/facebook/mariana-trench/issues/137
+* FBThrift: https://github.com/facebook/fbthrift/issues/564
+* Hermes: https://github.com/facebook/hermes/issues/1076
+* Yoga: https://github.com/facebook/yoga/issues/1338
 
 ## Operating systems
 
@@ -153,6 +159,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Firebird: https://github.com/FirebirdSQL/firebird/issues/7631
 * Groonga: https://github.com/groonga/groonga/issues/1585
 * Typesense: https://github.com/typesense/typesense/issues/1103
+* SQLite: https://sqlite.org/forum/forumpost/7fd3c9a43a
 
 ## Logging
 
@@ -206,5 +213,4 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Nebula: https://github.com/vesoft-inc/nebula/issues/5661
 * Netdata: https://github.com/netdata/netdata/issues/15338#issuecomment-1629460584
 * Wazuh: https://github.com/wazuh/wazuh/issues/18151
-
-
+* FreeSwitch: https://github.com/signalwire/freeswitch/issues/2186
