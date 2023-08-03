@@ -55,6 +55,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [lld](https://lld.llvm.org/): [GitHub issue](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028)
 * [clang-format](https://clang.llvm.org/docs/ClangFormat.html): [GitHub comment](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1617008106)
 * [Uncrustify](https://uncrustify.sourceforge.net/): [GitHub issue](https://github.com/uncrustify/uncrustify/issues/4045)
+* Android tooling like `dex2oat`: [Medium](https://medium.com/androiddevelopers/pgo-for-native-android-applications-1a48a99e95d0)
 
 ### Operating systems
 
@@ -104,6 +105,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
 * [RonDB](https://www.rondb.com/): [GitHub comment](https://github.com/logicalclocks/rondb/issues/335#issuecomment-1624188886)
 * [ReDB](https://www.redb.org/): [GitHub comment](https://github.com/cberner/redb/issues/638#issuecomment-1641380707)
+* [Nebula](https://www.nebula-graph.io/): [Docs](https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/)
 
 ### Logging
 
@@ -124,7 +126,13 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Drill](https://github.com/fcsonline/drill): [GitHub issue](https://github.com/fcsonline/drill/issues/185)
 * [Goose](https://www.tag1consulting.com/goose-podcasts-blogs-presentations-more): [Article](https://www.tag1consulting.com/blog/golden-goose-egg-compile-time-adventure)
 * Chess engines (Stockfish, Cfish, asmFish): [Reddit post](https://www.reddit.com/r/chess/comments/7uw699/speed_benchmark_stockfish_9_vs_cfish_vs_asmfish/)
-* Multiple smaller benchmarks by Phoronix: [link](https://www.phoronix.com/review/gcc11-pgo-5950x)
+* Multiple smaller benchmarks by Phoronix:
+  - [GCC 8](https://www.phoronix.com/review/gcc-82-pgo)
+  - [GCC 9](https://www.phoronix.com/news/Threadripper-GCC9-Optimized-Run)
+  - [GCC 10](https://www.phoronix.com/news/GCC-10-PGO-3960X-Xmas-Eve)
+  - [More GCC 10](https://www.phoronix.com/news/GCC-10.1-PGO-Optimizations)
+  - [GCC 11](https://www.phoronix.com/review/gcc11-pgo-5950x)
+  - [GCC 12](https://www.phoronix.com/news/GCC-12-PGO-TR-3990X-AMD)
 * Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
 * Bunch of LLVM test suite algorithms benchmarks: [Blog](https://johnnysswlab.com/tune-your-programs-speed-with-profile-guided-optimizations/)
 * [ClamAV](https://www.clamav.net/): [BLog](https://nikkhokkho.sourceforge.io/static.php?page=ClamAVOpt)
@@ -132,6 +140,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [hck](https://github.com/sstadick/hck): [README note](https://github.com/sstadick/hck#profile-guided-optimization)
 * [Typst](https://typst.app/): [GitHub issue](https://github.com/typst/typst/issues/1733)
 * [Cemu](https://cemu.info/): [GitHub comment](https://github.com/cemu-project/Cemu/issues/797#issuecomment-1521169155)
+* Pydantic-core: [GitHub comment](https://github.com/pydantic/pydantic-core/pull/678#issuecomment-1600427788)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -154,6 +163,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Zstd: [Makefile](https://github.com/facebook/zstd/blob/dev/programs/Makefile#L232)
 * [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
 * Windows Terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
+* Pydantic-core: [GitHub PR](https://github.com/pydantic/pydantic-core/pull/741)
 
 ## PGO support in programming languages and compilers
 
@@ -204,6 +214,7 @@ Here I collect all results with applying LLVM BOLT to the projects (with numbers
 
 * YDB: [GitHub comment](https://github.com/ydb-platform/ydb/issues/140)
 * Clang: [Slides](https://llvm.org/devmtg/2022-11/slides/Lightning15-OptimizingClangWithBOLTUsingCMake.pdf)
+* HHVM, Proxygen and others: [Facebook paper](https://scontent-waw1-1.xx.fbcdn.net/v/t39.8562-6/240895848_219658560107211_6043870470092412798_n.pdf?_nc_cat=104&ccb=1-7&_nc_sid=ad8a9d&_nc_ohc=93feyEEEdC0AX8gvlSt&_nc_ht=scontent-waw1-1.xx&oh=00_AfAJh5n1HhZg32R-kRPqnpKJxHUSaFZZ2udLMFcT9MRQPw&oe=64CD8CE0)
 
 ## Are we BOLT yet?
 
@@ -331,7 +342,7 @@ If you have an example where PGO shines (and where doesn't) - please open an iss
 * Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
 * Add more links to the existing projects how PGO is integrated into them
-* Get more information about PGO states in other browsers like Safari, Brave, Yandex.Browser and others
+* Get more information about PGO states in other browsers like Safari, Brave ([GitHub comment](https://github.com/brave/brave-browser/issues/20560#issuecomment-1658782341)), Yandex.Browser and others
 * Write more about PGO and library development.
 * Try to use PGO on some modules like Nginx VTS (https://github.com/vozlt/nginx-module-vts)
 * There is another PGO - PostGreSQL Operator from CrunchyDate ([GitHub](https://github.com/CrunchyData/postgres-operator)). It makes a bit harder to find information about Profile-Guided Optimization :)
@@ -360,3 +371,7 @@ If you have an example where PGO shines (and where doesn't) - please open an iss
   - Ad-hoc approach: use AutoFDO approach from Google or "just" rebuild all packages with Instrumentation PGO, run on a real-life workload, then collect the profiles and use them during the optimized build
 * Check Rustc PGO state in Linux distributions
 * How to quickly check PGO support in the project: search over issues for "PGO", "Profile guided", "FDO". Also works grepping over the project for the same words or for PGO-related compiler flags like `fprofile-generate`/`fprofile-use`, etc.
+* Extract actual numbers directly into the document for avoiding the cases like [this](https://github.com/facebook/mariana-trench/issues/137#issuecomment-1658195725).
+* Describe different PGO applications scenarios: for SaaS, for open-source, for closed-source but delivered to the customers, etc.
+* Check Altinity builds for CLickHouse and suggest PGO for their CH build. Their sources are available here: https://github.com/Altinity/ClickHouse
+* Using built-in benchmarks can be not so good idea: benchmark code coverage issues, built-in benchmarks can be too slow in the instrumentation modes

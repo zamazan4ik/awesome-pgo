@@ -73,6 +73,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * FBThrift: https://github.com/facebook/fbthrift/issues/564
 * Hermes: https://github.com/facebook/hermes/issues/1076
 * Yoga: https://github.com/facebook/yoga/issues/1338
+* Turbopack: https://github.com/vercel/turbo/issues/5667
 
 ## Operating systems
 
@@ -80,6 +81,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Zephyr: https://github.com/zephyrproject-rtos/zephyr/issues/60953
 * SerenityOS: https://github.com/SerenityOS/serenity/issues/19549
 * Embox: https://github.com/embox/embox/issues/2848
+* Vesper: https://github.com/metta-systems/vesper/issues/187
 
 ## Virtual machines and emulators
 
@@ -95,7 +97,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * DragonflyDB: https://github.com/dragonflydb/dragonfly/issues/592
 * YDB: https://github.com/ydb-platform/ydb/issues/140
 * Quickwit: https://github.com/quickwit-oss/quickwit/issues/3548
-* YugabyteDB: https://github.com/yugabyte/yugabyte-db/issues/12763
+* YugabyteDB:
+  - https://github.com/yugabyte/yugabyte-db/issues/12763
+  - https://github.com/yugabyte/yugabyte-db/issues/18497
 * comdb2: https://github.com/bloomberg/comdb2/issues/3597
 * ClickHouse:
   - https://github.com/ClickHouse/ClickHouse/issues/44567
@@ -112,7 +116,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Redis: https://github.com/redis/redis/issues/12371
 * KeyDB: https://github.com/Snapchat/KeyDB/issues/683
 * Memcached: https://github.com/memcached/memcached/issues/1054
-* Databend: https://github.com/datafuselabs/databend/issues/9387
+* Databend:
+  - https://github.com/datafuselabs/databend/issues/9387
+  - https://github.com/datafuselabs/databend/issues/12318
 * RocksDB:
   - https://groups.google.com/g/rocksdb/c/j9iMFskUnpA
   - Created a post on https://www.facebook.com/groups/rocksdb.dev/
@@ -160,6 +166,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Groonga: https://github.com/groonga/groonga/issues/1585
 * Typesense: https://github.com/typesense/typesense/issues/1103
 * SQLite: https://sqlite.org/forum/forumpost/7fd3c9a43a
+* Polars: https://github.com/pola-rs/polars/issues/9702
 
 ## Logging
 
@@ -214,3 +221,4 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Netdata: https://github.com/netdata/netdata/issues/15338#issuecomment-1629460584
 * Wazuh: https://github.com/wazuh/wazuh/issues/18151
 * FreeSwitch: https://github.com/signalwire/freeswitch/issues/2186
+* Dora: https://github.com/dora-rs/dora/issues/331
