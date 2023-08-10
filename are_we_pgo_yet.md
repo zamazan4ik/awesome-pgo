@@ -33,6 +33,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Deno: https://github.com/denoland/rusty_v8/pull/1063
 * Piccolo: https://github.com/triplehex/piccolo/issues/30
 * HHVM: https://github.com/facebook/hhvm/issues/9385
+* Burst: https://forum.unity.com/threads/profile-guided-optimisation-for-burst.931419/
+* KCL: https://github.com/kcl-lang/kcl/issues/647
 
 ## Developer tooling
 
@@ -74,6 +76,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Hermes: https://github.com/facebook/hermes/issues/1076
 * Yoga: https://github.com/facebook/yoga/issues/1338
 * Turbopack: https://github.com/vercel/turbo/issues/5667
+* Unreal Engine: https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240
 
 ## Operating systems
 
@@ -167,6 +170,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Typesense: https://github.com/typesense/typesense/issues/1103
 * SQLite: https://sqlite.org/forum/forumpost/7fd3c9a43a
 * Polars: https://github.com/pola-rs/polars/issues/9702
+* pg_embedding: https://github.com/neondatabase/pg_embedding/issues/29
+* CachewDB: https://github.com/theopfr/cachew-db/issues/1
+* pgvector.rs: https://github.com/tensorchord/pgvecto.rs/issues/43
 
 ## Logging
 
@@ -222,3 +228,4 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Wazuh: https://github.com/wazuh/wazuh/issues/18151
 * FreeSwitch: https://github.com/signalwire/freeswitch/issues/2186
 * Dora: https://github.com/dora-rs/dora/issues/331
+* mozjpeg: https://github.com/mozilla/mozjpeg/issues/169

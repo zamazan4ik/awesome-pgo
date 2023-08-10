@@ -38,6 +38,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegram chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
+* Go (compiler): [Official blog](https://go.dev/doc/go1.21)
 * [PHP](https://www.php.net/):
   - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
   - [Phoronix benchmarks](https://www.phoronix.com/news/Clear-Linux-PHP7-PGO-Opt)
@@ -83,6 +84,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [MariaDB](https://mariadb.org/):
   - [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
   - [ClearLinux benchmarks](https://clearlinux.org/news-blogs/profile-guided-optimization-mariadb-benchmarks)
+  - [Blog](https://kristiannielsen.livejournal.com/17676.html)
 * [MySQL](https://www.mysql.com/): 
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
@@ -116,6 +118,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 ### Other
 
+* Unreal Engine: [Release notes](https://docs.unrealengine.com/4.27/en-US/WhatsNew/Builds/ReleaseNotes/4_27/) (search for "PGO" on the page)
 * [Suricata](https://suricata.io/): [Slides](https://suricon.net/wp-content/uploads/2019/11/SURICON2019_Tools-and-Techniques-to-Simplify-Suricata-Performance-Testing.pdf)
 * [Handbrake](https://handbrake.fr/): [GitHub issue comment](https://github.com/HandBrake/HandBrake/issues/1072#issuecomment-865630524)
 * [CP2K](https://www.cp2k.org/): [Docs](https://www.cp2k.org/howto:pgo)
@@ -141,6 +144,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Typst](https://typst.app/): [GitHub issue](https://github.com/typst/typst/issues/1733)
 * [Cemu](https://cemu.info/): [GitHub comment](https://github.com/cemu-project/Cemu/issues/797#issuecomment-1521169155)
 * Pydantic-core: [GitHub comment](https://github.com/pydantic/pydantic-core/pull/678#issuecomment-1600427788)
+* xz: [OpenMandriva forum](https://forum.openmandriva.org/t/pgo-xz/2543)
+* libspng: [Docs](https://libspng.org/docs/build/#profile-guided-optimization)
+* matchit: [GitHub issue](https://github.com/ibraheemdev/matchit/issues/38)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -327,7 +333,8 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 * [CompilerGym](https://compilergym.com/): https://github.com/facebookresearch/CompilerGym/ (an interesting project about applying ML on compiler optimization flags)
 * MLGO: A Machine Learning Framework for Compiler Optimization: [Google blog](https://ai.googleblog.com/2022/07/mlgo-machine-learning-framework-for.html)
 * Phoronix Test Suite (PTS) integration with PGO: [GitHub](https://github.com/phoronix-test-suite/phoronix-test-suite/blob/master/pts-core/modules/pgo.php)
-* An [article](https://thenewstack.io/how-to-use-bolt-binary-optimization-and-layout-tool/) about BOLT 
+* An [article](https://thenewstack.io/how-to-use-bolt-binary-optimization-and-layout-tool/) about BOLT
+* Nvidia paper about PGO in gamedev: [Publication](https://research.nvidia.com/publication/2021-07_cooperative-profile-guided-optimization)
 
 ## Where PGO did not help (according to my tests)
 
@@ -373,5 +380,9 @@ If you have an example where PGO shines (and where doesn't) - please open an iss
 * How to quickly check PGO support in the project: search over issues for "PGO", "Profile guided", "FDO". Also works grepping over the project for the same words or for PGO-related compiler flags like `fprofile-generate`/`fprofile-use`, etc.
 * Extract actual numbers directly into the document for avoiding the cases like [this](https://github.com/facebook/mariana-trench/issues/137#issuecomment-1658195725).
 * Describe different PGO applications scenarios: for SaaS, for open-source, for closed-source but delivered to the customers, etc.
-* Check Altinity builds for CLickHouse and suggest PGO for their CH build. Their sources are available here: https://github.com/Altinity/ClickHouse
+* Check Altinity builds for ClickHouse and suggest PGO for their CH build. Their sources are available here: https://github.com/Altinity/ClickHouse
 * Using built-in benchmarks can be not so good idea: benchmark code coverage issues, built-in benchmarks can be too slow in the instrumentation modes
+* Ask about GDB + Binutils with PGO performance results: https://sourceware.org/bugzilla/show_bug.cgi?id=26766
+* Think about collecting "general" PGO profiles via crowd sourcing
+* PGO and https://packaging-con.org/
+* What to do with performance regressions after PGO? Rustc question: https://users.rust-lang.org/t/how-to-report-performance-regressions-with-profile-guided-optimization-pgo/98225
