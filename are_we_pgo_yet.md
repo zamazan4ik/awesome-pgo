@@ -33,8 +33,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Deno: https://github.com/denoland/rusty_v8/pull/1063
 * Piccolo: https://github.com/triplehex/piccolo/issues/30
 * HHVM: https://github.com/facebook/hhvm/issues/9385
-* Burst: https://forum.unity.com/threads/profile-guided-optimisation-for-burst.931419/
+* Burst (Unity Engine): https://forum.unity.com/threads/profile-guided-optimisation-for-burst.931419/
 * KCL: https://github.com/kcl-lang/kcl/issues/647
+* Zig: https://github.com/ziglang/zig/issues/16759
 
 ## Developer tooling
 
@@ -77,6 +78,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Yoga: https://github.com/facebook/yoga/issues/1338
 * Turbopack: https://github.com/vercel/turbo/issues/5667
 * Unreal Engine: https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240
+* Bevy: https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867
+* Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
 
 ## Operating systems
 
@@ -173,6 +176,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * pg_embedding: https://github.com/neondatabase/pg_embedding/issues/29
 * CachewDB: https://github.com/theopfr/cachew-db/issues/1
 * pgvector.rs: https://github.com/tensorchord/pgvecto.rs/issues/43
+* SpacetimeDB: https://github.com/clockworklabs/SpacetimeDB/issues/174
 
 ## Logging
 
