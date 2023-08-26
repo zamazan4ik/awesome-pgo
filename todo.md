@@ -43,3 +43,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * What to do with performance regressions after PGO? Rustc question: https://users.rust-lang.org/t/how-to-report-performance-regressions-with-profile-guided-optimization-pgo/98225
 * Check simdjson with PGO: https://github.com/simdjson/simdjson/blob/master/benchmark/CMakeLists.txt
 * Check new Go PGO when Go 1.21 compiler update will arrive in the distrubutions. Some CPU-heavy scenarios like log parsing should be a good candidate to test
+* Write an article about PGO and its caveats
+* Try to optimize LLVM LLC (https://llvm.org/docs/CommandGuide/llc.html)
+* Integrate PGO into godbolt.org for better understandings PGO by other people
+* Rustc and `cargo-pgo` - https://github.com/rust-lang/rust/issues/114995

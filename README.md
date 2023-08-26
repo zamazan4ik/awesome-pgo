@@ -151,6 +151,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * matchit: [GitHub issue](https://github.com/ibraheemdev/matchit/issues/38)
 * QOAudio (Rust version): [GitHub issue](https://github.com/rafaelcaricio/qoaudio/issues/5)
 * JSON libraries (`serde_json`, `rustc_serialize`, `simd-json`): [GitHub issue](https://github.com/serde-rs/json-benchmark/issues/23)
+* `xml-rs`: [GitHub issue](https://github.com/netvl/xml-rs/issues/228)
+* `quick-xml`: [GitHub issue](https://github.com/tafia/quick-xml/issues/632)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -174,6 +176,17 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
 * Windows Terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 * Pydantic-core: [GitHub PR](https://github.com/pydantic/pydantic-core/pull/741)
+
+## Project-specific documentation about PGO
+
+Here we collect projects were PGO is described as an optimization option in the documentation:
+
+* GCC: Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
+* Clang: https://llvm.org/docs/HowToBuildWithPGO.html
+* ClickHouse: https://clickhouse.com/docs/en/operations/optimizing-performance/profile-guided-optimization
+* Databend: https://databend.rs/doc/contributing/pgo
+* Vector: https://vector.dev/docs/administration/tuning/pgo/
+* Nebula: https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/
 
 ## PGO support in programming languages and compilers
 

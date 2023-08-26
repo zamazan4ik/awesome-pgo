@@ -177,6 +177,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * CachewDB: https://github.com/theopfr/cachew-db/issues/1
 * pgvector.rs: https://github.com/tensorchord/pgvecto.rs/issues/43
 * SpacetimeDB: https://github.com/clockworklabs/SpacetimeDB/issues/174
+* libmdbx: https://gitflic.ru/project/erthink/libmdbx/issue/14
+* Risingwave: https://github.com/risingwavelabs/risingwave/issues/11859
 
 ## Logging
 
@@ -233,3 +235,19 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * FreeSwitch: https://github.com/signalwire/freeswitch/issues/2186
 * Dora: https://github.com/dora-rs/dora/issues/331
 * mozjpeg: https://github.com/mozilla/mozjpeg/issues/169
+* Godbolt: https://github.com/compiler-explorer/compiler-explorer/issues/5414
+
+# PGO documentation
+
+Here we track the issues regarding PGO documentation in different projects:
+
+* Fluent-Bit: https://github.com/fluent/fluent-bit/discussions/6638#discussioncomment-6822318
+* YugabyteDB: https://github.com/yugabyte/yugabyte-db/issues/18497
+* Rsyslog: https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1694349501
+
+
+# BOLT documentation
+
+Here we track the issues regarding BOLT documentation in different projects:
+
+* Clang: https://github.com/llvm/llvm-project/issues/65010
