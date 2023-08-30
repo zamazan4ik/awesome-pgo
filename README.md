@@ -140,7 +140,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [GCC 12](https://www.phoronix.com/news/GCC-12-PGO-TR-3990X-AMD)
 * Benchmarks from OpenSUSE: [Docs](https://documentation.suse.com/sbp/all/html/SBP-GCC-10/index.html)
 * Bunch of LLVM test suite algorithms benchmarks: [Blog](https://johnnysswlab.com/tune-your-programs-speed-with-profile-guided-optimizations/)
-* [ClamAV](https://www.clamav.net/): [BLog](https://nikkhokkho.sourceforge.io/static.php?page=ClamAVOpt)
+* [ClamAV](https://www.clamav.net/): [Blog](https://nikkhokkho.sourceforge.io/static.php?page=ClamAVOpt)
 * Mesa: [Mailing list](https://lists.freedesktop.org/archives/mesa-dev/2020-February/224096.html) about OpenGL benchmark. Worth reading the whole thread though.
 * [hck](https://github.com/sstadick/hck): [README note](https://github.com/sstadick/hck#profile-guided-optimization)
 * [Typst](https://typst.app/): [GitHub issue](https://github.com/typst/typst/issues/1733)
@@ -153,6 +153,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * JSON libraries (`serde_json`, `rustc_serialize`, `simd-json`): [GitHub issue](https://github.com/serde-rs/json-benchmark/issues/23)
 * `xml-rs`: [GitHub issue](https://github.com/netvl/xml-rs/issues/228)
 * `quick-xml`: [GitHub issue](https://github.com/tafia/quick-xml/issues/632)
+* `tonic`: [GitHub issue](https://github.com/hyperium/tonic/issues/1486)
+* `tantivy`: [GitHub issue](https://github.com/quickwit-oss/tantivy/issues/2163)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -172,6 +174,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138) and old Centminmod [scripts](https://github.com/centminmod/php_pgo_training_scripts)
 * MySQL: [CMake script](https://github.com/mysql/mysql-server/blob/8.0/cmake/fprofile.cmake)
 * YugabyteDB: [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
+* FoundationDB: [Script](https://github.com/apple/foundationdb/blob/1a6114a66f3de508c0cf0a45f72f3687ba05750c/contrib/generate_profile.sh)
 * Zstd: [Makefile](https://github.com/facebook/zstd/blob/dev/programs/Makefile#L232)
 * [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
 * Windows Terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
@@ -181,12 +184,14 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 Here we collect projects were PGO is described as an optimization option in the documentation:
 
-* GCC: Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
-* Clang: https://llvm.org/docs/HowToBuildWithPGO.html
 * ClickHouse: https://clickhouse.com/docs/en/operations/optimizing-performance/profile-guided-optimization
 * Databend: https://databend.rs/doc/contributing/pgo
 * Vector: https://vector.dev/docs/administration/tuning/pgo/
 * Nebula: https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/
+* GCC: Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
+* Clang:
+  - https://llvm.org/docs/HowToBuildWithPGO.html
+  - https://llvm.org/docs/AdvancedBuilds.html
 
 ## PGO support in programming languages and compilers
 
@@ -325,6 +330,7 @@ Other pitfalls include the following things:
   - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare a "sample" workload
   - For services sometimes PGO reports are not flushed to the disk properly, so you need to do it manually like [here](https://github.com/scylladb/scylladb/pull/10808/files#diff-bf1eacd22947b4daf9f4c2639427b8593d489f093eb1acfbba3e4cc1c9b0288bR427)
   - Reproducubility issues - could be important for some use-cases even more than performance
+  - Bugs. E.g. LLVM issues when PGO is combined with LTO - [GitHub issue](https://github.com/llvm/llvm-project/issues/57501)
 * AutoFDO
   - Huge memory consumption during profile conversion: [GitHub issue](https://github.com/google/autofdo/issues/162)
   - Supports only `perf`, so cannot be used with other profilers from different like Windows/macOS (support for other profilers could be implemented manually)

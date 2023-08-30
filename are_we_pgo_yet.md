@@ -36,6 +36,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Burst (Unity Engine): https://forum.unity.com/threads/profile-guided-optimisation-for-burst.931419/
 * KCL: https://github.com/kcl-lang/kcl/issues/647
 * Zig: https://github.com/ziglang/zig/issues/16759
+* Kuroko: https://github.com/kuroko-lang/kuroko/issues/42
 
 ## Developer tooling
 
@@ -80,6 +81,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Unreal Engine: https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240
 * Bevy: https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867
 * Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
+* oxc: https://github.com/web-infra-dev/oxc/issues/812
+* biome: https://github.com/biomejs/biome/discussions/85
 
 ## Operating systems
 
@@ -88,12 +91,14 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SerenityOS: https://github.com/SerenityOS/serenity/issues/19549
 * Embox: https://github.com/embox/embox/issues/2848
 * Vesper: https://github.com/metta-systems/vesper/issues/187
+* ToaruOS: https://github.com/klange/toaruos/issues/284
 
 ## Virtual machines and emulators
 
 * Firecracker: https://github.com/firecracker-microvm/firecracker/issues/3456
 * Ruffle: https://github.com/ruffle-rs/ruffle/issues/12094
 * Cemu: https://github.com/cemu-project/Cemu/issues/797
+* CrosVM: https://issuetracker.google.com/issues/297890486
 
 ## Databases
 
@@ -179,6 +184,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SpacetimeDB: https://github.com/clockworklabs/SpacetimeDB/issues/174
 * libmdbx: https://gitflic.ru/project/erthink/libmdbx/issue/14
 * Risingwave: https://github.com/risingwavelabs/risingwave/issues/11859
+* Pika: https://github.com/OpenAtomFoundation/pika/issues/1300
 
 ## Logging
 
@@ -221,7 +227,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Godot: https://github.com/godotengine/godot-proposals/issues/2610
 * Rspamd: https://github.com/rspamd/rspamd/issues/4534
 * Arroyo: https://github.com/ArroyoSystems/arroyo/issues/202
-* ClamAV: didn;t find yet a good way to report an idea to the upstream - maybe someone will do it? :)
+* ClamAV: https://github.com/Cisco-Talos/clamav/issues/1016
 * OpenZFS: https://github.com/openzfs/zfs/issues/15069
 * uutils: https://github.com/uutils/coreutils/issues/2730
 * CephFS: https://tracker.ceph.com/issues/62032
@@ -236,6 +242,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Dora: https://github.com/dora-rs/dora/issues/331
 * mozjpeg: https://github.com/mozilla/mozjpeg/issues/169
 * Godbolt: https://github.com/compiler-explorer/compiler-explorer/issues/5414
+* Bloop: https://github.com/BloopAI/bloop/issues/898
 
 # PGO documentation
 
@@ -244,7 +251,13 @@ Here we track the issues regarding PGO documentation in different projects:
 * Fluent-Bit: https://github.com/fluent/fluent-bit/discussions/6638#discussioncomment-6822318
 * YugabyteDB: https://github.com/yugabyte/yugabyte-db/issues/18497
 * Rsyslog: https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1694349501
-
+* Rustc:
+  - https://github.com/rust-lang/rust/issues/115251
+  - https://github.com/rust-lang/rust/issues/114995
+* GreptimeDB: https://github.com/GreptimeTeam/docs/issues/544
+* RonDB: https://github.com/logicalclocks/rondb/issues/335#issuecomment-1695636890
+* ReDB: https://github.com/cberner/redb/issues/638#issuecomment-1695601594
+* Memcached: https://github.com/memcached/memcached/issues/1054#issuecomment-1696426432
 
 # BOLT documentation
 

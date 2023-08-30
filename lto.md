@@ -12,3 +12,6 @@ State across distrubutions:
 * OpenSUSE: [link](https://en.opensuse.org/openSUSE:LTO)
 * NixOS: [Reddit](https://www.reddit.com/r/NixOS/comments/146wdfk/lto_by_default/)
 * Gentoo: TODO
+
+Performance improvments from enabling LTO:
+* Vector: https://github.com/vectordotdev/vector/issues/15631#issuecomment-1694554798
