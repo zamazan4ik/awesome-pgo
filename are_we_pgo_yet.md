@@ -83,6 +83,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
 * oxc: https://github.com/web-infra-dev/oxc/issues/812
 * biome: https://github.com/biomejs/biome/discussions/85
+* CMake: https://gitlab.kitware.com/cmake/cmake/-/issues/19273
 
 ## Operating systems
 
@@ -258,6 +259,7 @@ Here we track the issues regarding PGO documentation in different projects:
 * RonDB: https://github.com/logicalclocks/rondb/issues/335#issuecomment-1695636890
 * ReDB: https://github.com/cberner/redb/issues/638#issuecomment-1695601594
 * Memcached: https://github.com/memcached/memcached/issues/1054#issuecomment-1696426432
+* Qdrant: TODO
 
 # BOLT documentation
 

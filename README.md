@@ -32,9 +32,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
   - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
   - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
-  - BOLT effects on Clang speed: [Slides](https://llvm.org/devmtg/2022-11/slides/Lightning15-OptimizingClangWithBOLTUsingCMake.pdf) or [Android](https://android-review.linaro.org/plugins/gitiles/toolchain/llvm_android/+/f36c64eeddf531b7b1a144c40f61d6c9a78eee7a) experience
 * [GCC](https://gcc.gnu.org/): 
-  - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for Gcc 3.3 - be careful.
+  - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegram chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
@@ -108,6 +107,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [RonDB](https://www.rondb.com/): [GitHub comment](https://github.com/logicalclocks/rondb/issues/335#issuecomment-1624188886)
 * [ReDB](https://www.redb.org/): [GitHub comment](https://github.com/cberner/redb/issues/638#issuecomment-1641380707)
 * [Nebula](https://www.nebula-graph.io/): [Docs](https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/)
+* [Qdrant](https://qdrant.tech/):
+  - [Microbenchmarks](https://github.com/qdrant/qdrant/issues/2354#issuecomment-1701936793)
+  - [Benchmarks](https://github.com/qdrant/qdrant/issues/2354#issuecomment-1702002161)
 
 ### Logging
 
@@ -251,7 +253,11 @@ Check "are_we_pgo_yet.md" file in the repo to check the PGO status in a project.
 Here I collect all results with applying LLVM BOLT to the projects (with numbers).
 
 * YDB: [GitHub comment](https://github.com/ydb-platform/ydb/issues/140)
-* Clang: [Slides](https://llvm.org/devmtg/2022-11/slides/Lightning15-OptimizingClangWithBOLTUsingCMake.pdf)
+* Clang:
+  - [Slides](https://llvm.org/devmtg/2022-11/slides/Lightning15-OptimizingClangWithBOLTUsingCMake.pdf)
+  - [Results on building Clang](https://github.com/ptr1337/llvm-bolt-scripts/blob/master/results.md)
+  - [Linaro results](https://android-review.linaro.org/plugins/gitiles/toolchain/llvm_android/+/f36c64eeddf531b7b1a144c40f61d6c9a78eee7a)
+  - [on AMD 7950X3D](https://github.com/llvm/llvm-project/issues/65010#issuecomment-1701255347)
 * HHVM, Proxygen and others: [Facebook paper](https://scontent-waw1-1.xx.fbcdn.net/v/t39.8562-6/240895848_219658560107211_6043870470092412798_n.pdf?_nc_cat=104&ccb=1-7&_nc_sid=ad8a9d&_nc_ohc=93feyEEEdC0AX8gvlSt&_nc_ht=scontent-waw1-1.xx&oh=00_AfAJh5n1HhZg32R-kRPqnpKJxHUSaFZZ2udLMFcT9MRQPw&oe=64CD8CE0)
 
 ## Are we BOLT yet?
