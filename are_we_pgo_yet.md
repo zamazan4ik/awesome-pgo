@@ -37,6 +37,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * KCL: https://github.com/kcl-lang/kcl/issues/647
 * Zig: https://github.com/ziglang/zig/issues/16759
 * Kuroko: https://github.com/kuroko-lang/kuroko/issues/42
+* Noir: https://github.com/noir-lang/noir/issues/2534
+* Move: https://github.com/move-language/move/issues/1072
 
 ## Developer tooling
 
@@ -84,6 +86,12 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * oxc: https://github.com/web-infra-dev/oxc/issues/812
 * biome: https://github.com/biomejs/biome/discussions/85
 * CMake: https://gitlab.kitware.com/cmake/cmake/-/issues/19273
+* Ruff: https://github.com/astral-sh/ruff/issues/7055
+* Redpen: https://github.com/estebank/redpen/issues/3
+* Kani: https://github.com/model-checking/kani/issues/2751
+* typos: https://github.com/crate-ci/typos/issues/827
+* delta: https://github.com/dandavison/delta/issues/1540
+* Enso: https://github.com/orgs/enso-org/discussions/7795
 
 ## Operating systems
 
@@ -93,6 +101,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Embox: https://github.com/embox/embox/issues/2848
 * Vesper: https://github.com/metta-systems/vesper/issues/187
 * ToaruOS: https://github.com/klange/toaruos/issues/284
+* SnarkOS: https://github.com/AleoHQ/snarkOS/issues/2636
+* Aero: https://github.com/Andy-Python-Programmer/aero/issues/108
 
 ## Virtual machines and emulators
 
@@ -186,6 +196,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * libmdbx: https://gitflic.ru/project/erthink/libmdbx/issue/14
 * Risingwave: https://github.com/risingwavelabs/risingwave/issues/11859
 * Pika: https://github.com/OpenAtomFoundation/pika/issues/1300
+* cr-sqlite: https://github.com/vlcn-io/cr-sqlite/issues/345
 
 ## Logging
 
@@ -244,6 +255,23 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * mozjpeg: https://github.com/mozilla/mozjpeg/issues/169
 * Godbolt: https://github.com/compiler-explorer/compiler-explorer/issues/5414
 * Bloop: https://github.com/BloopAI/bloop/issues/898
+* Lychee: https://github.com/lycheeverse/lychee/issues/1247
+* GraphScope: https://github.com/alibaba/GraphScope/issues/3173
+* [Spin](https://github.com/fermyon/spin): didn't create an issue yet since Rustc does not support PGO via profiling in WASM (https://github.com/rust-lang/rust/issues/81684)
+* Foundry-rs: didn't create a PGO issue since LTO + PGO build is broken: https://github.com/rust-lang/rust/issues/115344#issuecomment-1703825138
+* Sui: https://github.com/MystenLabs/sui/discussions/13603
+* hurl: https://github.com/Orange-OpenSource/hurl/issues/1918
+* fd: https://github.com/sharkdp/fd/discussions/1384
+
+# PGO in Go ecosystem
+
+PGO was added to Go in 1.20 (Preview) and 1.21 (GA). Here we track PGO adoption across the Go ecosystem.
+
+Go proposal about dumping PGO profiles at exit: https://github.com/golang/go/issues/62444
+
+* pushup: https://github.com/adhocteam/pushup/issues/106
+* goProbe: https://github.com/els0r/goProbe/issues/170
+* rymdport: https://github.com/Jacalz/rymdport/issues/109
 
 # PGO documentation
 

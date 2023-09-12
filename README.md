@@ -37,7 +37,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegram chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
 * [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
-* Go (compiler): [Official blog](https://go.dev/doc/go1.21)
+* Go (`go` compiler):
+  - [Official blog](https://go.dev/doc/go1.21)
+  - [Go compiler performance numbers](https://go-review.googlesource.com/c/go/+/495596)
 * [PHP](https://www.php.net/):
   - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
   - [Phoronix benchmarks](https://www.phoronix.com/news/Clear-Linux-PHP7-PGO-Opt)
@@ -56,6 +58,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [clang-format](https://clang.llvm.org/docs/ClangFormat.html): [GitHub comment](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1617008106)
 * [Uncrustify](https://uncrustify.sourceforge.net/): [GitHub issue](https://github.com/uncrustify/uncrustify/issues/4045)
 * Android tooling like `dex2oat`: [Medium](https://medium.com/androiddevelopers/pgo-for-native-android-applications-1a48a99e95d0)
+* [typos](https://github.com/crate-ci/typos): [GitHub issue](https://github.com/crate-ci/typos/issues/827#issue-1888263250)
 
 ### Operating systems
 
@@ -157,6 +160,11 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * `quick-xml`: [GitHub issue](https://github.com/tafia/quick-xml/issues/632)
 * `tonic`: [GitHub issue](https://github.com/hyperium/tonic/issues/1486)
 * `tantivy`: [GitHub issue](https://github.com/quickwit-oss/tantivy/issues/2163)
+* Lychee: [GitHub issue](https://github.com/lycheeverse/lychee/issues/1247)
+* nushell: [GitHub comment](https://github.com/nushell/nushell/issues/6943#issuecomment-1592327662)
+* delta: [GitHub comment](https://github.com/dandavison/delta/issues/1540)
+* hurl: [GitHub comment](https://github.com/Orange-OpenSource/hurl/issues/1918)
+* fd: [GitHub comment](https://github.com/sharkdp/fd/discussions/1384)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -168,6 +176,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Python: 
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
   - Pyston: [README](https://github.com/pyston/pyston#building)
+* Go: [Bash script](https://github.com/golang/go/blob/master/src/cmd/compile/profile.sh)
 * V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * ChakraCore: [Scripts](https://github.com/chakra-core/ChakraCore/tree/master/Build/scripts/pgo)
 * Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
@@ -181,6 +190,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
 * Windows Terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 * Pydantic-core: [GitHub PR](https://github.com/pydantic/pydantic-core/pull/741)
+* file.d: [GitHub PR](https://github.com/ozontech/file.d/pull/469)
 
 ## Project-specific documentation about PGO
 

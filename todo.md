@@ -47,3 +47,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Try to optimize LLVM LLC (https://llvm.org/docs/CommandGuide/llc.html)
 * Add PGO information to Rsyslog: https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1694533339
 * Rustc and LTO+PGO bug: https://github.com/rust-lang/rust/issues/115344
+* Ask in `cargo-pgo` repo about profiling C-like dependencies (e.g. RocksDB deps) in Rust projects: https://github.com/Kobzol/cargo-pgo/issues/38
+* Not everywhere PGO is available (e.g. WASM): https://github.com/rust-lang/rust/issues/81684
+* Committing PGO profiles into the project - transparency problem if you do not describe how this profile is collected
+* Create an issue in Golang repo for dumping PGO profiles at the exit of a program. It's much more convenient to use instead of HTTP handlers
