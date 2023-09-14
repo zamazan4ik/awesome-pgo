@@ -112,7 +112,6 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Nebula](https://www.nebula-graph.io/): [Docs](https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/)
 * [Qdrant](https://qdrant.tech/):
   - [Microbenchmarks](https://github.com/qdrant/qdrant/issues/2354#issuecomment-1701936793)
-  - [Benchmarks](https://github.com/qdrant/qdrant/issues/2354#issuecomment-1702002161)
 
 ### Logging
 
@@ -165,6 +164,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * delta: [GitHub comment](https://github.com/dandavison/delta/issues/1540)
 * hurl: [GitHub comment](https://github.com/Orange-OpenSource/hurl/issues/1918)
 * fd: [GitHub comment](https://github.com/sharkdp/fd/discussions/1384)
+* [MRCC](https://mrcc.hu/): up to 40% performance boost with PGO according to the private benchmarks
+* Rathole: https://github.com/rapiz1/rathole/discussions/287
 
 ## Projects with already integrated PGO into their build scripts
 

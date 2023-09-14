@@ -39,6 +39,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Kuroko: https://github.com/kuroko-lang/kuroko/issues/42
 * Noir: https://github.com/noir-lang/noir/issues/2534
 * Move: https://github.com/move-language/move/issues/1072
+* Ezno: https://github.com/kaleidawave/ezno/issues/58
 
 ## Developer tooling
 
@@ -80,9 +81,6 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Hermes: https://github.com/facebook/hermes/issues/1076
 * Yoga: https://github.com/facebook/yoga/issues/1338
 * Turbopack: https://github.com/vercel/turbo/issues/5667
-* Unreal Engine: https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240
-* Bevy: https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867
-* Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
 * oxc: https://github.com/web-infra-dev/oxc/issues/812
 * biome: https://github.com/biomejs/biome/discussions/85
 * CMake: https://gitlab.kitware.com/cmake/cmake/-/issues/19273
@@ -92,6 +90,19 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * typos: https://github.com/crate-ci/typos/issues/827
 * delta: https://github.com/dandavison/delta/issues/1540
 * Enso: https://github.com/orgs/enso-org/discussions/7795
+* Siege: https://github.com/JoeDog/siege/issues/227
+* Prusti: https://github.com/viperproject/prusti-dev/issues/1454
+* Mirai: https://github.com/facebookexperimental/MIRAI/issues/1237
+* ESBMC: https://github.com/esbmc/esbmc/issues/1343
+* Phasar: https://github.com/secure-software-engineering/phasar/issues/668
+* Vera++: https://bitbucket.org/verateam/vera/issues/140/evaluate-profile-guided-optimization-pgo
+
+## Gamedev
+
+* Unreal Engine: https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240
+* Bevy: https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867
+* Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
+* Bitty: https://github.com/paladin-t/bitty/issues/38
 
 ## Operating systems
 
@@ -110,6 +121,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Ruffle: https://github.com/ruffle-rs/ruffle/issues/12094
 * Cemu: https://github.com/cemu-project/Cemu/issues/797
 * CrosVM: https://issuetracker.google.com/issues/297890486
+* Cloud Hypervisor: https://github.com/cloud-hypervisor/cloud-hypervisor/issues/5768
+* Hocus: https://github.com/hocus-dev/hocus/issues/141
 
 ## Databases
 
@@ -197,6 +210,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Risingwave: https://github.com/risingwavelabs/risingwave/issues/11859
 * Pika: https://github.com/OpenAtomFoundation/pika/issues/1300
 * cr-sqlite: https://github.com/vlcn-io/cr-sqlite/issues/345
+* doris: https://github.com/apache/doris/issues/7657
 
 ## Logging
 
@@ -215,6 +229,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * OpenVino: https://github.com/openvinotoolkit/openvino/issues/18572
 * ApacheTVM: https://discuss.tvm.apache.org/t/profile-guided-optimization-pgo-and-apache-tvm/15332
 * OnnxRuntime: https://github.com/microsoft/onnxruntime/discussions/16726
+* Triton (OpenAI): https://github.com/openai/triton/issues/2288
+* Triton (Nvidia): https://github.com/triton-inference-server/server/issues/6304
 
 ## Message brokers
 
@@ -226,6 +242,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Envoy: https://github.com/envoyproxy/envoy/issues/25500
 * linkerd-proxy: https://github.com/linkerd/linkerd2/issues/10308
 * Haproxy: https://github.com/haproxy/haproxy/issues/2047
+* Rathole: https://github.com/rapiz1/rathole/discussions/287
 
 ## Other
 
@@ -262,6 +279,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Sui: https://github.com/MystenLabs/sui/discussions/13603
 * hurl: https://github.com/Orange-OpenSource/hurl/issues/1918
 * fd: https://github.com/sharkdp/fd/discussions/1384
+* Thalassa: https://github.com/a-croco-stolyarov/thalassa/issues/1
 
 # PGO in Go ecosystem
 
