@@ -165,7 +165,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * hurl: [GitHub comment](https://github.com/Orange-OpenSource/hurl/issues/1918)
 * fd: [GitHub comment](https://github.com/sharkdp/fd/discussions/1384)
 * [MRCC](https://mrcc.hu/): up to 40% performance boost with PGO according to the private benchmarks
-* Rathole: https://github.com/rapiz1/rathole/discussions/287
+* Rathole: [GitHub discussion](https://github.com/rapiz1/rathole/discussions/287)
+* Broot: [GitHub issue](https://github.com/Canop/broot/issues/741)
 
 ## Projects with already integrated PGO into their build scripts
 

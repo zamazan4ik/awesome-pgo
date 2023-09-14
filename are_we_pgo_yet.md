@@ -114,6 +114,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ToaruOS: https://github.com/klange/toaruos/issues/284
 * SnarkOS: https://github.com/AleoHQ/snarkOS/issues/2636
 * Aero: https://github.com/Andy-Python-Programmer/aero/issues/108
+* Bottlerocket: https://github.com/bottlerocket-os/bottlerocket/discussions/3454
 
 ## Virtual machines and emulators
 
@@ -280,6 +281,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * hurl: https://github.com/Orange-OpenSource/hurl/issues/1918
 * fd: https://github.com/sharkdp/fd/discussions/1384
 * Thalassa: https://github.com/a-croco-stolyarov/thalassa/issues/1
+* [dust](https://github.com/bootandy/dust): didn't test since PGO build is broken while enabling LTO on Linux machine
+* broot: https://github.com/Canop/broot/issues/741
 
 # PGO in Go ecosystem
 
