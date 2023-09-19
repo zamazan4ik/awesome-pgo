@@ -212,6 +212,11 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Pika: https://github.com/OpenAtomFoundation/pika/issues/1300
 * cr-sqlite: https://github.com/vlcn-io/cr-sqlite/issues/345
 * doris: https://github.com/apache/doris/issues/7657
+* IndraDB: https://github.com/indradb/indradb/issues/309
+* CozoDB: https://github.com/cozodb/cozo/issues/183
+* Atomic server: https://github.com/atomicdata-dev/atomic-server/issues/662
+* Materialize: https://github.com/MaterializeInc/materialize/discussions/21759
+* TerminusDB: https://github.com/terminusdb/terminusdb-store/issues/143
 
 ## Logging
 
@@ -237,6 +242,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 
 * Redpanda: https://github.com/redpanda-data/redpanda/issues/7945
 * BlazingMQ: https://github.com/bloomberg/blazingmq/issues/42
+* rumqttd: https://github.com/bytebeamio/rumqtt/discussions/717
 
 ## Proxies
 
@@ -283,6 +289,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Thalassa: https://github.com/a-croco-stolyarov/thalassa/issues/1
 * [dust](https://github.com/bootandy/dust): didn't test since PGO build is broken while enabling LTO on Linux machine
 * broot: https://github.com/Canop/broot/issues/741
+* Massa: https://github.com/massalabs/massa/discussions/4407
+* Fuel-core: https://github.com/FuelLabs/fuel-core/issues/1369
 
 # PGO in Go ecosystem
 

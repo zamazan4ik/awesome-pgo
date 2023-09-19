@@ -66,6 +66,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
   - [Microsoft presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
   - [ASOS (Application Specific Operating System)](http://scis.scichina.com/en/2018/092102.pdf)
+  - [TCP Stream perf](https://lpc.events/event/7/contributions/798/attachments/661/1214/LTO_PGO_and_AutoFDO_-_Plumbers_2020_-_Tolvanen_Wendling_Desaulniers.pdf)
   - [Phoronix post](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next)
   - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
   - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
@@ -167,6 +168,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [MRCC](https://mrcc.hu/): up to 40% performance boost with PGO according to the private benchmarks
 * Rathole: [GitHub discussion](https://github.com/rapiz1/rathole/discussions/287)
 * Broot: [GitHub issue](https://github.com/Canop/broot/issues/741)
+* Geant4 (a CERN project): [Slides](https://indico.cern.ch/event/394788/contributions/2357347/attachments/1368686/2074705/slides.pdf)
+* Envoy: [GitHub comment](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679)
 
 ## Projects with already integrated PGO into their build scripts
 

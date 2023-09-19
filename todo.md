@@ -51,3 +51,4 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Not everywhere PGO is available (e.g. WASM): https://github.com/rust-lang/rust/issues/81684
 * Committing PGO profiles into a project - transparency problem if you do not describe how this profile is collected
 * "Awesome-X" repositories are good places to start PGOify some domains
+* Envoy build fails with FDO: https://pastebin.com/8HtsEC26

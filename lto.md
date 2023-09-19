@@ -15,3 +15,4 @@ State across distrubutions:
 
 Performance improvments from enabling LTO:
 * Vector: https://github.com/vectordotdev/vector/issues/15631#issuecomment-1694554798
+* Ladybird: https://twitter.com/awesomekling/status/1702247511698587678
