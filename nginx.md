@@ -44,3 +44,5 @@ More detailed reports from Nighthawk are available here:
 * Instrumented (just for the reference): https://pastebin.com/23PPdM4z
 
 According to the tests, PGO helps with optimizing Nginx's performance from the throughput perspective at least in the tested scenario. However, from the latency perspective the results are worse with PGO compared to the Release build - it should be investigated further.
+
+I think more robust benchmarks are required here to perform since these benchmarks on one local machine can be quite noisy.
