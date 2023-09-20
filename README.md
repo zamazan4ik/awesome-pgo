@@ -121,6 +121,13 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Rsyslog](https://www.rsyslog.com/): [GitHub comment](https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1631807664)
 * Some logs parsing routines: [Blog](https://andre.arko.net/2022/03/13/parsing-logs-faster-with-rust-revisited/)
 
+## Proxy
+
+* Envoy: [GitHub comment](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679)
+* HAProxy: [GitHub comment](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165)
+* Nginx: see "nginx.md file"
+* Rathole: [GitHub discussion](https://github.com/rapiz1/rathole/discussions/287)
+
 ### Other
 
 * Unreal Engine:
@@ -166,10 +173,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * hurl: [GitHub comment](https://github.com/Orange-OpenSource/hurl/issues/1918)
 * fd: [GitHub comment](https://github.com/sharkdp/fd/discussions/1384)
 * [MRCC](https://mrcc.hu/): up to 40% performance boost with PGO according to the private benchmarks
-* Rathole: [GitHub discussion](https://github.com/rapiz1/rathole/discussions/287)
 * Broot: [GitHub issue](https://github.com/Canop/broot/issues/741)
 * Geant4 (a CERN project): [Slides](https://indico.cern.ch/event/394788/contributions/2357347/attachments/1368686/2074705/slides.pdf)
-* Envoy: [GitHub comment](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679)
 
 ## Projects with already integrated PGO into their build scripts
 

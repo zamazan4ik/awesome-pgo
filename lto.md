@@ -2,7 +2,7 @@
 
 LTO is not widely used in the distributions. However, more and more OS enables LTo by default for their packages. Is it enabled by default on your distribution - ask your maintainers.
 
-Is LTO enabled in other binaries - ask their authors. Do not forget that enabling LTO could uncover some bugs: [GentooLTO](https://github.com/InBetweenNames/gentooLTO/issues).
+Is LTO enabled in other binaries - ask their authors. Do not forget that enabling LTO could uncover some bugs: [GentooLTO](https://github.com/InBetweenNames/gentooLTO/issues) or [this](https://github.com/yugabyte/llvm-project/commit/64d871949eb23145af7b97cb13feaeeeee7ab39a).
 
 State across distrubutions:
 
