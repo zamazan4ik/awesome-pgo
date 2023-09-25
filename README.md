@@ -203,6 +203,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Windows Terminal: [GitHub PR](https://github.com/microsoft/terminal/pull/10071)
 * Pydantic-core: [GitHub PR](https://github.com/pydantic/pydantic-core/pull/741)
 * file.d: [GitHub PR](https://github.com/ozontech/file.d/pull/469)
+* OceanBase: [CMake flag](https://github.com/oceanbase/oceanbase/blob/master/cmake/Env.cmake#L55)
 
 ## Project-specific documentation about PGO
 
