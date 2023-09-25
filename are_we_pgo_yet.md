@@ -40,6 +40,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Noir: https://github.com/noir-lang/noir/issues/2534
 * Move: https://github.com/move-language/move/issues/1072
 * Ezno: https://github.com/kaleidawave/ezno/issues/58
+* Natalie: https://github.com/natalie-lang/natalie/issues/1251
+* Qsharp: https://github.com/microsoft/qsharp/issues/752
 
 ## Developer tooling
 
@@ -103,6 +105,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Bevy: https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867
 * Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
 * Bitty: https://github.com/paladin-t/bitty/issues/38
+* Hazel: https://github.com/TheCherno/Hazel/issues/645
 
 ## Operating systems
 
@@ -217,6 +220,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Atomic server: https://github.com/atomicdata-dev/atomic-server/issues/662
 * Materialize: https://github.com/MaterializeInc/materialize/discussions/21759
 * TerminusDB: https://github.com/terminusdb/terminusdb-store/issues/143
+* OceanBase: https://github.com/oceanbase/oceanbase/issues/1580
+* Age: https://github.com/apache/age/discussions/1249
 
 ## Logging
 
@@ -250,6 +255,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * linkerd-proxy: https://github.com/linkerd/linkerd2/issues/10308
 * Haproxy: https://github.com/haproxy/haproxy/issues/2047
 * Rathole: https://github.com/rapiz1/rathole/discussions/287
+* TinyWebServer: https://github.com/qinguoyi/TinyWebServer/issues/247
 
 ## Other
 
@@ -291,6 +297,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * broot: https://github.com/Canop/broot/issues/741
 * Massa: https://github.com/massalabs/massa/discussions/4407
 * Fuel-core: https://github.com/FuelLabs/fuel-core/issues/1369
+* PuzzleFS: https://github.com/project-machine/puzzlefs/issues/113
+* Proton: https://github.com/timeplus-io/proton/issues/122
+* NFSserve: https://github.com/xetdata/nfsserve/issues/4
 
 # PGO in Go ecosystem
 

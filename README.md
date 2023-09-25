@@ -125,8 +125,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 * Envoy: [GitHub comment](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679)
 * HAProxy: [GitHub comment](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165)
-* Nginx: see "nginx.md file"
+* Nginx: see "nginx.md" file in the repo
 * Rathole: [GitHub discussion](https://github.com/rapiz1/rathole/discussions/287)
+* httpd: see "httpd.md" file in the repo
 
 ### Other
 
@@ -175,6 +176,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [MRCC](https://mrcc.hu/): up to 40% performance boost with PGO according to the private benchmarks
 * Broot: [GitHub issue](https://github.com/Canop/broot/issues/741)
 * Geant4 (a CERN project): [Slides](https://indico.cern.ch/event/394788/contributions/2357347/attachments/1368686/2074705/slides.pdf)
+* Youki: [GitHub comment](https://github.com/containers/youki/issues/10#issuecomment-1732693511)
 
 ## Projects with already integrated PGO into their build scripts
 
