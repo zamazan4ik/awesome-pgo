@@ -42,6 +42,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Ezno: https://github.com/kaleidawave/ezno/issues/58
 * Natalie: https://github.com/natalie-lang/natalie/issues/1251
 * Qsharp: https://github.com/microsoft/qsharp/issues/752
+* Uiua: https://github.com/uiua-lang/uiua/issues/48
+* Xeus-clang-repl: https://github.com/compiler-research/xeus-clang-repl/issues/71
 
 ## Developer tooling
 
@@ -200,7 +202,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * GreenplumDB: https://github.com/greenplum-db/gpdb/issues/16046
 * Speedb: https://github.com/speedb-io/speedb/issues/602
 * OrioleDB: https://github.com/orioledb/postgres/issues/4
-* InfluxDB Iox: https://github.com/influxdata/influxdb_iox/issues/8366
+* InfluxDB: https://github.com/influxdata/influxdb/issues/24398
 * Firebird: https://github.com/FirebirdSQL/firebird/issues/7631
 * Groonga: https://github.com/groonga/groonga/issues/1585
 * Typesense: https://github.com/typesense/typesense/issues/1103
@@ -222,6 +224,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * TerminusDB: https://github.com/terminusdb/terminusdb-store/issues/143
 * OceanBase: https://github.com/oceanbase/oceanbase/issues/1580
 * Age: https://github.com/apache/age/discussions/1249
+* rUniversalDB: https://github.com/pasindumuth/rUniversalDB/issues/1
 
 ## Logging
 
@@ -248,6 +251,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Redpanda: https://github.com/redpanda-data/redpanda/issues/7945
 * BlazingMQ: https://github.com/bloomberg/blazingmq/issues/42
 * rumqttd: https://github.com/bytebeamio/rumqtt/discussions/717
+* Akasa: https://github.com/akasamq/akasa/issues/3
 
 ## Proxies
 
@@ -300,6 +304,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * PuzzleFS: https://github.com/project-machine/puzzlefs/issues/113
 * Proton: https://github.com/timeplus-io/proton/issues/122
 * NFSserve: https://github.com/xetdata/nfsserve/issues/4
+* Youki: https://github.com/containers/youki/issues/2386
+* Hyperswitch: https://github.com/juspay/hyperswitch/issues/2399
+* ClickHouse tooling: https://github.com/ClickHouse/ClickHouse/discussions/55198
 
 # PGO in Go ecosystem
 

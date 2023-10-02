@@ -113,6 +113,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Nebula](https://www.nebula-graph.io/): [Docs](https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/)
 * [Qdrant](https://qdrant.tech/):
   - [Microbenchmarks](https://github.com/qdrant/qdrant/issues/2354#issuecomment-1701936793)
+* [OceanBase](https://en.oceanbase.com/): [GitHub comment](https://github.com/oceanbase/oceanbase/issues/1580#issuecomment-1732874282)
 
 ### Logging
 
@@ -176,7 +177,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [MRCC](https://mrcc.hu/): up to 40% performance boost with PGO according to the private benchmarks
 * Broot: [GitHub issue](https://github.com/Canop/broot/issues/741)
 * Geant4 (a CERN project): [Slides](https://indico.cern.ch/event/394788/contributions/2357347/attachments/1368686/2074705/slides.pdf)
-* Youki: [GitHub comment](https://github.com/containers/youki/issues/10#issuecomment-1732693511)
+* Youki: [GitHub issue](https://github.com/containers/youki/issues/2386)
 
 ## Projects with already integrated PGO into their build scripts
 
