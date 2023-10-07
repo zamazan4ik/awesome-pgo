@@ -314,6 +314,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ClickHouse tooling: https://github.com/ClickHouse/ClickHouse/discussions/55198
 * Eza: https://github.com/eza-community/eza/issues/479
 * sd: https://github.com/chmln/sd/issues/237
+* bat: https://github.com/sharkdp/bat/issues/2701
 
 # PGO in Go ecosystem
 

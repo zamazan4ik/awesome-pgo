@@ -183,6 +183,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Youki: [GitHub issue](https://github.com/containers/youki/issues/2386)
 * sd: [GitHub issue](https://github.com/chmln/sd/issues/237)
 * frawk: [GitHub comment](https://github.com/ezrosent/frawk/issues/103#issuecomment-1751781163)
+* bat: [GitHub issue](https://github.com/sharkdp/bat/issues/2701)
 
 ## Projects with already integrated PGO into their build scripts
 
