@@ -125,7 +125,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 ## Proxy
 
 * Envoy: [GitHub comment](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679)
-* HAProxy: [GitHub comment](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165)
+* HAProxy:
+ - [Clang results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165)
+ - [GCC results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729606775)
+ - [More Clang and GCC results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729971279)
 * Nginx: see "nginx.md" file in the repo
 * Rathole: [GitHub discussion](https://github.com/rapiz1/rathole/discussions/287)
 * httpd: see "httpd.md" file in the repo
@@ -178,6 +181,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Broot: [GitHub issue](https://github.com/Canop/broot/issues/741)
 * Geant4 (a CERN project): [Slides](https://indico.cern.ch/event/394788/contributions/2357347/attachments/1368686/2074705/slides.pdf)
 * Youki: [GitHub issue](https://github.com/containers/youki/issues/2386)
+* sd: [GitHub issue](https://github.com/chmln/sd/issues/237)
+* frawk: [GitHub comment](https://github.com/ezrosent/frawk/issues/103#issuecomment-1751781163)
 
 ## Projects with already integrated PGO into their build scripts
 

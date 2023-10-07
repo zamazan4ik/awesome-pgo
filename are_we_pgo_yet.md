@@ -44,6 +44,10 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Qsharp: https://github.com/microsoft/qsharp/issues/752
 * Uiua: https://github.com/uiua-lang/uiua/issues/48
 * Xeus-clang-repl: https://github.com/compiler-research/xeus-clang-repl/issues/71
+* Ferrocene: https://github.com/ferrocene/ferrocene/issues/22
+* Rimu: https://github.com/ahdinosaur/rimu/issues/75
+* Berry: https://github.com/berry-lang/berry/issues/367
+* frawk: https://github.com/ezrosent/frawk/issues/103
 
 ## Developer tooling
 
@@ -100,6 +104,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ESBMC: https://github.com/esbmc/esbmc/issues/1343
 * Phasar: https://github.com/secure-software-engineering/phasar/issues/668
 * Vera++: https://bitbucket.org/verateam/vera/issues/140/evaluate-profile-guided-optimization-pgo
+* Creusot: https://github.com/xldenis/creusot/issues/884
 
 ## Gamedev
 
@@ -307,6 +312,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Youki: https://github.com/containers/youki/issues/2386
 * Hyperswitch: https://github.com/juspay/hyperswitch/issues/2399
 * ClickHouse tooling: https://github.com/ClickHouse/ClickHouse/discussions/55198
+* Eza: https://github.com/eza-community/eza/issues/479
+* sd: https://github.com/chmln/sd/issues/237
 
 # PGO in Go ecosystem
 
