@@ -52,3 +52,4 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Committing PGO profiles into a project - transparency problem if you do not describe how this profile is collected
 * "Awesome-X" repositories are good places to start PGOify some domains
 * Envoy build fails with FDO: https://pastebin.com/8HtsEC26
+* Probably a good list to optimize command-line tooling: https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a

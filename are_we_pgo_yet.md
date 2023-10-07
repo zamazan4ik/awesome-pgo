@@ -315,6 +315,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Eza: https://github.com/eza-community/eza/issues/479
 * sd: https://github.com/chmln/sd/issues/237
 * bat: https://github.com/sharkdp/bat/issues/2701
+* jql: https://github.com/yamafaktory/jql/issues/236
+* htmlq: https://github.com/mgdm/htmlq/issues/70
 
 # PGO in Go ecosystem
 

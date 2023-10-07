@@ -184,6 +184,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * sd: [GitHub issue](https://github.com/chmln/sd/issues/237)
 * frawk: [GitHub comment](https://github.com/ezrosent/frawk/issues/103#issuecomment-1751781163)
 * bat: [GitHub issue](https://github.com/sharkdp/bat/issues/2701)
+* jql: [GitHub issue](https://github.com/yamafaktory/jql/issues/236)
+* htmlq: [GitHub issue](https://github.com/mgdm/htmlq/issues/70)
 
 ## Projects with already integrated PGO into their build scripts
 
