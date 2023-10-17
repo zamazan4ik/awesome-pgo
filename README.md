@@ -200,6 +200,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
   - Pyston: [README](https://github.com/pyston/pyston#building)
 * Go: [Bash script](https://github.com/golang/go/blob/master/src/cmd/compile/profile.sh)
+* Swift: [CMake script](https://github.com/apple/swift/blob/main/CMakeLists.txt#L364)
 * V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * ChakraCore: [Scripts](https://github.com/chakra-core/ChakraCore/tree/master/Build/scripts/pgo)
 * Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
@@ -257,6 +258,7 @@ Here we collect projects were PGO is described as an optimization option in the 
   - [Go compiler](https://go.dev/doc/pgo) in Preview since Go 1.20, GA in [1.21](https://go.dev/blog/go1.21rc)
   - [GoLLVM](https://go.googlesource.com/gollvm) - [not yet](https://go.googlesource.com/gollvm/#thinltofdo)
   - GCCGO - unknown, but it should be possible to try
+* Swift: [Supports](https://github.com/apple/swift/blob/main/include/swift/Option/Options.td#L1322)
 * Ada:
   - GNAT: should be possible, same as GCC
 * [D](https://dlang.org/): [LDC docs](https://wiki.dlang.org/LDC_LLVM_profiling_instrumentation)

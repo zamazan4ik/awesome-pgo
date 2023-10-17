@@ -34,7 +34,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - Ad-hoc approach: use AutoFDO approach from Google or "just" rebuild all packages with Instrumentation PGO, run on a real-life workload, then collect the profiles and use them during the optimized build
 * Check PGO state in Linux distributions for different packages:
   - Browsers (Firefox, Chromium, etc.)
-  - Compilers (GCC, Clang, Rustc)
+  - Compilers (GCC, Clang, Rustc, Swift)
   - Other software (like `zstd` command-line tools)
 * How to quickly check PGO support in the project: search over issues for "PGO", "Profile guided", "FDO". Also works grepping over the project for the same words or for PGO-related compiler flags like `fprofile-generate`/`fprofile-use`, etc.
 * Extract actual numbers directly into the document for avoiding the cases like [this](https://github.com/facebook/mariana-trench/issues/137#issuecomment-1658195725).

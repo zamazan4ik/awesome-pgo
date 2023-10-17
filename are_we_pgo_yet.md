@@ -51,6 +51,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Chapel: https://github.com/chapel-lang/chapel/issues/23608
 * Nature: https://github.com/nature-lang/nature/issues/34
 * DPC++: https://github.com/intel/llvm/issues/11555
+* Swift: https://github.com/apple/swift/issues/69227
 
 ## Developer tooling
 
