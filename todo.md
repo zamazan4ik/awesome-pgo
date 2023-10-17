@@ -32,7 +32,10 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Add notes about system-wide PGO:
   - Google approach with AutoFDO: run `perf` on a subset of nodes, collect profiles for all running applications and use these profiles on CI
   - Ad-hoc approach: use AutoFDO approach from Google or "just" rebuild all packages with Instrumentation PGO, run on a real-life workload, then collect the profiles and use them during the optimized build
-* Check Rustc PGO state in Linux distributions
+* Check PGO state in Linux distributions for different packages:
+  - Browsers (Firefox, Chromium, etc.)
+  - Compilers (GCC, Clang, Rustc)
+  - Other software (like `zstd` command-line tools)
 * How to quickly check PGO support in the project: search over issues for "PGO", "Profile guided", "FDO". Also works grepping over the project for the same words or for PGO-related compiler flags like `fprofile-generate`/`fprofile-use`, etc.
 * Extract actual numbers directly into the document for avoiding the cases like [this](https://github.com/facebook/mariana-trench/issues/137#issuecomment-1658195725).
 * Describe different PGO applications scenarios: for SaaS, for open-source, for closed-source but delivered to the customers, etc.
@@ -53,3 +56,4 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * "Awesome-X" repositories are good places to start PGOify some domains
 * Envoy build fails with FDO: https://pastebin.com/8HtsEC26
 * Probably a good list to optimize command-line tooling: https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a
+* Write to Expensify about optimizing SQLite performance further with PGO: https://use.expensify.com/blog/scaling-sqlite-to-4m-qps-on-a-single-server

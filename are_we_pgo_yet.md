@@ -48,6 +48,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Rimu: https://github.com/ahdinosaur/rimu/issues/75
 * Berry: https://github.com/berry-lang/berry/issues/367
 * frawk: https://github.com/ezrosent/frawk/issues/103
+* Chapel: https://github.com/chapel-lang/chapel/issues/23608
+* Nature: https://github.com/nature-lang/nature/issues/34
+* DPC++: https://github.com/intel/llvm/issues/11555
 
 ## Developer tooling
 
@@ -113,6 +116,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
 * Bitty: https://github.com/paladin-t/bitty/issues/38
 * Hazel: https://github.com/TheCherno/Hazel/issues/645
+* Ogre3D: https://github.com/o3de/o3de/discussions/16883
 
 ## Operating systems
 
@@ -125,6 +129,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SnarkOS: https://github.com/AleoHQ/snarkOS/issues/2636
 * Aero: https://github.com/Andy-Python-Programmer/aero/issues/108
 * Bottlerocket: https://github.com/bottlerocket-os/bottlerocket/discussions/3454
+* lk: https://github.com/littlekernel/lk/issues/387
 
 ## Virtual machines and emulators
 
@@ -230,6 +235,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * OceanBase: https://github.com/oceanbase/oceanbase/issues/1580
 * Age: https://github.com/apache/age/discussions/1249
 * rUniversalDB: https://github.com/pasindumuth/rUniversalDB/issues/1
+* ParadeDB: https://github.com/paradedb/paradedb/issues/359
 
 ## Logging
 
@@ -317,6 +323,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * bat: https://github.com/sharkdp/bat/issues/2701
 * jql: https://github.com/yamafaktory/jql/issues/236
 * htmlq: https://github.com/mgdm/htmlq/issues/70
+* ouch: https://github.com/ouch-org/ouch/issues/537
+* czkawka: https://github.com/qarmin/czkawka/issues/1099
 
 # PGO in Go ecosystem
 

@@ -186,6 +186,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * bat: [GitHub issue](https://github.com/sharkdp/bat/issues/2701)
 * jql: [GitHub issue](https://github.com/yamafaktory/jql/issues/236)
 * htmlq: [GitHub issue](https://github.com/mgdm/htmlq/issues/70)
+* ouch: [GitHub issue](https://github.com/ouch-org/ouch/issues/537)
+* czkawka: [GitHub issue](https://github.com/qarmin/czkawka/issues/1099)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -284,6 +286,10 @@ Check "are_we_pgo_yet.md" file in the repo to check the PGO status in a project.
 
 Here I collect all results with applying LLVM BOLT to the projects (with numbers).
 
+* Rustc:
+  - [Rustc itself (GitHub PR)](https://github.com/rust-lang/rust/pull/116352)
+  - [LLVM in Rustc (Reddit)](https://www.reddit.com/r/rust/comments/y4w2kr/llvm_used_by_rustc_is_now_optimized_with_bolt_on/)
+* CPython: [GitHub PR](https://github.com/python/cpython/pull/95908)
 * YDB: [GitHub comment](https://github.com/ydb-platform/ydb/issues/140)
 * Clang:
   - [Slides](https://llvm.org/devmtg/2022-11/slides/Lightning15-OptimizingClangWithBOLTUsingCMake.pdf)
@@ -296,7 +302,7 @@ Here I collect all results with applying LLVM BOLT to the projects (with numbers
 
 Just a list of BOLT-related issues in different projects. So you can estimate the BOLT state in your favourite open-source product.
 
-* Clang in Gentoo: https://bugs.gentoo.org/907931
+* Clang in Gentoo: [Gentoo bugtracker](https://bugs.gentoo.org/907931)
 
 ## LTO, PGO, BOLT, etc and provided by someone binaries
 
