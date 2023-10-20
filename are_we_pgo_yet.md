@@ -52,6 +52,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Nature: https://github.com/nature-lang/nature/issues/34
 * DPC++: https://github.com/intel/llvm/issues/11555
 * Swift: https://github.com/apple/swift/issues/69227
+* AdaptiveCpp: https://github.com/AdaptiveCpp/AdaptiveCpp/issues/1198
 
 ## Developer tooling
 
@@ -272,6 +273,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Haproxy: https://github.com/haproxy/haproxy/issues/2047
 * Rathole: https://github.com/rapiz1/rathole/discussions/287
 * TinyWebServer: https://github.com/qinguoyi/TinyWebServer/issues/247
+* Quilkin: https://github.com/googleforgames/quilkin/issues/834
+* g3: https://github.com/bytedance/g3/issues/126
+* Angie: https://github.com/webserver-llc/angie/issues/51
 
 ## Other
 
@@ -326,6 +330,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * htmlq: https://github.com/mgdm/htmlq/issues/70
 * ouch: https://github.com/ouch-org/ouch/issues/537
 * czkawka: https://github.com/qarmin/czkawka/issues/1099
+* blaze: https://github.com/blaze-init/blaze/issues/275
 
 # PGO in Go ecosystem
 

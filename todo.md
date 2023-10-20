@@ -57,3 +57,4 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Envoy build fails with FDO: https://pastebin.com/8HtsEC26
 * Probably a good list to optimize command-line tooling: https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a
 * Write to Expensify about optimizing SQLite performance further with PGO: https://use.expensify.com/blog/scaling-sqlite-to-4m-qps-on-a-single-server
+* Sent an email to NauEngine about PGO

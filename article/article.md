@@ -14,11 +14,11 @@ Do not expect "hardcore" here. I am a usual software engineer, (un)fortunately n
 
 ## Disclaimer about the author
 
-Most of my experience is with "native" technologies like C++ (it was my main lang for many years), C, Rust. Right now I don't even writing a code for almost 2 years. They call me an architect, I prefer "Confluence engineer".
+Most of my experience is with "native" technologies like C++ (it was my main lang for many years), C, and Rust. Right now I don't even writing a code for almost 2 years. They call me an architect but I prefer a "Confluence engineer".
 
-So when we will talk about C/C++/Rust-related things, you can expect some more advanced information. I try my best with covering other technologies with PGO like Go, Java but do not expect much. However, at the end I put a bunch of helpful links for all technilogies.
+So when we will talk about C/C++/Rust related things, you can expect some more advanced information. I try my best with covering other technologies with PGO like Go, C#, Java, etc. but do not expect much. However, at the end I put a bunch of helpful links for all technilogies.
 
-Also, I am not a compiler engineer, so I cannot tell you much about internal implementation details. But I know people who knows about it a lot! I will try to reference all these awesome engineers too so (hopefully) you will not be alone if you want to dig into the compiler internal details.
+Also, I am not a compiler engineer, so I cannot tell you much about internal implementation details. But I know people who knows about it a lot! I will try to reference all these awesome engineers too, and (hopefully) you will not be alone if you want to dig into the compiler internal details. Also, I left some anchors to PGO-related parts of different compilers for the most interested people!
 
 ## Attention anchor
 
@@ -46,7 +46,7 @@ TODO: add the most famous applications and PGO results for it
 | HAProxy | up to +5% RPS | [GitHub issue](https://github.com/haproxy/haproxy/issues/2047) |
 | Vector | up to +15% EPS | [GitHub issue](https://github.com/vectordotdev/vector/issues/15631) |
 
-Of course it's not a complete list - more PGO showcases you can check right now [here](https://github.com/zamazan4ik/awesome-pgo#pgo-showcases). If you are interested - let's go to our PGO journey!
+Of course it's not a complete list - much more PGO showcases you can check right now [here](https://github.com/zamazan4ik/awesome-pgo#pgo-showcases). If you are interested - let's go to our PGO journey!
 
 ## Intro
 
@@ -70,7 +70,7 @@ During the investigation, I found multiple very interesting compiler techniques 
 
 ## What is PGO?
 
-Let's ask about it from the truly expert in everything - Gigglesome Punster Texterator aka GPT.
+Let's chat about PGO with the truly expert in everything - Gigglesome Punster Texterator aka GPT.
 
 **Me**: What is PGO?
 
@@ -122,7 +122,75 @@ Quickly I found another issue: there are multiple meanings for PGO:
 
 Not critical at all but keep in mind this information during your googling sessions.
 
+### PGO types
+
+In general, PGO has two types:
+
+* Instrumentation-based
+* Sampling-based
+
+Let's take a look on each.
+
+#### PGO via instrumentation
+
+Right now, instrumentation mode is the de-facto default PGO mode in many cases. So if you here somewhere something about PGO, in 99% it is instrumentation PGO. But how does it work?
+
+Usually, the scenario is the following:
+
+* Compile your application in instrumentation mode
+* Run the in
+
+#### PGO via Sampling
+
+TODO: add info about Sampling PGO
+
+---
+
+## PGO caveats
+
+I have read **many** articles about PGO. Unfortunately, I found almost nothing about PGO issues and difficulties in different situations. So I just collected as much as possible traps myself and want to share my experience (not traps) with you. Niels Bohr once said: “An expert is a person who has made all the mistakes that can be made in a very narrow field.”. Am I a PGO expert now, huh?
+
+TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
+
+### Instrumentation PGO problems
+
+* Instrumentation PGO: problems
+  - The instrumented binary is slower. How much - usually is unpredictable
+  - Double compilation - it hurts a lot smaller platforms like PowerPC in different CI pipelines
+  - Increased compilation resource usage during the compilation - increased memory usage by the compiler and compile time
+  - Increased binary size
+  - Exit-code issues - for some applications in the end the profile is not dumped (like Clangd). You need to tweak the application manually
+  - Not all software can be built with PGO (Envoy) - some dependencies does not support PGO for some reason
+
+#### Instrumented binary is slower
+
+Instrumented binary is slower. But how much? Well, as usual - *it depends*. I didn't find before such benchmarks for real-life applications so I did them and ready to show you some numbers for several projects:
+
+* HAProxy: ([Clang](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165) and [GCC](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729606775))
+* Fluent-bit: ~50% slowdown ([link](https://github.com/fluent/fluent-bit/discussions/6638#discussioncomment-6419880))
+* ClickHouse: 
+* Tarantool: ([link](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168))
+
+TODO: write about cases when an instrumented binary is faster (I met such cases in some strange situations. Probably some combination of compiler optimizations does this - who knows, didn't investigate deep such cases).
+
+#### Instrumented binary is larger
+
+TODO: add several examples of such binaries (can look at my local left binaries)
+
+#### Build issues with instrumentation PGO
+
+TODO: add Envoy example
+
+### Sampling PGO problems
+
+TODO
+
+### Common PGO problems
+
+TODO: like building with PGO in multi-lang apps and passing PGO info to the dependencies.
+
 ## Why am I writing this?
+
 * I like performant applications
 There are multiple reasons for that:
 * For me it would be easier to work in the industry, where we have "PGO by default" mindset. Because with faster software it's easier to achieve required NFR (Non-Functional Requirements) before the horizontal scaling questions.
@@ -138,6 +206,8 @@ TODO: insert a diagram here
 ## Beyond PGO
 
 TODO: write about BOLT, Propeller, its history and perspectives
+
+What else could we do beyond PGO? Well, the optimization industry has an answer - it's called Post-Link time Optimization (PLO)
 
 ## FAQ
 
