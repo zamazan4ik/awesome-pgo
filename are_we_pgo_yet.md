@@ -51,8 +51,13 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Chapel: https://github.com/chapel-lang/chapel/issues/23608
 * Nature: https://github.com/nature-lang/nature/issues/34
 * DPC++: https://github.com/intel/llvm/issues/11555
-* Swift: https://github.com/apple/swift/issues/69227
+* Swift:
+  - https://github.com/apple/swift/issues/69227
+  - https://forums.swift.org/t/several-questions-regarding-profile-guided-optimization-pgo-and-llvm-bolt/67963
 * AdaptiveCpp: https://github.com/AdaptiveCpp/AdaptiveCpp/issues/1198
+* ISPC: https://github.com/ispc/ispc/issues/2687
+* Hylo: https://github.com/hylo-lang/hylo/issues/1113
+* SPIRV-LLVM: https://github.com/KhronosGroup/SPIRV-LLVM-Translator/issues/2191
 
 ## Developer tooling
 
@@ -96,7 +101,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Turbopack: https://github.com/vercel/turbo/issues/5667
 * oxc: https://github.com/web-infra-dev/oxc/issues/812
 * biome: https://github.com/biomejs/biome/discussions/85
-* CMake: https://gitlab.kitware.com/cmake/cmake/-/issues/19273
+* CMake:
+  - https://gitlab.kitware.com/cmake/cmake/-/issues/19273
+  - https://gitlab.kitware.com/cmake/cmake/-/issues/25356
 * Ruff: https://github.com/astral-sh/ruff/issues/7055
 * Redpen: https://github.com/estebank/redpen/issues/3
 * Kani: https://github.com/model-checking/kani/issues/2751
@@ -331,6 +338,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ouch: https://github.com/ouch-org/ouch/issues/537
 * czkawka: https://github.com/qarmin/czkawka/issues/1099
 * blaze: https://github.com/blaze-init/blaze/issues/275
+* gluten: https://github.com/oap-project/gluten/issues/3478
 
 # PGO in Go ecosystem
 
@@ -352,6 +360,7 @@ Here we track the issues regarding PGO documentation in different projects:
 * Rustc:
   - https://github.com/rust-lang/rust/issues/115251
   - https://github.com/rust-lang/rust/issues/114995
+  - https://github.com/rust-lang/rust/issues/117023
 * GreptimeDB: https://github.com/GreptimeTeam/docs/issues/544
 * RonDB: https://github.com/logicalclocks/rondb/issues/335#issuecomment-1695636890
 * ReDB: https://github.com/cberner/redb/issues/638#issuecomment-1695601594
@@ -362,4 +371,6 @@ Here we track the issues regarding PGO documentation in different projects:
 
 Here we track the issues regarding BOLT documentation in different projects:
 
-* Clang: https://github.com/llvm/llvm-project/issues/65010
+* Clang:
+  - https://github.com/llvm/llvm-project/issues/65010
+  - https://github.com/llvm/llvm-project/issues/69846

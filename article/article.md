@@ -176,6 +176,32 @@ TODO: write about cases when an instrumented binary is faster (I met such cases 
 #### Instrumented binary is larger
 
 TODO: add several examples of such binaries (can look at my local left binaries)
+TODO: add before and after PGO instrumentation assembler for Clang and GCC: https://godbolt.org/z/ofMKzEscn
+
+Instrumentation PGO works via inserting into your code some counters for tracking the program execution characteriscs, so your binary will be larger after the instrumentation. How much? Let's take a look on some examples:
+
+| Application | Release size | Instrumented size | PGO optimized size | Instrumented to Release ratio | Compiler |
+|---|---|---|---|---|---|
+| ClickHouse | 2.0 Gib | 2.8 Gib | 2.0 Gib | 1.4x | Clang |
+| MongoDB | 151 Mib | 255 Mib | 143 Mib | 1.69x | Clang |
+| SQLite | 1.8 Mib | 2.7 Mib | 1.5 Mib | 1.5x | Clang |
+| HAProxy | 13 Mib | 17 Mib | 13 Mib | 1.3x | Clang |
+| HAProxy | 15 Mib | 19 Mib | 16 Mib | 1.27x | GCC |
+| Nginx | 3.8 Mib | 4.3 Mib | 3.8 Mib | 1.13x | Clang |
+| Envoy | 439 Mib | 1800 Mib | 433 Mib | 4.15x | Clang |
+| httpd | 2.3 Mib | 2.7 Mib | 2.4 Mib | 1.17x | Clang |
+| Quilkin | 33 Mib | 94 Mib | 30 Mib | 2.84x | Rustc |
+| Rathole | 3.8 Mib | 11 Mib | 3.5 Mib | 2.89x | Rustc |
+| bat | 5.4 Mib | 16 Mib | 5.2 Mib | 2.96x | Rustc |
+| Catboost | 32 Mib | 88 Mib | 30 Mib | 2.75x | Clang |
+| curl | 1.1 Mib | 1.4 Mib | 939 Kib | 1.27x | Clang |
+| czkawka | 14 Mib | 38 Mib | 14 Mib | 2.71x | Rustc |
+| Fluent-Bit | 7.9 Mib | 11 Mib | 6.4 Mib | 1.39x | Clang |
+| Vector | 198 Mib | 286 Mib | 124 Mib | 1.44x | Rustc |
+| htmlq | 6.7 Mib | 11 Mib | 6.8 Mib | 1.64x | Rustc |
+| ouch | 3.5 Mib | 8.0 Mib | 3.3 Mib | 2.26x | Rustc |
+
+TODO: add a note about non-stripped binaries
 
 #### Build issues with instrumentation PGO
 
@@ -208,6 +234,37 @@ TODO: insert a diagram here
 TODO: write about BOLT, Propeller, its history and perspectives
 
 What else could we do beyond PGO? Well, the optimization industry has an answer - it's called Post-Link time Optimization (PLO)
+
+## Test environments
+
+### Hardware and OS
+
+TODO: add a photo of my Mac with my PC test setup
+
+During the tests, I use two test setups: my Windows-Linux dual-boot PC and Macbook with macOS.
+
+PC:
+
+* CPU: AMD Ryzen 9 5900x
+* RAM: 48 Gib of some default non-RGB RAM
+* SSD: Samsung 980 Pro 2 Tib
+* OS: Fedora 38
+* Kernel: Linux kernel 6.x (mostly 6.2 - 6.5)
+
+Macbook:
+
+* CPU: Apple M1 Pro 6+2
+* RAM: 16 Gib
+* SSD: 512 Gib
+* OS: macOS (mostly 13.x version)
+
+In the article my PC setup is called "Linux", and Macbook as "macOS". Sorry Windows people, I have no desire to perform all the tests on Windows. But anyway - it should work (and works) on this OS completely in the same way.
+
+### Compilers
+
+For all Rust projects I use `rustc` compiler with LLVM backend, versions somewhere in 1.68-1.73 range. For C and C++ I prefer using Clang 16, sometimes I use GCC 13 as an additional compiler.
+
+All these compilers are in their "default" state with no custom patches from my side: `rustc` from the official website, Clang and GCC from the official Fedore repository.
 
 ## FAQ
 

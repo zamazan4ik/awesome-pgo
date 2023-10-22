@@ -188,6 +188,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * htmlq: [GitHub issue](https://github.com/mgdm/htmlq/issues/70)
 * ouch: [GitHub issue](https://github.com/ouch-org/ouch/issues/537)
 * czkawka: [GitHub issue](https://github.com/qarmin/czkawka/issues/1099)
+* quilkin: [GitHub comment](https://github.com/googleforgames/quilkin/issues/834#issuecomment-1772719309)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -216,6 +217,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Pydantic-core: [GitHub PR](https://github.com/pydantic/pydantic-core/pull/741)
 * file.d: [GitHub PR](https://github.com/ozontech/file.d/pull/469)
 * OceanBase: [CMake flag](https://github.com/oceanbase/oceanbase/blob/master/cmake/Env.cmake#L55)
+* ISPC: [CMake scipts](https://github.com/ispc/ispc/tree/main/superbuild)
 
 ## Project-specific documentation about PGO
 

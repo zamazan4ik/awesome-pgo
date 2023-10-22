@@ -82,6 +82,7 @@ Article topics to cover:
   - Could we trust the profiles from the upstream to use them instead of our own? Good question. That’s why is important to commit scripts for reproducing the profile (and still can differ due to time-based things like I had in YDB)
 * PGO and proprietary software
   - ArenagraphDB just didn’t answer my request - maybe an email wasn’t enterprise-enough? :)
+  - NauEngine: sent an email about PGO (not response yet)
 * PGO implementation improvements:
   - Tooling. PGO at scale is simply not possible right now in an easy way with available open-source tooling
 * Post-Link Optimizers (LLVM BOLT, Propeller, their states and perspectives)
