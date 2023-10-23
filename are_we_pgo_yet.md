@@ -59,6 +59,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Hylo: https://github.com/hylo-lang/hylo/issues/1113
 * SPIRV-LLVM: https://github.com/KhronosGroup/SPIRV-LLVM-Translator/issues/2191
 * GraalVM: https://github.com/oracle/graal/discussions/7648
+* Intel Graphics Compiler (IGC): https://github.com/intel/intel-graphics-compiler/issues/305
 
 ## Developer tooling
 
@@ -102,9 +103,6 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Turbopack: https://github.com/vercel/turbo/issues/5667
 * oxc: https://github.com/web-infra-dev/oxc/issues/812
 * biome: https://github.com/biomejs/biome/discussions/85
-* CMake:
-  - https://gitlab.kitware.com/cmake/cmake/-/issues/19273
-  - https://gitlab.kitware.com/cmake/cmake/-/issues/25356
 * Ruff: https://github.com/astral-sh/ruff/issues/7055
 * Redpen: https://github.com/estebank/redpen/issues/3
 * Kani: https://github.com/model-checking/kani/issues/2751
@@ -120,7 +118,16 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Creusot: https://github.com/xldenis/creusot/issues/884
 * Rust-Code-Analysis: https://github.com/mozilla/rust-code-analysis/issues/1077
 * grcov: https://github.com/mozilla/grcov/issues/1128
+
+## Build systems
+
+* CMake:
+  - https://gitlab.kitware.com/cmake/cmake/-/issues/19273
+  - https://gitlab.kitware.com/cmake/cmake/-/issues/25356
 * Meson: https://github.com/mesonbuild/meson/issues/5251
+* SCons: https://github.com/SCons/scons/discussions/4437
+* Buck2: https://github.com/facebook/buck2/issues/454
+* FPM: https://github.com/fortran-lang/fpm/discussions/968
 
 ## Gamedev
 

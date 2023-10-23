@@ -124,12 +124,12 @@ Not critical at all but keep in mind this information during your googling sessi
 
 ### PGO types
 
-In general, PGO has two types:
+PGO has two major types:
 
 * Instrumentation-based
 * Sampling-based
 
-Let's take a look on each.
+To make the things even more complicated - there are a bunch of hybrid approaches as well. We will check them a bit later. Right now let's take a deeper look on the major ones.
 
 #### PGO via instrumentation
 
@@ -143,6 +143,10 @@ Usually, the scenario is the following:
 #### PGO via Sampling
 
 TODO: add info about Sampling PGO
+
+#### Other PGO types
+
+TODO: Write here about other PGO types from https://aaupov.github.io/blog/2023/07/09/pgo
 
 ---
 
@@ -320,6 +324,92 @@ CMake (one of the most [popular](https://www.jetbrains.com/lp/devecosystem-2022/
 ---
 
 TODO: write a conclusion about build systems support - even without an explicit support it's doable to perform PGO optimizations. Write several tricks of how it can be implemented and what caveats I've seen in the projects (like ClickHouse overriding passed CMAKE_CXX_FLAGS and other similar stuff).
+
+## Profile collection approaches
+
+TODO: Describe possible ways to collect PGO profiles in practice
+
+* How to collect PGO profiles?
+  - Tests - please no, too many differences with your actual workload
+  - Benchmarks - not so bad, but be careful regarding coverage and happy paths
+  - Generating sample load and using it - a good one. But you need to maintain it and track that it does not differ much from your actual workload
+  - Collecting directly from production - a good one too. But you need good tooling for that + Instrumentation PGO usually is not usable for that
+
+Okay, you decided to give PGO a try in your application. But where can you collect a profile? And, what is more important, where can you collect *a good* profile? There are multiple approaches - let's discuss all of them!
+
+### Tests
+
+The first idea that can appear in your mind - "We have unit/functional/integration/e2e-tests - let's use them for as a sample workload for PGO". Please don't do that.
+
+In most cases, the main aim of your tests is testing (!) your application in all possible situation (including rare and almost impossible scenarios). Instead, PGO optimizes not for all cases but for the most common from your *actual* workload. If you try to use tests as a sample workload for training PGO, you optimize your program not for the usual workload but for the corner cases. That's definetely not what you want to do.
+
+### Benchmarks
+
+Using benchmarks for training is a bit more complicated topic because the answer here is "It depends". It depends on how well your bench suite represents your actual workload. Because if you have a bench suite that measures something not so important in your application - you get completely the same problem as we have with tests.
+
+From my experience, I met the following problems with using benchmarks as a PGO training workload:
+
+* A bench suite measures unimportant things (TODO: add an example here from a real project).
+* A bench suite does not provide good coverage for the optimized application.
+* A bench suite is broken/not maintained well due to some reasons (TODO: add Quilkin and grcov examples at least)
+
+TODO: insert here a meme about a parrot who learnt to say "It depends" and became an architect
+TODO: add project examples where such approach is used
+
+Some examples:
+
+* Firefox: [Uses](https://github.com/mozilla/gecko-dev/blob/master/build/pgo/profileserver.py#L25) WebKit performance test suite.
+* Pydantic-core: [Uses](https://github.com/pydantic/pydantic-core/blob/main/Makefile#L74) its own benchmarks.
+* 
+
+### Manually crafted workload
+
+Here I collected some examples of real-life project that use this approach for doing PGO:
+
+* ISPC: [Has](https://github.com/ispc/ispc/tree/main/superbuild#build-process) special real-life `ispc-corpus` for PGO training purpose
+* Clang: [Uses](https://llvm.org/docs/HowToBuildWithPGO.html#selecting-benchmarks) the instrumented Clang to build Clang, LLVM, and all of the other LLVM subprojects available to it.
+* Windows Terminal: [Uses](https://github.com/microsoft/terminal/pull/10071) special PGO-oriented user test scenarios.
+
+
+* Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
+* GCC:
+  - Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
+  - A [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
+* Python:
+  - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
+  - Pyston: [README](https://github.com/pyston/pyston#building)
+* Go: [Bash script](https://github.com/golang/go/blob/master/src/cmd/compile/profile.sh)
+* Swift: [CMake script](https://github.com/apple/swift/blob/main/CMakeLists.txt#L364)
+* V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
+* ChakraCore: [Scripts](https://github.com/chakra-core/ChakraCore/tree/master/Build/scripts/pgo)
+* Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
+* PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138) and old Centminmod [scripts](https://github.com/centminmod/php_pgo_training_scripts)
+* MySQL: [CMake script](https://github.com/mysql/mysql-server/blob/8.0/cmake/fprofile.cmake)
+* YugabyteDB: [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
+* FoundationDB: [Script](https://github.com/apple/foundationdb/blob/1a6114a66f3de508c0cf0a45f72f3687ba05750c/contrib/generate_profile.sh)
+* Zstd: [Makefile](https://github.com/facebook/zstd/blob/dev/programs/Makefile#L232)
+* [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
+* OceanBase: [CMake flag](https://github.com/oceanbase/oceanbase/blob/master/cmake/Env.cmake#L55)
+
+
+TODO: add project where this approach is used
+
+### Production environment
+
+Advantages:
+
+* Production is the most representative environment to get the actual workload profile.
+* There is no need to maintain custom near real life workloads, sync them with the actual production workload, monitor a skew between the sample workload and the production, etc.
+
+Disadvantages:
+
+* It can be difficult to collect PGO profiles from external environments. E.g. let's imagine you have a mobile application. It's much more difficult to collect PGO profiles from consumer devices and transfer them to your CI environment for PGO optimization.
+* Getting PGO profiles from production affects performance of your production. So do it carefully. It can be partially mitigated by using sampling PGO approach since with sampling you have an option to tweak the performance overhead via increasing/decreasing the sampling frequency ("Sampling overhead <-> Profile precision" tradeoff). Actually, instrumented PGO also can be used in production but before this you need to test/estimate the performance penalty and decide - is it acceptable in your case or not.
+
+Especially for this case, Google created [AutoFDO](https://github.com/google/autofdo) project. Google has a corresponding internal infrastructure for collecting PGO profiles directly from production environment with almost no overhead.
+
+TODO: Write about caveat of how to collect PGO profiles from the customer devices, overhead of taking a profile from the production, etc.
+TODO: add somewhere link to "PGO at scale" in Google
 
 ## Why am I writing this?
 

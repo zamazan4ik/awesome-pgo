@@ -196,9 +196,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
 * GCC:
   - Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
-  - A [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
-* Clang: [Docs](https://llvm.org/docs/HowToBuildWithPGO.html) 
-* Python: 
+  - A [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script.
+* Clang: [Docs](https://llvm.org/docs/HowToBuildWithPGO.html)
+* Python:
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
   - Pyston: [README](https://github.com/pyston/pyston#building)
 * Go: [Bash script](https://github.com/golang/go/blob/master/src/cmd/compile/profile.sh)
@@ -280,6 +280,7 @@ Here we collect and track PGO integrations into build systems:
 * Bazel: Supports ([command-line reference](https://bazel.build/reference/command-line-reference#flag--fdo_instrument))
 * CMake: No support yet ([GitLab issue](https://gitlab.kitware.com/cmake/cmake/-/issues/19273))
 * Meson: Supports (`b_pgo` in the [docs](https://mesonbuild.com/Builtin-options.html)) but has some limitations ([GitHub issue](https://github.com/mesonbuild/meson/issues/5251))
+* SCons: No support yet ([GitHub discussion](https://github.com/SCons/scons/discussions/4437))
 
 ### Sampling PGO (AutoFDO) support
 
