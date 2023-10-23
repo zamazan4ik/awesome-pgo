@@ -155,6 +155,7 @@ TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
 ### Instrumentation PGO problems
 
 * Instrumentation PGO: problems
+
   - The instrumented binary is slower. How much - usually is unpredictable
   - Double compilation - it hurts a lot smaller platforms like PowerPC in different CI pipelines
   - Increased compilation resource usage during the compilation - increased memory usage by the compiler and compile time
@@ -168,17 +169,18 @@ Instrumented binary is slower. But how much? Well, as usual - *it depends*. I di
 
 * HAProxy: ([Clang](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165) and [GCC](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729606775))
 * Fluent-bit: ~50% slowdown ([link](https://github.com/fluent/fluent-bit/discussions/6638#discussioncomment-6419880))
-* ClickHouse: 
+* ClickHouse: TODO add actual numbers
 * Tarantool: ([link](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168))
 
 TODO: write about cases when an instrumented binary is faster (I met such cases in some strange situations. Probably some combination of compiler optimizations does this - who knows, didn't investigate deep such cases).
 
 #### Instrumented binary is larger
 
-TODO: add several examples of such binaries (can look at my local left binaries)
+Instrumentation PGO works via inserting into your code some counters for tracking the program execution characteriscs, so your binary will be larger after the instrumentation. In assembler it looks something like:
+
 TODO: add before and after PGO instrumentation assembler for Clang and GCC: https://godbolt.org/z/ofMKzEscn
 
-Instrumentation PGO works via inserting into your code some counters for tracking the program execution characteriscs, so your binary will be larger after the instrumentation. How much? Let's take a look on some examples:
+How much binary space does it take in practice? Let's check it:
 
 | Application | Release size | Instrumented size | PGO optimized size | Instrumented to Release ratio | Compiler |
 |---|---|---|---|---|---|
@@ -201,6 +203,10 @@ Instrumentation PGO works via inserting into your code some counters for trackin
 | htmlq | 6.7 Mib | 11 Mib | 6.8 Mib | 1.64x | Rustc |
 | ouch | 3.5 Mib | 8.0 Mib | 3.3 Mib | 2.26x | Rustc |
 
+In general, there is no way to make a *precise* predict of how large your binary will be after the instrumentation without the actual compilation process. There are so many variables involved in this process (how much branches your application has, do you recompile with PGO your statically-linked dependencies, etc.) that much-much easier will be just recompile with instrumentation and check it. Maybe one day the compilers (or an ecosystem around the compiler) will provide you some estimations before the actual compilation process but not today.
+
+PGO optimized size hugely depends on your test workflow. If you execute larger amount of code, with a higher probability the inlining will be triggered during the optimization, and your binary due to this will be larger.
+
 TODO: add a note about non-stripped binaries
 
 #### Build issues with instrumentation PGO
@@ -214,6 +220,106 @@ TODO
 ### Common PGO problems
 
 TODO: like building with PGO in multi-lang apps and passing PGO info to the dependencies.
+
+## PGO support in compilers
+
+Different compilers has different PGO maturity levels. Some of them support PGO for decades, some of them added PGO just recently, and some (shame on you) has no PGO support at all! Below I prepared some overview of the PGO state across different compilers for multiple programming languages.
+
+### C and C++
+
+C has a veeeery long history, C++ is a bit younger but still is quite a mature technology. So compilers for C and C++ also evolved **a lot** during the decades from many viewpoints, including multiple optimizations.
+
+TODO: add information when PGO firstly appeared in C compilers
+
+Here are some PGO integration examples into the different compilers:
+
+* [GCC](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#Instrumentation-Options)
+* [Clang](https://clang.llvm.org/docs/UsersManual.html#profile-guided-optimization)
+* [MSVC](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations)
+* [ICC](https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-8/profile-guided-optimization-pgo.html)
+* [AOCC](https://www.amd.com/en/developer/aocc.html#documentation) (supports but the documentation right now exists only as PDF files)
+
+### Rust
+
+Rust right now has one major compiler - `rustc`. Rustc is based on LLVM so PGO implementation shares almost all details with Clang.
+
+TODO: write a note about sampling PGO support: https://github.com/rust-lang/rust/issues/117023
+
+Rustc documentation about PGO is available [here](https://doc.rust-lang.org/rustc/profile-guided-optimization.html).
+
+### Go
+
+TODO: add links about PGO implementation in Go compiler
+
+Links:
+
+* https://go.dev/doc/pgo
+* https://go.dev/blog/pgo
+* https://theyahya.com/posts/go-pgo/
+
+### Fortran
+
+TODO
+
+### C#
+
+Microsoft few years ago started investing into the PGO implementation in C#. Unfortunately, due to lack of C# experience from my side, I cannot say you much about the quality of this implementation, traps and nuances. Instead, I will share with you some interesting from my point of view articles and links about PGO state in C# for further reading:
+
+* [Dynamic PGO in .Net 6](https://gist.github.com/EgorBo/dc181796683da3d905a5295bfd3dd95b). By the way, the article author, [EgorBo](https://gist.github.com/EgorBo), is an expert in C# PGO implementation. So probably you can ask him about more details directly!
+* [PGO improvements in .Net 7](https://petabridge.com/blog/dotnet7-pgo-performance-improvements/)
+* [Conversation about PGO in Microsoft blog](https://devblogs.microsoft.com/dotnet/conversation-about-pgo/)
+
+### Java
+
+[GraalVM](https://www.graalvm.org/) implements AoT compilation mode for Java. Unfortunately, I have no experience with GraalVM so I cannot tell you, how GraalVM's PGO implementation works in practice, what caveats you should expect there, etc. [Official documentation](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) has so few interesting details so I even hesitate with recommending it as a further reading. Maybe talking directly with the GraalVM engineers would be a good idea?
+
+One of the biggest issues that I see right - no sampling PGO support. I've created a [discussion](https://github.com/oracle/graal/discussions/7648) in the upstream - more details about the question I hope will appear there eventually.
+
+PGO in GraalVM is available only in GraalVM Enterprise license but don'y worry - Enterprise license is free [now](https://blogs.oracle.com/java/post/graalvm-free-license) so you do not need to pay at least for a license if you want to use PGO in Java. Good? Great!
+
+### Swift
+
+It's a complicated question. From one perspective, in the Swift compiler sources [there are](https://github.com/apple/swift/blob/main/include/swift/Option/Options.td#L1322) some PGO footprints. From another - even the compiler developer is [not sure](https://github.com/apple/swift/issues/69227) about the current PGO implementation state in the compiler. Anyway, there is an **unanswered** [topic](https://forums.swift.org/t/several-questions-regarding-profile-guided-optimization-pgo-and-llvm-bolt/67963) on the Swift forum. Hopefully, one day it will get an answer.
+
+### Zig
+
+TODO: write a story about a new Zig compiler and how it affects PGO dreams in this language
+
+## PGO support in build systems
+
+* Overview of the PGO state across build systems
+  - Add a note about Bazel integration
+  - Add links to the issues in other build systems like CMake, Meson, etc. (maybe I need to check it across all popular build systems and create proper issues for that)
+
+In 99.9(9)% cases we do not compile our applications via direct compiler invocations - we use build systems. What kind of PGO support could we expect from a build system? I have the following wishes:
+
+* I want to have a possibility to enable PGO for my application via *a build system flag* rather than *a compiler flag*. Why? Because I can use multiple compilers, each compiler can have different flags for enabling PGO (e.g. check the difference in PGO in MSVC and Clang). And writing such logic for each compiler is not what I want to do for each project where I want to enable PGO.
+* Optimizing with PGO whole dependency tree, not only my project. Almost any modern application uses dependencies. And for making things even more complicated, this dependencies can be written in different languages, that are compiled by different compilers (with different PGO flags, as we know). In this case, enabling PGO build for the whole dependency tree is quickly becomes a non-trivial task.
+* It should work.
+
+### Cargo
+
+Cargo (the default build system for Rust) has no built-in support for PGO. But community (particularly [Jakub "Kobzol" Beranek](https://github.com/kobzol)) developed an extension - [cargo-pgo](https://github.com/Kobzol/cargo-pgo). I highly recommend you to use this Cargo extension if you are going to start optimizing Rust projects with PGO. I used for **every** Rust project that I PGOed (and I did it for a lot of them) - it always worked like a charm. It even supports optimizing with LLVM BOLT as an additional post-PGO optimization step! I wish every other ecosystem eventually will get something similar.
+
+TODO: add a note about missing Sampling PGO optimization integration
+
+### Bazel
+
+Bazel [has](https://bazel.build/reference/command-line-reference#flag--fdo_instrument) built-in PGO support. With provided by Bazel command-line options, you will be able to optimize your program with PGO without needing to know of how to properly invoke PGO stuff in your favourite compiler.
+
+TODO: add a note about Envoy, Bazel and PGO
+
+### Meson
+
+TODO: add Meson notes
+
+### CMake
+
+CMake (one of the most [popular](https://www.jetbrains.com/lp/devecosystem-2022/cpp/#Which-project-models-or-build-systems-do-you-regularly-use) build system for C++ nowadays) has no built-in PGO support - only a [request](https://gitlab.kitware.com/cmake/cmake/-/issues/19273) for it.
+
+---
+
+TODO: write a conclusion about build systems support - even without an explicit support it's doable to perform PGO optimizations. Write several tricks of how it can be implemented and what caveats I've seen in the projects (like ClickHouse overriding passed CMAKE_CXX_FLAGS and other similar stuff).
 
 ## Why am I writing this?
 

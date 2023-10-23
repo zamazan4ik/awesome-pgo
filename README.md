@@ -189,6 +189,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * ouch: [GitHub issue](https://github.com/ouch-org/ouch/issues/537)
 * czkawka: [GitHub issue](https://github.com/qarmin/czkawka/issues/1099)
 * quilkin: [GitHub comment](https://github.com/googleforgames/quilkin/issues/834#issuecomment-1772719309)
+* grcov: [GitHub issue](https://github.com/mozilla/grcov/issues/1128)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -243,7 +244,6 @@ Here we collect projects were PGO is described as an optimization option in the 
   - [Circle](https://www.circle-lang.org/) (not exactly a C++ compiler): no PGO support
 * Rust:
   - [rustc](https://doc.rust-lang.org/rustc/profile-guided-optimization.html)
-  - [cargo-pgo](https://github.com/Kobzol/cargo-pgo)
 * Fortran:
   - [GCC](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#Instrumentation-Options)
   - [Flang](https://clang.llvm.org/docs/UsersManual.html#profile-guided-optimization)
@@ -271,6 +271,15 @@ Here we collect projects were PGO is described as an optimization option in the 
 * [Red](https://www.red-lang.org/): [seems like not](https://github.com/red/red/issues/5333)
 
 Possibly other compilers support PGO too. If you know any, please let me know.
+
+### PGO support in build systems
+
+Here we collect and track PGO integrations into build systems:
+
+* Cargo: No built-in support but there is awesome [cargo-pgo](https://github.com/Kobzol/cargo-pgo)
+* Bazel: Supports ([command-line reference](https://bazel.build/reference/command-line-reference#flag--fdo_instrument))
+* CMake: No support yet ([GitLab issue](https://gitlab.kitware.com/cmake/cmake/-/issues/19273))
+* Meson: Supports (`b_pgo` in the [docs](https://mesonbuild.com/Builtin-options.html)) but has some limitations ([GitHub issue](https://github.com/mesonbuild/meson/issues/5251))
 
 ### Sampling PGO (AutoFDO) support
 
@@ -301,6 +310,8 @@ Here I collect all results with applying LLVM BOLT to the projects (with numbers
   - [Linaro results](https://android-review.linaro.org/plugins/gitiles/toolchain/llvm_android/+/f36c64eeddf531b7b1a144c40f61d6c9a78eee7a)
   - [on AMD 7950X3D](https://github.com/llvm/llvm-project/issues/65010#issuecomment-1701255347)
 * HHVM, Proxygen and others: [Facebook paper](https://scontent-waw1-1.xx.fbcdn.net/v/t39.8562-6/240895848_219658560107211_6043870470092412798_n.pdf?_nc_cat=104&ccb=1-7&_nc_sid=ad8a9d&_nc_ohc=93feyEEEdC0AX8gvlSt&_nc_ht=scontent-waw1-1.xx&oh=00_AfAJh5n1HhZg32R-kRPqnpKJxHUSaFZZ2udLMFcT9MRQPw&oe=64CD8CE0)
+* NodeJS: [Blog](https://aaupov.github.io/blog/2020/10/08/bolt-nodejs)
+* Chromium: [Blog](https://aaupov.github.io/blog/2022/11/12/bolt-chromium)
 
 ## Are we BOLT yet?
 

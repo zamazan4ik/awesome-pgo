@@ -58,6 +58,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ISPC: https://github.com/ispc/ispc/issues/2687
 * Hylo: https://github.com/hylo-lang/hylo/issues/1113
 * SPIRV-LLVM: https://github.com/KhronosGroup/SPIRV-LLVM-Translator/issues/2191
+* GraalVM: https://github.com/oracle/graal/discussions/7648
 
 ## Developer tooling
 
@@ -117,6 +118,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Phasar: https://github.com/secure-software-engineering/phasar/issues/668
 * Vera++: https://bitbucket.org/verateam/vera/issues/140/evaluate-profile-guided-optimization-pgo
 * Creusot: https://github.com/xldenis/creusot/issues/884
+* Rust-Code-Analysis: https://github.com/mozilla/rust-code-analysis/issues/1077
+* grcov: https://github.com/mozilla/grcov/issues/1128
+* Meson: https://github.com/mesonbuild/meson/issues/5251
 
 ## Gamedev
 
@@ -245,6 +249,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Age: https://github.com/apache/age/discussions/1249
 * rUniversalDB: https://github.com/pasindumuth/rUniversalDB/issues/1
 * ParadeDB: https://github.com/paradedb/paradedb/issues/359
+* Toshi: https://github.com/toshi-search/Toshi/issues/981
 
 ## Logging
 

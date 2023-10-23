@@ -58,3 +58,5 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Probably a good list to optimize command-line tooling: https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a
 * Write to Expensify about optimizing SQLite performance further with PGO: https://use.expensify.com/blog/scaling-sqlite-to-4m-qps-on-a-single-server
 * Check https://trofi.github.io/posts/243-gcc-profiler-internals.html article about GCC profiler internals
+* Check PGO support state across different build systems like CMake, Meson, Bazel, Buck, Cargo, etc.
+* Write an email (or something else) to https://twitter.com/disruptnhandlr (LLVM BOLT expert)
