@@ -85,7 +85,7 @@ Article topics to cover:
   - NauEngine: sent an email about PGO (not response yet)
 * PGO implementation improvements:
   - Tooling. PGO at scale is simply not possible right now in an easy way with available open-source tooling
-* Post-Link Optimizers (LLVM BOLT, Propeller, their states and perspectives)
+* Post-Link Optimizers (LLVM BOLT, Propeller, their states and perspectives from my point of view)
 * Bunch of funny stories from integrating PGO into different projects:
   - Hardcoded timeout issue in YDB and Instrumentation PGO
   - Developers does not believe in their own benchmarks (DuckDB and Broot)
@@ -128,3 +128,4 @@ Article topics to cover:
   - Popularization using runtime information during the compilation for better optimizations
   - As one more step into the ML-based optimization techniques for the AOT compilation model.
 * Write a note about software distributors like Percona (PostgreSQL) and Altinity (ClickHouse)
+* Write about my day-to-day experience with PGO: checking corresponding Reddits, HackerNews, GitHub Trendings, dbdb.io, AwesomeX repos, etc., googling about PGO

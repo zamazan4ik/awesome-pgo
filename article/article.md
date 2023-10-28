@@ -1,4 +1,4 @@
-# Profile-Guided Optimization (PGO): a long hard road out of hell
+# Profile-Guided Optimization (PGO): a long hard road to the hell
 
 In this article, I want to discuss one compiler optimization technique - Profile-Guided Optimization (PGO). We will talk about PGO pros and cons, obvouis and tricky traps with PGO, take a look on the current PGO ecosystem from different perspectives (programming languages, build systems, operating systems, etc.). I spent many days with applying PGO to different applications... Tweaking build scripts, many measurements, sometimes tricky debug sessions, several compiler bugs and much more - it was (and still is) a great journey! I think my experience would be helpful for other people so you will be able to avoid my mistakes from the beginning and much nicer optimization experience.
 
@@ -102,6 +102,8 @@ Sounds quite simple, doesn't it? I was young, so such a simple explanation (even
 
 Let's dig into PGO further!
 
+TODO: write a note about PGO answer from ChatGPT about varying work profiles and how bad PGO works in this case.
+
 ### PGO and other similar names
 
 The first funny thing that I found - PGO has multiple names! And they all mean **completely** the same thing:
@@ -171,10 +173,25 @@ TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
 
 Instrumented binary is slower. But how much? Well, as usual - *it depends*. I didn't find before such benchmarks for real-life applications so I did them and ready to show you some numbers for several projects:
 
-* HAProxy: ([Clang](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165) and [GCC](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729606775))
-* Fluent-bit: ~50% slowdown ([link](https://github.com/fluent/fluent-bit/discussions/6638#discussioncomment-6419880))
-* ClickHouse: TODO add actual numbers
-* Tarantool: ([link](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168))
+TODO: add as much projects as I can here
+
+
+
+| Application | Instrumentation to Release slowdown ratio | Benchmark link |
+|---|---|---|
+| HAProxy (Clang) | 1.10x - 1.20x | links ([one](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729971279), [two](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165)) |
+| HAProxy (GCC) | 1.24x | links ([one](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729971279), [two](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729606775)) |
+| Fluent-Bit | 1.48x | [link](https://github.com/fluent/fluent-bit/discussions/6638#discussioncomment-6419880) |
+| ClickHouse | up to **311x** (it's not a mistake!) | [link](https://github.com/ClickHouse/ClickHouse/issues/44567#issuecomment-1519136060) |
+| Tarantool | up to 1.5x | [link](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168) |
+| Lychee | 4.0x | [link](https://github.com/lycheeverse/lychee/issues/1247) |
+| grcov | up to 10x | [link](https://github.com/mozilla/grcov/issues/1128#issue-1956099937) |
+| quilkin | 1.5x | [link](https://github.com/googleforgames/quilkin/issues/834#issuecomment-1772719309) |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+TODO: write about more deep statistics like slowdown percentiles, testing different configurations, etc.
 
 TODO: write about cases when an instrumented binary is faster (I met such cases in some strange situations. Probably some combination of compiler optimizations does this - who knows, didn't investigate deep such cases).
 
@@ -206,6 +223,7 @@ How much binary space does it take in practice? Let's check it:
 | Vector | 198 Mib | 286 Mib | 124 Mib | 1.44x | Rustc |
 | htmlq | 6.7 Mib | 11 Mib | 6.8 Mib | 1.64x | Rustc |
 | ouch | 3.5 Mib | 8.0 Mib | 3.3 Mib | 2.26x | Rustc |
+| difftastic | 68 Mib | 75 Mib | 68 Mib | 1.10x | Rustc |
 
 In general, there is no way to make a *precise* predict of how large your binary will be after the instrumentation without the actual compilation process. There are so many variables involved in this process (how much branches your application has, do you recompile with PGO your statically-linked dependencies, etc.) that much-much easier will be just recompile with instrumentation and check it. Maybe one day the compilers (or an ecosystem around the compiler) will provide you some estimations before the actual compilation process but not today.
 
@@ -277,9 +295,11 @@ Microsoft few years ago started investing into the PGO implementation in C#. Unf
 
 [GraalVM](https://www.graalvm.org/) implements AoT compilation mode for Java. Unfortunately, I have no experience with GraalVM so I cannot tell you, how GraalVM's PGO implementation works in practice, what caveats you should expect there, etc. [Official documentation](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) has so few interesting details so I even hesitate with recommending it as a further reading. Maybe talking directly with the GraalVM engineers would be a good idea?
 
-One of the biggest issues that I see right - no sampling PGO support. I've created a [discussion](https://github.com/oracle/graal/discussions/7648) in the upstream - more details about the question I hope will appear there eventually.
+GraalVM even [supports](https://github.com/oracle/graal/discussions/7648) sampling PGO but the documentation is a bit outdated. Hopefully, it will be fixed soon.
 
-PGO in GraalVM is available only in GraalVM Enterprise license but don'y worry - Enterprise license is free [now](https://blogs.oracle.com/java/post/graalvm-free-license) so you do not need to pay at least for a license if you want to use PGO in Java. Good? Great!
+PGO in GraalVM is available only in GraalVM Enterprise license but don't worry - Enterprise license is free [now](https://blogs.oracle.com/java/post/graalvm-free-license) so you do not need to pay at least for a license if you want to use PGO in Java. Good? Great!
+
+TODO: write about the curently weak GraalVM support across the Java ecosystem.
 
 ### Swift
 
@@ -288,6 +308,14 @@ It's a complicated question. From one perspective, in the Swift compiler sources
 ### Zig
 
 TODO: write a story about a new Zig compiler and how it affects PGO dreams in this language
+
+### Dart
+
+TODO: add information about Dart: https://github.com/dart-lang/sdk/issues/53855 in `dart2native` mode and https://github.com/dart-lang/sdk/issues/53856
+
+### Nim
+
+TODO: has no support https://github.com/nim-lang/RFCs/issues/130
 
 ## PGO support in build systems
 
@@ -319,7 +347,13 @@ TODO: add Meson notes
 
 ### CMake
 
-CMake (one of the most [popular](https://www.jetbrains.com/lp/devecosystem-2022/cpp/#Which-project-models-or-build-systems-do-you-regularly-use) build system for C++ nowadays) has no built-in PGO support - only a [request](https://gitlab.kitware.com/cmake/cmake/-/issues/19273) for it.
+CMake (one of the most [popular](https://www.jetbrains.com/lp/devecosystem-2022/cpp/#Which-project-models-or-build-systems-do-you-regularly-use) build system for C++ nowadays) has no built-in PGO support - only a [request](https://gitlab.kitware.com/cmake/cmake/-/issues/19273) for it. So for CMake-based projects passing required PGO flags via `CMAKE_C_FLAGS` and/or `CMAKE_CXX_FLAGS` (or via env `CFLAGS` and/or `CXXFLAGS`) are the only options.
+
+### Package managers (Conan, Vcpkg, etc.)
+
+Not exactly the build systems but I want to mention them here as well.
+
+TODO: Check Conan and Vcpkg support for PGO and how it could be done.
 
 ---
 
@@ -355,12 +389,12 @@ From my experience, I met the following problems with using benchmarks as a PGO 
 
 TODO: insert here a meme about a parrot who learnt to say "It depends" and became an architect
 TODO: add project examples where such approach is used
+TODO: write about benchmark infra standartization in some ecosystems as Rust with `cargo bench`
 
 Some examples:
 
 * Firefox: [Uses](https://github.com/mozilla/gecko-dev/blob/master/build/pgo/profileserver.py#L25) WebKit performance test suite.
 * Pydantic-core: [Uses](https://github.com/pydantic/pydantic-core/blob/main/Makefile#L74) its own benchmarks.
-* 
 
 ### Manually crafted workload
 
@@ -368,27 +402,27 @@ Here I collected some examples of real-life project that use this approach for d
 
 * ISPC: [Has](https://github.com/ispc/ispc/tree/main/superbuild#build-process) special real-life `ispc-corpus` for PGO training purpose
 * Clang: [Uses](https://llvm.org/docs/HowToBuildWithPGO.html#selecting-benchmarks) the instrumented Clang to build Clang, LLVM, and all of the other LLVM subprojects available to it.
+* Rustc: [Compiles](https://github.com/rust-lang/rust/blob/master/src/tools/opt-dist/src/training.rs#L19) set of sample open-source crates as a training workload
 * Windows Terminal: [Uses](https://github.com/microsoft/terminal/pull/10071) special PGO-oriented user test scenarios.
+* Zstd: [Uses](https://github.com/facebook/zstd/blob/dev/programs/Makefile#L240) several Zstd CLI invocations with different parameters
+* FoundationDB: [Uses](https://github.com/apple/foundationdb/blob/1a6114a66f3de508c0cf0a45f72f3687ba05750c/contrib/generate_profile.sh) custom workload
+* Go compiler: [Compiles](https://github.com/golang/go/blob/master/src/cmd/compile/profile.sh) all targets in `std` and `cmd`.
+* Foot: [Has](https://codeberg.org/dnkl/foot/src/branch/master/pgo) multiple predefined scenarios to choose from.
 
 
-* Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
+TODO: sort of this list to different categories
 * GCC:
   - Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
-  - A [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script 
+  - A [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script
 * Python:
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
   - Pyston: [README](https://github.com/pyston/pyston#building)
-* Go: [Bash script](https://github.com/golang/go/blob/master/src/cmd/compile/profile.sh)
 * Swift: [CMake script](https://github.com/apple/swift/blob/main/CMakeLists.txt#L364)
 * V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * ChakraCore: [Scripts](https://github.com/chakra-core/ChakraCore/tree/master/Build/scripts/pgo)
 * Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
 * PHP - [Makefile command](https://github.com/php/php-src/blob/master/build/Makefile.global#L138) and old Centminmod [scripts](https://github.com/centminmod/php_pgo_training_scripts)
 * MySQL: [CMake script](https://github.com/mysql/mysql-server/blob/8.0/cmake/fprofile.cmake)
-* YugabyteDB: [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
-* FoundationDB: [Script](https://github.com/apple/foundationdb/blob/1a6114a66f3de508c0cf0a45f72f3687ba05750c/contrib/generate_profile.sh)
-* Zstd: [Makefile](https://github.com/facebook/zstd/blob/dev/programs/Makefile#L232)
-* [Foot](https://codeberg.org/dnkl/foot): [Scripts](https://codeberg.org/dnkl/foot/src/branch/master/pgo)
 * OceanBase: [CMake flag](https://github.com/oceanbase/oceanbase/blob/master/cmake/Env.cmake#L55)
 
 
@@ -410,6 +444,46 @@ Especially for this case, Google created [AutoFDO](https://github.com/google/aut
 
 TODO: Write about caveat of how to collect PGO profiles from the customer devices, overhead of taking a profile from the production, etc.
 TODO: add somewhere link to "PGO at scale" in Google
+
+## Post-Link time Optimization (PLO)
+
+TODO: Write about BOLT, PROPELLER, and others (like Dynamic BOLT)
+
+### BOLT
+
+TODO: write about BOLT advantages and disadvantages
+TODO: write about BOLT instrumentation slowdown like https://github.com/qarmin/czkawka/issues/1099
+
+| Application | BOLT Instrumentation to Release slowdown ratio | Benchmark link |
+|---|---|---|
+| czkawka | 2.66x | [link](https://github.com/qarmin/czkawka/issues/1099#issue-1946612100) |
+|  |  |  |
+
+### Propeller
+
+TODO: Do I have any benchmarks? I guess putting from the official Google papers is fine here
+
+### Other approaches
+
+TODO: write here about Dynamic BOLT and other ongoing researches in this area
+
+## LTO, PGO, PLO and proprietary software
+
+Everyday we use not only open-source software, that can be (simply) optimized with LTO, PGO, PLO and other fansy stuff by our own hands in a Gentoo-style but also some proprietary software where we have no such an option. And still proprietary software performance can be valuable for us: CI performance with closed-source compilers, IDE performance, closed-source database performance (in both on-premise and SaaS versions) - there are many of them. So what could we do instead?
+
+I have tried to test a silly thing: write directly to the companies with an idea of optimizing their software with PGO. Here are some results:
+
+* Sent an email to <opensource@apple.com> about enabling PGO for Apple products like Apple Clang, prebuilt FoundationDB, etc - no response.
+* Created the [topic](https://forums.percona.com/t/profile-guided-optimization-pgo-for-databases/24035) on the official Percona forum about optimizing its products with PGO - no response
+* Sent an email to Nvidia via Developer Contact email about enabling PGO for their HPC compilers with all required information about PGO. Only got a suggestion about creating a topic on their HPC forum. I have tried multiple times to create an account on this resource but with no success due to unknown for me reasons. No more responses from them by email, btw.
+* Sent an email to [NauEngine](https://nauengine.org/) devs about evaluating PGO for this game engine - **got a response** that PGO information was sent to development teams. Great!
+
+TODO: write a section how I was ignored by different companies with an idea of PGO and other stuff
+TODO: write several advices/thoughts of how users can try to push PGO for their products being a users AND a developer of such products
+
+* PGO and proprietary software
+  - ArenagraphDB just didn’t answer my request - maybe an email wasn’t enterprise-enough? :)
+  - NauEngine: sent an email about PGO (not response yet)
 
 ## Why am I writing this?
 
@@ -478,6 +552,14 @@ There are some situations, when you may want to avoid using LTO with PGO:
 ## Related projects
 
 TODO: write about ASOS, machine-learning based compilers, etc.
+
+## Awesome PGO people
+
+If you decide to integrate PGO, probably at some point you will meet some problems, a corner case or find a nice way to improve PGO for your specific workload. So here I want to share the PGO experts list (not complete!). I believe these people could help you in your PGO journey:
+
+* Jakub Beranek
+* Maxim Panchenko
+* Amir Aupov
 
 ## Future plans
 

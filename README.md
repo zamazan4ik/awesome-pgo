@@ -190,10 +190,13 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * czkawka: [GitHub issue](https://github.com/qarmin/czkawka/issues/1099)
 * quilkin: [GitHub comment](https://github.com/googleforgames/quilkin/issues/834#issuecomment-1772719309)
 * grcov: [GitHub issue](https://github.com/mozilla/grcov/issues/1128)
+* difftastic: [GitHub issue](https://github.com/Wilfred/difftastic/issues/588)
 
 ## Projects with already integrated PGO into their build scripts
 
-* Rustc: a CI [script](https://github.com/rust-lang/rust/blob/master/src/ci/stage-build.py) for the multi-stage build
+Below you can find some examples, where and how PGO is integrated into different projects.
+
+* Rustc: a CI [tool](https://github.com/rust-lang/rust/tree/master/src/tools/opt-dist) for the multi-stage build
 * GCC:
   - Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
   - A [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script.
@@ -219,6 +222,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * file.d: [GitHub PR](https://github.com/ozontech/file.d/pull/469)
 * OceanBase: [CMake flag](https://github.com/oceanbase/oceanbase/blob/master/cmake/Env.cmake#L55)
 * ISPC: [CMake scipts](https://github.com/ispc/ispc/tree/main/superbuild)
+* NodeJS: [Configure script](https://github.com/nodejs/node/commit/9be15559cc0bfe506d9cdfba4ad0f4beacf5ce17)
 
 ## Project-specific documentation about PGO
 
@@ -313,12 +317,24 @@ Here I collect all results with applying LLVM BOLT to the projects (with numbers
 * HHVM, Proxygen and others: [Facebook paper](https://scontent-waw1-1.xx.fbcdn.net/v/t39.8562-6/240895848_219658560107211_6043870470092412798_n.pdf?_nc_cat=104&ccb=1-7&_nc_sid=ad8a9d&_nc_ohc=93feyEEEdC0AX8gvlSt&_nc_ht=scontent-waw1-1.xx&oh=00_AfAJh5n1HhZg32R-kRPqnpKJxHUSaFZZ2udLMFcT9MRQPw&oe=64CD8CE0)
 * NodeJS: [Blog](https://aaupov.github.io/blog/2020/10/08/bolt-nodejs)
 * Chromium: [Blog](https://aaupov.github.io/blog/2022/11/12/bolt-chromium)
+* MySQL, MongoDB, memcached, Verilator: [Paper](https://people.ucsc.edu/~hlitz/papers/ocolos.pdf)
+
+## Projects with already integrated BOLT into their build scripts
+
+* Rustc: [GitHub PR](https://github.com/rust-lang/rust/pull/116352)
+* CPython: [GitHub PR](https://github.com/python/cpython/pull/95908)
+* Pyston: [README](https://github.com/pyston/pyston#building)
+* Clang: [CMake script](https://github.com/llvm/llvm-project/blob/main/clang/cmake/caches/BOLT.cmake)
 
 ## Are we BOLT yet?
 
 Just a list of BOLT-related issues in different projects. So you can estimate the BOLT state in your favourite open-source product.
 
 * Clang in Gentoo: [Gentoo bugtracker](https://bugs.gentoo.org/907931)
+* Chromium: [Chromium bugtracker](https://bugs.chromium.org/p/chromium/issues/detail?id=1163978)
+* Firefox: [Mozilla bugtracker](https://bugzilla.mozilla.org/show_bug.cgi?id=1789087)
+  - The same for Propeller: [Mozilla bugtracker](https://bugzilla.mozilla.org/show_bug.cgi?id=1509314)
+* NodeJS: [GitHub issue](https://github.com/nodejs/node/issues/50379)
 
 ## LTO, PGO, BOLT, etc and provided by someone binaries
 

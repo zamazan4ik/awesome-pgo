@@ -60,6 +60,12 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SPIRV-LLVM: https://github.com/KhronosGroup/SPIRV-LLVM-Translator/issues/2191
 * GraalVM: https://github.com/oracle/graal/discussions/7648
 * Intel Graphics Compiler (IGC): https://github.com/intel/intel-graphics-compiler/issues/305
+* Dart:
+  - https://github.com/dart-lang/sdk/issues/53855
+  - https://github.com/dart-lang/sdk/issues/53856
+* Gravity: https://github.com/marcobambini/gravity/issues/414
+* daScript: https://github.com/GaijinEntertainment/daScript/issues/831
+* Quirrel: https://github.com/GaijinEntertainment/quirrel/issues/84
 
 ## Developer tooling
 
@@ -137,6 +143,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Bitty: https://github.com/paladin-t/bitty/issues/38
 * Hazel: https://github.com/TheCherno/Hazel/issues/645
 * Ogre3D: https://github.com/o3de/o3de/discussions/16883
+* DagorEngine: https://github.com/GaijinEntertainment/DagorEngine/issues/1
 
 ## Operating systems
 
@@ -257,6 +264,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * rUniversalDB: https://github.com/pasindumuth/rUniversalDB/issues/1
 * ParadeDB: https://github.com/paradedb/paradedb/issues/359
 * Toshi: https://github.com/toshi-search/Toshi/issues/981
+* chdb: https://github.com/chdb-io/chdb/issues/124
 
 ## Logging
 
@@ -269,6 +277,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 ## Machine learning
 
 * Tensorflow: https://github.com/tensorflow/tensorflow/issues/60944
+* Tensorflow Serving: https://github.com/tensorflow/serving/issues/2192
+* Tensorflow Text: https://github.com/tensorflow/text/issues/1227
 * PyTorch: https://github.com/pytorch/pytorch/issues/105281
 * Glow: https://github.com/pytorch/glow/issues/6106
 * PlaidML: https://github.com/plaidml/plaidml/issues/1996
@@ -351,6 +361,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * czkawka: https://github.com/qarmin/czkawka/issues/1099
 * blaze: https://github.com/blaze-init/blaze/issues/275
 * gluten: https://github.com/oap-project/gluten/issues/3478
+* difftastic: https://github.com/Wilfred/difftastic/issues/588
 
 # PGO in Go ecosystem
 
@@ -386,3 +397,7 @@ Here we track the issues regarding BOLT documentation in different projects:
 * Clang:
   - https://github.com/llvm/llvm-project/issues/65010
   - https://github.com/llvm/llvm-project/issues/69846
+
+# Other
+
+* Rustc discussion about Propeller: https://internals.rust-lang.org/t/add-propeller-support-to-the-rustc-compiler/19757

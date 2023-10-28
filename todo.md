@@ -60,3 +60,15 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Check https://trofi.github.io/posts/243-gcc-profiler-internals.html article about GCC profiler internals
 * Check PGO support state across different build systems like CMake, Meson, Bazel, Buck, Cargo, etc.
 * Write an email (or something else) to https://twitter.com/disruptnhandlr (LLVM BOLT expert)
+* OCOLOS: https://people.ucsc.edu/~hlitz/papers/ocolos.pdf
+* Discussion BOLT and Propeller: https://discourse.llvm.org/t/practical-compiler-optimizations-for-wsc-workshop-us-llvm-dev-meeting-2023/73998/
+* What is https://prodfiler.com/ ? Check their work and probably write about them in the article
+* https://github.com/aaupov/school_topics/blob/main/perfd.md - highlight this project as an future BOLT improvement idea
+* Play locally with Propeller: https://github.com/google/llvm-propeller and discuss integrating it into the cargo-pgo
+* Make a research about PGO support in package managers like Conan, Vcpkg, etc.
+* Do not forget to mention about monitoring actual workload and tracking - does it match your current PGO-profile or not
+* Example of an application where PGO exists but not used for prebuilt binaries: https://github.com/ispc/ispc/issues/2687
+* Add a note about unavailable LBR in virtual machines (that can limit AutoFDO usage in virtualized envs)
+* Why GraalVM (and consequently PGO in Java world) has so low adoption? I need to investigate it. GraalVM metadata repo - https://github.com/oracle/graalvm-reachability-metadata
+* Write about Clang (LLVM) vs GCC PGO implementations: GCC has more PGO switches, Clang has more recently-researched PGO-related things inside, etc.
+* Prepare an answer in Angie (Nginx fork) repository about PGO
