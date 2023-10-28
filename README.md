@@ -88,7 +88,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
   - [ClearLinux benchmarks](https://clearlinux.org/news-blogs/profile-guided-optimization-mariadb-benchmarks)
   - [Blog](https://kristiannielsen.livejournal.com/17676.html)
-* [MySQL](https://www.mysql.com/): 
+* [MySQL](https://www.mysql.com/):
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
 * [ClickHouse](https://clickhouse.com/): [GitHub issue](https://github.com/ClickHouse/ClickHouse/issues/44567#issuecomment-1589541199)

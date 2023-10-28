@@ -173,11 +173,9 @@ TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
 
 Instrumented binary is slower. But how much? Well, as usual - *it depends*. I didn't find before such benchmarks for real-life applications so I did them and ready to show you some numbers for several projects:
 
-TODO: add as much projects as I can here
+TODO: add as much projects as I can
 
-
-
-| Application | Instrumentation to Release slowdown ratio | Benchmark link |
+| Application | Instrumentation to Release slowdown ratio | Benchmark |
 |---|---|---|
 | HAProxy (Clang) | 1.10x - 1.20x | links ([one](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729971279), [two](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165)) |
 | HAProxy (GCC) | 1.24x | links ([one](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729971279), [two](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729606775)) |
@@ -187,9 +185,29 @@ TODO: add as much projects as I can here
 | Lychee | 4.0x | [link](https://github.com/lycheeverse/lychee/issues/1247) |
 | grcov | up to 10x | [link](https://github.com/mozilla/grcov/issues/1128#issue-1956099937) |
 | quilkin | 1.5x | [link](https://github.com/googleforgames/quilkin/issues/834#issuecomment-1772719309) |
-|  |  |  |
-|  |  |  |
-|  |  |  |
+| frawk | 1.35x | [link](https://github.com/ezrosent/frawk/issues/103#issuecomment-1751781163) |
+| sd | 1.8x | [link](https://github.com/chmln/sd/issues/237#issue-1931408669) |
+| youki | 2.0x | [link](https://github.com/containers/youki/issues/2386#issue-1911324530) |
+| broot | 2.37x | [link](https://github.com/Canop/broot/issues/741#issue-1895569419) |
+| delta | 1.42x | [link](https://github.com/dandavison/delta/issues/1540#issue-1891473319) |
+| Cemu | 2.0x | [link](https://github.com/cemu-project/Cemu/issues/797#issuecomment-1521169155) |
+| httpd | 1.04x | [link](https://github.com/zamazan4ik/awesome-pgo/blob/main/httpd.md) |
+| databend | 151.0x | [link](https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063) |
+| PostgreSQL | TODO | [link](https://github.com/zamazan4ik/awesome-pgo/blob/main/postrgresql_results.md) |
+| clang-tidy | 2.28x | [link](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1606147035) |
+| uncrustify | 1.62x | [link](https://github.com/uncrustify/uncrustify/issues/4045#issue-1775843009) |
+| typos | 2.61x | [link](https://github.com/crate-ci/typos/issues/827#issue-1888263250) |
+| tfcompile | 1.43x | [link](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591) |
+| drill | 1.72x | [link](https://github.com/fcsonline/drill/issues/185#issue-1795772245) |
+
+The same applies for libraries as well:
+
+| Library | Instrumentation to Release slowdown ratio | Benchmark |
+|---|---|---|
+| tantivy | 1.49x | [link](https://github.com/quickwit-oss/tantivy/issues/2163#issue-1872682955) |
+| tonic | up to 1.55x | [link](https://github.com/hyperium/tonic/issues/1486#issue-1871968898) |
+| quick-xml | up to 2.5x| [link](https://github.com/tafia/quick-xml/issues/632#issue-1852200475) |
+| xml-rs | 1.45x | [link](https://github.com/netvl/xml-rs/issues/228#issue-1852007193) |
 
 TODO: write about more deep statistics like slowdown percentiles, testing different configurations, etc.
 
@@ -452,12 +470,18 @@ TODO: Write about BOLT, PROPELLER, and others (like Dynamic BOLT)
 ### BOLT
 
 TODO: write about BOLT advantages and disadvantages
-TODO: write about BOLT instrumentation slowdown like https://github.com/qarmin/czkawka/issues/1099
+TODO: write about BOLT instrumentation slowdown like https://github.com/qarmin/czkawka/issues/1099 and https://github.com/crate-ci/typos/issues/827#issue-1888263250
 
 | Application | BOLT Instrumentation to Release slowdown ratio | Benchmark link |
 |---|---|---|
 | czkawka | 2.66x | [link](https://github.com/qarmin/czkawka/issues/1099#issue-1946612100) |
 |  |  |  |
+
+TODO: add BOLT instrumentation binary large ratio
+
+| Application | Release size | Instrumented size | PGO optimized size | Instrumented to Release ratio |
+|---|---|---|---|---|
+|  |  |  |  |  |
 
 ### Propeller
 
