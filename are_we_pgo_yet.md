@@ -144,6 +144,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Hazel: https://github.com/TheCherno/Hazel/issues/645
 * Ogre3D: https://github.com/o3de/o3de/discussions/16883
 * DagorEngine: https://github.com/GaijinEntertainment/DagorEngine/issues/1
+* Cocos Engine: https://github.com/cocos/cocos-engine/issues/16449
 
 ## Operating systems
 
@@ -265,6 +266,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ParadeDB: https://github.com/paradedb/paradedb/issues/359
 * Toshi: https://github.com/toshi-search/Toshi/issues/981
 * chdb: https://github.com/chdb-io/chdb/issues/124
+* Cube: https://github.com/cube-js/cube/issues/7354
+* PostgresML: https://github.com/postgresml/postgresml/issues/1131
+* Perspective: https://github.com/finos/perspective/issues/2405
 
 ## Logging
 
@@ -287,6 +291,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * OnnxRuntime: https://github.com/microsoft/onnxruntime/discussions/16726
 * Triton (OpenAI): https://github.com/openai/triton/issues/2288
 * Triton (Nvidia): https://github.com/triton-inference-server/server/issues/6304
+* Fuser: https://github.com/NVIDIA/Fuser/issues/1185
 
 ## Message brokers
 
@@ -362,6 +367,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * blaze: https://github.com/blaze-init/blaze/issues/275
 * gluten: https://github.com/oap-project/gluten/issues/3478
 * difftastic: https://github.com/Wilfred/difftastic/issues/588
+* Solidity: https://github.com/ethereum/solidity/issues/11085
 
 # PGO in Go ecosystem
 
