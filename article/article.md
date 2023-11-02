@@ -1,4 +1,4 @@
-# Profile-Guided Optimization (PGO): a long hard road to the hell
+# Profile-Guided Optimization (PGO): a long hard road to the hell (or PGO: survey of industy-wide adoption, challenges and benefits as Amir suggested)
 
 In this article, I want to discuss one compiler optimization technique - Profile-Guided Optimization (PGO). We will talk about PGO pros and cons, obvouis and tricky traps with PGO, take a look on the current PGO ecosystem from different perspectives (programming languages, build systems, operating systems, etc.). I spent many days with applying PGO to different applications... Tweaking build scripts, many measurements, sometimes tricky debug sessions, several compiler bugs and much more - it was (and still is) a great journey! I think my experience would be helpful for other people so you will be able to avoid my mistakes from the beginning and much nicer optimization experience.
 
@@ -208,6 +208,7 @@ The same applies for libraries as well:
 | tonic | up to 1.55x | [link](https://github.com/hyperium/tonic/issues/1486#issue-1871968898) |
 | quick-xml | up to 2.5x| [link](https://github.com/tafia/quick-xml/issues/632#issue-1852200475) |
 | xml-rs | 1.45x | [link](https://github.com/netvl/xml-rs/issues/228#issue-1852007193) |
+| tquic | up to 1.3x | [link](https://github.com/Tencent/tquic/issues/19#issue-1972443474) |
 
 TODO: write about more deep statistics like slowdown percentiles, testing different configurations, etc.
 
@@ -283,7 +284,7 @@ Here are some PGO integration examples into the different compilers:
 
 Rust right now has one major compiler - `rustc`. Rustc is based on LLVM so PGO implementation shares almost all details with Clang.
 
-TODO: write a note about sampling PGO support: https://github.com/rust-lang/rust/issues/117023
+TODO: write a note about sampling PGO support: https://github.com/rust-lang/rust/issues/117023 and https://github.com/rust-lang/rust/issues/64892
 
 Rustc documentation about PGO is available [here](https://doc.rust-lang.org/rustc/profile-guided-optimization.html).
 
@@ -347,9 +348,11 @@ In 99.9(9)% cases we do not compile our applications via direct compiler invocat
 * Optimizing with PGO whole dependency tree, not only my project. Almost any modern application uses dependencies. And for making things even more complicated, this dependencies can be written in different languages, that are compiled by different compilers (with different PGO flags, as we know). In this case, enabling PGO build for the whole dependency tree is quickly becomes a non-trivial task.
 * It should work.
 
+So, what do we have now in the ecosystem?
+
 ### Cargo
 
-Cargo (the default build system for Rust) has no built-in support for PGO. But community (particularly [Jakub "Kobzol" Beranek](https://github.com/kobzol)) developed an extension - [cargo-pgo](https://github.com/Kobzol/cargo-pgo). I highly recommend you to use this Cargo extension if you are going to start optimizing Rust projects with PGO. I used for **every** Rust project that I PGOed (and I did it for a lot of them) - it always worked like a charm. It even supports optimizing with LLVM BOLT as an additional post-PGO optimization step! I wish every other ecosystem eventually will get something similar.
+Cargo (the default build system for Rust) has no built-in support for PGO. But community (particularly [Jakub "Kobzol" Beranek](https://github.com/kobzol)) developed an extension - [cargo-pgo](https://github.com/Kobzol/cargo-pgo). I highly recommend you to use this Cargo extension if you are going to start optimizing Rust projects with PGO. I used for **every** Rust project that I PGOed (and I did it for a lot of them) - it always worked like a charm. It even supports optimizing with LLVM BOLT (we will talk about it later) as an additional post-PGO optimization step! I wish every other ecosystem eventually will get something similar.
 
 TODO: add a note about missing Sampling PGO optimization integration
 
@@ -357,7 +360,7 @@ TODO: add a note about missing Sampling PGO optimization integration
 
 Bazel [has](https://bazel.build/reference/command-line-reference#flag--fdo_instrument) built-in PGO support. With provided by Bazel command-line options, you will be able to optimize your program with PGO without needing to know of how to properly invoke PGO stuff in your favourite compiler.
 
-TODO: add a note about Envoy, Bazel and PGO
+But even such a "native" PGO integration into the build system could have some problems. I [found](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679) one of them during the PGO testing for Envoy. For some unknown yet reason Bazel denied to compile with PGO one of the Envoy's dependency when I try to use the PGO option. But if I just pass the required compiler flags recursively for all dependencies - it works fine! I don't know what is the root cause for such behavior in this case (honestly, I don't care much since I got my job done there)... Anyway, now you know about this possible caveat and how to avoid the problem :)
 
 ### Meson
 
@@ -465,6 +468,12 @@ TODO: add somewhere link to "PGO at scale" in Google
 
 ## Post-Link time Optimization (PLO)
 
+What if PGO is not enough for us and we want to squeeze even more performance "for free" with no manual optimizations? Well, in this case the industry already has something to offer. This kind of tools are called Post-Link Time Optimizers or simply PLO.
+
+TL;DR, the idea behind PLO is simple - try to reduce [CPU instruction cache (I-cache)](https://en.wikipedia.org/wiki/CPU_cache#Overview) misses for applications. We can achieve it with rearranging code in our binary accordingly to our execution profile: hot code executed together we place together in the binary, so these pieces of code highly-likely will be uploaded to a CPU at the same time.
+
+Right now, there are two the most mature tools in this area: [LLVM BOLT](https://github.com/llvm/llvm-project/blob/main/bolt/README.md) (from Facebook/Meta) and Propeller (from Google). Let's discuss each of them.
+
 TODO: Write about BOLT, PROPELLER, and others (like Dynamic BOLT)
 
 ### BOLT
@@ -483,13 +492,42 @@ TODO: add BOLT instrumentation binary large ratio
 |---|---|---|---|---|
 |  |  |  |  |  |
 
+BOLT is already integrated into the optimization pipelines in several projects:
+
+* Rustc: [GitHub PR](https://github.com/rust-lang/rust/pull/116352)
+* CPython: [GitHub PR](https://github.com/python/cpython/pull/95908)
+* Pyston: [README](https://github.com/pyston/pyston#building)
+* Clang: [CMake script](https://github.com/llvm/llvm-project/blob/main/clang/cmake/caches/BOLT.cmake)
+
+E.g. `rustc` compiler is already PGO + BOLT optimized for Linux platforms.
+
+More materils? Yeah, I have something to share:
+
+* BOLT original paper: [Facebok engineering blog](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
+* Optimizing Linux kernel with BOLT: [Youtube](https://www.youtube.com/watch?v=ivTCCTSMGZg)
+* 
+
 ### Propeller
 
 TODO: Do I have any benchmarks? I guess putting from the official Google papers is fine here
 
+Do you want more? Here we go:
+
+* 2019 LLVM Developers’ Meeting: S. Tallam “Propeller: Profile Guided Large Scale Performance...”: [Youtube](https://www.youtube.com/watch?v=DySuXFGmB40)
+* 
+
 ### Other approaches
 
 TODO: write here about Dynamic BOLT and other ongoing researches in this area
+
+### What to choose?
+
+From my experience, right now BOLT would be the better option to start with if we are talking about PLO usage.
+
+## PLO state in the ecosystem
+
+* PLO has no integration in the Linux distros yet
+* PLO has no integration in the build systems
 
 ## LTO, PGO, PLO and proprietary software
 
@@ -533,7 +571,7 @@ What else could we do beyond PGO? Well, the optimization industry has an answer 
 
 ### Hardware and OS
 
-TODO: add a photo of my Mac with my PC test setup
+TODO: add a photo of my Mac with my PC test setup (add a screen with Yorha units with a question "Are Yorha units PGO-optimized or not?")
 
 During the tests, I use two test setups: my Windows-Linux dual-boot PC and Macbook with macOS.
 
@@ -543,14 +581,14 @@ PC:
 * RAM: 48 Gib of some default non-RGB RAM
 * SSD: Samsung 980 Pro 2 Tib
 * OS: Fedora 38
-* Kernel: Linux kernel 6.x (mostly 6.2 - 6.5)
+* Kernel: Linux kernel 6.* (mostly 6.2.* - 6.5.*)
 
 Macbook:
 
 * CPU: Apple M1 Pro 6+2
 * RAM: 16 Gib
 * SSD: 512 Gib
-* OS: macOS (mostly 13.x version)
+* OS: macOS (mostly 13.* versions)
 
 In the article my PC setup is called "Linux", and Macbook as "macOS". Sorry Windows people, I have no desire to perform all the tests on Windows. But anyway - it should work (and works) on this OS completely in the same way.
 
@@ -562,15 +600,15 @@ All these compilers are in their "default" state with no custom patches from my 
 
 ## FAQ
 
-### Do I need to use LTO with PGO?
+### Can I use PGO without LTO?
 
-No! Link-Time Optimization (LTO) and PGO are completely independent and can be used without each other.
+Yes! Link-Time Optimization (LTO) and PGO are completely independent and can be used without each other.
 
 However, usually LTO is enabled before PGO. Why it happens? Because both LTO and PGO are optimization technique with an aim to optimize your program. And usually enabling LTO is much easier than PGO because enable one compiler/linker switch with LTO is an easier task than introduce 2-stages build pipelines with PGO. So please - before trying to add PGO to your program try to use LTO at first.
 
 There are some situations, when you may want to avoid using LTO with PGO:
 
-* Weak build machines. LTO (even in ThinLTO mode) consumes a large amount of RAM on your build machines. That means if your build environment is highly memory-constrained - you may want to use PGO without LTO since PGO usually has lighter RAM requirements for your CI.
+* Weak build machines. LTO (even in ThinLTO mode) consumes a large amount of RAM on your build machines. That means if your build environment is highly memory-constrained - you may want to use PGO without LTO since PGO usually has lighter RAM requirements for your CI. (TODO: add Linux distributions examples here in the build scripts)
 * Compiler bugs. Sometimes PGO does not work for some reason with LTO (TODO: add Rust compiler bug issue here)
 
 ## Related projects
@@ -579,13 +617,51 @@ TODO: write about ASOS, machine-learning based compilers, etc.
 
 ## Awesome PGO people
 
+TODO: add links to the people (GitHub, their blogs, etc.)
+
 If you decide to integrate PGO, probably at some point you will meet some problems, a corner case or find a nice way to improve PGO for your specific workload. So here I want to share the PGO experts list (not complete!). I believe these people could help you in your PGO journey:
 
 * Jakub Beranek
 * Maxim Panchenko
 * Amir Aupov
 
+Additionally I reccomend you to [join](https://discord.gg/xS7Z362) LLVM Discord server. It has many kind and clever people who can help you with your questions regarding LTO, PGO, PLO and other compiler-like fancy stuff.
+
 ## Future plans
+
+## Ideas
+
+TODO: write here some ideas for improving PGO situation
+
+I have several ideas about PGO and PLO future improvements across the ecosystem. Maybe something from my list will be so interesting to a someone, so they eventually will be implemented.
+
+### Write a PGO handbook
+
+TODO: write how I like handbook formats, give some examples like Rustbook, write why education is important and what I want to achieve with this book
+
+### Improve PGO state in various ecosystems
+
+TODO: write here at least about Java AoT state (that blocks PGO efforts) and Go (we are waiting for the more mature PGO implementation in the main Go compiler), CNCF projects opportunity
+
+### Improve PGO tooling
+
+From the tooling perspective, we have a big room for improvements. And here I am not even talking about build systems/package managers integrations. There are much more ways to integrate PGO into the daily life:
+
+* I created an [issue](https://github.com/compiler-explorer/compiler-explorer/issues/5414) about integrating PGO to [Godbolt](https://godbolt.org/) platform. Godbolt is a great place to play with different compilers, compiler flags to measure their influence on the compiled programs. I think it would be great to have a possibility to show differences betwenn PGOed and non-PGOed code on some toy examples directly on Godbolt. Right now it's not possible to do since PGO requires to store somehow the gathered profiles from the instrumentation phase but Godbolt is stateless (from this perspective). Hopefully, someone would be interested enough to implement it.
+* It seems to be an interesting idea to implement some kind PGO profiles integration into IDE. Let's say you open your favorite IDE/text editor, open some source code and right here you can see hot and cold paths in your code. And this information is not just your mental predicion (like "exception path highly-likely is a cold path") but based on the actual PGO profiles. How can you use this information? Well, e.g. for load balancing your efforts regarding optimizations across your program - take care at first about the hot paths in your application. If there is a [request](https://youtrack.jetbrains.com/issue/IDEA-332604/Support-voice-messages-code-comments) voice message in code comments support (and someone even [implemented](https://github.com/polina4096/voices) it!) - why not to have a PGO support? :)
+
+### Write PGO/PLO profiles gathering ecosystem
+
+TODO: write about mine and Amir's idea for a profiles gathering daemon like it's done in Google (or they'll open source it eventually)
+
+### Improve PGO/PLO visibility across the industry
+
+PGO and similar optimizations have too poor visibility across the industry (IMHO). I think spread the word about PGO, its benefits, traps, etc. would be valuable investment to the whole industry. It's one of the reasons why I wrote this article. I have several ideas of how the situation can be improved:
+
+* Talk more about PGO on the conferences. I like conferences, having a lot of tech-minded people around me - it's a lot fun! I think it would be great to give multiple talks about PGO on different conferences. It could be language-specific conferences (like [Rust](https://foundation.rust-lang.org/events/) or [C++](https://isocpp.org/wiki/faq/conferences-worldwide) conferences) where we can discuss language-specific PGO aspects. It could be something more specific like "PGO from a maintainer perspective" on [PackagingCon](https://packaging-con.org/). Maybe even prepare some PGO-workshops (like [performance workshops](https://conf.researchr.org/track/cgo-2023/cgo-2023-workshops-and-tutorials) on CGO) - why not?
+* I am thinking about trying to collaborate with Google with a project about integrating PGO into different kinds of software as a part of [Google Summer Of Code](https://summerofcode.withgoogle.com/) (GSoC). Didn't have such experience before but heard a lot of warm words about this activity. Maybe it would be possible to integrate PGO/PLO into several projects with GSoC help.
+
+TODO: collaboartion with companies, etc.
 
 ## Helpful/interesting links to know about
 

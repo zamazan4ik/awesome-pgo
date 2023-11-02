@@ -47,7 +47,6 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Check `simdjson` with PGO: https://github.com/simdjson/simdjson/blob/master/benchmark/CMakeLists.txt
 * Check new Go PGO when Go 1.21 compiler update will arrive in the distrubutions. Some CPU-heavy scenarios like log parsing should be a good candidate to test. Right now it has a lot of places to improve: https://github.com/golang/go/issues?q=is%3Aissue+is%3Aopen+PGO
 * Write an article about PGO and its caveats
-* Try to optimize LLVM LLC (https://llvm.org/docs/CommandGuide/llc.html)
 * Add PGO information to Rsyslog: https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1694533339
 * Rustc and LTO+PGO bug: https://github.com/rust-lang/rust/issues/115344
 * Ask in `cargo-pgo` repo about profiling C-like dependencies (e.g. RocksDB deps) in Rust projects: https://github.com/Kobzol/cargo-pgo/issues/38
@@ -56,10 +55,8 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * "Awesome-X" repositories are good places to start PGOify some domains
 * Envoy build fails with FDO: https://pastebin.com/8HtsEC26
 * Probably a good list to optimize command-line tooling: https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a
-* Write to Expensify about optimizing SQLite performance further with PGO: https://use.expensify.com/blog/scaling-sqlite-to-4m-qps-on-a-single-server
 * Check https://trofi.github.io/posts/243-gcc-profiler-internals.html article about GCC profiler internals
 * Check PGO support state across different build systems like CMake, Meson, Bazel, Buck, Cargo, etc.
-* Write an email (or something else) to https://twitter.com/disruptnhandlr (LLVM BOLT expert)
 * OCOLOS: https://people.ucsc.edu/~hlitz/papers/ocolos.pdf
 * Discussion BOLT and Propeller: https://discourse.llvm.org/t/practical-compiler-optimizations-for-wsc-workshop-us-llvm-dev-meeting-2023/73998/
 * What is https://prodfiler.com/ ? Check their work and probably write about them in the article
@@ -72,3 +69,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Why GraalVM (and consequently PGO in Java world) has so low adoption? I need to investigate it. GraalVM metadata repo - https://github.com/oracle/graalvm-reachability-metadata
 * Write about Clang (LLVM) vs GCC PGO implementations: GCC has more PGO switches, Clang has more recently-researched PGO-related things inside, etc.
 * Prepare an answer in Angie (Nginx fork) repository about PGO
+* https://github.com/stevinz/awesome-game-engine-dev
+* Possible LTO issues in compilers: https://github.com/rust-lang/rust/pull/113433
+* Good tracking issue for the Rustc optimizations: https://github.com/rust-lang/rust/issues/103595
+* PGO-related issue in Rustc: https://github.com/tensorchord/pgvecto.rs/issues/43#issuecomment-1788324707

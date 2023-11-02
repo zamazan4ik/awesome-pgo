@@ -13,11 +13,6 @@ Article topics to cover:
   - A good “first PGO issue” list to start playing with for a potential PGO newcomer
 * What is PGO
 * What does it inside of your program
-* Different PGO names (PGO, FDO, PDF, etc.)
-  - usually, PGO is used but be ready for other abbreviations as well
-* Types of PGO
-  - Instrumentation-based
-  - Sampling-based
 * Overview of the PGO state across programming languages
   - C/C++ - good
   - Rust - good
@@ -80,9 +75,6 @@ Article topics to cover:
   - Sometimes PGO is disabled on some platforms due to a lack of build resources
   - Sometimes PGO is disabled due to reproducible builds concerns. Concern about reproducing the profile
   - Could we trust the profiles from the upstream to use them instead of our own? Good question. That’s why is important to commit scripts for reproducing the profile (and still can differ due to time-based things like I had in YDB)
-* PGO and proprietary software
-  - ArenagraphDB just didn’t answer my request - maybe an email wasn’t enterprise-enough? :)
-  - NauEngine: sent an email about PGO (not response yet)
 * PGO implementation improvements:
   - Tooling. PGO at scale is simply not possible right now in an easy way with available open-source tooling
 * Post-Link Optimizers (LLVM BOLT, Propeller, their states and perspectives from my point of view)
@@ -111,11 +103,6 @@ Article topics to cover:
   - If you are a project developer - please consider providing better PGO integration into your project if you care about the performance
   - If you are a maintainer - please consider enabling PGO in your packages
   - If you have experience with PGO in production - please share your numbers/pains/experience with us!
-* A bunch of possible ideas for further PGO improvements:
-  - Write a PGO handbook - maybe would be a good idea
-  - Many Go applications are waiting to be PGO-optimized. CNCF - I am looking at you
-  - Integrate PGO profiles into your favorite IDE: you can read the code and see - where is hot and cold paths of your program
-  - Integrate PGO into Godbolt program - easier to show the PGO difference in some microbenchmarks
 * Similar projects:
   - Application-Specific Operating Systems (ASOS)
   - Machine-learning based compilers like Clang with Tensorflow inlining module

@@ -66,6 +66,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Gravity: https://github.com/marcobambini/gravity/issues/414
 * daScript: https://github.com/GaijinEntertainment/daScript/issues/831
 * Quirrel: https://github.com/GaijinEntertainment/quirrel/issues/84
+* Leo: https://github.com/AleoHQ/leo/issues/3226
 
 ## Developer tooling
 
@@ -142,9 +143,11 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
 * Bitty: https://github.com/paladin-t/bitty/issues/38
 * Hazel: https://github.com/TheCherno/Hazel/issues/645
-* Ogre3D: https://github.com/o3de/o3de/discussions/16883
+* Open 3D Engine: https://github.com/o3de/o3de/discussions/16883
 * DagorEngine: https://github.com/GaijinEntertainment/DagorEngine/issues/1
 * Cocos Engine: https://github.com/cocos/cocos-engine/issues/16449
+* Flax Engine: https://github.com/FlaxEngine/FlaxEngine/issues/1833
+* Defold: https://github.com/defold/defold/issues/8193
 
 ## Operating systems
 
@@ -269,6 +272,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Cube: https://github.com/cube-js/cube/issues/7354
 * PostgresML: https://github.com/postgresml/postgresml/issues/1131
 * Perspective: https://github.com/finos/perspective/issues/2405
+* OpenMLDB: https://github.com/4paradigm/OpenMLDB/issues/3575
 
 ## Logging
 

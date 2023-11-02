@@ -191,6 +191,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * quilkin: [GitHub comment](https://github.com/googleforgames/quilkin/issues/834#issuecomment-1772719309)
 * grcov: [GitHub issue](https://github.com/mozilla/grcov/issues/1128)
 * difftastic: [GitHub issue](https://github.com/Wilfred/difftastic/issues/588)
+* Perspective: [GitHub discussion](https://github.com/finos/perspective/discussions/2406#discussioncomment-7419407)
+* tquic: [GitHub issue](https://github.com/Tencent/tquic/issues/19)
 
 ## Projects with already integrated PGO into their build scripts
 
