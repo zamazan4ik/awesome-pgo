@@ -71,25 +71,8 @@ Article topics to cover:
   - By maintainers in your company (if you are large enough or have some specific security concerns)
   - On your own
   - Integrated into the build scripts PGO does not mean that you will get PGO-optimized binary
-* PGO state across OS distributions
-  - Sometimes PGO is disabled on some platforms due to a lack of build resources
-  - Sometimes PGO is disabled due to reproducible builds concerns. Concern about reproducing the profile
-  - Could we trust the profiles from the upstream to use them instead of our own? Good question. That’s why is important to commit scripts for reproducing the profile (and still can differ due to time-based things like I had in YDB)
 * PGO implementation improvements:
   - Tooling. PGO at scale is simply not possible right now in an easy way with available open-source tooling
-* Post-Link Optimizers (LLVM BOLT, Propeller, their states and perspectives from my point of view)
-* Bunch of funny stories from integrating PGO into different projects:
-  - Hardcoded timeout issue in YDB and Instrumentation PGO
-  - Developers does not believe in their own benchmarks (DuckDB and Broot)
-  - Rainer Grimm from Rsyslog thinks that algorithm always beats peephole optimizations (it’s wrong - they work at the same time)
-  - Developers are unresponsive (SQLite, MongoDB and others)
-  - Bugs with LTO and PGO in Rustc compiler
-  - ClickHouse in the Instrumentation mode runs the ClickBench suite for more 30+ hours on my Linux setup
-  - Got an additional RAM from my friend since 32 Gib is not enough for LLVM BOLT :)
-  - Needed to complete registrations in many bugzillas or even more trickier platforms - please add the possibility to login with Google, GitHub or smth like that
-  - Some people integrate PGO even without benchmarks - just because they can :) Usually, it’s not a good idea (since PGO can give you nothing but you will pay for the longer compilation process)
-  - Problems with hardware architecture availability in CI (GitHub Actions as an example of such CI service)
-  - A comment from Stolyarov about PGO in Thalassa :)
 * PGO FAQ:
   - What if I have different workloads for the application? Well, here there are multiple options:
   - Merge profiles (could be less efficient sometimes)
@@ -98,18 +81,6 @@ Article topics to cover:
   - Good question. No - they are independent optimizations. However, usually people enables LTO at first (because it’s easier to do) and then start thinking about PGO, not vice versa. But e.g. MSVC compiler does not allow you to enable PGO without LTO (I do not know why - maybe some internal implementation difficulties - how knows)
   - Could I put information from PGO profile directly into the sources?
   - Well, sort of. Like usually you able to write inline attribute here and there based on PGO profiles. But it can be hard to maintain with a little or no benefits
-* Piece of advice for the developers:
-  - If you are a language/compiler designer - please consider integrating PGO into your language/compiler
-  - If you are a project developer - please consider providing better PGO integration into your project if you care about the performance
-  - If you are a maintainer - please consider enabling PGO in your packages
-  - If you have experience with PGO in production - please share your numbers/pains/experience with us!
-* Similar projects:
-  - Application-Specific Operating Systems (ASOS)
-  - Machine-learning based compilers like Clang with Tensorflow inlining module
-* PGO experts (from my experience):
-  - Add Niels Bohr quote about experts and mistakes
-  - Kobzol from Rust team
-  - People from LLVM BOLT dev team
 * Why am I doing all this stuff with PGO
   - Better performance overall -> easier to resolve NFR for the systems
   - Popularization using runtime information during the compilation for better optimizations

@@ -372,6 +372,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * gluten: https://github.com/oap-project/gluten/issues/3478
 * difftastic: https://github.com/Wilfred/difftastic/issues/588
 * Solidity: https://github.com/ethereum/solidity/issues/11085
+* legba: https://github.com/evilsocket/legba/issues/10
 
 # PGO in Go ecosystem
 

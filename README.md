@@ -193,6 +193,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * difftastic: [GitHub issue](https://github.com/Wilfred/difftastic/issues/588)
 * Perspective: [GitHub discussion](https://github.com/finos/perspective/discussions/2406#discussioncomment-7419407)
 * tquic: [GitHub issue](https://github.com/Tencent/tquic/issues/19)
+* legba: [GitHub issue](https://github.com/evilsocket/legba/issues/10)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -225,6 +226,9 @@ Below you can find some examples, where and how PGO is integrated into different
 * OceanBase: [CMake flag](https://github.com/oceanbase/oceanbase/blob/master/cmake/Env.cmake#L55)
 * ISPC: [CMake scipts](https://github.com/ispc/ispc/tree/main/superbuild)
 * NodeJS: [Configure script](https://github.com/nodejs/node/commit/9be15559cc0bfe506d9cdfba4ad0f4beacf5ce17)
+* Android Open Source Project (AOSP):
+  - [Official documentation](https://source.android.com/docs/core/perf/pgo)
+  - Committed PGO profiles: [repository](https://android.googlesource.com/toolchain/pgo-profiles/+/refs/heads/main)
 
 ## Project-specific documentation about PGO
 

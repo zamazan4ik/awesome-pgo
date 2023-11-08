@@ -73,3 +73,4 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Possible LTO issues in compilers: https://github.com/rust-lang/rust/pull/113433
 * Good tracking issue for the Rustc optimizations: https://github.com/rust-lang/rust/issues/103595
 * PGO-related issue in Rustc: https://github.com/tensorchord/pgvecto.rs/issues/43#issuecomment-1788324707
+* Check Android (and Android-dependent) project for PGO/BOLT usage

@@ -111,7 +111,7 @@ The first funny thing that I found - PGO has multiple names! And they all mean *
 * Profile-Guided Optimization (PGO)
 * Feedback-Directed Optimization (FDO)
 * Profile-Driven Optimization (PDO)
-* Profile-Directed Feedback (PDF)
+* Profile-Directed Feedback (PDF) (IBM AIX [documentation](https://www.ibm.com/docs/en/aix/7.3?topic=techniques-profile-directed-feedback))
 * Profile Online Guided Optimization (POGO) (I found at least one [post](https://www.reddit.com/r/rust/comments/jwad2g/new_experiment_pogo_online_pgo_for_functions/) on Reddit)
 
 At most places, you will see PGO (sometimes people pronouns it as "pogo") (like in Clang (TODO ref), GCC (TODO ref), Rustc (TODO ref)). Sometimes, FDO is used (like in Bazel (TODO ref)). Other names almost never used. In this article, I use only PGO abbreviation as the most known name for this optimization technique.
@@ -145,6 +145,10 @@ Usually, the scenario is the following:
 #### PGO via Sampling
 
 TODO: add info about Sampling PGO
+
+More about AutoFDO you can find here:
+
+* Original AutoFDO paper: [Google research](https://research.google/pubs/pub45290/)
 
 #### Other PGO types
 
@@ -220,7 +224,7 @@ Instrumentation PGO works via inserting into your code some counters for trackin
 
 TODO: add before and after PGO instrumentation assembler for Clang and GCC: https://godbolt.org/z/ofMKzEscn
 
-How much binary space does it take in practice? Let's check it:
+How much binary space does it take in practice? Let's check it (all tests are done on the Linux machine):
 
 | Application | Release size | Instrumented size | PGO optimized size | Instrumented to Release ratio | Compiler |
 |---|---|---|---|---|---|
@@ -309,6 +313,7 @@ Microsoft few years ago started investing into the PGO implementation in C#. Unf
 * [Dynamic PGO in .Net 6](https://gist.github.com/EgorBo/dc181796683da3d905a5295bfd3dd95b). By the way, the article author, [EgorBo](https://gist.github.com/EgorBo), is an expert in C# PGO implementation. So probably you can ask him about more details directly!
 * [PGO improvements in .Net 7](https://petabridge.com/blog/dotnet7-pgo-performance-improvements/)
 * [Conversation about PGO in Microsoft blog](https://devblogs.microsoft.com/dotnet/conversation-about-pgo/)
+* Dynamic PGO official design [documentation](https://github.com/dotnet/runtime/blob/main/docs/design/features/DynamicPgo.md)
 
 ### Java
 
@@ -319,6 +324,7 @@ GraalVM even [supports](https://github.com/oracle/graal/discussions/7648) sampli
 PGO in GraalVM is available only in GraalVM Enterprise license but don't worry - Enterprise license is free [now](https://blogs.oracle.com/java/post/graalvm-free-license) so you do not need to pay at least for a license if you want to use PGO in Java. Good? Great!
 
 TODO: write about the curently weak GraalVM support across the Java ecosystem.
+TODO: add link about Kafka and GraalVM: https://cwiki.apache.org/confluence/display/KAFKA/KIP-974%3A+Docker+Image+for+GraalVM+based+Native+Kafka+Broker
 
 ### Swift
 
@@ -470,7 +476,7 @@ TODO: add somewhere link to "PGO at scale" in Google
 
 What if PGO is not enough for us and we want to squeeze even more performance "for free" with no manual optimizations? Well, in this case the industry already has something to offer. This kind of tools are called Post-Link Time Optimizers or simply PLO.
 
-TL;DR, the idea behind PLO is simple - try to reduce [CPU instruction cache (I-cache)](https://en.wikipedia.org/wiki/CPU_cache#Overview) misses for applications. We can achieve it with rearranging code in our binary accordingly to our execution profile: hot code executed together we place together in the binary, so these pieces of code highly-likely will be uploaded to a CPU at the same time.
+TL;DR, the idea behind PLO is simple - try to reduce [CPU instruction cache (I-cache)](https://en.wikipedia.org/wiki/CPU_cache#Overview) and [Instruction Translation Lookaside Buffer (iTLB)](https://en.wikipedia.org/wiki/Translation_lookaside_buffer#Overview) misses for applications. We can achieve it with rearranging code in our binary accordingly to our execution profile: hot code executed together we place together in the binary, so these pieces of code highly-likely will be uploaded to a CPU at the same time.
 
 Right now, there are two the most mature tools in this area: [LLVM BOLT](https://github.com/llvm/llvm-project/blob/main/bolt/README.md) (from Facebook/Meta) and Propeller (from Google). Let's discuss each of them.
 
@@ -488,7 +494,7 @@ TODO: write about BOLT instrumentation slowdown like https://github.com/qarmin/c
 
 TODO: add BOLT instrumentation binary large ratio
 
-| Application | Release size | Instrumented size | PGO optimized size | Instrumented to Release ratio |
+| Application | Release size | Instrumented size | BOLT optimized size | Instrumented to Release ratio |
 |---|---|---|---|---|
 |  |  |  |  |  |
 
@@ -513,8 +519,8 @@ TODO: Do I have any benchmarks? I guess putting from the official Google papers 
 
 Do you want more? Here we go:
 
+* Original Propeller repo: [GitHub](https://github.com/google/llvm-propeller)
 * 2019 LLVM Developers’ Meeting: S. Tallam “Propeller: Profile Guided Large Scale Performance...”: [Youtube](https://www.youtube.com/watch?v=DySuXFGmB40)
-* 
 
 ### Other approaches
 
@@ -523,6 +529,8 @@ TODO: write here about Dynamic BOLT and other ongoing researches in this area
 ### What to choose?
 
 From my experience, right now BOLT would be the better option to start with if we are talking about PLO usage.
+
+TODO: add thoughts about unification efforts between BOLT and Propeller: https://github.com/google/llvm-propeller/issues/10
 
 ## PLO state in the ecosystem
 
@@ -598,6 +606,92 @@ For all Rust projects I use `rustc` compiler with LLVM backend, versions somewhe
 
 All these compilers are in their "default" state with no custom patches from my side: `rustc` from the official website, Clang and GCC from the official Fedore repository.
 
+## PGO state across Linux distributions
+
+TODO: finish chapter
+
+  - Sometimes PGO is disabled on some platforms due to a lack of build resources
+  - Sometimes PGO is disabled due to reproducible builds concerns. Concern about reproducing the profile
+  - Could we trust the profiles from the upstream to use them instead of our own? Good question. That’s why is important to commit scripts for reproducing the profile (and still can differ due to time-based things like I had in YDB)
+
+In many cases, we don't use binaries directly from developers or we don't rebuild all the things in our own perimter (despite I know such security requirements in some areas!) - we use *prebuilt* binaries from our favourite OS distribution. But if the binaries are prebuilt by someone, there is a chance that PGO can be disabled even if PGO-optimized build is supported by the upstream. How does it work in practice?
+
+Unfortunately, PGO is rarely enabled in the provided by OS repositories. Let's take a look on some examples:
+
+| Application | PGO state | Notes |
+|---|---|---|
+| Chromium |  |  |
+| Firefox |  |  |
+| Clang |||
+| GCC | ||
+| Rustc |||
+
+## Stories
+
+TODO: finish chapter
+
+  - Developers does not believe in their own benchmarks (DuckDB and Broot)
+  - Developers are unresponsive (SQLite, MongoDB and others)
+  - Bugs with LTO and PGO in Rustc compiler
+  - ClickHouse in the Instrumentation mode runs the ClickBench suite for more 30+ hours on my Linux setup
+  - Got an additional RAM from my friend since 32 Gib is not enough for LLVM BOLT :)
+  - Needed to complete registrations in many bugzillas or even more trickier platforms - please add the possibility to login with Google, GitHub or smth like that
+  - Some people integrate PGO even without benchmarks - just because they can :) Usually, it’s not a good idea (since PGO can give you nothing but you will pay for the longer compilation process)
+  - Problems with hardware architecture availability in CI (GitHub Actions as an example of such CI service)
+
+
+During my PGO tests across the ecosystem, I collected some interesting PGO-related stories. I think it would be a good thing to share them here and learn some lessons.
+
+### YDB
+
+TODO: Hardcoded timeout issue in YDB and Instrumentation PGO
+
+When I was working on testing PGO with different databases, I found [YDB](https://ydb.tech/) - an interesting database from Yandex. And I decided to optimize it with PGO. YDB is written in C++ (PGO can be applied), [has](https://ydb.tech/en/docs/reference/ydb-cli/commands/workload/) built-in benchmarks (PGO can be easily trained at least on these benchmarks).
+
+I recompiled YDB with instrumentation PGO and started the benchmark to collect PGO profiles. But for some reason, the benchmark failed. After deeper investigation I found an interesting behavior - hitting internal YDB deadlines. Since the instrumented binary was running slower, internal deadlines started to interrupt the PGO training phase. I increased [the limit](https://github.com/ydb-platform/ydb/blob/main/ydb/core/load_test/kqp.cpp#L321) (since I had no glue how to fix it properly) and it the issue was fixed.
+
+However, since the upstream has no proper fix yet, and you decide to optimize YDB with PGO - just be aware of the issue!
+
+Lessons learnt:
+
+* Having built-in benchmarks is a useful thing!
+* Timeouts are not jokes and actually can hurt your PGO trip
+
+### HAProxy
+
+TODO: write a story about HAProxy multiple benchmarks
+
+Once I [created](https://github.com/haproxy/haproxy/issues/2047) an issue about PGO in HAProxy repo, and [Willy Tarreau](https://github.com/wtarreau) (the HAProxy maintainer) said that will be no effects from PGO on HAProxy. I argued a little bit about PGO, CPU consumption, HAProxy actual bottlenecks, and I was not able to win this dispute without an actual benchmark. So I decided to prove my point of view.
+
+I crafted a benchmark, showed the positive results to Willy, he asked to improve my benchmark scenario and show additional information like binary sizes and perform PGO tests on GCC too (I use Clang as a default C and C++ compiler). After several iterations, Willy [concluded](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729980766) that PGO shows measurable improvements. It was a huge win for me!
+
+I **really** appreciate such attention to the details and wish to understand as much details as possible about PGO from Willy Tarreu. Even if it required from me performing multiple tests, I still think it was worth it.
+
+Lessons learnt:
+
+* Maintainers knows the domain much better than you and can help you with crafting a "right" benchmark
+* Disputing about PGO is much easier with the actual benchmark results
+
+### SQLite
+
+Write a story how I was ignored by SQLite developers
+
+### Stolyarov
+
+TODO: A comment from Stolyarov about PGO in Thalassa :)
+
+In the Russian-speaking Internet segment there is a meme - Aleksei Stolyarov. His own webpage is [here](http://stolyarov.info/). Recently he published his own C++ CMS - [Thalassa](https://github.com/a-croco-stolyarov/thalassa).
+
+I decided to [propose](https://github.com/a-croco-stolyarov/thalassa/issues/1) testing PGO on Thalassa. And I expected, got a wonderful answer!
+
+TODO: add screenshot here: https://github.com/a-croco-stolyarov/thalassa/issues/1#issuecomment-1721060548
+
+Besides jokes, don't be like Aleksey regarding PGO. PGO allows you spend less time with manual program optimization. So even if you are a **real** programmer - do not hesitate to use PGO!
+
+## PGO tips
+
+TODO: finish chapter
+
 ## FAQ
 
 ### Can I use PGO without LTO?
@@ -609,11 +703,101 @@ However, usually LTO is enabled before PGO. Why it happens? Because both LTO and
 There are some situations, when you may want to avoid using LTO with PGO:
 
 * Weak build machines. LTO (even in ThinLTO mode) consumes a large amount of RAM on your build machines. That means if your build environment is highly memory-constrained - you may want to use PGO without LTO since PGO usually has lighter RAM requirements for your CI. (TODO: add Linux distributions examples here in the build scripts)
-* Compiler bugs. Sometimes PGO does not work for some reason with LTO (TODO: add Rust compiler bug issue here)
+* Compiler bugs. Sometimes PGO does not work for some reason with LTO (like [this](https://github.com/rust-lang/rust/issues/115344) and [this](https://github.com/rust-lang/rust/issues/117220) bugs in the Rustc compiler). Even without PGO enabling LTO can bring multiple bugs - e.g. check YugabyteDB LLVM [fix](https://github.com/yugabyte/llvm-project/commit/64d871949eb23145af7b97cb13feaeeeee7ab39a).
+
+I have several examples of how LTO improves performance:
+
+| Application | Release | Release + LTO | Link |
+|---|---|---|---|
+| legba |  |  |  |
+
+Some Linux distributions few years ago started to integrate LTO as a default compiler flag for building their software. Here are some examples:
+
+* Debian: [link](https://wiki.debian.org/ToolChain/LTO)
+* Ubuntu: [link](https://wiki.ubuntu.com/ToolChain/LTO)
+* Fedora: [link](https://fedoraproject.org/wiki/LTOByDefault)
+* OpenSUSE: [link](https://en.opensuse.org/openSUSE:LTO)
+
+Enabling LTO by default is a huge step that highlights dozens of bugs in your software (especially C and C++). You see it on a Gentoo example - they already collected many LTO-related issues (links to [Gentoo bugzilla](https://bugs.gentoo.org/618550), [gentooLTO repository](https://github.com/InBetweenNames/gentooLTO/issues)). I am sure you can find similar issues in other bugtrackers as well.
+
+However, not all distributions consider enabling LTO by default due to the problems discussed above. One of the examples is NixOS (the discussion can be found at [Reddit](https://www.reddit.com/r/NixOS/comments/146wdfk/lto_by_default/)). Hopefully over time more and more issues with LTO will be resolved and we will see "LTO by default" policy enabled in more build guidelines.
+
+If you are interested in more details about LTO, I collected several links for you:
+
+* ThinLTO: [Google Research](https://research.google/pubs/pub47584/), [Youtube](https://www.youtube.com/watch?v=9OIEZAj243g)
+* 
+
+TODO:
+- add more information about Fat and Thin LTO
+- add about LTO state across Linux distributions
+- add LTO performance improvement results examples
+- add more LTO links to articles and talks
+
+### What about PGO profiles compatibility between compilers?
+
+**Awful**. PGO profiles are incompatible between compilers. So if you have PGO profiles generated by GCC, it's imporssible to use them in Clang or MSVC. In theory, it's possible to write a converter between profile formats but I don't know such projects (of course you can try writing your own. If you do - please let me know!).
+
+Compatibility is not guaranteed even between versions of the compiler! So if you upgraded from Clang X to Clang Y - probably you need to regenerate your PGO profiles as well. And if you want to support multiple compilers - you need to maintain multiple PGO profiles versions (or just generate PGO profiles ondemand for each compiler).
+
+I tried to find strict profile format definition, forward/backward compatibility guarantees, migration guides, built-in versioning support but with no success. If you a compiler engineer and you can fix it somehow - please do it! It would be helpful for the whole community!
+
+### Regenerating vs caching PGO profiles
+
+TODO: finish section
+
+Usually, there are two ways to work with PGO profiles:
+
+* Generate PGO profiles again for each build
+* Cache PGO profiles and reuse them for builds
+
+Here are some examples of how it's done in some projects:
+
+* Android Open Source Project (AOSP): [repository](https://android.googlesource.com/toolchain/pgo-profiles/+/refs/heads/main)
+* file.d: [GitHub file](https://github.com/ozontech/file.d/blob/master/default.pgo)
+
+### Algorithm optimizations always outperform machine optimizations
+
+TODO: here we need to discuss an opinion from Rainer Grimm (Rsyslog dev). Rainer Grimm from Rsyslog thinks that algorithm always beats peephole optimizations (it’s wrong - they work at the same time)
+
+### Do I need to integrate LTO, PGO or PLO without benchmarks
+
+TODO: discuss here such a topic
 
 ## Related projects
 
 TODO: write about ASOS, machine-learning based compilers, etc.
+
+Here I want to show you some PGO-related ongoing researches or similar ideas that possibly you find at least interesting.
+
+### Application Specific Operating Systems (ASOS)
+
+TODO: add info about ASOS
+TODO: add a diagram about how our applications are deployed on OS
+
+Before we talked about optimizing with LTO/PGO/PLO our own applications. But in 99.99(9)% cases we run software on operating systems. But what if we optimize will try to PGO optimize an operating system too?
+
+Already there are multiple PGO tests on this topic:
+
+* Linux kernel:
+  - "One Profile Fits All: Profile-Guided Linux Kernel Optimizations for Data Center
+Applications" [paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
+  - [Microsoft presentation about Linux with PGO](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
+  - [TCP Stream perf from Linux Plumbers conference](https://lpc.events/event/7/contributions/798/attachments/661/1214/LTO_PGO_and_AutoFDO_-_Plumbers_2020_-_Tolvanen_Wendling_Desaulniers.pdf)
+  - [Phoronix post about Clang PGO for Linux](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next)
+  - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
+  - [Gentoo Wiki about the Linux kernel optimization](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
+  - Optimizing Linux kernel with Clang. An [article](https://habr.com/ru/companies/ruvds/articles/696236/)(in Russian) and the [results](https://github.com/h0tc0d3/linux_pgo)
+* Windows: 5-20% improvement according to the [presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
+
+Unfortunately, I have no PGO results for other operating systems like macOS (almost impossible to get insights from Apple, you know) or *BSD (e.g. see [this](https://www.reddit.com/r/freebsd/comments/150codp/profileguided_optimization_pgo_on_freebsd_kernel/) Reddit post). If you can perform tests for other operating systems or already know some PGO results - please let me know!
+
+Operating systems can be optimized with PGO in the same as we do for usual applications: compile with instrumentation (if we choose instrumentation PGO), run target workload on the operating system, collect PGO profiles, and recompile the OS once again.
+
+More information can be found in the original paper [here](http://scis.scichina.com/en/2018/092102.pdf).
+
+### Machine learning-based compilers
+
+TODO: write about TF-based inlining for LLVM and write a little bit about the current inline implementation in LLVM
 
 ## Awesome PGO people
 
@@ -639,9 +823,16 @@ I have several ideas about PGO and PLO future improvements across the ecosystem.
 
 TODO: write how I like handbook formats, give some examples like Rustbook, write why education is important and what I want to achieve with this book
 
+Here are some good examples:
+
+* A plenty of Rust-related books: [Rustbook](https://doc.rust-lang.org/book/), [The Rustonomicon](https://doc.rust-lang.org/nomicon/)
+* [Unofficial Bevy Cheat Book](https://bevy-cheatbook.github.io/)
+
 ### Improve PGO state in various ecosystems
 
 TODO: write here at least about Java AoT state (that blocks PGO efforts) and Go (we are waiting for the more mature PGO implementation in the main Go compiler), CNCF projects opportunity
+
+* We have a lot of Java software nowadays. And before we Rewrite It In Rust (RIIR) we need to care about the Java performance too. [GraalVM](https://www.graalvm.org/) helps with AoT compiling Java applications to the native mode. Since we want to integrate PGO into Java too, at first we need to integrate GraalVM well into the ecosystem.
 
 ### Improve PGO tooling
 
@@ -653,6 +844,10 @@ From the tooling perspective, we have a big room for improvements. And here I am
 ### Write PGO/PLO profiles gathering ecosystem
 
 TODO: write about mine and Amir's idea for a profiles gathering daemon like it's done in Google (or they'll open source it eventually)
+
+The original idea is described [here](https://github.com/aaupov/school_topics/blob/main/perfd.md) (in Russian, so if you don't know the lang - please use the translator or ask Amir about making it English-first :), a few initial commits are available [here](https://github.com/linux-perfd/perfd).
+
+Another idea is gathering PGO profiles (instrumentation or sampling, whatever) via crowd-sourcing like mechanism. One of the biggest issue with PGO is collecting actual usage profiles. But what if we had a repository where each software engineer can get actual PGO profiles for its application and use it for PGO-optimized builds on their official site? It could be done e.g. via a specific OS build where all PGO-potent applications are built with instrumentation or continually collect sampling profiles via `perf` or something like that? There are **a lot** of concerns here like privacy issues (potential mapping "some_user_id -> application execution profiles"), security issues (organize an attack on an application performance via messing publicly-gathered PGO profiles), implementation (who and how would implement all this stuff?!), and much more. Maybe community-driven projects like [Boinc](https://boinc.berkeley.edu/) could be a good example here - right now it's just an idea, no more.
 
 ### Improve PGO/PLO visibility across the industry
 
@@ -671,6 +866,35 @@ Here I collected a bunch of PGO and optimization related links that I can recomm
 
 * [Awesome PGO](https://github.com/zamazan4ik/awesome-pgo). It's my repository, where I collect **everything** about PGO: benchmarks for different software, bugs in compilers, tracking PGO issues in multiple projects, etc. If anyone asks you something like "Hi ${PERSON_NAME}! Could you please send me a link to dive into PGO?" - it should the first appeared in your mind link to share! From my side, I will try to maintain it on the corresponding quality level (at least for some time).
 * [PGO in details in Go](https://theyahya.com/posts/go-pgo/). I think it would be interesting to read for Go people.
+
+## Conclusion
+
+TODO: finish the chapter
+
+* Piece of advice for the developers:
+  - If you are a language/compiler designer - please consider integrating PGO into your language/compiler
+  - If you are a project developer - please consider providing better PGO integration into your project if you care about the performance
+  - If you are a maintainer - please consider enabling PGO in your packages
+  - If you are a OS package comittee member (like Fedora FESCO) - please consider general PGO movement across the whole package policy
+  - If you have experience with PGO in production - please share your numbers/pains/experience with us!
+
+I want to finish with the call to the commununity.
+
+If you are a language designer - please at least consider implementing AoT compilation model for your language. Of course this model is not suitable for all cases but would be nice to have a possibility to compile (and preoptimize with PGO) a program before the launch. Cold start time matters nowadays, you know.
+
+If you are a language/compiler designer - please consider integrating PGO into your language/compiler
+
+I hope you enjoyed the article! I tried to share all my experience with PGO. And if at least one person after reading all these materials will try to integrate PGO into their applications - I would be happy!
+
+## My contacts
+
+If you want to discuss with me more things about PGO, think about contributing to PGO or know anything PGO-related, you can find me via:
+
+* Email: zamazan4ik@tut.by (primary email) or zamazan4ik@gmail.com (secondary email)
+* Telegram: zamazan4ik
+* Discord: zamazan4ik
+
+Also, you can create an issue or open a discussion in https://github.com/zamazan4ik/awesome-pgo, if you want to contribute PGO results or discuss something publicly. Just be careful about possible NDA violation and similar stuff.
 
 TODO: note about MSVC compiler and combined LTO/PGO mode as the only option to enable PGO.
 
