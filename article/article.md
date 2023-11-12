@@ -1,6 +1,6 @@
 # Profile-Guided Optimization (PGO): a long hard road to the hell (or PGO: survey of industy-wide adoption, challenges and benefits as Amir suggested)
 
-In this article, I want to discuss one compiler optimization technique - Profile-Guided Optimization (PGO). We will talk about PGO pros and cons, obvouis and tricky traps with PGO, take a look on the current PGO ecosystem from different perspectives (programming languages, build systems, operating systems, etc.). I spent many days with applying PGO to different applications... Tweaking build scripts, many measurements, sometimes tricky debug sessions, several compiler bugs and much more - it was (and still is) a great journey! I think my experience would be helpful for other people so you will be able to avoid my mistakes from the beginning and much nicer optimization experience.
+In this article, I want to discuss one compiler optimization technique - Profile-Guided Optimization (PGO). We will talk about PGO pros and cons, obvious and tricky traps with PGO, take a look at the current PGO ecosystem from different perspectives (programming languages, build systems, operating systems, etc.). I spent many days applying PGO to different applications... Tweaking build scripts, many measurements, sometimes tricky debug sessions, several compiler bugs and much more - it was (and still is) a great journey! I think my experience would be helpful for other people so you will be able to avoid my mistakes from the beginning and much nicer optimization experience.
 
 The article is written in a story style. So the information about PGO is mixed with a lot of examples (because I like examples from the real world) and my own thoughts regarding multiple aspects PGO and PGO-related aspects.
 
@@ -8,7 +8,7 @@ The article is huge enough, so do not forget to grab some tea, beer or something
 
 ## Target audience
 
-I think the article would be interesting for anyone, who cares about software performance. Especially it should be interesting for people who wants to extract more performance from applications without tweaking the application itself.
+I think the article would be interesting for anyone, who cares about software performance. Especially it should be interesting for people who want to extract more performance from applications without tweaking the application itself.
 
 Do not expect "hardcore" here. I am a usual software engineer, (un)fortunately not even a compiler engineer! And because of this I am sure my point of view could be interesting here - how looks like advanced (IMHO) compiler optimizations techniques from the average software engineer side.
 
@@ -40,13 +40,15 @@ TODO: add the most famous applications and PGO results for it
 | GCC | up to +7-12% compilation speed | [one](https://bugs.archlinux.org/task/56856), [two](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138) |
 | Rustc | up to +10-15% compilation speed | [one](https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html), [two](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html) |
 | CPython | +13% improvement | [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/) |
+| DMD (D compiler) | up to +45% improvement | [GitHub issue](https://github.com/dlang/dmd/pull/13791#issue-1164476335) |
+| LDC (D compiler) | up to 10-15% improvement | [GitHub comment](https://github.com/ldc-developers/ldc/discussions/4524#discussioncomment-7537608) |
 | Chromium | up to 12% faster | [one](https://blog.chromium.org/2016/10/making-chrome-on-windows-faster-with-pgo.html), [two](https://blog.chromium.org/2020/08/chrome-just-got-faster-with-profile.html) |
 | Firefox | up to 12% faster | [Google groups](https://groups.google.com/g/mozilla.dev.platform/c/wwO48xXFx0A/m/ztg4i0DYAAAJ) |
 | Envoy | up to +20% RPS | [GitHub comment](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679) |
 | HAProxy | up to +5% RPS | [GitHub issue](https://github.com/haproxy/haproxy/issues/2047) |
 | Vector | up to +15% EPS | [GitHub issue](https://github.com/vectordotdev/vector/issues/15631) |
 
-Of course it's not a complete list - much more PGO showcases you can check right now [here](https://github.com/zamazan4ik/awesome-pgo#pgo-showcases). If you are interested - let's go to our PGO journey!
+Of course, it's not a complete list - much more PGO showcases you can check right now [here](https://github.com/zamazan4ik/awesome-pgo#pgo-showcases). If you are interested - let's go our PGO journey!
 
 ## Intro
 
@@ -247,6 +249,7 @@ How much binary space does it take in practice? Let's check it (all tests are do
 | htmlq | 6.7 Mib | 11 Mib | 6.8 Mib | 1.64x | Rustc |
 | ouch | 3.5 Mib | 8.0 Mib | 3.3 Mib | 2.26x | Rustc |
 | difftastic | 68 Mib | 75 Mib | 68 Mib | 1.10x | Rustc |
+| slint-fmt | 3.1 Mib | 28 Mib | 3.3 Mib | 9.0x | Rustc |
 
 In general, there is no way to make a *precise* predict of how large your binary will be after the instrumentation without the actual compilation process. There are so many variables involved in this process (how much branches your application has, do you recompile with PGO your statically-linked dependencies, etc.) that much-much easier will be just recompile with instrumentation and check it. Maybe one day the compilers (or an ecosystem around the compiler) will provide you some estimations before the actual compilation process but not today.
 
@@ -274,7 +277,7 @@ Different compilers has different PGO maturity levels. Some of them support PGO 
 
 C has a veeeery long history, C++ is a bit younger but still is quite a mature technology. So compilers for C and C++ also evolved **a lot** during the decades from many viewpoints, including multiple optimizations.
 
-TODO: add information when PGO firstly appeared in C compilers
+TODO: add information when PGO first appeared in C compilers
 
 Here are some PGO integration examples into the different compilers:
 
@@ -326,6 +329,10 @@ PGO in GraalVM is available only in GraalVM Enterprise license but don't worry -
 TODO: write about the curently weak GraalVM support across the Java ecosystem.
 TODO: add link about Kafka and GraalVM: https://cwiki.apache.org/confluence/display/KAFKA/KIP-974%3A+Docker+Image+for+GraalVM+based+Native+Kafka+Broker
 
+### Kotlin and Kotlin Native
+
+TODO: https://youtrack.jetbrains.com/issue/KT-63357/Kotlin-Native-Profile-Guided-Optimization-PGO-support
+
 ### Swift
 
 It's a complicated question. From one perspective, in the Swift compiler sources [there are](https://github.com/apple/swift/blob/main/include/swift/Option/Options.td#L1322) some PGO footprints. From another - even the compiler developer is [not sure](https://github.com/apple/swift/issues/69227) about the current PGO implementation state in the compiler. Anyway, there is an **unanswered** [topic](https://forums.swift.org/t/several-questions-regarding-profile-guided-optimization-pgo-and-llvm-bolt/67963) on the Swift forum. Hopefully, one day it will get an answer.
@@ -334,6 +341,10 @@ It's a complicated question. From one perspective, in the Swift compiler sources
 
 TODO: write a story about a new Zig compiler and how it affects PGO dreams in this language
 
+### D
+
+TODO
+
 ### Dart
 
 TODO: add information about Dart: https://github.com/dart-lang/sdk/issues/53855 in `dart2native` mode and https://github.com/dart-lang/sdk/issues/53856
@@ -341,6 +352,26 @@ TODO: add information about Dart: https://github.com/dart-lang/sdk/issues/53855 
 ### Nim
 
 TODO: has no support https://github.com/nim-lang/RFCs/issues/130
+
+### Pascal
+
+TODO: https://forum.lazarus.freepascal.org/index.php/topic,65162.0.html
+
+### Haskell
+
+TODO: GHC - no support: https://gitlab.haskell.org/ghc/ghc/-/issues/18393 , what about other compilers?
+
+### Julia
+
+TODO: https://github.com/JuliaLang/julia/pull/45641#issue-1268010204
+
+### Ocaml
+
+TODO: https://github.com/ocaml/ocaml/issues/12200
+
+---
+
+TODO: create a table with programming languages and PGO support status
 
 ## PGO support in build systems
 
@@ -635,7 +666,7 @@ TODO: finish chapter
   - Bugs with LTO and PGO in Rustc compiler
   - ClickHouse in the Instrumentation mode runs the ClickBench suite for more 30+ hours on my Linux setup
   - Got an additional RAM from my friend since 32 Gib is not enough for LLVM BOLT :)
-  - Needed to complete registrations in many bugzillas or even more trickier platforms - please add the possibility to login with Google, GitHub or smth like that
+  - Needed to complete registrations in many bugzillas or even trickier platforms - please add the possibility to login with Google, GitHub or smth like that
   - Some people integrate PGO even without benchmarks - just because they can :) Usually, it’s not a good idea (since PGO can give you nothing but you will pay for the longer compilation process)
   - Problems with hardware architecture availability in CI (GitHub Actions as an example of such CI service)
 
@@ -733,13 +764,13 @@ TODO:
 - add LTO performance improvement results examples
 - add more LTO links to articles and talks
 
-### What about PGO profiles compatibility between compilers?
+### What about PGO profile compatibility between compilers?
 
 **Awful**. PGO profiles are incompatible between compilers. So if you have PGO profiles generated by GCC, it's imporssible to use them in Clang or MSVC. In theory, it's possible to write a converter between profile formats but I don't know such projects (of course you can try writing your own. If you do - please let me know!).
 
-Compatibility is not guaranteed even between versions of the compiler! So if you upgraded from Clang X to Clang Y - probably you need to regenerate your PGO profiles as well. And if you want to support multiple compilers - you need to maintain multiple PGO profiles versions (or just generate PGO profiles ondemand for each compiler).
+Compatibility is not guaranteed even between versions of the compiler! So if you upgraded from Clang X to Clang Y - probably you need to regenerate your PGO profiles as well. And if you want to support multiple compilers - you need to maintain multiple PGO profiles versions (or just generate PGO profiles on-demand for each compiler).
 
-I tried to find strict profile format definition, forward/backward compatibility guarantees, migration guides, built-in versioning support but with no success. If you a compiler engineer and you can fix it somehow - please do it! It would be helpful for the whole community!
+I tried to find strict profile format definition, forward/backward compatibility guarantees, migration guides, built-in versioning support but with no success. If you are a compiler engineer and you can fix it somehow - please do it! It would be helpful for the whole community!
 
 ### Regenerating vs caching PGO profiles
 
@@ -809,7 +840,7 @@ If you decide to integrate PGO, probably at some point you will meet some proble
 * Maxim Panchenko
 * Amir Aupov
 
-Additionally I reccomend you to [join](https://discord.gg/xS7Z362) LLVM Discord server. It has many kind and clever people who can help you with your questions regarding LTO, PGO, PLO and other compiler-like fancy stuff.
+Additionally, I reccomend you to [join](https://discord.gg/xS7Z362) LLVM Discord server. It has many kind and clever people who can help you with your questions regarding LTO, PGO, PLO and other compiler-like fancy stuff.
 
 ## Future plans
 
@@ -875,10 +906,10 @@ TODO: finish the chapter
   - If you are a language/compiler designer - please consider integrating PGO into your language/compiler
   - If you are a project developer - please consider providing better PGO integration into your project if you care about the performance
   - If you are a maintainer - please consider enabling PGO in your packages
-  - If you are a OS package comittee member (like Fedora FESCO) - please consider general PGO movement across the whole package policy
+  - If you are an OS package comittee member (like Fedora FESCO) - please consider general PGO movement across the whole package policy
   - If you have experience with PGO in production - please share your numbers/pains/experience with us!
 
-I want to finish with the call to the commununity.
+I want to finish with the call to the community.
 
 If you are a language designer - please at least consider implementing AoT compilation model for your language. Of course this model is not suitable for all cases but would be nice to have a possibility to compile (and preoptimize with PGO) a program before the launch. Cold start time matters nowadays, you know.
 
@@ -901,6 +932,6 @@ TODO: note about MSVC compiler and combined LTO/PGO mode as the only option to e
 TODO: Possible plot for the talk:
 
 1. Why did I write this post? Intro why I like fast software, etc.
-2. Show, why PGO is a worth thing to discuss with performance numbers for the most famous projects like PostgreSQL, Clang, MongoDB, 
-2. PGO current ecosystem state from multiple perspectives: languages, compilers, problems, etc.
-3. What it can be in the future?
+2. Show, why PGO is a worth thing to discuss with performance numbers for the most famous projects like PostgreSQL, Clang, MongoDB
+3. PGO's current ecosystem state from multiple perspectives: languages, compilers, problems, etc.
+4. What it can be in the future?

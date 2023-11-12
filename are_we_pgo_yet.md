@@ -67,6 +67,10 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * daScript: https://github.com/GaijinEntertainment/daScript/issues/831
 * Quirrel: https://github.com/GaijinEntertainment/quirrel/issues/84
 * Leo: https://github.com/AleoHQ/leo/issues/3226
+* Julia: https://github.com/JuliaLang/julia/pull/45641
+* D compilers (DMD, GDC, LDC):
+  - All D compilers: https://forum.dlang.org/post/ukljubhhlosfygbdzfcm@forum.dlang.org
+  - LDC: https://github.com/ldc-developers/ldc/discussions/4524 (general discussion) , https://github.com/ldc-developers/ldc/issues/4526 (CSIR PGO), https://github.com/ldc-developers/ldc/issues/4527 (AutoFDO)
 
 ## Developer tooling
 
@@ -373,6 +377,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * difftastic: https://github.com/Wilfred/difftastic/issues/588
 * Solidity: https://github.com/ethereum/solidity/issues/11085
 * legba: https://github.com/evilsocket/legba/issues/10
+* Slint: https://github.com/slint-ui/slint/issues/3909
 
 # PGO in Go ecosystem
 
@@ -383,6 +388,12 @@ Go proposal about dumping PGO profiles at exit: https://github.com/golang/go/iss
 * pushup: https://github.com/adhocteam/pushup/issues/106
 * goProbe: https://github.com/els0r/goProbe/issues/170
 * rymdport: https://github.com/Jacalz/rymdport/issues/109
+
+# Are we PGO yet in OS repositories
+
+Here we track information on enablement PGO in OS-specific package build scripts
+
+
 
 # PGO documentation
 

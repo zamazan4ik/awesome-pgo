@@ -40,6 +40,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Go (`go` compiler):
   - [Official blog](https://go.dev/doc/go1.21)
   - [Go compiler performance numbers](https://go-review.googlesource.com/c/go/+/495596)
+* D:
+  - DMD: [GitHub issue](https://github.com/dlang/dmd/pull/13791#issue-1164476335)
+  - LDC: [GitHub comment](https://github.com/ldc-developers/ldc/discussions/4524#discussioncomment-7537608)
+* Julia: [GitHub PR](https://github.com/JuliaLang/julia/pull/45641#issue-1268010204)  
 * [PHP](https://www.php.net/):
   - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
   - [Phoronix benchmarks](https://www.phoronix.com/news/Clear-Linux-PHP7-PGO-Opt)
@@ -194,6 +198,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Perspective: [GitHub discussion](https://github.com/finos/perspective/discussions/2406#discussioncomment-7419407)
 * tquic: [GitHub issue](https://github.com/Tencent/tquic/issues/19)
 * legba: [GitHub issue](https://github.com/evilsocket/legba/issues/10)
+* Slint: [GitHub issue](https://github.com/slint-ui/slint/issues/3909)
+* tsv-utils: [Study report](https://github.com/eBay/tsv-utils/blob/master/docs/lto-pgo-study.md)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -202,7 +208,7 @@ Below you can find some examples, where and how PGO is integrated into different
 * Rustc: a CI [tool](https://github.com/rust-lang/rust/tree/master/src/tools/opt-dist) for the multi-stage build
 * GCC:
   - Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
-  - A [part](https://github.com/gcc-mirror/gcc/blob/4832767db7897be6fb5cbc44f079482c90cb95a6/configure#L7818) in a "wonderful" `configure` script.
+  - A [part](https://github.com/gcc-mirror/gcc/blob/master/configure#L7896) in a "wonderful" `configure` script.
 * Clang: [Docs](https://llvm.org/docs/HowToBuildWithPGO.html)
 * Python:
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
@@ -229,10 +235,13 @@ Below you can find some examples, where and how PGO is integrated into different
 * Android Open Source Project (AOSP):
   - [Official documentation](https://source.android.com/docs/core/perf/pgo)
   - Committed PGO profiles: [repository](https://android.googlesource.com/toolchain/pgo-profiles/+/refs/heads/main)
+* DMD: [Custom build rule](https://github.com/dlang/dmd/blob/master/compiler/src/build.d#L553)
+* LDC: TODO
+* tsv-utils: [Makefile](https://github.com/eBay/tsv-utils/blob/master/makefile#L56)
 
 ## Project-specific documentation about PGO
 
-Here we collect projects were PGO is described as an optimization option in the documentation:
+Here we collect projects where PGO is described as an optimization option in the documentation:
 
 * ClickHouse: https://clickhouse.com/docs/en/operations/optimizing-performance/profile-guided-optimization
 * Databend: https://databend.rs/doc/contributing/pgo
@@ -242,6 +251,7 @@ Here we collect projects were PGO is described as an optimization option in the 
 * Clang:
   - https://llvm.org/docs/HowToBuildWithPGO.html
   - https://llvm.org/docs/AdvancedBuilds.html
+* tsv-utils: https://github.com/eBay/tsv-utils/blob/master/docs/BuildingWithLTO.md
 
 ## PGO support in programming languages and compilers
 
@@ -270,7 +280,8 @@ Here we collect projects were PGO is described as an optimization option in the 
   - [Go compiler](https://go.dev/doc/pgo) in Preview since Go 1.20, GA in [1.21](https://go.dev/blog/go1.21rc)
   - [GoLLVM](https://go.googlesource.com/gollvm) - [not yet](https://go.googlesource.com/gollvm/#thinltofdo)
   - GCCGO - unknown, but it should be possible to try
-* Swift: [Supports](https://github.com/apple/swift/blob/main/include/swift/Option/Options.td#L1322)
+* Swift: [Seems like supports but I am not sure](https://github.com/apple/swift/blob/main/include/swift/Option/Options.td#L1322)
+* Kotlin: [Seems like no](https://youtrack.jetbrains.com/issue/KT-63357/Kotlin-Native-Profile-Guided-Optimization-PGO-support)
 * Ada:
   - GNAT: should be possible, same as GCC
 * [D](https://dlang.org/): [LDC docs](https://wiki.dlang.org/LDC_LLVM_profiling_instrumentation)
@@ -279,6 +290,9 @@ Here we collect projects were PGO is described as an optimization option in the 
 * [Zig](https://ziglang.org/): [no](https://github.com/ziglang/zig/issues/237)
 * [V](https://vlang.io/): [kind of](https://github.com/vlang/v/issues/7024)
 * [Red](https://www.red-lang.org/): [seems like not](https://github.com/red/red/issues/5333)
+* Pascal: [No](https://forum.lazarus.freepascal.org/index.php/topic,65162.0.html)
+* Haskell:
+  - GHC: [no](https://gitlab.haskell.org/ghc/ghc/-/issues/18393)
 
 Possibly other compilers support PGO too. If you know any, please let me know.
 
@@ -308,7 +322,7 @@ Check "are_we_pgo_yet.md" file in the repo to check the PGO status in a project.
 
 ## BOLT showcases
 
-Here I collect all results with applying LLVM BOLT to the projects (with numbers).
+Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 
 * Rustc:
   - [Rustc itself (GitHub PR)](https://github.com/rust-lang/rust/pull/116352)
@@ -320,6 +334,7 @@ Here I collect all results with applying LLVM BOLT to the projects (with numbers
   - [Results on building Clang](https://github.com/ptr1337/llvm-bolt-scripts/blob/master/results.md)
   - [Linaro results](https://android-review.linaro.org/plugins/gitiles/toolchain/llvm_android/+/f36c64eeddf531b7b1a144c40f61d6c9a78eee7a)
   - [on AMD 7950X3D](https://github.com/llvm/llvm-project/issues/65010#issuecomment-1701255347)
+* LDC: [GitHub comment](https://github.com/ldc-developers/ldc/issues/4228#issuecomment-1334499428)
 * HHVM, Proxygen and others: [Facebook paper](https://scontent-waw1-1.xx.fbcdn.net/v/t39.8562-6/240895848_219658560107211_6043870470092412798_n.pdf?_nc_cat=104&ccb=1-7&_nc_sid=ad8a9d&_nc_ohc=93feyEEEdC0AX8gvlSt&_nc_ht=scontent-waw1-1.xx&oh=00_AfAJh5n1HhZg32R-kRPqnpKJxHUSaFZZ2udLMFcT9MRQPw&oe=64CD8CE0)
 * NodeJS: [Blog](https://aaupov.github.io/blog/2020/10/08/bolt-nodejs)
 * Chromium: [Blog](https://aaupov.github.io/blog/2022/11/12/bolt-chromium)
@@ -329,32 +344,35 @@ Here I collect all results with applying LLVM BOLT to the projects (with numbers
 
 * Rustc: [GitHub PR](https://github.com/rust-lang/rust/pull/116352)
 * CPython: [GitHub PR](https://github.com/python/cpython/pull/95908)
-* Pyston: [README](https://github.com/pyston/pyston#building)
+* Pyston:
+  - [README](https://github.com/pyston/pyston#building)
+  - [Makefile](https://github.com/pyston/pyston/blob/pyston_main/Makefile#L200)
 * Clang: [CMake script](https://github.com/llvm/llvm-project/blob/main/clang/cmake/caches/BOLT.cmake)
 
 ## Are we BOLT yet?
 
-Just a list of BOLT-related issues in different projects. So you can estimate the BOLT state in your favourite open-source product.
+Just a list of BOLT-related issues in different projects. So you can estimate the BOLT state in your favorite open-source product.
 
-* Clang in Gentoo: [Gentoo bugtracker](https://bugs.gentoo.org/907931)
 * Chromium: [Chromium bugtracker](https://bugs.chromium.org/p/chromium/issues/detail?id=1163978)
 * Firefox: [Mozilla bugtracker](https://bugzilla.mozilla.org/show_bug.cgi?id=1789087)
   - The same for Propeller: [Mozilla bugtracker](https://bugzilla.mozilla.org/show_bug.cgi?id=1509314)
 * NodeJS: [GitHub issue](https://github.com/nodejs/node/issues/50379)
+* LDC: [GitHub issue](https://github.com/ldc-developers/ldc/issues/4228)
+* GCC: [Bugzilla](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112492)
 
 ## LTO, PGO, BOLT, etc and provided by someone binaries
 
-Well, it's hard to say, is your binary already LTO/PGO optimized or not. It depends on the multiple factors like upstream support for LTO/PGO, maintainers willing to enable these optimizations, etc. Usually the most obvious way to check it - just ask the question "Is the binary LTO/PGO optimized?" from the binary author (a person who built the binary). It could be your colleague (if you build programs on your own), build scripts from CI, maintainers from your favourite OS/repository (if you use provided by repos binaries), software developers (if you use downloaded from a site "official" binaries). Do not hesitate to ask!
+Well, it's hard to say, is your binary already LTO/PGO optimized or not. It depends on multiple factors like upstream support for LTO/PGO, maintainers willing to enable these optimizations, etc. Usually, the most obvious way to check it - just ask the question "Is the binary LTO/PGO optimized?" from the binary author (a person who built the binary). It could be your colleague (if you build programs on your own), build scripts from CI, maintainers from your favorite OS/repository (if you use provided by repos binaries), software developers (if you use downloaded from a site "official" binaries). Do not hesitate to ask!
 
 ### PGO adoption across projects
 
-PGO usually is **not** enabled by the upstream developers due to lack of support for sample load or lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
+PGO usually is **not** enabled by the upstream developers due to a lack of support for sample load or a lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
 
 ### PGO adoption across Linux distros
 
-Even if PGO is supported by a project, it does not mean that your favourite Linux distro builds this project with PGO enbaled. For this there are a lot of reasons: maintainer burden (because we are humans (yet)), build machines burden (in general you need to compile twice), reproducibility issues (like profile is an additional input to the build process and you need to make it reproducible), a maintainer just don't know about PGO, etc.
+Even if PGO is supported by a project, it does not mean that your favorite Linux distro builds this project with PGO enabled. For this there are a lot of reasons: maintainer burden (because we are humans (yet)), build machines burden (in general you need to compile twice), reproducibility issues (like profile is an additional input to the build process and you need to make it reproducible), a maintainer just don't know about PGO, etc.
 
-So here I will try to collect an information about the PGO status across the Linux distros for the projects that supports PGO in the upstream. If you didn't find your distro - don't worry! Just check it somehow (probably in some chats/distros' build systems, etc.) and report it here (e.g. via Issues) - I will add it to the list.
+So here I will try to collect information about the PGO status across the Linux distros for the projects that support PGO in the upstream. If you didn't find your distro - don't worry! Just check it somehow (probably in some chats/distros' build systems, etc.) and report it here (e.g. via Issues) - I will add it to the list.
 
 * GCC:
   - Note: PGO for GCC usually is not enabled for all architectures since it requires too much from the build systems
@@ -366,17 +384,37 @@ So here I will try to collect an information about the PGO status across the Lin
   - Alma Linux: [yes](https://git.almalinux.org/rpms/gcc/src/branch/c8/SPECS/gcc.spec#L1164)
   - NixOS: [no](https://github.com/NixOS/nixpkgs/pull/112928)
   - OpenSUSE: [yes](https://build.opensuse.org/package/view_file/openSUSE:Factory/gcc12/gcc12.spec), see line `2414`
-  - AltLinux: TODO: check :D
 * Clang:
-  - Binaries from LLVM are already PGO-optimized (according to the [note](https://apt.llvm.org/) about using "stage2" build - it's PGO-optimized build)
+  - Binaries from LLVM are already PGO-optimized (according to the [note](https://apt.llvm.org/) about using "stage2" build - it's PGO optimized build)
   - RedHat (CentOS Stream): [no](https://bugzilla.redhat.com/show_bug.cgi?id=2224925)
   - Fedora: [no](https://bugzilla.redhat.com/show_bug.cgi?id=2156679)
   - AlmaLinux: [no](https://bugs.almalinux.org/view.php?id=350)
   - Rocky Linux: [no](https://bugs.rockylinux.org/view.php?id=1618)
   - NixOS: [no](https://github.com/NixOS/nixpkgs/issues/208188)
   - Arch Linux: sent an email to the Clang maintainer in Arch Linux - no response yet
+* Rustc:
+  - Fedora: [yes](https://src.fedoraproject.org/rpms/rust/blob/rawhide/f/rust.spec#_773)
 * CPython:
-  - Fedora: [yes](https://src.fedoraproject.org/rpms/python3.11/blob/f38/f/python3.11.spec#_73). Also check [this](https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/2H4ZDRR326XAZ2EPCQKTNRMQYG5YZQ2K/) discussion. I guess other RedHat-based distros builds are the same for this package (however I didn't check it but Rocky Linux is the [same](https://git.rockylinux.org/staging/rpms/python3.11/-/blame/r8/SPECS/python3.11.spec#L70)).
+  - Fedora: [yes](https://src.fedoraproject.org/rpms/python3.11/blob/f38/f/python3.11.spec#_73). Also, check [this](https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/2H4ZDRR326XAZ2EPCQKTNRMQYG5YZQ2K/) discussion. I guess other RedHat-based distro builds are the same for this package (however I didn't check it but Rocky Linux is the [same](https://git.rockylinux.org/staging/rpms/python3.11/-/blame/r8/SPECS/python3.11.spec#L70)).
+
+## BOLT adoption across Linux distros
+
+Here we track LLVM BOLT enablement across various projects in various OS-specific build scripts:
+
+* Clang:
+  - [Gentoo bugtracker](https://bugs.gentoo.org/907931)
+* GCC: TODO
+* Rustc:
+  - Fedora: no
+  - RedHat: no
+* CPython: TODO
+* Pyston: TODO  
+
+Meta-issues about LLVM BOLT:
+
+* Fedora: [Bugzilla](https://bugzilla.redhat.com/show_bug.cgi?id=2249353)
+* RedHat: [JIRA](https://issues.redhat.com/browse/RHEL-16308)
+* ClearLinux: [GitHub issue](https://github.com/clearlinux/distribution/issues/2996)
 
 ### Other optimization techniques like BOLT
 
@@ -397,13 +435,13 @@ Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-pu
 
 ## Traps
 
-The biggest problem is "How to collect a good profile?". There are multiple ways for doing this:
+The biggest problem is "How to collect a good profile?". There are multiple ways to do this:
 - Prepare a reference workload. It could be quite difficult to create and maintain (since during the time it could become more and more different from your actual workload). However, for some loads like compilers load is usually predictable (compiling programs) so this way is good enough in this case. For other cases like databases the workload could hugely depend on the actual input from your users and users can change their queries for some reason. So be careful.
-- Collect profile from your actual production. It could be difficult to do with a usual PGO since it's requires an instrumentation, and instrumentation binaries could work too slowly. If it's your case - you could try to use AutoFDO since it has a low overhead due to the underlying `perf` nature. But it also has its own limitations (usually Linux-only, less efficient than usual PGO, could be more buggy). E.g. Google uses AutoFDO for profiling all their services and has a lot of automation around sampling profiles at their scale, storing them, integration into CI pipelines, etc. But all these tooling is closed-source so you need to implement it from the scratch.
+- Collect profile from your actual production. It could be difficult to do with a usual PGO since it requires an instrumentation, and instrumentation binaries could work too slowly. If it's your case - you could try to use AutoFDO since it has a low overhead due to the underlying `perf` nature. But it also has its own limitations (usually Linux-only, less efficient than usual PGO, could be more buggy). E.g. Google uses AutoFDO for profiling all their services and has a lot of automation around sampling profiles at their scale, storing them, integration into CI pipelines, etc. But all this tooling is closed-source so you need to implement it from the scratch.
 
 In my opinion, usually you should start with simple PGO via Instrumentation mode, especially if you upgrade your binaries seldomly. And only if Instrumentation starts to hurt you - start thinking about AutoFDO.
 
-Another issue could be reproducibility. Since you are injecting some information from runtime (some execution counters based on your sample workload) you get more variables that could influence your binary. In this case you need to store somewhere in VCS your sample workload, probably collected profiles based on this workload, etc.
+Another issue could be reproducibility. Since you are injecting some information from runtime (some execution counters based on your sample workload) you get more variables that could influence your binary. In this case, you need to store somewhere in VCS your sample workload, probably collected profiles based on this workload, etc.
 
 Other pitfalls include the following things:
 
@@ -419,7 +457,7 @@ Other pitfalls include the following things:
   - "Support" from Google is at least questionable: no regular releases, compilation [issues](https://github.com/google/autofdo/issues/157)
 * Bolt
   - Huge memory usage during build: [GitHub issue](https://github.com/llvm/llvm-project/issues/61711)
-  - For better results you need hardware/software with [LBR](https://lwn.net/Articles/680985/)/[BRS](https://lwn.net/Articles/877245/) support
+  - For better results, you need hardware/software with [LBR](https://lwn.net/Articles/680985/)/[BRS](https://lwn.net/Articles/877245/) support
   - There are a lot of bugs - be careful
 * Propeller:
   - Too Google-oriented - could be hard to use outside of Google
@@ -437,7 +475,7 @@ Other pitfalls include the following things:
 
 ## Communities
 
-Here are the *incomplete* community list where you can find PGO-related advice with higher probability:
+Here is the *incomplete* community list where you can find PGO-related advice with higher probability:
 
 * Gentoo (chats, forums)
 * ClearLinux (chats, forums)
@@ -453,8 +491,8 @@ Here are the *incomplete* community list where you can find PGO-related advice w
 
 ## Where PGO did not help (according to my tests)
 
-* [Catboost](https://catboost.ai/) - I think this is due to highly math-oriented nature of this. I did a test on `fit` and `calc` modes (trainig and evaluation, respectively) on `epsilon` dataset. In `calc` mode PGO for some reason made things even worse. Maybe, PGO could help in other modes but I didn't test it (yet).
+* [Catboost](https://catboost.ai/) - I think this is due to the highly math-oriented nature of this. I did a test on `fit` and `calc` modes (training and evaluation, respectively) on `epsilon` dataset. In the `calc` mode PGO for some reason made things even worse. Maybe, PGO could help in other modes but I didn't test it (yet).
 
 ## Contribute
 
-If you have an example where PGO shines (and where doesn't) - please open an issue and/or PR to the repo. It's important to collect as much as possible showcases about PGO!
+If you have an example where PGO shines (and where doesn't) - please open an issue and/or PR to the repo. It's important to collect as many as possible showcases about PGO!

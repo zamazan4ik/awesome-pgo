@@ -74,3 +74,8 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Good tracking issue for the Rustc optimizations: https://github.com/rust-lang/rust/issues/103595
 * PGO-related issue in Rustc: https://github.com/tensorchord/pgvecto.rs/issues/43#issuecomment-1788324707
 * Check Android (and Android-dependent) project for PGO/BOLT usage
+* Add DMD and LDC integrations as examples to the README file
+* Add info that ThinLTO is not so slow compared to FatLTO like it was proven in https://github.com/ldc-developers/ldc/issues/2168#issuecomment-313969487
+* Add information about PGO missed optimizations like GCC (https://gcc.gnu.org/bugzilla/buglist.cgi?quicksearch=PGO&list_id=403385), Clang (TODO), Go compiler (TODO), Rustc (TODO)
+* Naming conflict: LLVM BOLT and https://gitlab.freedesktop.org/bolt/bolt
+* Add CachyOS project as an example where BOLT is integrated at most to the OS build pipelines
