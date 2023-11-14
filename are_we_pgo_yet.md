@@ -71,6 +71,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * D compilers (DMD, GDC, LDC):
   - All D compilers: https://forum.dlang.org/post/ukljubhhlosfygbdzfcm@forum.dlang.org
   - LDC: https://github.com/ldc-developers/ldc/discussions/4524 (general discussion) , https://github.com/ldc-developers/ldc/issues/4526 (CSIR PGO), https://github.com/ldc-developers/ldc/issues/4527 (AutoFDO)
+* Erlang: https://erlangforums.com/t/profile-guided-optimization-pgo-benchmarks-on-erlang-otp/3028
 
 ## Developer tooling
 
@@ -379,7 +380,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * legba: https://github.com/evilsocket/legba/issues/10
 * Slint: https://github.com/slint-ui/slint/issues/3909
 
-# PGO in Go ecosystem
+## PGO in Go ecosystem
 
 PGO was added to Go in 1.20 (Preview) and 1.21 (GA). Here we track PGO adoption across the Go ecosystem.
 
@@ -389,13 +390,14 @@ Go proposal about dumping PGO profiles at exit: https://github.com/golang/go/iss
 * goProbe: https://github.com/els0r/goProbe/issues/170
 * rymdport: https://github.com/Jacalz/rymdport/issues/109
 
-# Are we PGO yet in OS repositories
+## Are we PGO yet in OS repositories
 
 Here we track information on enablement PGO in OS-specific package build scripts
 
+* Clang:
+  - Fedora: https://bugzilla.redhat.com/show_bug.cgi?id=2156679
 
-
-# PGO documentation
+## PGO documentation
 
 Here we track the issues regarding PGO documentation in different projects:
 
@@ -412,7 +414,20 @@ Here we track the issues regarding PGO documentation in different projects:
 * Memcached: https://github.com/memcached/memcached/issues/1054#issuecomment-1696426432
 * Qdrant: TODO
 
-# BOLT documentation
+## BOLT package availability in repositories
+
+Here we track LLVM BOLT existence progress for Linux distributions. It can be checked with this Repology query: https://repology.org/project/llvm-bolt/versions
+
+* Fedora: supports
+* Solus: supports
+* Chromebrew: https://github.com/chromebrew/chromebrew/issues/8940
+* Gentoo: https://bugs.gentoo.org/895326
+* Void Linux: https://github.com/void-linux/void-packages/issues/47226
+* NixOS: https://github.com/NixOS/nixpkgs/issues/176536
+* Alpine Linux: https://gitlab.alpinelinux.org/alpine/aports/-/issues/15472
+* Mageia: https://bugs.mageia.org/show_bug.cgi?id=32519
+
+## BOLT documentation
 
 Here we track the issues regarding BOLT documentation in different projects:
 
@@ -420,6 +435,6 @@ Here we track the issues regarding BOLT documentation in different projects:
   - https://github.com/llvm/llvm-project/issues/65010
   - https://github.com/llvm/llvm-project/issues/69846
 
-# Other
+## Other
 
 * Rustc discussion about Propeller: https://internals.rust-lang.org/t/add-propeller-support-to-the-rustc-compiler/19757

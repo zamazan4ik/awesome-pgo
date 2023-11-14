@@ -17,7 +17,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - Software itself (add PGO to the build scripts)
   - Maintainers (work with different distributions about enabling PGO for the packages)
   - In-house builds (if we build binary somewhere in a closed perimeter)
-* From time to time I hear from different people something like "Algorithms always beat compilers". That's could be true but that's not a question actually because you can (and should) always use compiler optimizations WITH algorithms. Just let compiler (in this case - with PGO) do their job. And free time spend on that humans do best (yet) - write algorithmic optimizations for your favourite software.
+* From time to time I hear from different people something like "Algorithms always beat compilers". That could be true but that's not a question actually because you can (and should) always use compiler optimizations WITH algorithms. Just let compiler (in this case - with PGO) do their job. And free time spend on that humans do best (yet) - write algorithmic optimizations for your favourite software.
 * Add a chapter about PGO tips:
   - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile()` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
   - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
@@ -60,13 +60,13 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * OCOLOS: https://people.ucsc.edu/~hlitz/papers/ocolos.pdf
 * Discussion BOLT and Propeller: https://discourse.llvm.org/t/practical-compiler-optimizations-for-wsc-workshop-us-llvm-dev-meeting-2023/73998/
 * What is https://prodfiler.com/ ? Check their work and probably write about them in the article
-* https://github.com/aaupov/school_topics/blob/main/perfd.md - highlight this project as an future BOLT improvement idea
+* https://github.com/aaupov/school_topics/blob/main/perfd.md - highlight this project as future BOLT improvement idea
 * Play locally with Propeller: https://github.com/google/llvm-propeller and discuss integrating it into the cargo-pgo
 * Make a research about PGO support in package managers like Conan, Vcpkg, etc.
 * Do not forget to mention about monitoring actual workload and tracking - does it match your current PGO-profile or not
 * Example of an application where PGO exists but not used for prebuilt binaries: https://github.com/ispc/ispc/issues/2687
 * Add a note about unavailable LBR in virtual machines (that can limit AutoFDO usage in virtualized envs)
-* Why GraalVM (and consequently PGO in Java world) has so low adoption? I need to investigate it. GraalVM metadata repo - https://github.com/oracle/graalvm-reachability-metadata
+* Why GraalVM (and consequently PGO in Java world) have so low adoption? I need to investigate it. GraalVM metadata repo - https://github.com/oracle/graalvm-reachability-metadata
 * Write about Clang (LLVM) vs GCC PGO implementations: GCC has more PGO switches, Clang has more recently-researched PGO-related things inside, etc.
 * Prepare an answer in Angie (Nginx fork) repository about PGO
 * https://github.com/stevinz/awesome-game-engine-dev
@@ -74,8 +74,10 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Good tracking issue for the Rustc optimizations: https://github.com/rust-lang/rust/issues/103595
 * PGO-related issue in Rustc: https://github.com/tensorchord/pgvecto.rs/issues/43#issuecomment-1788324707
 * Check Android (and Android-dependent) project for PGO/BOLT usage
-* Add DMD and LDC integrations as examples to the README file
-* Add info that ThinLTO is not so slow compared to FatLTO like it was proven in https://github.com/ldc-developers/ldc/issues/2168#issuecomment-313969487
+* Add DMD and LDC as PGO integration examples to the README file
 * Add information about PGO missed optimizations like GCC (https://gcc.gnu.org/bugzilla/buglist.cgi?quicksearch=PGO&list_id=403385), Clang (TODO), Go compiler (TODO), Rustc (TODO)
-* Naming conflict: LLVM BOLT and https://gitlab.freedesktop.org/bolt/bolt
 * Add CachyOS project as an example where BOLT is integrated at most to the OS build pipelines
+* Add "llvm-bolt" request for building in OS distributions
+* An interesting case of a try to enable PGO for Foot in Void Linux: https://github.com/void-linux/void-packages/issues/29526
+* Create a generic PGO + BOLT issue in Gentoo (links reporting in the bugzilla restricted until 15.11.2023)
+* Add to OpenWRT request about building its GCC with PGO

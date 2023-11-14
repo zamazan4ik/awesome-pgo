@@ -17,7 +17,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 ### Browsers
 
-* [Chromium](https://www.chromium.org/Home/): 
+* [Chromium](https://www.chromium.org/Home/):
   - [Chromium blog 1](https://blog.chromium.org/2016/10/making-chrome-on-windows-faster-with-pgo.html)
   - [Chromium blog 2](https://blog.chromium.org/2020/08/chrome-just-got-faster-with-profile.html)
 * [Firefox](https://www.mozilla.org/en-US/firefox/new/): [Google Groups thread](https://groups.google.com/g/mozilla.dev.platform/c/wwO48xXFx0A/m/ztg4i0DYAAAJ)
@@ -26,17 +26,21 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 ### Compilers and interpreters
 
-* [Rust](https://www.rust-lang.org/) (`rustc` compiler):
+* [Rust](https://www.rust-lang.org/) (the `rustc` compiler):
   - [Rust Lang blog](https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html)
   - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
-* [Clang](https://clang.llvm.org/): [Docs](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
+* [Clang](https://clang.llvm.org/):
+  - [Official documentation](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
   - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
   - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
-* [GCC](https://gcc.gnu.org/): 
+  - Homebrew benchmarks: [one](https://github.com/Homebrew/homebrew-core/issues/77975#issuecomment-859190783), [two](https://github.com/Homebrew/homebrew-core/pull/79454#issuecomment-869055079)
+* [GCC](https://gcc.gnu.org/):
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
   - According to the experiments from a person in a local Telegram chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
-* [Python](https://www.python.org/): [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
+* [Python](https://www.python.org/):
+  - [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
+  - [GitHub PR](https://github.com/void-linux/void-packages/pull/43791#issue-1699145188)
 * Go (`go` compiler):
   - [Official blog](https://go.dev/doc/go1.21)
   - [Go compiler performance numbers](https://go-review.googlesource.com/c/go/+/495596)
@@ -238,6 +242,7 @@ Below you can find some examples, where and how PGO is integrated into different
 * DMD: [Custom build rule](https://github.com/dlang/dmd/blob/master/compiler/src/build.d#L553)
 * LDC: TODO
 * tsv-utils: [Makefile](https://github.com/eBay/tsv-utils/blob/master/makefile#L56)
+* Erlang OTP: [Makefile](https://github.com/erlang/otp/blob/master/Makefile.in#L484)
 
 ## Project-specific documentation about PGO
 
@@ -314,7 +319,7 @@ Here we collect information about supporting PGO via sampling across different c
   - GCC: supports
   - Clang: supports
 * Rust:
-  - rustc: supports, but marked unstable - [commit](https://github.com/rust-lang/rust/commit/a17193dbb931ea0c8b66d82f640385bce8b4929a), [unstable book](https://doc.rust-lang.org/beta/unstable-book/compiler-flags/profile_sample_use.html)
+  - rustc: supports, but marked unstable: [commit](https://github.com/rust-lang/rust/commit/a17193dbb931ea0c8b66d82f640385bce8b4929a), [unstable book](https://doc.rust-lang.org/beta/unstable-book/compiler-flags/profile_sample_use.html)
 
 ## Are we PGO yet?
 
@@ -399,6 +404,8 @@ So here I will try to collect information about the PGO status across the Linux 
 
 ## BOLT adoption across Linux distros
 
+TODO: what about Windows package managers? BOLT is unavailable for Windows right now but PGO can be used too.
+
 Here we track LLVM BOLT enablement across various projects in various OS-specific build scripts:
 
 * Clang:
@@ -410,11 +417,19 @@ Here we track LLVM BOLT enablement across various projects in various OS-specifi
 * CPython: TODO
 * Pyston: TODO  
 
-Meta-issues about LLVM BOLT:
+Meta-issues about PGO and LLVM BOLT in different OSs:
 
 * Fedora: [Bugzilla](https://bugzilla.redhat.com/show_bug.cgi?id=2249353)
 * RedHat: [JIRA](https://issues.redhat.com/browse/RHEL-16308)
 * ClearLinux: [GitHub issue](https://github.com/clearlinux/distribution/issues/2996)
+* CachyOS ([Website](https://cachyos.org/)): according to the search over its GitHub repositories - they are trying to integrate BOLT as much as possible
+* OpenSUSE: Cannot create an account to create a corresponding issue
+* Ubuntu: [Ubuntu forums](https://ubuntuforums.org/showthread.php?t=2492480&p=14165131#post14165131)
+* Alpine Linux: [Gitlab issue](https://gitlab.alpinelinux.org/alpine/aports/-/issues/15465)
+* Mageia: [Bugzilla](https://bugs.mageia.org/show_bug.cgi?id=32511)
+* Void Linux: [GitHub issue](https://github.com/void-linux/void-packages/issues/47215)
+* Chromebrew: [GitHub discussion](https://github.com/chromebrew/chromebrew/discussions/8941)
+* Homebrew: [GitHub discussion](https://github.com/orgs/Homebrew/discussions/4902)
 
 ### Other optimization techniques like BOLT
 
