@@ -72,6 +72,12 @@ Just a list of PGO-related issues in different projects. So you can estimate the
   - All D compilers: https://forum.dlang.org/post/ukljubhhlosfygbdzfcm@forum.dlang.org
   - LDC: https://github.com/ldc-developers/ldc/discussions/4524 (general discussion) , https://github.com/ldc-developers/ldc/issues/4526 (CSIR PGO), https://github.com/ldc-developers/ldc/issues/4527 (AutoFDO)
 * Erlang: https://erlangforums.com/t/profile-guided-optimization-pgo-benchmarks-on-erlang-otp/3028
+* Inko:
+  - https://github.com/inko-lang/inko/issues/650
+  - https://github.com/inko-lang/inko/issues/651
+* GnuCobol: https://sourceforge.net/p/gnucobol/feature-requests/456/
+* gcc-cobol: Cannot create an issue in https://gitlab.cobolworx.com/COBOLworx/gcc-cobol
+* numbat: https://github.com/sharkdp/numbat/issues/257
 
 ## Developer tooling
 
@@ -130,6 +136,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Creusot: https://github.com/xldenis/creusot/issues/884
 * Rust-Code-Analysis: https://github.com/mozilla/rust-code-analysis/issues/1077
 * grcov: https://github.com/mozilla/grcov/issues/1128
+* ctags: https://github.com/universal-ctags/ctags/issues/3849
 
 ## Build systems
 
@@ -153,6 +160,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Cocos Engine: https://github.com/cocos/cocos-engine/issues/16449
 * Flax Engine: https://github.com/FlaxEngine/FlaxEngine/issues/1833
 * Defold: https://github.com/defold/defold/issues/8193
+* wgpu: https://github.com/gfx-rs/wgpu/discussions/4692
+* glslang: https://github.com/KhronosGroup/glslang/issues/3400
 
 ## Operating systems
 
@@ -379,6 +388,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Solidity: https://github.com/ethereum/solidity/issues/11085
 * legba: https://github.com/evilsocket/legba/issues/10
 * Slint: https://github.com/slint-ui/slint/issues/3909
+* Clingo: https://github.com/potassco/clingo/issues/468
+* Mesa: https://gitlab.freedesktop.org/mesa/mesa/-/issues/10155
+* lingua-rs: https://github.com/pemistahl/lingua-rs/discussions/273
 
 ## PGO in Go ecosystem
 
@@ -426,6 +438,7 @@ Here we track LLVM BOLT existence progress for Linux distributions. It can be ch
 * NixOS: https://github.com/NixOS/nixpkgs/issues/176536
 * Alpine Linux: https://gitlab.alpinelinux.org/alpine/aports/-/issues/15472
 * Mageia: https://bugs.mageia.org/show_bug.cgi?id=32519
+* Spack: https://github.com/spack/spack/issues/41088
 
 ## BOLT documentation
 

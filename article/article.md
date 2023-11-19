@@ -205,6 +205,7 @@ TODO: add as many projects as I can
 | typos | 2.61x | [link](https://github.com/crate-ci/typos/issues/827#issue-1888263250) |
 | tfcompile | 1.43x | [link](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591) |
 | drill | 1.72x | [link](https://github.com/fcsonline/drill/issues/185#issue-1795772245) |
+| Vector | 12-14x | [link](https://github.com/vectordotdev/vector/issues/15631#issuecomment-1694554798) |
 
 The same applies for libraries as well:
 
@@ -215,8 +216,9 @@ The same applies for libraries as well:
 | quick-xml | up to 2.5x| [link](https://github.com/tafia/quick-xml/issues/632#issue-1852200475) |
 | xml-rs | 1.45x | [link](https://github.com/netvl/xml-rs/issues/228#issue-1852007193) |
 | tquic | up to 1.3x | [link](https://github.com/Tencent/tquic/issues/19#issue-1972443474) |
+| lingua-rs | up to 146x (not an error!) | [link](https://github.com/pemistahl/lingua-rs/discussions/273#discussion-5864708) |
 
-TODO: write about more deep statistics like slowdown percentiles, testing different configurations, etc.
+I could prepare more advanced analysis like slowdown p50/p95/p99 percentiles, testing across more different configurations (like trying to replicate tests across different hardware/software, etc) but I am a bit lazy for doing it right now. Maybe next time ;)
 
 TODO: write about cases when an instrumented binary is faster (I met such cases in some strange situations. Probably some combination of compiler optimizations does this - who knows, didn't investigate deep such cases).
 
@@ -298,6 +300,7 @@ Rustc documentation about PGO is available [here](https://doc.rust-lang.org/rust
 ### Go
 
 TODO: add links about PGO implementation in Go compiler
+TODO: add my thoughts the current PGO implementation in Go and its disadvantages
 
 Links:
 
@@ -369,6 +372,10 @@ TODO: https://github.com/JuliaLang/julia/pull/45641#issue-1268010204
 
 TODO: https://github.com/ocaml/ocaml/issues/12200
 
+### Cobol
+
+TODO: check Cobol compilers and PGO support in them (lol)
+
 ---
 
 TODO: create a table with programming languages and PGO support status
@@ -392,6 +399,7 @@ So, what do we have now in the ecosystem?
 Cargo (the default build system for Rust) has no built-in support for PGO. But community (particularly [Jakub "Kobzol" Beranek](https://github.com/kobzol)) developed an extension - [cargo-pgo](https://github.com/Kobzol/cargo-pgo). I highly recommend you to use this Cargo extension if you are going to start optimizing Rust projects with PGO. I used for **every** Rust project that I PGOed (and I did it for a lot of them) - it always worked like a charm. It even supports optimizing with LLVM BOLT (we will talk about it later) as an additional post-PGO optimization step! I wish every other ecosystem eventually will get something similar.
 
 TODO: add a note about missing Sampling PGO optimization integration
+TODO: add a note about C-dependencies: https://github.com/Kobzol/cargo-pgo/issues/38
 
 ### Bazel
 
@@ -639,7 +647,7 @@ All these compilers are in their "default" state with no custom patches from my 
 TODO: finish chapter
 
   - Sometimes PGO is disabled on some platforms due to a lack of build resources
-  - Sometimes PGO is disabled due to reproducible builds concerns. Concern about reproducing the profile
+  - Sometimes PGO is disabled due to reproducible builds concerns. Concern about reproducing the profile. Bugs: https://bugzilla.opensuse.org/show_bug.cgi?id=1040589 , NixOS comment (find and link it here)
   - Could we trust the profiles from the upstream to use them instead of our own? Good question. That’s why is important to commit scripts for reproducing the profile (and still can differ due to time-based things like I had in YDB)
 
 In many cases, we don't use binaries directly from developers or we don't rebuild all the things in our perimeter (despite knowing such security requirements in some areas!) - we use *prebuilt* binaries from our favorite OS distribution. But if the binaries are prebuilt by someone, there is a chance that PGO can be disabled even if the PGO-optimized build is supported by the upstream. How does it work in practice?
@@ -744,7 +752,7 @@ However, usually, LTO is enabled before PGO. Why it happens? Because both LTO an
 There are some situations, when you may want to avoid using LTO with PGO:
 
 * Weak build machines. LTO (even in ThinLTO mode) consumes a large amount of RAM on your build machines. That means if your build environment is highly memory-constrained - you may want to use PGO without LTO since PGO usually has lighter RAM requirements for your CI. (TODO: add Linux distribution examples here in the build scripts)
-* Compiler bugs. Sometimes PGO does not work for some reason with LTO (like [this](https://github.com/rust-lang/rust/issues/115344) and [this](https://github.com/rust-lang/rust/issues/117220) bug in the Rustc compiler). Even without PGO enabling LTO can bring multiple bugs - e.g. check YugabyteDB LLVM [fix](https://github.com/yugabyte/llvm-project/commit/64d871949eb23145af7b97cb13feaeeeee7ab39a).
+* Compiler bugs. Sometimes PGO does not work for some reason with LTO (like [this](https://github.com/rust-lang/rust/issues/115344) and [this](https://github.com/rust-lang/rust/issues/117220) bugs in the Rustc compiler). Even without PGO enabling LTO can bring multiple bugs - e.g. check YugabyteDB LLVM [fix](https://github.com/yugabyte/llvm-project/commit/64d871949eb23145af7b97cb13feaeeeee7ab39a).
 
 I have several examples of how LTO improves performance:
 
@@ -799,6 +807,7 @@ Here are some examples of how it's done in some projects:
 ### Algorithm optimizations always outperform machine optimizations
 
 TODO: here we need to discuss an opinion from Rainer Grimm (Rsyslog dev). Rainer Grimm from Rsyslog thinks that algorithm always beats peephole optimizations (it’s wrong - they work at the same time)
+TODO: also a comment from Khronos group: https://github.com/KhronosGroup/glslang/issues/3400#issuecomment-1817277433
 
 ### Is PGO/PLO CPU-specific optimization?
 
@@ -808,9 +817,16 @@ TODO: here write about the common mystery that PGO depends on the target CPU - n
 
 TODO: discuss here such a topic
 
+### How PGO and/or PLO changes a binary size?
+
+TODO: PGO helps with optimizing binary size since we can inline less for actually cold paths of our programs (and it can help with performance as well since our program will be smaller and more friendly for CPU I-cache). Write that binary can become larger (due to more agressive inlining) or smaller (if inlining is not required in some places) - it depends on the software kind and actual profiles.
+
+TODO: Do I need this chapter since this topic was discussed above with actual numbers?
+
 ## Related projects
 
 TODO: write about ASOS, machine-learning-based compilers, etc.
+TODO: write about machine-learning PGO: https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/fprofile-ml-use.html
 
 Here I want to show you some PGO-related ongoing research or similar ideas that possibly you find at least interesting.
 

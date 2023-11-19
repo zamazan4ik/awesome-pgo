@@ -2,22 +2,16 @@
 
 Here I collect random thoughts and ideas about further PGO investigation.
 
-* Add more information about caveats of each method: PGO, AutoFDO, Bolt, Propeller, more advanced techniques
 * Add more info about LTO and PGO state for packages in different Linux distros
-* Add more links to the existing projects how PGO is integrated into them
 * Get more information about PGO states in other browsers like Safari, Brave ([GitHub comment](https://github.com/brave/brave-browser/issues/20560#issuecomment-1658782341)), Yandex.Browser and others
 * Write more about PGO and library development.
 * Try to use PGO on some modules like Nginx VTS (https://github.com/vozlt/nginx-module-vts)
-* There is another PGO - PostGreSQL Operator from CrunchyDate ([GitHub](https://github.com/CrunchyData/postgres-operator)). It makes a bit harder to find information about Profile-Guided Optimization :)
-* PGO helps with optimizing binary size since we can inline less for actually cold paths of our programs (and it can help with performance as well since our program will be smaller and more friendly for CPU I-cache)
 * Add an issue to LLVM upstream about writing a difference between PGO implementations (Frontend vs IR vs Context-Sensitive), pros and cons of each, which to use by default. Probably add a link to the blog post of a person who described all these stuff.
 * Contact with more proprietary vendors regarding PGO support in their compilers and PGO optimization their compilers itself before distribution to the customers. Possible compilers list: https://en.wikipedia.org/wiki/List_of_compilers
-* Write to Mike Pall (LuaJIT author) about "How to benchmark LuaJIT performance itself - without benchmarking the load"
 * Points of the software supply chain, where PGO can be applied (we can influence any of them with different methods and priorities):
   - Software itself (add PGO to the build scripts)
   - Maintainers (work with different distributions about enabling PGO for the packages)
   - In-house builds (if we build binary somewhere in a closed perimeter)
-* From time to time I hear from different people something like "Algorithms always beat compilers". That could be true but that's not a question actually because you can (and should) always use compiler optimizations WITH algorithms. Just let compiler (in this case - with PGO) do their job. And free time spend on that humans do best (yet) - write algorithmic optimizations for your favourite software.
 * Add a chapter about PGO tips:
   - PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile()` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
   - Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
@@ -36,20 +30,15 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - Browsers (Firefox, Chromium, etc.)
   - Compilers (GCC, Clang, Rustc, Swift)
   - Other software (like `zstd` command-line tools)
-* How to quickly check PGO support in the project: search over issues for "PGO", "Profile guided", "FDO". Also works grepping over the project for the same words or for PGO-related compiler flags like `fprofile-generate`/`fprofile-use`, etc.
+* How to quickly check PGO support in the project: search over issues for "PGO", "Profile guided", "FDO". Also works grepping over the project for the same words or for PGO-related compiler flags like `-fprofile-generate`/`-fprofile-use`, etc.
 * Extract actual numbers directly into the document for avoiding the cases like [this](https://github.com/facebook/mariana-trench/issues/137#issuecomment-1658195725).
 * Describe different PGO applications scenarios: for SaaS, for open-source, for closed-source but delivered to the customers, etc.
 * Check Altinity builds for ClickHouse and suggest PGO for their CH build. Their sources are available here: https://github.com/Altinity/ClickHouse
 * Using built-in benchmarks can be not so good idea: benchmark code coverage issues, built-in benchmarks can be too slow in the instrumentation modes
-* Think about collecting "general" PGO profiles via crowd sourcing
-* Think about a PGO talk for https://packaging-con.org/ ?
 * What to do with performance regressions after PGO? Rustc question: https://users.rust-lang.org/t/how-to-report-performance-regressions-with-profile-guided-optimization-pgo/98225
 * Check `simdjson` with PGO: https://github.com/simdjson/simdjson/blob/master/benchmark/CMakeLists.txt
 * Check new Go PGO when Go 1.21 compiler update will arrive in the distrubutions. Some CPU-heavy scenarios like log parsing should be a good candidate to test. Right now it has a lot of places to improve: https://github.com/golang/go/issues?q=is%3Aissue+is%3Aopen+PGO
-* Write an article about PGO and its caveats
 * Add PGO information to Rsyslog: https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1694533339
-* Rustc and LTO+PGO bug: https://github.com/rust-lang/rust/issues/115344
-* Ask in `cargo-pgo` repo about profiling C-like dependencies (e.g. RocksDB deps) in Rust projects: https://github.com/Kobzol/cargo-pgo/issues/38
 * Not everywhere PGO is available (e.g. WASM): https://github.com/rust-lang/rust/issues/81684
 * Committing PGO profiles into a project - transparency problem if you do not describe how this profile is collected
 * "Awesome-X" repositories are good places to start PGOify some domains
@@ -74,10 +63,19 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Good tracking issue for the Rustc optimizations: https://github.com/rust-lang/rust/issues/103595
 * PGO-related issue in Rustc: https://github.com/tensorchord/pgvecto.rs/issues/43#issuecomment-1788324707
 * Check Android (and Android-dependent) project for PGO/BOLT usage
-* Add DMD and LDC as PGO integration examples to the README file
 * Add information about PGO missed optimizations like GCC (https://gcc.gnu.org/bugzilla/buglist.cgi?quicksearch=PGO&list_id=403385), Clang (TODO), Go compiler (TODO), Rustc (TODO)
 * Add CachyOS project as an example where BOLT is integrated at most to the OS build pipelines
 * Add "llvm-bolt" request for building in OS distributions
 * An interesting case of a try to enable PGO for Foot in Void Linux: https://github.com/void-linux/void-packages/issues/29526
 * Create a generic PGO + BOLT issue in Gentoo (links reporting in the bugzilla restricted until 15.11.2023)
 * Add to OpenWRT request about building its GCC with PGO
+* Check https://hpsfoundation.github.io/ and its projects. Probably they will be interested in PGO as well since it's HPC foundation
+* Check Windows-based package managers like Chocolatey and others for PGO enablement
+* A comment about build resources in Void Linux (why they do not use PGO): https://github.com/void-linux/void-packages/issues/39652#issuecomment-1265308710
+* Become a Mageia maintainer to push PGO/PLO activity: https://bugs.mageia.org/show_bug.cgi?id=32511
+* Check Firefox and Chromium derivatives like Thunderbird and Tor browser for PGO
+* Cobol is a compiled language. What about enabling PGO for that? Check Cobol ecosystem
+* Clear Linux PGO packages: https://github.com/search?q=org%3Aclearlinux-pkgs+%22pgo+%3D+true%22&type=code + PGO integration as a USE flag
+* Check CRAN, *BSD (FreeBSD, OpenBSD, DragonflyBSD, etc) repositories for enabled PGO over projects
+* Add to the article this idea: https://github.com/llvm/llvm-project/issues/58422
+* Check for PGO compilers at https://cgit.freebsd.org/ports/tree/lang - can be a valuable source for the PGO experiments

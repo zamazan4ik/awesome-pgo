@@ -34,6 +34,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
   - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
   - Homebrew benchmarks: [one](https://github.com/Homebrew/homebrew-core/issues/77975#issuecomment-859190783), [two](https://github.com/Homebrew/homebrew-core/pull/79454#issuecomment-869055079)
+  - Clang on Windows: [Phoronix post](https://www.phoronix.com/news/LLVM-PGO-Windows-Build)
 * [GCC](https://gcc.gnu.org/):
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
@@ -67,6 +68,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Uncrustify](https://uncrustify.sourceforge.net/): [GitHub issue](https://github.com/uncrustify/uncrustify/issues/4045)
 * Android tooling like `dex2oat`: [Medium](https://medium.com/androiddevelopers/pgo-for-native-android-applications-1a48a99e95d0)
 * [typos](https://github.com/crate-ci/typos): [GitHub issue](https://github.com/crate-ci/typos/issues/827#issue-1888263250)
+* [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
 
 ### Operating systems
 
@@ -134,9 +136,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 * Envoy: [GitHub comment](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679)
 * HAProxy:
- - [Clang results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165)
- - [GCC results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729606775)
- - [More Clang and GCC results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729971279)
+  - [Clang results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1728265165)
+  - [GCC results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729606775)
+  - [More Clang and GCC results](https://github.com/haproxy/haproxy/issues/2047#issuecomment-1729971279)
 * Nginx: see "nginx.md" file in the repo
 * Rathole: [GitHub discussion](https://github.com/rapiz1/rathole/discussions/287)
 * httpd: see "httpd.md" file in the repo
@@ -204,6 +206,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * legba: [GitHub issue](https://github.com/evilsocket/legba/issues/10)
 * Slint: [GitHub issue](https://github.com/slint-ui/slint/issues/3909)
 * tsv-utils: [Study report](https://github.com/eBay/tsv-utils/blob/master/docs/lto-pgo-study.md)
+* wgpu: [GitHub discussion](https://github.com/gfx-rs/wgpu/discussions/4692)
+* Mesa: [Phoronix post](https://www.phoronix.com/news/Mesa-2020-PGO-LTO-Builds)
+* lingua-rs: [GitHub discussion](https://github.com/pemistahl/lingua-rs/discussions/273)
+* libtre: [FreeBSD Bugzilla comment](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=133302#c0)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -240,9 +246,16 @@ Below you can find some examples, where and how PGO is integrated into different
   - [Official documentation](https://source.android.com/docs/core/perf/pgo)
   - Committed PGO profiles: [repository](https://android.googlesource.com/toolchain/pgo-profiles/+/refs/heads/main)
 * DMD: [Custom build rule](https://github.com/dlang/dmd/blob/master/compiler/src/build.d#L553)
-* LDC: TODO
+* LDC: [GitHub action](https://github.com/ldc-developers/ldc/blob/master/.github/actions/2a-build-pgo/action.yml)
 * tsv-utils: [Makefile](https://github.com/eBay/tsv-utils/blob/master/makefile#L56)
 * Erlang OTP: [Makefile](https://github.com/erlang/otp/blob/master/Makefile.in#L484)
+* Clingo (PGO enabled only in Spack): [Package recipe](https://github.com/spack/spack/blob/develop/var/spack/repos/builtin/packages/clingo-bootstrap/package.py#L96)
+
+## Project with package-manager integration level
+
+Sometimes PGO is not supported in the upstream for some reasons. In this case, a package manager/OS maintainers can decide to enable PGO on their own and patch the application correspondingly. Here are some examples:
+
+* libtre in FreeBSD: [Makefile](https://cgit.freebsd.org/ports/tree/textproc/libtre/Makefile)
 
 ## Project-specific documentation about PGO
 
@@ -339,6 +352,7 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
   - [Results on building Clang](https://github.com/ptr1337/llvm-bolt-scripts/blob/master/results.md)
   - [Linaro results](https://android-review.linaro.org/plugins/gitiles/toolchain/llvm_android/+/f36c64eeddf531b7b1a144c40f61d6c9a78eee7a)
   - [on AMD 7950X3D](https://github.com/llvm/llvm-project/issues/65010#issuecomment-1701255347)
+  - [GitHub comment from LLVM](https://github.com/llvm/llvm-project/pull/71067#issuecomment-1791317245)
 * LDC: [GitHub comment](https://github.com/ldc-developers/ldc/issues/4228#issuecomment-1334499428)
 * HHVM, Proxygen and others: [Facebook paper](https://scontent-waw1-1.xx.fbcdn.net/v/t39.8562-6/240895848_219658560107211_6043870470092412798_n.pdf?_nc_cat=104&ccb=1-7&_nc_sid=ad8a9d&_nc_ohc=93feyEEEdC0AX8gvlSt&_nc_ht=scontent-waw1-1.xx&oh=00_AfAJh5n1HhZg32R-kRPqnpKJxHUSaFZZ2udLMFcT9MRQPw&oe=64CD8CE0)
 * NodeJS: [Blog](https://aaupov.github.io/blog/2020/10/08/bolt-nodejs)
@@ -417,7 +431,7 @@ Here we track LLVM BOLT enablement across various projects in various OS-specifi
 * CPython: TODO
 * Pyston: TODO  
 
-Meta-issues about PGO and LLVM BOLT in different OSs:
+Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
 
 * Fedora: [Bugzilla](https://bugzilla.redhat.com/show_bug.cgi?id=2249353)
 * RedHat: [JIRA](https://issues.redhat.com/browse/RHEL-16308)
@@ -430,6 +444,10 @@ Meta-issues about PGO and LLVM BOLT in different OSs:
 * Void Linux: [GitHub issue](https://github.com/void-linux/void-packages/issues/47215)
 * Chromebrew: [GitHub discussion](https://github.com/chromebrew/chromebrew/discussions/8941)
 * Homebrew: [GitHub discussion](https://github.com/orgs/Homebrew/discussions/4902)
+* Spack: [GitHub discussion](https://github.com/spack/spack/discussions/41090)
+* Vcpkg: [GitHub discussion](https://github.com/microsoft/vcpkg/discussions/35190)
+* FreeBSD: [FreeBSD forum](https://forums.freebsd.org/threads/expand-profile-guided-optimization-pgo-usage-across-freebsd-packages.91034/)
+* Conan: [GitHub issue](https://github.com/conan-io/conan-center-index/issues/21245)
 
 ### Other optimization techniques like BOLT
 
