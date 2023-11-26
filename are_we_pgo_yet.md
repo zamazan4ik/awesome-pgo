@@ -78,6 +78,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * GnuCobol: https://sourceforge.net/p/gnucobol/feature-requests/456/
 * gcc-cobol: Cannot create an issue in https://gitlab.cobolworx.com/COBOLworx/gcc-cobol
 * numbat: https://github.com/sharkdp/numbat/issues/257
+* R: https://stackoverflow.com/collectives/r-language/beta/discussions/77526179/adding-profile-guided-optimization-pgo-to-the-r-interpreter
 
 ## Developer tooling
 
@@ -147,6 +148,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SCons: https://github.com/SCons/scons/discussions/4437
 * Buck2: https://github.com/facebook/buck2/issues/454
 * FPM: https://github.com/fortran-lang/fpm/discussions/968
+* Cargo: https://github.com/rust-lang/cargo/issues/7618
 
 ## Gamedev
 
@@ -287,6 +289,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * PostgresML: https://github.com/postgresml/postgresml/issues/1131
 * Perspective: https://github.com/finos/perspective/issues/2405
 * OpenMLDB: https://github.com/4paradigm/OpenMLDB/issues/3575
+* ustore: https://github.com/unum-cloud/ustore/discussions/435
 
 ## Logging
 
@@ -328,6 +331,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Quilkin: https://github.com/googleforgames/quilkin/issues/834
 * g3: https://github.com/bytedance/g3/issues/126
 * Angie: https://github.com/webserver-llc/angie/issues/51
+* Nginx VTS: https://github.com/vozlt/nginx-module-vts/issues/283
 
 ## Other
 
@@ -391,6 +395,12 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Clingo: https://github.com/potassco/clingo/issues/468
 * Mesa: https://gitlab.freedesktop.org/mesa/mesa/-/issues/10155
 * lingua-rs: https://github.com/pemistahl/lingua-rs/discussions/273
+* tokei: https://github.com/XAMPPRocky/tokei/issues/1039
+* qsv: https://github.com/jqnatividad/qsv/discussions/1433
+* pydantic-core: https://github.com/pydantic/pydantic-core/issues/732
+* vtracer: https://github.com/visioncortex/vtracer/discussions/67
+* Qt: https://bugreports.qt.io/browse/QTCREATORBUG-29968
+* fish: https://github.com/fish-shell/fish-shell/discussions/10119
 
 ## PGO in Go ecosystem
 

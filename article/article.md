@@ -152,6 +152,12 @@ More about AutoFDO you can find here:
 
 * Original AutoFDO paper: [Google research](https://research.google/pubs/pub45290/)
 
+TODO:
+
+* Add notes about system-wide PGO:
+  - Google approach with AutoFDO: run `perf` on a subset of nodes, collect profiles for all running applications and use these profiles on CI
+  - Ad-hoc approach: use AutoFDO approach from Google or "just" rebuild all packages with Instrumentation PGO, run on a real-life workload, then collect the profiles and use them during the optimized build
+
 #### Other PGO types
 
 TODO: Write here about other PGO types from https://aaupov.github.io/blog/2023/07/09/pgo
@@ -206,6 +212,7 @@ TODO: add as many projects as I can
 | tfcompile | 1.43x | [link](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591) |
 | drill | 1.72x | [link](https://github.com/fcsonline/drill/issues/185#issue-1795772245) |
 | Vector | 12-14x | [link](https://github.com/vectordotdev/vector/issues/15631#issuecomment-1694554798) |
+| lld | ~6.8x | [link](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028) |
 
 The same applies for libraries as well:
 
@@ -230,7 +237,7 @@ TODO: add before and after PGO instrumentation assembler for Clang and GCC: http
 
 How much binary space does it take in practice? Let's check it (all tests are done on the Linux machine):
 
-| Application | Release size | Instrumented size | PGO optimized size | Instrumented to Release ratio | Compiler |
+| Application | Release size | Instrumented size | PGO optimized size | Instrumented to Release size ratio | Compiler |
 |---|---|---|---|---|---|
 | ClickHouse | 2.0 Gib | 2.8 Gib | 2.0 Gib | 1.4x | Clang |
 | MongoDB | 151 Mib | 255 Mib | 143 Mib | 1.69x | Clang |
@@ -252,6 +259,10 @@ How much binary space does it take in practice? Let's check it (all tests are do
 | ouch | 3.5 Mib | 8.0 Mib | 3.3 Mib | 2.26x | Rustc |
 | difftastic | 68 Mib | 75 Mib | 68 Mib | 1.10x | Rustc |
 | slint-fmt | 3.1 Mib | 28 Mib | 3.3 Mib | 9.0x | Rustc |
+| tokei | 7.5 Mib | 16 Mib | 7.5 Mib | 2.13x | Rustc |
+| tealdeer | 7.4 Mib | 20 Mib | 7.6 Mib | 2.7x | Rustc |
+| qsv | 42 Mib | 81 Mib | 39 Mib | 1.93x | Rustc |
+| vtracer | 6.6 Mib | 13 Mib | 6.4 Mib | 1.97x | Rustc |
 
 In general, there is no way to make a *precise* predict of how large your binary will be after the instrumentation without the actual compilation process. There are so many variables involved in this process (how much branches your application has, do you recompile with PGO your statically-linked dependencies, etc.) that much-much easier will be just recompile with instrumentation and check it. Maybe one day the compilers (or an ecosystem around the compiler) will provide you some estimations before the actual compilation process but not today.
 
@@ -513,6 +524,21 @@ Especially for this case, Google created [AutoFDO](https://github.com/google/aut
 TODO: Write about the caveat of how to collect PGO profiles from the customer devices, the overhead of taking a profile from the production, etc.
 TODO: add somewhere link to "PGO at scale" in Google
 
+### PGO tips
+
+TODO: rework this chapter
+
+* PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile()` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
+* Partial profile sets are useful too since they usually covers a lot of hot paths (LLD and ClickHouse as en example).
+* Merging multiple profiles - works well.
+* Running on a test suite - generally is not a good idea. Real-life workload usually would differ and a profile from the tests would not be so useful. However, if you have "real-life" tests - it's fine to use them as a profile workload.
+* PGO works well with libraries. However, will be a question - how to collect and distribute a profile for them? Especially if we are talking about general-purpose builds like in OS distros. Also, it's not easy to collect a profile from instrumented but non-instrumented binary (e.g. instrumented .so library which is used from Python software). Needs to be clarified but writing an instrumented wrapper right now is a recommended option.
+* PGO profiles does not depend on time! However, if your code has time-dependent paths, PGO profiles could differ due to "time stuff" like time issues on a build machine, different speed of different build machines, etc - be careful with that
+* PGO works fine without LTO (in normal compilers. MSVC does not belong to this family - you cannot use PGO without LTO there). So if LTO is too expensive to your build resources (especially if we are talking about FatLTO that consumes A LOT of RAM) - just use PGO without LTO, that's completely fine
+* It's hard to estimate how slow would be your application in the Instrumentation mode without actual testing. It hugely depends on the hot paths of your application, number of branches, etc. It's possible to predict based on some metrics of the application. But much easier just to test it :) Be careful, some application could be too slow in Instrumentation mode (like ClickHouse, Clangd or LLD)
+* When recompile software, would be useful to recompile 3rd parties with PGO as well. Here could be a challenge since often provided by OS packages dependencies are used. And it could be challenging to recompile them as well from the scratch (especially if we are talking about C and C++). Also, not for every software is obvious to understand - which 3rd parties are rebuilt from the scratch and which are taken from another place (like OS-provided or some package manager like Conan).
+* For reproducibility purposes you can just collect profile and commit it to the repo
+
 ## Post-Link time Optimization (PLO)
 
 What if PGO is not enough for us and we want to squeeze even more performance "for free" with no manual optimizations? Well, in this case, the industry already has something to offer. These kinds of tools are called Post-Link Time Optimizers or simply PLO.
@@ -673,6 +699,10 @@ TODO: finish chapter
 
 https://github.com/getsolus/packages/blob/main/packages/l/llvm/package.yml#L116 - example of BOLT integration in the upstream
 
+## PGO / PLO state across package managers
+
+TODO: Check Altinity builds for ClickHouse and suggest PGO for their CH build. Their sources are available here: https://github.com/Altinity/ClickHouse
+
 ## Stories
 
 TODO: finish chapter
@@ -740,6 +770,10 @@ Besides jokes, don't be like Aleksey regarding PGO. PGO allows you spend less ti
 TODO: finish chapter
 
 ## FAQ
+
+### Is PGO a silver bullet?
+
+TODO: What to do with performance regressions after PGO? Rustc question: https://users.rust-lang.org/t/how-to-report-performance-regressions-with-profile-guided-optimization-pgo/98225
 
 ### Can I use PGO without LTO?
 
@@ -826,7 +860,8 @@ TODO: Do I need this chapter since this topic was discussed above with actual nu
 ## Related projects
 
 TODO: write about ASOS, machine-learning-based compilers, etc.
-TODO: write about machine-learning PGO: https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/fprofile-ml-use.html
+TODO: write about OCOLOS - https://people.ucsc.edu/~hlitz/papers/ocolos.pdf
+TODO: write about improved PGO workflow: https://github.com/llvm/llvm-project/issues/58422
 
 Here I want to show you some PGO-related ongoing research or similar ideas that possibly you find at least interesting.
 
@@ -860,6 +895,7 @@ More information can be found in the original paper [here](http://scis.scichina.
 ### Machine learning-based compilers
 
 TODO: write about TF-based inlining for LLVM and write a little bit about the current inline implementation in LLVM
+TODO: Intel and ML PGO: https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/fprofile-ml-use.html
 
 ## Awesome PGO people
 
@@ -867,15 +903,16 @@ TODO: add links to the people (GitHub, their blogs, etc.)
 
 If you decide to integrate PGO, probably at some point you will meet some problems, a corner case or find a nice way to improve PGO for your specific workload. So here I want to share the PGO experts list (not complete!). I believe these people could help you in your PGO journey:
 
-* Jakub Beranek
-* Maxim Panchenko
-* Amir Aupov
+* Jakub Beranek aka [Kobzol](https://github.com/Kobzol) - main PGO wizard in the Rust community.
+* Maxim Panchenko aka [maksfb](https://github.com/maksfb) - BOLT developer
+* Amir Aupov aka [aaupov](https://github.com/aaupov) - BOLT developer
+* [ptr1337](https://github.com/ptr1337) - CachyOS founder and developer
 
-Additionally, I reccomend you to [join](https://discord.gg/xS7Z362) LLVM Discord server. It has many kind and clever people who can help you with your questions regarding LTO, PGO, PLO and other compiler-like fancy stuff.
+Additionally, I reccomend you to [join](https://discord.gg/xS7Z362) LLVM Discord server. It has many kind and clever people who can help you with your questions regarding LTO, PGO, PLO and other compiler-like fancy stuff. There is a dedicated channel for BOLT too.
 
 ## Future plans
 
-TODO
+TODO: test and advertise PGO in the Go ecosystem (when it becomes a bit more mature)
 
 ## Ideas
 
@@ -911,7 +948,7 @@ TODO: write about mine and Amir's idea for a profiles gathering daemon like it's
 
 The original idea is described [here](https://github.com/aaupov/school_topics/blob/main/perfd.md) (in Russian, so if you don't know the lang - please use the translator or ask Amir about making it English-first :), a few initial commits are available [here](https://github.com/linux-perfd/perfd).
 
-Another idea is gathering PGO profiles (instrumentation or sampling, whatever) via crowd-sourcing like mechanism. One of the biggest issue with PGO is collecting actual usage profiles. But what if we had a repository where each software engineer can get actual PGO profiles for its application and use it for PGO-optimized builds on their official site? It could be done e.g. via a specific OS build where all PGO-potent applications are built with instrumentation or continually collect sampling profiles via `perf` or something like that? There are **a lot** of concerns here like privacy issues (potential mapping "some_user_id -> application execution profiles"), security issues (organize an attack on an application performance via messing publicly-gathered PGO profiles), implementation (who and how would implement all this stuff?!), and much more. Maybe community-driven projects like [Boinc](https://boinc.berkeley.edu/) could be a good example here - right now it's just an idea, no more.
+Another idea is gathering PGO profiles (instrumentation or sampling, whatever) via crowd-sourcing like mechanism. One of the biggest issue with PGO is collecting actual usage profiles. But what if we had a repository where each software engineer can get actual PGO profiles for its application and use it for PGO-optimized builds on their official site? It could be done e.g. via a specific OS build where all PGO-potent applications are built with instrumentation or continually collect sampling profiles via `perf` or something like that? There are **a lot** of concerns here like privacy issues (potential mapping "some_user_id -> application execution profiles"), security issues (organize an attack on an application performance via messing publicly-gathered PGO profiles), implementation (who and how would implement all this stuff?!), and much more. Maybe community-driven projects like [Boinc](https://boinc.berkeley.edu/) could be a good example here - right now it's just an idea, no more. And I am [not alone](https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1422805-llvm-now-using-pgo-for-building-x86_64-windows-release-binaries-~22-faster-builds?p=1422977#post1422977) with this idea.
 
 ### Improve PGO/PLO visibility across the industry
 
@@ -968,3 +1005,11 @@ TODO: Possible plot for the talk:
 2. Show, why PGO is a worth thing to discuss with performance numbers for the most famous projects like PostgreSQL, Clang, MongoDB
 3. PGO's current ecosystem state from multiple perspectives: languages, compilers, problems, etc.
 4. What it can be in the future?
+
+TODO: article meme ideas
+
+* meme about Nier androids and "Are they PGO optimized?"
+* meme about DMC Vergil and "Show me your PGO motivation"
+* meme about AI in compilers and AYAYYAAYAYAYAY meme 10h
+* meme about Rick and Morty "Go here and there  - 10 minutes" about PGO journey
+* think about Rika Makiba meme and PGO? What would be a better idea here?

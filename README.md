@@ -56,6 +56,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Ruby](https://www.ruby-lang.org/): [Ruby Forum (post from 2006 with GCC 4.1)](https://www.ruby-forum.com/t/compiling-ruby-w-profile-guided-optimization/60564)
 * [Lua](https://www.lua.org/): [Lua interpeter results - Reddit](https://www.reddit.com/r/lua/comments/151dtyu/profileguided_optimization_pgo_on_lua_interpreters/)
 * [tfcompile](https://www.tensorflow.org/xla/tfcompile): [GitHub comment](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591)
+* [SWI-Prolog](https://www.swi-prolog.org): [GitHub comment](https://github.com/macports/macports-ports/pull/20918#issuecomment-1767875432)
 
 ### Developer tooling
 
@@ -210,6 +211,14 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Mesa: [Phoronix post](https://www.phoronix.com/news/Mesa-2020-PGO-LTO-Builds)
 * lingua-rs: [GitHub discussion](https://github.com/pemistahl/lingua-rs/discussions/273)
 * libtre: [FreeBSD Bugzilla comment](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=133302#c0)
+* ion:
+  - Instrumented to Release: https://gist.github.com/zamazan4ik/200b179278bcad05528eb65340977781
+  - PGO-optimized to Release: https://gist.github.com/zamazan4ik/a4c5b603c16ec9fe3427c9d26a50e3e5
+  - Platform: Linux
+  - ion version: `master` branch on `60bfb73351f0412c95b8ba2afe75e988514470a6` commit
+* tokei: [GitHub issue](https://github.com/XAMPPRocky/tokei/issues/1039)
+* qsv: [GitHub discussion](https://github.com/jqnatividad/qsv/discussions/1433)
+* vtracer: [GitHub discussion](https://github.com/visioncortex/vtracer/discussions/67)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -250,10 +259,14 @@ Below you can find some examples, where and how PGO is integrated into different
 * tsv-utils: [Makefile](https://github.com/eBay/tsv-utils/blob/master/makefile#L56)
 * Erlang OTP: [Makefile](https://github.com/erlang/otp/blob/master/Makefile.in#L484)
 * Clingo (PGO enabled only in Spack): [Package recipe](https://github.com/spack/spack/blob/develop/var/spack/repos/builtin/packages/clingo-bootstrap/package.py#L96)
+* SWI-Prolog:
+  - [Script](https://github.com/SWI-Prolog/swipl-devel/blob/master/scripts/pgo-compile.sh)
+  - [CMake module](https://github.com/SWI-Prolog/swipl-devel/blob/master/cmake/PGO.cmake)
+* hck: [Justfile](https://github.com/sstadick/hck/blob/master/justfile#L27)
 
 ## Project with package-manager integration level
 
-Sometimes PGO is not supported in the upstream for some reasons. In this case, a package manager/OS maintainers can decide to enable PGO on their own and patch the application correspondingly. Here are some examples:
+Sometimes PGO is not supported in the upstream for some reason. In this case, a package manager/OS maintainers can decide to enable PGO on their own and patch the application correspondingly. Here are some examples:
 
 * libtre in FreeBSD: [Makefile](https://cgit.freebsd.org/ports/tree/textproc/libtre/Makefile)
 
@@ -448,6 +461,8 @@ Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
 * Vcpkg: [GitHub discussion](https://github.com/microsoft/vcpkg/discussions/35190)
 * FreeBSD: [FreeBSD forum](https://forums.freebsd.org/threads/expand-profile-guided-optimization-pgo-usage-across-freebsd-packages.91034/)
 * Conan: [GitHub issue](https://github.com/conan-io/conan-center-index/issues/21245)
+* MacPorts: [Ticket](https://trac.macports.org/ticket/68746#ticket)
+  - They said this question should be discussed in mailing lists
 
 ### Other optimization techniques like BOLT
 
