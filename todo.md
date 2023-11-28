@@ -67,3 +67,15 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Write a disclaimer in the article about why most tested projects are tested with Clang (I have nothing against GCC and GPL) and in Rust (because it's easier to apply PGO there - tooling matters)
 * Add to the article: https://discourse.llvm.org/t/couple-of-general-questions-about-pgo/72279. Here there are some interesting insights about PGO state in the compiler. https://discourse.llvm.org/t/status-of-ir-vs-frontend-pgo-fprofile-generate-vs-fprofile-instr-generate/58323 thread also has many valuable insights about FE PGO vs IR PGO.
 * PGO questions on LLVM forum - https://discourse.llvm.org/t/profile-guided-optimization-pgo-related-questions-and-suggestions/75232
+* Find information about single and multi-threaded PGO counters - in Clamg its https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update . Related GCC bug about PGO profiles slowness: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=89307 . GCC docs for it: https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fprofile-update . Problems in practice with such an approach: https://reviews.llvm.org/D34085 . More discussion in https://lists.llvm.org/pipermail/llvm-dev/2014-April/072172.html
+* Extract PGO recommendations from Pavel Kosov's talk about PGO on C++ Russia to the article
+* github.com recommendation system sometimes brings interesting projects for PGO, huh :D
+* GCC merging multiple profiles: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=47618
+* Lapce maintainer does not believe in PGO: https://github.com/lapce/lapce/discussions/2817#discussioncomment-7674201
+* Good umbrella issue about PGO in Go: https://github.com/golang/go/issues/62463
+* Go and PGO profiles compatibility: https://github.com/google/pprof/issues/821 and https://github.com/golang/go/issues/64394
+* Reproducibility issues from PGO - GCC example: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93398
+* GCC and PGO profiles compatibility: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112717
+* Sent an email about PGO to https://soqol.ru/ via the official contact form on the website - waiting for the response
+* PGO and mobile development - what is the status?
+* PGO and embedded - what is the status?

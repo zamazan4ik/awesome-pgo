@@ -219,6 +219,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * tokei: [GitHub issue](https://github.com/XAMPPRocky/tokei/issues/1039)
 * qsv: [GitHub discussion](https://github.com/jqnatividad/qsv/discussions/1433)
 * vtracer: [GitHub discussion](https://github.com/visioncortex/vtracer/discussions/67)
+* ripgrep: [GitHub comment](https://github.com/BurntSushi/ripgrep/issues/1225#issuecomment-1827082307)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -520,6 +521,7 @@ Other pitfalls include the following things:
 * `.profraw` internal details: [blog](https://leodido.dev/demystifying-profraw/)
 * Slides about PGO: [link](https://assets.ctfassets.net/oxjq45e8ilak/41KrMkvfzUDEu6MDOEQL7q/dd4575d45a19aef27eebae411faa7952/PGO-___________________________________________________________.pdf) (in Russian)
 * Overview of all kinds of PGO in LLVM: [link](https://aaupov.github.io/blog/2023/07/09/pgo)
+* MSVC insights about PGO (a video from 2012): [Microsoft learn](https://learn.microsoft.com/en-us/shows/c9-goingnative/c9goingnative-12-c-build-2012-inside-profile-guided-optimization)
 
 ## Communities
 

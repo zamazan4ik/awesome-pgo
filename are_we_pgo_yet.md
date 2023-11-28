@@ -290,6 +290,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Perspective: https://github.com/finos/perspective/issues/2405
 * OpenMLDB: https://github.com/4paradigm/OpenMLDB/issues/3575
 * ustore: https://github.com/unum-cloud/ustore/discussions/435
+* HeavyDB: https://github.com/heavyai/heavydb/issues/818
 
 ## Logging
 
@@ -401,6 +402,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * vtracer: https://github.com/visioncortex/vtracer/discussions/67
 * Qt: https://bugreports.qt.io/browse/QTCREATORBUG-29968
 * fish: https://github.com/fish-shell/fish-shell/discussions/10119
+* Lapce: https://github.com/lapce/lapce/discussions/2817
 
 ## PGO in Go ecosystem
 

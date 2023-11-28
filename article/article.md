@@ -342,10 +342,13 @@ PGO in GraalVM is available only in GraalVM Enterprise license but don't worry -
 
 TODO: write about the curently weak GraalVM support across the Java ecosystem.
 TODO: add link about Kafka and GraalVM: https://cwiki.apache.org/confluence/display/KAFKA/KIP-974%3A+Docker+Image+for+GraalVM+based+Native+Kafka+Broker
+TODO: tooling - https://github.com/oracle/graal/discussions/7901 and profiles compatibility - https://github.com/oracle/graal/discussions/7892
 
 ### Kotlin and Kotlin Native
 
 TODO: https://youtrack.jetbrains.com/issue/KT-63357/Kotlin-Native-Profile-Guided-Optimization-PGO-support
+
+TODO: Kotlin Native has no PGO support and has no plans to implement it: https://youtrack.jetbrains.com/issue/KT-63357/Native-Profile-Guided-Optimization-PGO-support#focus=Comments-27-8353088.0-0
 
 ### Swift
 
@@ -373,7 +376,7 @@ TODO: https://forum.lazarus.freepascal.org/index.php/topic,65162.0.html
 
 ### Haskell
 
-TODO: GHC - no support: https://gitlab.haskell.org/ghc/ghc/-/issues/18393 , what about other compilers?
+TODO: GHC - no support: https://gitlab.haskell.org/ghc/ghc/-/issues/18393, what about other compilers?
 
 ### Julia
 
@@ -385,7 +388,7 @@ TODO: https://github.com/ocaml/ocaml/issues/12200
 
 ### Cobol
 
-TODO: check Cobol compilers and PGO support in them (lol)
+TODO: check Cobol compilers and PGO support in them (lol?)
 
 ---
 
