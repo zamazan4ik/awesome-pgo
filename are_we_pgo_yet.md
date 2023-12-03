@@ -79,6 +79,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * gcc-cobol: Cannot create an issue in https://gitlab.cobolworx.com/COBOLworx/gcc-cobol
 * numbat: https://github.com/sharkdp/numbat/issues/257
 * R: https://stackoverflow.com/collectives/r-language/beta/discussions/77526179/adding-profile-guided-optimization-pgo-to-the-r-interpreter
+* Onyx: https://github.com/onyx-lang/onyx/issues/41
 
 ## Developer tooling
 
@@ -138,6 +139,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Rust-Code-Analysis: https://github.com/mozilla/rust-code-analysis/issues/1077
 * grcov: https://github.com/mozilla/grcov/issues/1128
 * ctags: https://github.com/universal-ctags/ctags/issues/3849
+* ast-grep: https://github.com/ast-grep/ast-grep/discussions/738
+* Symbolicator: https://github.com/getsentry/symbolicator/issues/1334
 
 ## Build systems
 
@@ -177,6 +180,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Aero: https://github.com/Andy-Python-Programmer/aero/issues/108
 * Bottlerocket: https://github.com/bottlerocket-os/bottlerocket/discussions/3454
 * lk: https://github.com/littlekernel/lk/issues/387
+* Fuchsia: https://bugs.fuchsia.dev/p/fuchsia/issues/detail?id=137125
 
 ## Virtual machines and emulators
 
@@ -198,6 +202,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * YugabyteDB:
   - https://github.com/yugabyte/yugabyte-db/issues/12763
   - https://github.com/yugabyte/yugabyte-db/issues/18497
+  - https://github.com/yugabyte/yugabyte-db/issues/20089
+  - https://github.com/yugabyte/yugabyte-db/issues/20090
 * comdb2: https://github.com/bloomberg/comdb2/issues/3597
 * ClickHouse:
   - https://github.com/ClickHouse/ClickHouse/issues/44567
@@ -291,6 +297,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * OpenMLDB: https://github.com/4paradigm/OpenMLDB/issues/3575
 * ustore: https://github.com/unum-cloud/ustore/discussions/435
 * HeavyDB: https://github.com/heavyai/heavydb/issues/818
+* pgbouncer: https://github.com/pgbouncer/pgbouncer/discussions/990
 
 ## Logging
 
@@ -305,7 +312,11 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Tensorflow: https://github.com/tensorflow/tensorflow/issues/60944
 * Tensorflow Serving: https://github.com/tensorflow/serving/issues/2192
 * Tensorflow Text: https://github.com/tensorflow/text/issues/1227
-* PyTorch: https://github.com/pytorch/pytorch/issues/105281
+* PyTorch:
+  - https://github.com/pytorch/pytorch/issues/105281
+  - https://github.com/pytorch/pytorch/issues/52655
+* PyTorch TensorRT: https://github.com/pytorch/TensorRT/issues/2511
+* Nvidia TensorRT: https://github.com/NVIDIA/TensorRT/issues/3512
 * Glow: https://github.com/pytorch/glow/issues/6106
 * PlaidML: https://github.com/plaidml/plaidml/issues/1996
 * OpenVino: https://github.com/openvinotoolkit/openvino/issues/18572
@@ -403,6 +414,10 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Qt: https://bugreports.qt.io/browse/QTCREATORBUG-29968
 * fish: https://github.com/fish-shell/fish-shell/discussions/10119
 * Lapce: https://github.com/lapce/lapce/discussions/2817
+* OpenSIPS: https://github.com/OpenSIPS/opensips/issues/3261
+* workerd: https://github.com/cloudflare/workerd/discussions/1463
+* Carla: https://github.com/carla-simulator/carla/discussions/6970
+* or-tools: https://github.com/google/or-tools/discussions/4012
 
 ## PGO in Go ecosystem
 

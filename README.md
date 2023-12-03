@@ -220,6 +220,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * qsv: [GitHub discussion](https://github.com/jqnatividad/qsv/discussions/1433)
 * vtracer: [GitHub discussion](https://github.com/visioncortex/vtracer/discussions/67)
 * ripgrep: [GitHub comment](https://github.com/BurntSushi/ripgrep/issues/1225#issuecomment-1827082307)
+* lol-heml: [GitHub issue](https://github.com/cloudflare/lol-html/issues/202#issue-2022322548)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -264,6 +265,8 @@ Below you can find some examples, where and how PGO is integrated into different
   - [Script](https://github.com/SWI-Prolog/swipl-devel/blob/master/scripts/pgo-compile.sh)
   - [CMake module](https://github.com/SWI-Prolog/swipl-devel/blob/master/cmake/PGO.cmake)
 * hck: [Justfile](https://github.com/sstadick/hck/blob/master/justfile#L27)
+* ast-grep: [GitHub discussion](https://github.com/ast-grep/ast-grep/discussions/738)
+* Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
 
 ## Project with package-manager integration level
 
@@ -372,6 +375,8 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * NodeJS: [Blog](https://aaupov.github.io/blog/2020/10/08/bolt-nodejs)
 * Chromium: [Blog](https://aaupov.github.io/blog/2022/11/12/bolt-chromium)
 * MySQL, MongoDB, memcached, Verilator: [Paper](https://people.ucsc.edu/~hlitz/papers/ocolos.pdf)
+* ast-grep: [GitHub issue](https://github.com/ast-grep/ast-grep/discussions/738)
+* Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
 
 ## Projects with already integrated BOLT into their build scripts
 

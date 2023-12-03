@@ -14,8 +14,10 @@ State across distributions:
 * Gentoo: TODO
 
 Performance improvements from enabling LTO:
+
 * Vector: https://github.com/vectordotdev/vector/issues/15631#issuecomment-1694554798
 * Ladybird: https://twitter.com/awesomekling/status/1702247511698587678
+* Symbolicator: https://github.com/getsentry/symbolicator/issues/1334
 
 Links:
 
