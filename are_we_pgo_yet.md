@@ -80,6 +80,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * numbat: https://github.com/sharkdp/numbat/issues/257
 * R: https://stackoverflow.com/collectives/r-language/beta/discussions/77526179/adding-profile-guided-optimization-pgo-to-the-r-interpreter
 * Onyx: https://github.com/onyx-lang/onyx/issues/41
+* Clasp: https://github.com/clasp-developers/clasp/issues/1526
+* ECL: https://gitlab.com/embeddable-common-lisp/ecl/-/issues/725
 
 ## Developer tooling
 
@@ -141,6 +143,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ctags: https://github.com/universal-ctags/ctags/issues/3849
 * ast-grep: https://github.com/ast-grep/ast-grep/discussions/738
 * Symbolicator: https://github.com/getsentry/symbolicator/issues/1334
+* llvm-mctoll: https://github.com/microsoft/llvm-mctoll/discussions/195
 
 ## Build systems
 
@@ -181,6 +184,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Bottlerocket: https://github.com/bottlerocket-os/bottlerocket/discussions/3454
 * lk: https://github.com/littlekernel/lk/issues/387
 * Fuchsia: https://bugs.fuchsia.dev/p/fuchsia/issues/detail?id=137125
+* SteamOS: https://github.com/ValveSoftware/SteamOS/issues/1287
 
 ## Virtual machines and emulators
 

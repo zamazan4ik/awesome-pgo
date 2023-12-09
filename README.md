@@ -48,7 +48,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * D:
   - DMD: [GitHub issue](https://github.com/dlang/dmd/pull/13791#issue-1164476335)
   - LDC: [GitHub comment](https://github.com/ldc-developers/ldc/discussions/4524#discussioncomment-7537608)
-* Julia: [GitHub PR](https://github.com/JuliaLang/julia/pull/45641#issue-1268010204)  
+* Julia: [GitHub PR](https://github.com/JuliaLang/julia/pull/45641#issue-1268010204)
 * [PHP](https://www.php.net/):
   - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
   - [Phoronix benchmarks](https://www.phoronix.com/news/Clear-Linux-PHP7-PGO-Opt)
@@ -220,7 +220,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * qsv: [GitHub discussion](https://github.com/jqnatividad/qsv/discussions/1433)
 * vtracer: [GitHub discussion](https://github.com/visioncortex/vtracer/discussions/67)
 * ripgrep: [GitHub comment](https://github.com/BurntSushi/ripgrep/issues/1225#issuecomment-1827082307)
-* lol-heml: [GitHub issue](https://github.com/cloudflare/lol-html/issues/202#issue-2022322548)
+* lol-html: [GitHub issue](https://github.com/cloudflare/lol-html/issues/202#issue-2022322548)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -230,7 +230,9 @@ Below you can find some examples, where and how PGO is integrated into different
 * GCC:
   - Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
   - A [part](https://github.com/gcc-mirror/gcc/blob/master/configure#L7896) in a "wonderful" `configure` script.
-* Clang: [Docs](https://llvm.org/docs/HowToBuildWithPGO.html)
+* Clang:
+  - [Docs](https://llvm.org/docs/HowToBuildWithPGO.html)
+  - [MinGW build script](https://github.com/msys2/MINGW-packages/commit/4dd91d1d4dfef17f1f451c3a8f59303be855e4b5)
 * Python:
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
   - Pyston: [README](https://github.com/pyston/pyston#building)
@@ -469,6 +471,8 @@ Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
 * Conan: [GitHub issue](https://github.com/conan-io/conan-center-index/issues/21245)
 * MacPorts: [Ticket](https://trac.macports.org/ticket/68746#ticket)
   - They said this question should be discussed in mailing lists
+* LLVM-mingw: [GitHub issue](https://github.com/mstorsjo/llvm-mingw/issues/383)
+* MinGW repo: [GitHub issue](https://github.com/msys2/MINGW-packages/issues/19273)
 
 ### Other optimization techniques like BOLT
 
