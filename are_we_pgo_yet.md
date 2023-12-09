@@ -159,6 +159,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 ## Gamedev
 
 * Unreal Engine: https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240
+* Unity: https://forum.unity.com/threads/add-lto-pgo-and-plo-recommendations-to-il2cpp-documentation.1525315/
 * Bevy: https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867
 * Fyrox: https://github.com/FyroxEngine/Fyrox/issues/498
 * Bitty: https://github.com/paladin-t/bitty/issues/38
@@ -273,7 +274,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Firebird: https://github.com/FirebirdSQL/firebird/issues/7631
 * Groonga: https://github.com/groonga/groonga/issues/1585
 * Typesense: https://github.com/typesense/typesense/issues/1103
-* SQLite: https://sqlite.org/forum/forumpost/7fd3c9a43a
+* SQLite:
+  - https://sqlite.org/forum/forumpost/d26f4eba26
+  - https://sqlite.org/forum/forumpost/7fd3c9a43a
 * Polars: https://github.com/pola-rs/polars/issues/9702
 * pg_embedding: https://github.com/neondatabase/pg_embedding/issues/29
 * CachewDB: https://github.com/theopfr/cachew-db/issues/1

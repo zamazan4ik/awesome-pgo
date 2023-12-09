@@ -67,7 +67,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - GCC: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806
   - GraalVM: TODO. Does it even have user hints support?
 * Clang recommendation IR PGO over FE PGO: https://github.com/llvm/llvm-project/issues/45668
-* Write in the article about manual profile dump via the compiler intrinsics
+* Write in the article about manual profile dump via the compiler runtime profile infra
 * Interesting PGO benefit - startup time. Can be important for Serverless apps - add to the article
 * Suggest an idea about AutoFDO at scale to Grafana Pyroscope (https://github.com/grafana/pyroscope) - https://github.com/grafana/pyroscope/discussions/2783
 * Check runtime PGO capabilities in GCC: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829
@@ -82,9 +82,10 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Documentation issues about PGO even from Google: https://issuetracker.google.com/issues/315487999
 * Write about multiple instrumentation and sampling tooling and their compatibility with PGO infrastructure: https://thume.ca/2023/12/02/tracing-methods/
 * magic-trace profiles and PGO: https://github.com/janestreet/magic-trace/discussions/285
-* A GopherCon talk about continuous PGO at Reddit: https://www.gophercon.com/agenda/session/1158767
 * Apple question about PGO:
-  - Apple StackExchange: https://apple.stackexchange.com/questions/467182/profile-guided-optimization-pgo-with-xcode-and-apple-clang
+  - Apple StackExchange: https://apple.stackexchange.com/questions/467215/profile-guided-optimization-pgo-in-xcode , https://apple.stackexchange.com/questions/467182/sampling-profile-guided-optimization-pgo-with-xcode-and-clang , https://apple.stackexchange.com/questions/467218/profile-guided-optimization-pgo-differences-between-clang-and-apple-clang
   - Apple developer forum: https://developer.apple.com/forums/thread/742840
 * Unity post for using LTO, PGO and PLO for games: https://forum.unity.com/threads/add-lto-pgo-and-plo-recommendations-to-il2cpp-documentation.1525315/
 * Fix Android PGO docs: https://source.android.com/docs/core/perf/pgo - https://issuetracker.google.com/issues/315464624
+* An idea about macos to linux profile converter
+* An idea about PGO profile to source converter (insert likely/unlikely attributes based on PGO)
