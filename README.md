@@ -288,6 +288,7 @@ Here we collect projects where PGO is described as an optimization option in the
 * Clang:
   - https://llvm.org/docs/HowToBuildWithPGO.html
   - https://llvm.org/docs/AdvancedBuilds.html
+* Rustc: https://rustc-dev-guide.rust-lang.org/building/optimized-build.html#profile-guided-optimization
 * tsv-utils: https://github.com/eBay/tsv-utils/blob/master/docs/BuildingWithLTO.md
 
 ## PGO support in programming languages and compilers

@@ -14,7 +14,6 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * How to quickly check PGO support in the project: search over issues for "PGO", "Profile guided", "FDO". Also works grepping over the project for the same words or for PGO-related compiler flags like `-fprofile-generate`/`-fprofile-use`, etc.
 * Extract actual numbers directly into the document for avoiding the cases like [this](https://github.com/facebook/mariana-trench/issues/137#issuecomment-1658195725).
 * Describe different PGO application scenarios: for SaaS, for open-source, for closed-source but delivered to the customers, etc.
-* Using built-in benchmarks can be not so good idea: benchmark code coverage issues, built-in benchmarks can be too slow in the instrumentation modes
 * Not everywhere PGO is available (e.g. WASM): https://github.com/rust-lang/rust/issues/81684
 * Committing PGO profiles into a project - transparency problem if you do not describe how this profile is collected
 * Check https://trofi.github.io/posts/243-gcc-profiler-internals.html article about GCC profiler internals
@@ -23,7 +22,6 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Play locally with Propeller: https://github.com/google/llvm-propeller and discuss integrating it into the cargo-pgo
 * Do not forget to mention about monitoring actual workload and tracking - does it match your current PGO-profile or not
 * Example of an application where PGO exists but not used for prebuilt binaries: https://github.com/ispc/ispc/issues/2687
-* Add a note about unavailable LBR in virtual machines (that can limit AutoFDO usage in virtualized envs)
 * Write about Clang (LLVM) vs GCC PGO implementations: GCC has more PGO switches, Clang has more recently-researched PGO-related things inside, etc.
 * Prepare an answer in Angie (Nginx fork) repository about PGO
 * Possible LTO issues in compilers: https://github.com/rust-lang/rust/pull/113433
@@ -48,32 +46,22 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Experiments regarding compiler options and PGO profile stability:
   - Enable/Disable LTO: ZERO OVERLAP
   - Change opt-level from 3 to 2: ZERO OVERLAP
-* Write about atomic counters update during the profiling phase (check both GCC and LLVM. Probably other compilers should be checked as well)
 * Add a link about some issues with the current build infrastructure for PGO in Rust: https://github.com/yamafaktory/jql/discussions/244#discussioncomment-7665597
-* Write a disclaimer in the article about why most tested projects are tested with Clang (I have nothing against GCC and GPL) and in Rust (because it's easier to apply PGO there - tooling matters)
+* Write a disclaimer in the article about why most tested projects in Rust (because it's easier to apply PGO there - tooling matters)
 * Add to the article: https://discourse.llvm.org/t/couple-of-general-questions-about-pgo/72279. Here there are some interesting insights about PGO state in the compiler. https://discourse.llvm.org/t/status-of-ir-vs-frontend-pgo-fprofile-generate-vs-fprofile-instr-generate/58323 thread also has many valuable insights about FE PGO vs IR PGO.
 * PGO questions on LLVM forum - https://discourse.llvm.org/t/profile-guided-optimization-pgo-related-questions-and-suggestions/75232
 * Find information about single and multi-threaded PGO counters - in Clang its https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update . Related GCC bug about PGO profiles slowness: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=89307 . GCC docs for it: https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fprofile-update . Problems in practice with such an approach: https://reviews.llvm.org/D34085 . More discussion in https://lists.llvm.org/pipermail/llvm-dev/2014-April/072172.html
 * Extract PGO recommendations from Pavel Kosov's talk about PGO from C++ Russia to the article
-* GCC merging multiple profiles: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=47618
 * Reproducibility issues from PGO - GCC example: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93398
-* GCC and PGO profiles compatibility: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112717
 * ripgrep does not want to maintain PGO. it's a good indicator that maintaining PGO costs something - https://github.com/BurntSushi/ripgrep/issues/1225#issuecomment-1828965231
 * Write more about the CompilerGym in the article: https://github.com/facebookresearch/CompilerGym
-* PGO and cold paths in LLVM and GCC: https://github.com/llvm/llvm-project/issues/63024
 * PGO and user hints: https://github.com/llvm/llvm-project/issues/58189
-  - What about other compilers like GCC?
   - Go: https://github.com/golang/go/issues/64460
   - GCC: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806
-  - GraalVM: TODO. Does it even have user hints support?
-* Clang recommendation IR PGO over FE PGO: https://github.com/llvm/llvm-project/issues/45668
+  - GraalVM: https://github.com/oracle/graal/discussions/7990
 * Write in the article about manual profile dump via the compiler runtime profile infra
-* Interesting PGO benefit - startup time. Can be important for Serverless apps - add to the article
 * Suggest an idea about AutoFDO at scale to Grafana Pyroscope (https://github.com/grafana/pyroscope) - https://github.com/grafana/pyroscope/discussions/2783
-* Check runtime PGO capabilities in GCC: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829
-* PGO for size optimization - an experiment results: https://bugs.fuchsia.dev/p/fuchsia/issues/detail?id=79458
 * Write a note about LLVM static counters warning and possible mitigations: https://bugs.fuchsia.dev/p/fuchsia/issues/detail?id=111987
-* Missing partial training support for Clang: https://github.com/llvm/llvm-project/issues/63024
 * Discuss comment from the Valve engineer: https://github.com/ValveSoftware/SteamOS/issues/1287#issuecomment-1840835012
 * Sampling PGO support via `perf` on Mobile devices? Is it possible to perform?
 * Cover question about CSIR PGO vs BOLT in the article
@@ -88,4 +76,5 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Unity post for using LTO, PGO and PLO for games: https://forum.unity.com/threads/add-lto-pgo-and-plo-recommendations-to-il2cpp-documentation.1525315/
 * Fix Android PGO docs: https://source.android.com/docs/core/perf/pgo - https://issuetracker.google.com/issues/315464624
 * An idea about macos to linux profile converter
-* An idea about PGO profile to source converter (insert likely/unlikely attributes based on PGO)
+* GraalVM's LLVM toolchain and PGO optimization: https://github.com/oracle/graal/discussions/7989
+* Write a note that me did a mistake with FE PGO and IR PGO too - that's why all my C/C++ tests use FE PGO instead of IR PGO

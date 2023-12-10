@@ -70,7 +70,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Julia: https://github.com/JuliaLang/julia/pull/45641
 * D compilers (DMD, GDC, LDC):
   - All D compilers: https://forum.dlang.org/post/ukljubhhlosfygbdzfcm@forum.dlang.org
-  - LDC: https://github.com/ldc-developers/ldc/discussions/4524 (general discussion) , https://github.com/ldc-developers/ldc/issues/4526 (CSIR PGO), https://github.com/ldc-developers/ldc/issues/4527 (AutoFDO)
+  - LDC: https://github.com/ldc-developers/ldc/discussions/4524 (general discussion) , https://github.com/ldc-developers/ldc/issues/4526 (CSIR PGO), https://github.com/ldc-developers/ldc/issues/4527 (AutoFDO), https://github.com/ldc-developers/ldc/issues/4542 (migrate to IR PGO instead of FE PGO)
 * Erlang: https://erlangforums.com/t/profile-guided-optimization-pgo-benchmarks-on-erlang-otp/3028
 * Inko:
   - https://github.com/inko-lang/inko/issues/650
