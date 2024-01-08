@@ -66,7 +66,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Sampling PGO support via `perf` on Mobile devices? Is it possible to perform?
 * Cover question about CSIR PGO vs BOLT in the article
 * PGO for Android games: https://developer.android.com/games/agde/pgo-overview and GDC talk (https://www.youtube.com/watch?v=CNbpFTyHOe8)
-  - Contact with the author and ask about more advanced PGO techniques: CSIR PGO, Sampling PGO, maybe BOLT/Propeller
+  - Contact the author and ask about more advanced PGO techniques: CSIR PGO, Sampling PGO, maybe BOLT/Propeller
 * Documentation issues about PGO even from Google: https://issuetracker.google.com/issues/315487999
 * Write about multiple instrumentation and sampling tooling and their compatibility with PGO infrastructure: https://thume.ca/2023/12/02/tracing-methods/
 * magic-trace profiles and PGO: https://github.com/janestreet/magic-trace/discussions/285
@@ -75,6 +75,14 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - Apple developer forum: https://developer.apple.com/forums/thread/742840
 * Unity post for using LTO, PGO and PLO for games: https://forum.unity.com/threads/add-lto-pgo-and-plo-recommendations-to-il2cpp-documentation.1525315/
 * Fix Android PGO docs: https://source.android.com/docs/core/perf/pgo - https://issuetracker.google.com/issues/315464624
-* An idea about macos to linux profile converter
+* An idea about macos to linux profile converter (original link somewhere in the llvm-mingw repo)
 * GraalVM's LLVM toolchain and PGO optimization: https://github.com/oracle/graal/discussions/7989
 * Write a note that me did a mistake with FE PGO and IR PGO too - that's why all my C/C++ tests use FE PGO instead of IR PGO
+* Ask GraalVM about dumping PGO profile to a memory region and other PGO-related runtime intrinsics: https://github.com/oracle/graal/discussions/7991
+* little-fs PGO benchmarks: https://github.com/littlefs-project/littlefs
+* GraalVM PGO profile optimization strategy for non-executed code: https://github.com/oracle/graal/discussions/7999
+* Arch feature levels as an optimization idea: https://www.phoronix.com/news/Ubuntu-x86-64-v3-Experiment
+  - Find more Phoronix publications on this topic
+* AOSP switches to AFDO: https://issuetracker.google.com/issues/315464624
+* Write about the instruction set bumping like https://www.phoronix.com/news/Ubuntu-x86-64-v3-Experiment
+* Add to the article note about using git blame to find responsible for PGO people - a nice thing to remember during the PGO journey

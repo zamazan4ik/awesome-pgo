@@ -219,7 +219,7 @@ TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
 
 #### Instrumented binary is slower
 
-Instrumented binary is slower. But how much? Well, as usual - *it depends*. I didn't find before such benchmarks for real-life applications so I did them and I'm ready to show you some numbers for several projects:
+An instrumented binary is slower. But how much? Well, as usual - *it depends*. I didn't find such benchmarks for real-life applications so I did them and I'm ready to show you some numbers for several projects:
 
 TODO: add as many projects as I can
 
@@ -251,8 +251,9 @@ TODO: add as many projects as I can
 | lld | ~6.8x | [link](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028) |
 | vtracer | ~2.0x | [link](https://github.com/visioncortex/vtracer/discussions/67#discussion-5889368) |
 | Symbolicator | 1.19x | [link](https://github.com/getsentry/symbolicator/issues/1334#issue-2016488888) |
+| sage | ~1.8x | [link](https://github.com/adam-mcdaniel/sage/issues/70) |
 
-The same applies for libraries as well:
+The same applies to libraries as well:
 
 | Library | Instrumentation to Release slowdown ratio | Benchmark |
 |---|---|---|
@@ -262,6 +263,7 @@ The same applies for libraries as well:
 | xml-rs | 1.45x | [link](https://github.com/netvl/xml-rs/issues/228#issue-1852007193) |
 | tquic | up to 1.3x | [link](https://github.com/Tencent/tquic/issues/19#issue-1972443474) |
 | lingua-rs | up to 146x (not an error!) | [link](https://github.com/pemistahl/lingua-rs/discussions/273#discussion-5864708) |
+| tokenizers | up to 20x | [link](https://github.com/huggingface/tokenizers/issues/1426#issue-2069318532) |
 
 I could prepare more advanced analysis like slowdown p50/p95/p99 percentiles, testing across more different configurations (like trying to replicate tests across different hardware/software, etc) but I am a bit lazy for doing it right now. Maybe next time ;)
 
@@ -361,18 +363,28 @@ Here are some PGO integration examples into the different compilers:
 TODO: add GCC vs Clang vs MSVC comparison
 TODO: MSVC PGO issue: https://developercommunity.visualstudio.com/t/Multiple-questions-about-Profile-Guided-/10537677
 
-With Clang/LLVM I found the following issues:
+With Clang I found the following issues:
 
-* TODO: Missing partial training support for instrumentation mode for Clang: https://github.com/llvm/llvm-project/issues/63024
-* TODO: documentation issues
-* TODO: write about atomic counters update during the profiling phase (check both GCC and LLVM. Probably other compilers should be checked as well)
+* [Missing](https://github.com/llvm/llvm-project/issues/63024) partial training support for instrumentation PGO. Right now, Clang [supports](https://releases.llvm.org/16.0.0/tools/clang/docs/ClangCommandLineReference.html#cmdoption-clang-fprofile-sample-accurate) partial training only for the sampling PGO with `-fno-profile-sample-accurate` flag.
+* By default, Clang [uses](https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update) non-atomic profile counters. It could be a problem since non-atomic counters can bring some non-determinism in your PGO pipelines.
+* As usual, [there are multiple](https://github.com/llvm/llvm-project/issues/74022) documentation issues in different areas. However, I would say Clang has **the best** PGO-related documentation at least among the open-source compilers.
 
 With GCC I found the following issues:
 
-* TODO: GCC and PGO profiles compatibility: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112717
-* TODO: GCC merging multiple profiles: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=47618
-* TODO: user hints: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806
-* TODO: runtime dumping capabilities: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829
+* [No](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112717) profiles compatibility guarantees at all. It means that for every GCC update in theory you need to regenerate your PGO profiles. In practice - who knows, I didn't test it. GL HF!
+* PGO profiles runtime dumping capabilities [are limited](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829). Compared to LLVM, there is no easy way to dump PGO profile to a memory instead of filesystem. GCC developers in this case suggest mitigations like using RAM-disk, NFS and other fancy stuff. If you want to implement it - you need to tweak GCOV implementation on your own.
+* It's [not clear](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806) how PGO in GCC interacts with user-defined `likely`/`unlikely` hints. It could be a problem when you apply PGO for already (partially) optimized codebase with such user hints. You can get some unexpected results.
+
+About MSVC I cannot say much - I didn't use MSVC for years and have no enough experience. However, after reading the corresponding PGO [documentation](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations) I can highlight the following things:
+
+* MSVC does not support sampling PGO. Probably there is a possibility to write a conversion tool from a profiler like Intel VTune and convert it to the MSVC-compatible PGO format. But I didn't anyhting like this in the wild.
+* I didn't find PGO profiles compatibility guarantees in the documentation.
+* You cannot enable PGO without LTO. It could be a problem since LTO often breaks C/C++ program (due to different hidden UB in them) and LTO bumps requirements for your build machine (it could be a problem for the resource-constrained build environments).
+* There is no way to compare two PGO profiles (`llvm-profdata overlap` alternative).
+* No alternative to `-fprofile-partial-training` [flag](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-fprofile-partial-training) from GCC.
+* You cannot dump PGO profile to a memory. The only way to dump the profile is a save to a filesystem.
+
+I [asked](https://developercommunity.visualstudio.com/t/Multiple-questions-about-Profile-Guided-/10537677) all these question on the Microsoft Developer community platform. I hope one day we will get answers there.
 
 ### Rust
 
@@ -399,7 +411,6 @@ Current PGO implementation in the `go` compiler has following issues/limitations
 * There is [no](https://github.com/golang/go/issues/62444) built-in option to dump PGO profile after the program exit or trigger PGO dumping via a signal. This scenario is very convenient in cases when you optimize some CLI utilities or one-time jobs. Right now, the only way to get this functionality - implement it manually via patching sources. In other PGO implementations (like LLVM and GCC) such an option is available - and I can in a simple way optimize all my programs without touching the code.
 * [Limited](https://github.com/golang/go/issues/64489) integration with existing profiling tooling like Linux' `perf`. It could be an issue if you already have some existing profiling infrastructure - in this case you need to spend initial efforts for integrating `pprof`-based PGO implementation from Go (if your profiling infra is already `pprof`-based - you are lucky). Not critical at all since it can be easily [fixed](https://github.com/golang/go/issues/64489#issuecomment-1846003368). I think eventually it would be fixed in the upstream. By the way, all currently supported external profilers for Go's PGO are listed [here](https://github.com/golang/go/wiki/PGO-Tools).
 * Small documentation issues like profile compatibility [guarantees](https://github.com/golang/go/issues/64394).
-
 
 Here I collected some links about PGO in Go:
 
@@ -860,6 +871,11 @@ When I was trying to find suitable projects for PGO, I found the following sourc
 * Categories in package managers. Like "Lang" group in FreeBSD [ports](https://cgit.freebsd.org/ports/tree/lang).
 * Sometimes recommendations from the github.com main page were quite interesting to investigate as well!
 
+In each project I quickly searched for PGO existence with the following "algorithm":
+
+* Search over issues / discussions for "PGO", "Profile guided", "FDO" keywords.
+* (rip)grep sources for PGO-related compiler flags like `-fprofile-generate`, `-fprofile-use`, `-fprofile-instr-generate`.
+
 ### YDB
 
 TODO: Hardcoded timeout issue in YDB and Instrumentation PGO
@@ -1051,6 +1067,8 @@ Sometimes you want to optimize not for speed but for size. In most cases, such r
 
 BOLT has [no](https://discord.com/channels/636084430946959380/930647188944613406/1183491352382689432) ability to reduce the binary size. There was some ongoing work on it but the original author [lost the interest](https://discord.com/channels/636084430946959380/930647188944613406/1183493533894725663) in the project.
 
+By the way, there is a project about optimizing binary size on the linker step from ByteDance with some promising results: [Slides](https://llvm.org/devmtg/2022-11/slides/TechTalk11-LinkerCodeSizeOptimization.pdf), [Paper](https://arxiv.org/abs/2210.07311v1). However, I don't know the current status of this work.
+
 ## Related projects
 
 TODO: write about improved PGO workflow: https://github.com/llvm/llvm-project/issues/58422
@@ -1152,8 +1170,6 @@ There are already some projects that integrated FE PGO in their PGO pipelines. W
 
 TODO: add an idea/suggestion to the article about using my "Are we PGO yet" issue list as a starting point to play with PGO for open-source projects
 
-
-
 ### Contribute to project-specific PGO documentation
 
 It's always convenient to have project-specific information as close to the project as possible like in a project documentation. Especially if the project has some implementation nuances in its PGO implementation (like a [custom logic](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d) in PGO dumping process).
@@ -1251,6 +1267,7 @@ If you want to discuss with me more things about PGO, think about contributing t
 * Email: zamazan4ik (at) tut.by (primary email) or zamazan4ik (at) gmail.com (secondary email)
 * Telegram: zamazan4ik
 * Discord: zamazan4ik
+* Twitter/X: [zamazan4ik](https://twitter.com/zamazan4ik)
 
 Also, you can create an issue or open a discussion at https://github.com/zamazan4ik/awesome-pgo, if you want to contribute PGO results or discuss something publicly. Just be careful about possible NDA violations and similar stuff.
 

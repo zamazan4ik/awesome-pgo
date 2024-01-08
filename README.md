@@ -29,6 +29,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Rust](https://www.rust-lang.org/) (the `rustc` compiler):
   - [Rust Lang blog](https://blog.rust-lang.org/inside-rust/2020/11/11/exploring-pgo-for-the-rust-compiler.html)
   - [Kobzol blog](https://kobzol.github.io/rust/rustc/2022/10/27/speeding-rustc-without-changing-its-code.html)
+  - [Android blog](https://android-developers.googleblog.com/2023/12/faster-rust-toolchains-for-android.html)
 * [Clang](https://clang.llvm.org/):
   - [Official documentation](https://llvm.org/docs/HowToBuildWithPGO.html#introduction)
   - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
@@ -57,6 +58,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Lua](https://www.lua.org/): [Lua interpeter results - Reddit](https://www.reddit.com/r/lua/comments/151dtyu/profileguided_optimization_pgo_on_lua_interpreters/)
 * [tfcompile](https://www.tensorflow.org/xla/tfcompile): [GitHub comment](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591)
 * [SWI-Prolog](https://www.swi-prolog.org): [GitHub comment](https://github.com/macports/macports-ports/pull/20918#issuecomment-1767875432)
+* Sage: [GitHub issue](https://github.com/adam-mcdaniel/sage/issues/70)
 
 ### Developer tooling
 
@@ -221,6 +223,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * vtracer: [GitHub discussion](https://github.com/visioncortex/vtracer/discussions/67)
 * ripgrep: [GitHub comment](https://github.com/BurntSushi/ripgrep/issues/1225#issuecomment-1827082307)
 * lol-html: [GitHub issue](https://github.com/cloudflare/lol-html/issues/202#issue-2022322548)
+* tokenizers: [GitHub issue](https://github.com/huggingface/tokenizers/issues/1426)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -365,6 +368,7 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * Rustc:
   - [Rustc itself (GitHub PR)](https://github.com/rust-lang/rust/pull/116352)
   - [LLVM in Rustc (Reddit)](https://www.reddit.com/r/rust/comments/y4w2kr/llvm_used_by_rustc_is_now_optimized_with_bolt_on/)
+  - [Android blog](https://android-developers.googleblog.com/2023/12/faster-rust-toolchains-for-android.html)
 * CPython: [GitHub PR](https://github.com/python/cpython/pull/95908)
 * YDB: [GitHub comment](https://github.com/ydb-platform/ydb/issues/140)
 * Clang:
