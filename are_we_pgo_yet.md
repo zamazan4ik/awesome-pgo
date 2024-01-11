@@ -83,6 +83,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Clasp: https://github.com/clasp-developers/clasp/issues/1526
 * ECL: https://gitlab.com/embeddable-common-lisp/ecl/-/issues/725
 * Sage: https://github.com/adam-mcdaniel/sage/issues/70
+* Odin: https://github.com/odin-lang/Odin/discussions/3081
 
 ## Developer tooling
 
@@ -307,6 +308,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * HeavyDB: https://github.com/heavyai/heavydb/issues/818
 * pgbouncer: https://github.com/pgbouncer/pgbouncer/discussions/990
 * oasysdb: https://github.com/oasysai/oasysdb/discussions/19
+* NativeDB: https://github.com/vincent-herlemont/native_db/discussions/92
 
 ## Logging
 
@@ -336,6 +338,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Fuser: https://github.com/NVIDIA/Fuser/issues/1185
 * tokenizers: https://github.com/huggingface/tokenizers/issues/1426
 * rten: https://github.com/robertknight/rten/issues/38
+* SentencePiece: https://github.com/google/sentencepiece/issues/961
 
 ## Message brokers
 
@@ -429,7 +432,11 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * workerd: https://github.com/cloudflare/workerd/discussions/1463
 * Carla: https://github.com/carla-simulator/carla/discussions/6970
 * or-tools: https://github.com/google/or-tools/discussions/4012
-* ocrs: https://github.com/robertknight/ocrs/issues/14#issuecomment-1880210742
+* ocrs: https://github.com/robertknight/ocrs/issues/14
+* lol-html: https://github.com/cloudflare/lol-html/issues/202
+* Zen: https://github.com/gorules/zen/discussions/109
+* native_model: https://github.com/vincent-herlemont/native_model/issues/50
+* pathfinding: https://github.com/evenfurther/pathfinding/issues/510
 
 ## PGO in Go ecosystem
 

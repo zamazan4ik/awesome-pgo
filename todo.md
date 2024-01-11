@@ -77,7 +77,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Fix Android PGO docs: https://source.android.com/docs/core/perf/pgo - https://issuetracker.google.com/issues/315464624
 * An idea about macos to linux profile converter (original link somewhere in the llvm-mingw repo)
 * GraalVM's LLVM toolchain and PGO optimization: https://github.com/oracle/graal/discussions/7989
-* Write a note that me did a mistake with FE PGO and IR PGO too - that's why all my C/C++ tests use FE PGO instead of IR PGO
+* Write a note that I did a mistake with FE PGO and IR PGO too - that's why all my C/C++ tests use FE PGO instead of IR PGO
 * Ask GraalVM about dumping PGO profile to a memory region and other PGO-related runtime intrinsics: https://github.com/oracle/graal/discussions/7991
 * little-fs PGO benchmarks: https://github.com/littlefs-project/littlefs
 * GraalVM PGO profile optimization strategy for non-executed code: https://github.com/oracle/graal/discussions/7999
@@ -85,4 +85,17 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - Find more Phoronix publications on this topic
 * AOSP switches to AFDO: https://issuetracker.google.com/issues/315464624
 * Write about the instruction set bumping like https://www.phoronix.com/news/Ubuntu-x86-64-v3-Experiment
-* Add to the article note about using git blame to find responsible for PGO people - a nice thing to remember during the PGO journey
+* Add to the article a note about using git blame to find responsible for PGO people - a nice thing to remember during the PGO journey
+* Add this link as a request for ebook about PGO: https://github.com/lycheeverse/lychee/issues/1247#issuecomment-1882078012
+* Dataframe performance regressions with PGO in the benchmarks - what is the reason? Needs to be investigated
+* Write a note about reporting problems with PGO to the upstream - how to do it properly? Especially, if we are talking about debuggability of the performance regression
+* Check profile generation reproducibility across runs
+* Sent an email to Cloudflare via https://sinkingpoint.com/ - sent 09.01.2024, got a response in a few hours! Cloudflare already uses PGO internally. For which projects, and what are the performance gains from it - still unknown. It needs to be clarified later.
+* Get in touch with https://twitter.com/ohmypy/status/1744664212952297640 regarding the SQLite and PGO situation
+* Some projects fail to build easily with PGO instrumentation: https://github.com/Kobzol/cargo-pgo/issues/44
+* Add a funny note to the article about reaching the Pastebin limit for PGO results - I needed to switch to GitHub's Gist since this limit.
+* Zen have a regression in the lexer benchmark - it needs to be investigated.
+* Add a note to the article about debugging performance regressions with PGO - how you can do it
+* Create an issue about PGO in ReDB and post benchmarks from NativeDB (it has the results for ReDB too)
+* Perform PGO benchmarks on Darktable - it has some benchmarks: https://github.com/darktable-org/darktable/blob/master/src/tests/benchmark/darktable-bench
+* Add PGO request to https://www.phoronix.com/news/Vcc-Vulkan-Clang-Compiler

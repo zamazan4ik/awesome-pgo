@@ -122,11 +122,14 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
 * [Tarantool](https://www.tarantool.io/): [GitHub issue](https://github.com/tarantool/tarantool/issues/8089#issuecomment-1580628168)
 * [RonDB](https://www.rondb.com/): [GitHub comment](https://github.com/logicalclocks/rondb/issues/335#issuecomment-1624188886)
-* [ReDB](https://www.redb.org/): [GitHub comment](https://github.com/cberner/redb/issues/638#issuecomment-1641380707)
+* [ReDB](https://www.redb.org/):
+  - [GitHub comment in the main repo](https://github.com/cberner/redb/issues/638#issuecomment-1641380707)
+  - [GitHub comment in NativeDB repo](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050) (has PGO results for ReDB too)
 * [Nebula](https://www.nebula-graph.io/): [Docs](https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/)
 * [Qdrant](https://qdrant.tech/):
   - [Microbenchmarks](https://github.com/qdrant/qdrant/issues/2354#issuecomment-1701936793)
 * [OceanBase](https://en.oceanbase.com/): [GitHub comment](https://github.com/oceanbase/oceanbase/issues/1580#issuecomment-1732874282)
+* [NativeDB](https://github.com/vincent-herlemont/native_db): [GitHub issue](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050)
 
 ### Logging
 
@@ -224,10 +227,14 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * ripgrep: [GitHub comment](https://github.com/BurntSushi/ripgrep/issues/1225#issuecomment-1827082307)
 * lol-html: [GitHub issue](https://github.com/cloudflare/lol-html/issues/202#issue-2022322548)
 * tokenizers: [GitHub issue](https://github.com/huggingface/tokenizers/issues/1426)
+* Zen: [GitHub discussion](https://github.com/gorules/zen/discussions/109#discussion-6053432)
+* native_model: [GitHub issue](https://github.com/vincent-herlemont/native_model/issues/50#issue-2073664067)
+* pathfinding: [GitHub issue](https://github.com/evenfurther/pathfinding/issues/510#issue-2073786817)
+* [HiGHS](https://highs.dev/): near 2-2.5% in `highs ../check/instances/greenbea.mps` workload
 
 ## Projects with already integrated PGO into their build scripts
 
-Below you can find some examples, where and how PGO is integrated into different projects.
+Below you can find some examples of where and how PGO is integrated into different projects.
 
 * Rustc: a CI [tool](https://github.com/rust-lang/rust/tree/master/src/tools/opt-dist) for the multi-stage build
 * GCC:

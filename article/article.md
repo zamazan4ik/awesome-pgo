@@ -264,6 +264,11 @@ The same applies to libraries as well:
 | tquic | up to 1.3x | [link](https://github.com/Tencent/tquic/issues/19#issue-1972443474) |
 | lingua-rs | up to 146x (not an error!) | [link](https://github.com/pemistahl/lingua-rs/discussions/273#discussion-5864708) |
 | tokenizers | up to 20x | [link](https://github.com/huggingface/tokenizers/issues/1426#issue-2069318532) |
+| zen | up to 4.25x | [link](https://github.com/gorules/zen/discussions/109#discussion-6053432) |
+| native_model | up to 95x | [link](https://github.com/vincent-herlemont/native_model/issues/50#issue-2073664067) |
+| NativeDB | up to 5.7x | [link](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050) |
+| redb | up to 4.5x | [link](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050) |
+| pathfinding | up to 3.5x | [link](https://github.com/evenfurther/pathfinding/issues/510#issue-2073786817) |
 
 I could prepare more advanced analysis like slowdown p50/p95/p99 percentiles, testing across more different configurations (like trying to replicate tests across different hardware/software, etc) but I am a bit lazy for doing it right now. Maybe next time ;)
 
@@ -306,6 +311,7 @@ How much binary space does it take in practice? Let's check it (all tests are do
 | qsv | 42 Mib | 81 Mib | 39 Mib | 1.93x | Rustc |
 | vtracer | 6.6 Mib | 13 Mib | 6.4 Mib | 1.97x | Rustc |
 | Symbolicator (stripped) | 31 Mib | 89 Mib | 27 Mib | 2.87x | Rustc |
+| HiGHS | 409 Kib | 866 Kib | 408 Kib | 2.12x | Clang |
 
 In general, there is no way to make a *precise* predict of how large your binary will be after the instrumentation without the actual compilation process. There are so many variables involved in this process (how much branches your application has, do you recompile with PGO your statically-linked dependencies, etc.) that much-much easier will be just recompile with instrumentation and check it. Maybe one day the compilers (or an ecosystem around the compiler) will provide you some estimations before the actual compilation process but not today.
 
@@ -793,7 +799,7 @@ PC:
 * RAM: 48 Gib of some default non-RGB RAM
 * SSD: Samsung 980 Pro 2 Tib
 * OS: Fedora 38/39
-* Kernel: Linux kernel 6.* (mostly 6.2.* - 6.5.*)
+* Kernel: Linux kernel 6.* (mostly 6.2.* - 6.6.*)
 
 Macbook:
 
@@ -1249,7 +1255,7 @@ TODO: finish the chapter
   - If you are a language/compiler designer - please consider integrating PGO into your language/compiler
   - If you are a project developer - please consider providing better PGO integration into your project if you care about the performance
   - If you are a maintainer - please consider enabling PGO in your packages
-  - If you are an OS package comittee member (like Fedora FESCO) - please consider general PGO movement across the whole package policy
+  - If you are an OS package committee member (like Fedora FESCO) - please consider general PGO movement across the whole package policy
   - If you have experience with PGO in production - please share your numbers/pains/experience with us!
 
 I want to finish with the call to the community.
