@@ -206,7 +206,7 @@ TODO: Write here about other PGO types from https://aaupov.github.io/blog/2023/0
 
 ## PGO caveats
 
-I have read **many** articles about PGO. Unfortunately, I found almost nothing about PGO issues and difficulties in different situations. So I just collected as much as possible traps myself and want to share my experience (not traps) with you. Niels Bohr once said: “An expert is a person who has made all the mistakes that can be made in a very narrow field.”. Am I a PGO expert now, huh?
+I have read **many** articles about PGO. Unfortunately, I found almost nothing about PGO issues and difficulties in different situations. So I just collected as many as possible traps myself and want to share my experience (not traps) with you. Niels Bohr once said: “An expert is a person who has made all the mistakes that can be made in a very narrow field.”. Am I a PGO expert now, huh?
 
 TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
 
@@ -217,7 +217,7 @@ TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
   - Exit-code issues - for some applications in the end the profile is not dumped (like Clangd). You need to tweak the application manually
   - Not all software can be built with PGO (Envoy) - some dependencies do not support PGO for some reason
 
-#### Instrumented binary is slower
+#### The instrumented binary is slower
 
 An instrumented binary is slower. But how much? Well, as usual - *it depends*. I didn't find such benchmarks for real-life applications so I did them and I'm ready to show you some numbers for several projects:
 
@@ -252,6 +252,7 @@ TODO: add as many projects as I can
 | vtracer | ~2.0x | [link](https://github.com/visioncortex/vtracer/discussions/67#discussion-5889368) |
 | Symbolicator | 1.19x | [link](https://github.com/getsentry/symbolicator/issues/1334#issue-2016488888) |
 | sage | ~1.8x | [link](https://github.com/adam-mcdaniel/sage/issues/70) |
+| lace-cli | ~1.23x | [link](https://github.com/promised-ai/lace/issues/172#issue-2104154605) |
 
 The same applies to libraries as well:
 
@@ -269,16 +270,17 @@ The same applies to libraries as well:
 | NativeDB | up to 5.7x | [link](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050) |
 | redb | up to 4.5x | [link](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050) |
 | pathfinding | up to 3.5x | [link](https://github.com/evenfurther/pathfinding/issues/510#issue-2073786817) |
+| minitrace-rust | up to 14x | [link](https://github.com/tikv/minitrace-rust/issues/195#issue-2104485855) |
 
-I could prepare more advanced analysis like slowdown p50/p95/p99 percentiles, testing across more different configurations (like trying to replicate tests across different hardware/software, etc) but I am a bit lazy for doing it right now. Maybe next time ;)
+I could prepare more advanced analysis like slowdown p50/p95/p99 percentiles, testing across more different configurations (like trying to replicate tests across different hardware/software, etc) but I am a bit lazy about doing it right now. Maybe next time ;)
 
-Generally speaking, there is no way to predict how slow your binary will be after the instrumentation phase since it depends on miriad of factors: amount of branches in your code, where your program spends the most time, training workload, etc. So in practice the only working solution to predict the slowdown is just benchmarking.
+Generally speaking, there is no way to predict how slow your binary will be after the instrumentation phase since it depends on a myriad of factors: the number of branches in your code, where your program spends the most time, training workload, etc. So in practice the only working solution to predict the slowdown is just benchmarking.
 
-TODO: write about cases when an instrumented binary is faster (I met such cases in some strange situations. Probably some combination of compiler optimizations does this - who knows, didn't investigate deep such cases).
+TODO: write about cases when an instrumented binary is faster (I met such cases in some strange situations. Probably some combination of compiler optimizations does this - who knows, didn't investigate deeply such cases).
 
-#### Instrumented binary is larger
+#### The instrumented binary is larger
 
-Instrumentation PGO works via inserting into your code some counters for tracking the program execution characteriscs, so your binary will be larger after the instrumentation. In assembler it looks something like:
+Instrumentation PGO works by inserting into your code some counters for tracking the program execution characteristics, so your binary will be larger after the instrumentation. In assembler, it looks something like:
 
 TODO: add before and after PGO instrumentation assembler for Clang and GCC: https://godbolt.org/z/ofMKzEscn
 
@@ -312,16 +314,17 @@ How much binary space does it take in practice? Let's check it (all tests are do
 | vtracer | 6.6 Mib | 13 Mib | 6.4 Mib | 1.97x | Rustc |
 | Symbolicator (stripped) | 31 Mib | 89 Mib | 27 Mib | 2.87x | Rustc |
 | HiGHS | 409 Kib | 866 Kib | 408 Kib | 2.12x | Clang |
+| lace-cli | ~28 Mib | 111 Mib | ~27.5 Mib | almost the same | Rustc |
 
-In general, there is no way to make a *precise* predict of how large your binary will be after the instrumentation without the actual compilation process. There are so many variables involved in this process (how much branches your application has, do you recompile with PGO your statically-linked dependencies, etc.) that much-much easier will be just recompile with instrumentation and check it. Maybe one day the compilers (or an ecosystem around the compiler) will provide you some estimations before the actual compilation process but not today.
+In general, there is no way to make a *precise* prediction of how large your binary will be after the instrumentation without the actual compilation process. There are so many variables involved in this process (how many branches your application has, do you recompile with PGO your statically-linked dependencies, etc.) that much easier will be just recompile with instrumentation and check it. Maybe one day the compilers (or an ecosystem around the compiler) will provide you some estimations before the actual compilation process but not today.
 
-PGO optimized size hugely depends on your test workflow. If you execute larger amount of code, with a higher probability the inlining will be triggered during the optimization, and your binary due to this will be larger.
+PGO optimized size hugely depends on your test workflow. If you execute a larger amount of code, with a higher probability the inlining will be triggered during the optimization, and your binary due to this will be larger.
 
 TODO: add a note about non-stripped binaries
 
 #### Compilation times
 
-Since instrumentation PGO means double-compilation model (or even triple, if we are using CSIR PGO). It creates significant load on your build pipelines.
+Since instrumentation PGO means a double-compilation model (or even triple, if we are using CSIR PGO). It creates a significant load on your build pipelines.
 
 This problem is not theoretical:
 
@@ -346,11 +349,11 @@ TODO: Add a note about unavailable LBR in virtual machines (that can limit AutoF
 
 ### Common PGO problems
 
-TODO: like building with PGO in multi-lang apps and passing PGO info to the dependencies. ast-grep as an interesting example where `cargo-pgo` failed and I cannot figure out - what is wrong? Seems like `tree-sitter` is the issue since it's ont optimized with PGO via `cargo-pgo` . it's the case where C++ + Rust PGO is involved.
+TODO: like building with PGO in multi-lang apps and passing PGO info to the dependencies. ast-grep as an interesting example where `cargo-pgo` failed and I could not figure out - what is wrong? Seems like `tree-sitter` is the issue since it's not optimized with PGO via `cargo-pgo`. It's the case where C++ + Rust PGO is involved.
 
 ## PGO support in compilers
 
-Different compilers has different PGO maturity levels. Some of them support PGO for decades, some of them added PGO just recently, and some (shame on you) has no PGO support at all! Below I prepared some overview of the PGO state across different compilers for multiple programming languages.
+Different compilers have different PGO maturity levels. Some of them have supported PGO for decades, some of them added PGO just recently, and some (shame on you) have no PGO support at all! Below I prepared some overview of the PGO state across different compilers for multiple programming languages.
 
 ### C and C++
 
@@ -378,17 +381,17 @@ With Clang I found the following issues:
 With GCC I found the following issues:
 
 * [No](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112717) profiles compatibility guarantees at all. It means that for every GCC update in theory you need to regenerate your PGO profiles. In practice - who knows, I didn't test it. GL HF!
-* PGO profiles runtime dumping capabilities [are limited](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829). Compared to LLVM, there is no easy way to dump PGO profile to a memory instead of filesystem. GCC developers in this case suggest mitigations like using RAM-disk, NFS and other fancy stuff. If you want to implement it - you need to tweak GCOV implementation on your own.
-* It's [not clear](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806) how PGO in GCC interacts with user-defined `likely`/`unlikely` hints. It could be a problem when you apply PGO for already (partially) optimized codebase with such user hints. You can get some unexpected results.
+* PGO profiles' runtime dumping capabilities [are limited](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829). Compared to LLVM, there is no easy way to dump PGO profile to a memory instead of filesystem. GCC developers in this case suggest mitigations like using RAM-disk, NFS and other fancy stuff. If you want to implement it - you need to tweak GCOV implementation on your own.
+* It's [not clear](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806) how PGO in GCC interacts with user-defined `likely`/`unlikely` hints. It could be a problem when you apply PGO for the (partially) optimized codebase with such user hints. You can get some unexpected results.
 
 About MSVC I cannot say much - I didn't use MSVC for years and have no enough experience. However, after reading the corresponding PGO [documentation](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations) I can highlight the following things:
 
-* MSVC does not support sampling PGO. Probably there is a possibility to write a conversion tool from a profiler like Intel VTune and convert it to the MSVC-compatible PGO format. But I didn't anyhting like this in the wild.
+* MSVC does not support sampling PGO. Probably there is a possibility to write a conversion tool from a profiler like Intel VTune and convert it to the MSVC-compatible PGO format. But I didn't see anything like this in the wild.
 * I didn't find PGO profiles compatibility guarantees in the documentation.
 * You cannot enable PGO without LTO. It could be a problem since LTO often breaks C/C++ program (due to different hidden UB in them) and LTO bumps requirements for your build machine (it could be a problem for the resource-constrained build environments).
 * There is no way to compare two PGO profiles (`llvm-profdata overlap` alternative).
 * No alternative to `-fprofile-partial-training` [flag](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-fprofile-partial-training) from GCC.
-* You cannot dump PGO profile to a memory. The only way to dump the profile is a save to a filesystem.
+* You cannot dump PGO profile into a memory. The only way to dump the profile is a save it to a filesystem.
 
 I [asked](https://developercommunity.visualstudio.com/t/Multiple-questions-about-Profile-Guided-/10537677) all these question on the Microsoft Developer community platform. I hope one day we will get answers there.
 
@@ -409,13 +412,13 @@ PGO in Go appeared quite recently: 1.20 in Preview, 1.21 in GA state.
 TODO: add links about PGO implementation in Go compiler
 TODO: add my thoughts about current PGO implementation in Go and its disadvantages
 
-Current PGO implementation in the `go` compiler has following issues/limitations/inconveniences:
+Current PGO implementation in the `go` compiler has the following issues/limitations/inconveniences:
 
 * **Very** limited amount implemented PGO optimizations. It's completely okay for now since this PGO implementation is pretty young. Although, for you as for an average PGO enjoyer it means that don't get all possible outcomes from enabling PGO. You can track already implemented optimizations in [this](https://github.com/golang/go/issues/62463) umbrella issue.
 * There is [no](https://github.com/golang/go/issues/64487) easy way to perform weighted merge for PGO profiles. It could be important in cases when you have PGO profiles with different importance for your needs - weighted merge solves this problem. There are some ways ([click](https://github.com/golang/go/issues/64487#issue-2019987476) and [clack](https://github.com/golang/go/issues/64487#issuecomment-1843692572)) to resolve the issue but with worse UX that it should be in the production-ready PGO tooling.
-* There is [no](https://github.com/golang/go/issues/64394#issuecomment-1830318982) easy way to measure difference between two PGO profiles. One of the common cases for it is tracking how different your PGO profiles are for different training workload. Based on this knowledge you can decide to build two separate binaries for two different target workloads. The only way to achieve it for now is manual implementation or just wait for the implementation in the upstream - eventually it could implemented (I hope).
-* There is [no](https://github.com/golang/go/issues/62444) built-in option to dump PGO profile after the program exit or trigger PGO dumping via a signal. This scenario is very convenient in cases when you optimize some CLI utilities or one-time jobs. Right now, the only way to get this functionality - implement it manually via patching sources. In other PGO implementations (like LLVM and GCC) such an option is available - and I can in a simple way optimize all my programs without touching the code.
-* [Limited](https://github.com/golang/go/issues/64489) integration with existing profiling tooling like Linux' `perf`. It could be an issue if you already have some existing profiling infrastructure - in this case you need to spend initial efforts for integrating `pprof`-based PGO implementation from Go (if your profiling infra is already `pprof`-based - you are lucky). Not critical at all since it can be easily [fixed](https://github.com/golang/go/issues/64489#issuecomment-1846003368). I think eventually it would be fixed in the upstream. By the way, all currently supported external profilers for Go's PGO are listed [here](https://github.com/golang/go/wiki/PGO-Tools).
+* There is [no](https://github.com/golang/go/issues/64394#issuecomment-1830318982) easy way to measure difference between two PGO profiles. One of the common cases for it is tracking how different your PGO profiles are for different training workload. Based on this knowledge you can decide to build two separate binaries for two different target workloads. The only way to achieve it for now is manual implementation or just waiting for the implementation in the upstream - eventually it could implemented (I hope).
+* There is [no](https://github.com/golang/go/issues/62444) built-in option to dump the PGO profile after the program exits or trigger PGO dumping via a signal. This scenario is very convenient in cases when you optimize some CLI utilities or one-time jobs. Right now, the only way to get this functionality - implement it manually via patching sources. In other PGO implementations (like LLVM and GCC) such an option is available - and I can in a simple way optimize all my programs without touching the code.
+* [Limited](https://github.com/golang/go/issues/64489) integration with existing profiling tooling like Linux' `perf`. It could be an issue if you already have some existing profiling infrastructure - in this case, you need to spend initial efforts for integrating `pprof`-based PGO implementation from Go (if your profiling infra is already `pprof`-based - you are lucky). Not critical at all since it can be easily [fixed](https://github.com/golang/go/issues/64489#issuecomment-1846003368). I think eventually it will be fixed in the upstream. By the way, all currently supported external profilers for Go's PGO are listed [here](https://github.com/golang/go/wiki/PGO-Tools).
 * Small documentation issues like profile compatibility [guarantees](https://github.com/golang/go/issues/64394).
 
 Here I collected some links about PGO in Go:
@@ -440,7 +443,7 @@ Flang (F18): https://github.com/llvm/llvm-project/issues/74216
 
 ### C#
 
-Microsoft few years ago started investing into the PGO implementation in C#. Unfortunately, due to lack of C# experience from my side, I cannot say much about the quality of this implementation, traps and nuances. Instead, I will share with you some interesting from my point of view articles and links about PGO state in C# for further reading:
+Microsoft few years ago started investing in the PGO implementation in C#. Unfortunately, due to lack of C# experience from my side, I cannot say much about the quality of this implementation, traps and nuances. Instead, I will share with you some interesting from my point of view articles and links about the PGO state in C# for further reading:
 
 * [Dynamic PGO in .Net 6](https://gist.github.com/EgorBo/dc181796683da3d905a5295bfd3dd95b). By the way, the article author, [EgorBo](https://gist.github.com/EgorBo), is an expert in C# PGO implementation. So probably you can ask him for more details directly!
 * [PGO improvements in .Net 7](https://petabridge.com/blog/dotnet7-pgo-performance-improvements/)
@@ -451,23 +454,28 @@ Anyway, I am happy to see serious investments from Microsoft in PGO for C#. We a
 
 ### Java
 
-[GraalVM](https://www.graalvm.org/) implements AoT compilation mode for Java. Unfortunately, I have no experience with GraalVM so I cannot tell you, how GraalVM's PGO implementation works in practice, what caveats you should expect there, etc. [Official documentation](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) has so few interesting details so I even hesitate with recommending it as a further reading. Maybe talking directly with the GraalVM engineers would be a good idea?
+[GraalVM](https://www.graalvm.org/) implements AoT compilation mode for Java. Unfortunately, I have no experience with GraalVM so I cannot tell you, how GraalVM's PGO implementation works in practice, what caveats you should expect there, etc.
+With GraalVM PGO I found the following issues:
 
-GraalVM even [supports](https://github.com/oracle/graal/discussions/7648) sampling PGO but the documentation is a bit outdated. Hopefully, it will be fixed soon. Despite [lack](https://github.com/oracle/graal/discussions/7901) of some PGO-related tooling and [questions](https://github.com/oracle/graal/discussions/7892) about PGO profiles compatibility, I can evaluate PGO state in GraalVM as at least promising and evolving.
+* [Official documentation](https://www.graalvm.org/22.0/reference-manual/native-image/PGO/) has so few interesting details so I even hesitate to recommend it as a further reading. Maybe talking directly with the GraalVM engineers would be a good idea?
+* GraalVM even [supports](https://github.com/oracle/graal/discussions/7648) sampling PGO but the documentation is a bit outdated. Hopefully, it will be fixed soon.
+* [Lack](https://github.com/oracle/graal/discussions/7901) of some PGO-related tooling,
+* [Questions](https://github.com/oracle/graal/discussions/7892) about the PGO profile compatibility
+* [Limited](https://github.com/oracle/graal/discussions/7991) PGO profile dumping functionality
 
 PGO in GraalVM is available only in GraalVM Enterprise license but don't worry - Enterprise license is free [now](https://blogs.oracle.com/java/post/graalvm-free-license) so you do not need to pay at least for a license if you want to use PGO in Java. Good? Great!
 
-One of the biggest issues with GraalVM right now is its adoption across Java ecosystem. Even if some large and well-known projects like Kafka tries to [adopt](https://cwiki.apache.org/confluence/display/KAFKA/KIP-974%3A+Docker+Image+for+GraalVM+based+Native+Kafka+Broker) GraalVM builds, in general GraalVM usage is low. AoT GraalVM nature has some difficulties with runtime Java features like reflection. There is a way to mitigate it - using GraalVM metadata [repository](https://github.com/oracle/graalvm-reachability-metadata).
+One of the biggest issues with GraalVM right now is its adoption across the Java ecosystem. Even if some large and well-known projects like Kafka try to [adopt](https://cwiki.apache.org/confluence/display/KAFKA/KIP-974%3A+Docker+Image+for+GraalVM+based+Native+Kafka+Broker) GraalVM builds, in general, GraalVM usage is low. AoT GraalVM nature has some difficulties with runtime Java features like reflection. There is a way to mitigate it - using the GraalVM metadata [repository](https://github.com/oracle/graalvm-reachability-metadata).
 
-What about GraalVM PGO efficiency? Honestly, I don't know. I have no hands-on experience with. All found by me public benchmarks for GraalVM PGO also too simplistic to consider them seriosly (in my optinion). I opened a [request](https://github.com/oracle/graal/discussions/7988) in the upstream for sharing more benchmarks - maybe eventually the collection will be bigger. According to my not-so-deep research, in many cases GraalVM Native Image + PGO still performes worse than usual JIT from the peak performance perspective.
+What about GraalVM PGO efficiency? Honestly, I don't know. I have no hands-on experience with it. All found public benchmarks for GraalVM PGO also too simplistic to consider them seriously (in my opinion). I opened a [request](https://github.com/oracle/graal/discussions/7988) in the upstream for sharing more benchmarks - maybe eventually the collection will be bigger. According to my not-so-deep research, in many cases, GraalVM Native Image + PGO still performs worse than usual JIT from the peak performance perspective.
 
-By the way, GraalVM supports AoT compilation mode for Python, Ruby, R, Jabascript (and maybe something). So you can try to apply GraalVM-flavoured PGO on them too.
+By the way, GraalVM supports AoT compilation mode for Python, Ruby, R, Javascript (and maybe something). So you can try to apply GraalVM-flavoured PGO on them too.
 
 TODO: question about GraalVM handling language-specific intrinsics for likely/unlikely. What is the current behavior in this case?
 
 ### Kotlin
 
-[Kotlin Native](https://kotlinlang.org/docs/native-overview.html) has [no](https://youtrack.jetbrains.com/issue/KT-63357/Native-Profile-Guided-Optimization-PGO-support#focus=Comments-27-8353088.0-0) PGO support and Kotlin dev team has no plans to implement it in near future. So if you want to use PGO with Kotlin - you will need to patch the Kotlin compiler. Another option is using GraalVM since it supports PGO (see Java section for more details). Anyway, using GraalVM instead of Kotlin Native [is not new thing](https://www.reddit.com/r/Kotlin/comments/172sul9/whats_position_of_kotlin_native_in_the_kotlin/) in the community.
+[Kotlin Native](https://kotlinlang.org/docs/native-overview.html) has [no](https://youtrack.jetbrains.com/issue/KT-63357/Native-Profile-Guided-Optimization-PGO-support#focus=Comments-27-8353088.0-0) PGO support and Kotlin dev team has no plans to implement it in the near future. So if you want to use PGO with Kotlin - you will need to patch the Kotlin compiler. Another option is using GraalVM since it supports PGO (see Java section for more details). Anyway, using GraalVM instead of Kotlin Native [is not a new thing](https://www.reddit.com/r/Kotlin/comments/172sul9/whats_position_of_kotlin_native_in_the_kotlin/) in the community.
 
 ### Scala
 
@@ -475,7 +483,7 @@ TODO: question about GraalVM handling language-specific intrinsics for likely/un
 
 ### Swift
 
-It's a complicated question. From one perspective, in the Swift compiler sources [there are](https://github.com/apple/swift/blob/main/include/swift/Option/Options.td#L1322) some PGO footprints. From another - even the compiler developer is [not sure](https://github.com/apple/swift/issues/69227) about the current PGO implementation state in the compiler. Anyway, there is an **unanswered** [topic](https://forums.swift.org/t/several-questions-regarding-profile-guided-optimization-pgo-and-llvm-bolt/67963) on the Swift forum. Hopefully, one day it will get an answer. And I am [not alone](https://forums.swift.org/t/does-the-swift-compiler-support-ir-level-llvm-instrumentation-pgo/52666) with questions about PGO and Swift.
+It's a complicated question. From one perspective, in the Swift compiler sources, [there are](https://github.com/apple/swift/blob/main/include/swift/Option/Options.td#L1322) some PGO footprints. From another - even the compiler developer is [not sure](https://github.com/apple/swift/issues/69227) about the current PGO implementation state in the compiler. Anyway, there is an **unanswered** [topic](https://forums.swift.org/t/several-questions-regarding-profile-guided-optimization-pgo-and-llvm-bolt/67963) on the Swift forum. Hopefully, one day it will get an answer. And I am [not alone](https://forums.swift.org/t/does-the-swift-compiler-support-ir-level-llvm-instrumentation-pgo/52666) with questions about PGO and Swift.
 
 What to do? Try to ping Swift developers once again to clarify (and document) the situation or perform your investigation. If you already have some insights about PGO in Swift - please let me know!
 
@@ -513,7 +521,7 @@ TODO: https://github.com/JuliaLang/julia/pull/45641#issue-1268010204
 
 ### Ocaml
 
-Out of the box the `ocamlopt` compiler has no support for PGO. However, there is a dedicated a bit out-dated tool - [ocamlfdo](https://github.com/gretay-js/ocamlfdo). Jane Street (probably the largest enterprise Ocaml [user](https://www.janestreet.com/technology/), you even can check their [tech-talks](https://www.janestreet.com/tech-talks/jane-and-compiler/) about the Ocaml compiler) internally uses "a bit" modified Ocaml compiler - [ocaml-flambda](https://github.com/ocaml-flambda/flambda-backend). If you want to try PGO with Ocaml - please ask Greta Yorsh aka [gretay-js](https://github.com/gretay-js). More details you can find in [this](https://github.com/ocaml/ocaml/issues/12200) discussion on GitHub. Hopefully, one day all this great work will be merged to the upstream and all Ocaml users will be able to use PGO for their applications.
+Out of the box, the `ocamlopt` compiler has no support for PGO. However, there is a dedicated a bit out-dated tool - [ocamlfdo](https://github.com/gretay-js/ocamlfdo). Jane Street (probably the largest enterprise Ocaml [user](https://www.janestreet.com/technology/), you even can check their [tech talks](https://www.janestreet.com/tech-talks/jane-and-compiler/) about the Ocaml compiler) internally uses "a bit" modified Ocaml compiler - [ocaml-flambda](https://github.com/ocaml-flambda/flambda-backend). If you want to try PGO with Ocaml - please ask Greta Yorsh aka [gretay-js](https://github.com/gretay-js). More details you can find in [this](https://github.com/ocaml/ocaml/issues/12200) discussion on GitHub. Hopefully, one day all this great work will be merged to the upstream and all Ocaml users will be able to use PGO for their applications.
 
 ### Cobol
 
@@ -523,7 +531,7 @@ TODO: check Cobol compilers and PGO support in them (lol?)
 
 ### Common Lisp (CL)
 
-Regarding Common Lisp compilers it's simple - there are no compiler with PGO support. As far as I can udnerstand, there are no huge investments into the PGO implementation for them, so... If you want to use PGO with Common Lisp - you need to implement it manually in your favourite CL compiler. Below I collected PGO-related issues in them:
+Regarding Common Lisp compilers it's simple - there are no compiler with PGO support. As far as I can udnerstand, there are no huge investments into the PGO implementation for them, so... If you want to use PGO with Common Lisp - you need to implement it manually in your favorite CL compiler. Below I collected PGO-related issues in them:
 
 * SBCL: https://bugs.launchpad.net/sbcl/+bug/2045484 (rejected the idea)
 * CCL: https://github.com/Clozure/ccl/discussions/467
@@ -534,6 +542,7 @@ Regarding Common Lisp compilers it's simple - there are no compiler with PGO sup
 ### Other technologies
 
 TODO: [Circle](https://www.circle-lang.org/) (not exactly a C++ compiler): no PGO support
+TODO: [Odin lang](https://odin-lang.org/) - [no](https://github.com/odin-lang/Odin/discussions/3081) PGO support
 
 ---
 
@@ -723,7 +732,7 @@ BOLT is already integrated into the optimization pipelines in several projects:
 * Pyston: [README](https://github.com/pyston/pyston#building)
 * Clang: [CMake script](https://github.com/llvm/llvm-project/blob/main/clang/cmake/caches/BOLT.cmake)
 
-E.g. `rustc` compiler is already PGO + BOLT optimized for Linux platforms.
+E.g. the `rustc` compiler is already PGO + BOLT optimized for Linux platforms.
 
 More materials? Yeah, I have something to share:
 
@@ -754,6 +763,18 @@ TODO: add thoughts about unification efforts between BOLT and Propeller: https:/
 * PLO has no integration in the Linux distros yet
 * PLO has no integration in the build systems
 
+## PGO and SaaS
+
+TODO: Write more about what to do with it and add a note about pure responsiveness from big corps
+
+Nowadays many people are crazy about clouds. So in my mind raised an idea - what is the current state of PGO usage in different SaaS environments? Quick googling gave me nothing so I just asked major public clouds via the official channels about their PGO state. Here we go:
+
+* AWS: no answer ([Repost AWS post](https://repost.aws/questions/QUzEamhSqBRS-gkAbvCjchPQ/profile-guided-optimization-pgo-and-post-link-optimization-plo-for-aws-products))
+* Azure: no answer ([Feedback Azure post](https://feedback.azure.com/d365community/idea/da9e736e-0bb1-ee11-92bc-000d3a037f01))
+* GCP: no answer ([GCP community post](https://www.googlecloudcommunity.com/gc/Databases/Profile-Guided-Optimization-PGO-and-Post-Link-Optimization-PLO/m-p/697535))
+
+From talks with my friends and asking proper questions on the [Highload](https://highload.ru/) conference I can say that local public clouds like Yandex cloud or VK cloud also don't use PGO internally for their products. I am pretty sure that the situation with other clouds is pretty much the same.
+
 ## LTO, PGO, PLO and proprietary software
 
 Everyday we use not only open-source software, that can be (simply) optimized with LTO, PGO, PLO and other fansy stuff by our own hands in a Gentoo-style but also some proprietary software where we have no such an option. And still proprietary software performance can be valuable for us: CI performance with closed-source compilers, IDE performance, closed-source database performance (in both on-premise and SaaS versions) - there are many of them. So what could we do instead?
@@ -765,11 +786,12 @@ I have tried to test a silly thing: write directly to the companies with the ide
 * Sent an email to Nvidia via Developer Contact email about enabling PGO for their HPC compilers with all required information about PGO. Only got a suggestion about creating a topic on their HPC forum. I have tried multiple times to create an account on this resource but with no success due to unknown for me reasons. No more responses from them by email, btw.
 * Sent an email about PGO to https://soqol.ru/ via the official contact form on the website - no response about PGO
 * Sent an email to [NauEngine](https://nauengine.org/) devs about evaluating PGO for this game engine - **got a response** that PGO information was sent to development teams. Great!
-* Created a [topic](https://community.cloudflare.com/t/using-profile-guided-optimization-pgo-for-cloudflare-products/587534) on the Cloudflare community platform - no response yet
 * Sent a request to [Arenadata DB](https://arenadata.tech/en/products/arenadata-db/) via the feedback form on the website - no response. Maybe my email is not enterprisish enough?
+* Sent an email to Cloudflare via https://sinkingpoint.com/ - sent 09.01.2024, got a response in a few hours! Cloudflare already uses PGO internally. For which projects, and what are the performance gains from it - still unknown. It needs to be clarified later. (TODO - rework it since I am talking with a person, I think)
+* Created a [topic](https://community.cloudflare.com/t/using-profile-guided-optimization-pgo-for-cloudflare-products/587534) on the Cloudflare community platform - no response yet
 
 TODO: write a section about how I was ignored by different companies with an idea of PGO and other stuff
-TODO: write several pieces of advice/thoughts about how users can try to push PGO for their products being users AND a developer of such products
+TODO: write several pieces of advice/thoughts about how users can try to push PGO for their products being users AND developers of such products
 
 ## Why am I writing this?
 
@@ -952,6 +974,7 @@ TODO: write here about Lapce's way to measure performance: https://github.com/la
 ### Spamming and LLM
 
 TODO: someone calls me an LLM! :) So funny: https://gitlab.com/embeddable-common-lisp/ecl/-/issues/725#note_1678404112
+TODO: and even a spammer! :D https://github.com/Hugobros3/shady/issues/18
 
 ### PGO and AI
 
@@ -1207,6 +1230,8 @@ Here are some good examples:
 
 * A plenty of Rust-related books: [Rustbook](https://doc.rust-lang.org/book/), [The Rustonomicon](https://doc.rust-lang.org/nomicon/)
 * [Unofficial Bevy Cheat Book](https://bevy-cheatbook.github.io/)
+
+Already there is at least [one](https://github.com/lycheeverse/lychee/issues/1247#issuecomment-1882078012) request for such a book!
 
 ### Improve PGO state in various ecosystems
 

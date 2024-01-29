@@ -231,6 +231,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * native_model: [GitHub issue](https://github.com/vincent-herlemont/native_model/issues/50#issue-2073664067)
 * pathfinding: [GitHub issue](https://github.com/evenfurther/pathfinding/issues/510#issue-2073786817)
 * [HiGHS](https://highs.dev/): near 2-2.5% in `highs ../check/instances/greenbea.mps` workload
+* lace: [GitHub issue](https://github.com/promised-ai/lace/issues/172#issue-2104154605)
+* minitrace-rust: [GitHub issue](https://github.com/tikv/minitrace-rust/issues/195#issue-2104485855)
 
 ## Projects with already integrated PGO into their build scripts
 

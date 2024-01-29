@@ -84,6 +84,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ECL: https://gitlab.com/embeddable-common-lisp/ecl/-/issues/725
 * Sage: https://github.com/adam-mcdaniel/sage/issues/70
 * Odin: https://github.com/odin-lang/Odin/discussions/3081
+* Shady: https://github.com/Hugobros3/shady/issues/18
+* Wingc: https://github.com/winglang/wing/issues/5558
 
 ## Developer tooling
 
@@ -317,6 +319,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * rsyslog: https://github.com/rsyslog/rsyslog/issues/5048
 * syslog-ng: https://github.com/syslog-ng/syslog-ng/issues/4511
 * parseable: https://github.com/parseablehq/parseable/issues/224
+* Hayabusa: https://github.com/Yamato-Security/hayabusa/discussions/1247
 
 ## Machine learning
 
@@ -339,6 +342,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * tokenizers: https://github.com/huggingface/tokenizers/issues/1426
 * rten: https://github.com/robertknight/rten/issues/38
 * SentencePiece: https://github.com/google/sentencepiece/issues/961
+* lace: https://github.com/promised-ai/lace/issues/172
 
 ## Message brokers
 
@@ -437,6 +441,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Zen: https://github.com/gorules/zen/discussions/109
 * native_model: https://github.com/vincent-herlemont/native_model/issues/50
 * pathfinding: https://github.com/evenfurther/pathfinding/issues/510
+* Zed: https://github.com/zed-industries/zed/issues/2040#issuecomment-1913627905
+* bpftime: https://github.com/eunomia-bpf/bpftime/discussions/199
+* minitrace-rust: https://github.com/tikv/minitrace-rust/issues/195
 
 ## PGO in Go ecosystem
 
