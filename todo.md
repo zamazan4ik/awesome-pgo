@@ -99,3 +99,8 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Talk with Nate Graham about trying to enable PGO for KDE. Seems KDE cares about performance too - https://www.phoronix.com/news/KDE-Plasma-6-Next-Month .
   - Sent a message on 28.01.2024 via a website form
 * Check PGO applicability with starship.rs
+* Add PGO request to https://github.com/CHIP-SPV/chipStar
+* Add PGO documentation to Lace: https://github.com/promised-ai/lace/issues/172#issuecomment-1917406027
+* Track Datadog experience with PGO: https://twitter.com/felixge/status/1754772490889396415
+* Run PGO benchmarks on https://github.com/StractOrg/stract
+* Write about a failed idea of extending PGO support across the ecosystem and GSoC (was discussed at FOSDEM 2024 with Google representatives)

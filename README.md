@@ -233,6 +233,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [HiGHS](https://highs.dev/): near 2-2.5% in `highs ../check/instances/greenbea.mps` workload
 * lace: [GitHub issue](https://github.com/promised-ai/lace/issues/172#issue-2104154605)
 * minitrace-rust: [GitHub issue](https://github.com/tikv/minitrace-rust/issues/195#issue-2104485855)
+* needletail: [GitHub issue](https://github.com/onecodex/needletail/issues/72#issue-2127271081)
+* logos: [GitHub issue](https://github.com/maciejhirsz/logos/issues/374#issue-2127942609)
+* llrt: [GitHub issue](https://github.com/awslabs/llrt/issues/117#issue-2128010022)
+* varpro: [GitHub issue](https://github.com/geo-ant/varpro/issues/27#issue-2129147949)
 
 ## Projects with already integrated PGO into their build scripts
 

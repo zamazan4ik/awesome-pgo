@@ -444,6 +444,17 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Zed: https://github.com/zed-industries/zed/issues/2040#issuecomment-1913627905
 * bpftime: https://github.com/eunomia-bpf/bpftime/discussions/199
 * minitrace-rust: https://github.com/tikv/minitrace-rust/issues/195
+* stract: https://github.com/StractOrg/stract/issues/53
+* needletail: https://github.com/onecodex/needletail/issues/72
+* logos: https://github.com/maciejhirsz/logos/issues/374
+* llrt: https://github.com/awslabs/llrt/issues/117
+* varpro: https://github.com/geo-ant/varpro/issues/27
+* Gnome: https://discourse.gnome.org/t/evaluate-using-profile-guided-optimization-pgo-and-post-link-optimization-plo-for-gnome-projects/19341
+* KDE: https://discuss.kde.org/t/evaluate-using-profile-guided-optimization-pgo-and-post-link-optimization-plo-for-kde-projects/10290
+
+## PGO in distributions
+
+* SailfishOS: https://forum.sailfishos.org/t/using-profile-guided-optimization-pgo-and-post-link-optimization-plo-for-sailfish/17949
 
 ## PGO in Go ecosystem
 
