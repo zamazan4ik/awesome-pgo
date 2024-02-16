@@ -86,6 +86,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Odin: https://github.com/odin-lang/Odin/discussions/3081
 * Shady: https://github.com/Hugobros3/shady/issues/18
 * Wingc: https://github.com/winglang/wing/issues/5558
+* ZLUDA: https://github.com/vosen/ZLUDA/discussions/73
 
 ## Developer tooling
 
@@ -190,6 +191,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * lk: https://github.com/littlekernel/lk/issues/387
 * Fuchsia: https://bugs.fuchsia.dev/p/fuchsia/issues/detail?id=137125
 * SteamOS: https://github.com/ValveSoftware/SteamOS/issues/1287
+* Tock: https://github.com/tock/tock/discussions/3850
 
 ## Virtual machines and emulators
 
@@ -320,6 +322,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * syslog-ng: https://github.com/syslog-ng/syslog-ng/issues/4511
 * parseable: https://github.com/parseablehq/parseable/issues/224
 * Hayabusa: https://github.com/Yamato-Security/hayabusa/discussions/1247
+* Loki: https://github.com/grafana/loki/issues/11939
 
 ## Machine learning
 

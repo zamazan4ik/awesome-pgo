@@ -104,3 +104,5 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Track Datadog experience with PGO: https://twitter.com/felixge/status/1754772490889396415
 * Run PGO benchmarks on https://github.com/StractOrg/stract
 * Write about a failed idea of extending PGO support across the ecosystem and GSoC (was discussed at FOSDEM 2024 with Google representatives)
+* Perform PGO benches on https://github.com/vercel/turbo/tree/main/crates/turbopack-bench
+* Lack of maintenance resource for PGO: https://github.com/facebook/hhvm/issues/9385#issuecomment-1943760010

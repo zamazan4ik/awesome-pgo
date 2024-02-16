@@ -110,6 +110,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [SQLite](https://www.sqlite.org/index.html):
   - See "sqlite.md" file in the repo for the detailed report
   - [SQLite forum discussion](https://sqlite.org/forum/forumpost/d26f4eba26)
+  - [sqlite-parquet-vtable PGO results](https://github.com/cldellow/sqlite-parquet-vtable/blob/master/README.md#building-release)
 * [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
 * [FoundationDB](https://www.foundationdb.org/): [GitHub issue](https://github.com/apple/foundationdb/issues/1334)
 * [DuckDB](https://duckdb.org/): [GitHub comment](https://github.com/duckdb/duckdb/discussions/7721#discussioncomment-6254284)
@@ -406,6 +407,8 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
   - [README](https://github.com/pyston/pyston#building)
   - [Makefile](https://github.com/pyston/pyston/blob/pyston_main/Makefile#L200)
 * Clang: [CMake script](https://github.com/llvm/llvm-project/blob/main/clang/cmake/caches/BOLT.cmake)
+* Linux kernel:
+  - [LLVM branch for BOLTing the kernel](https://github.com/maksfb/llvm-project/commits/bolt-linux-kernel/)
 
 ## Are we BOLT yet?
 
