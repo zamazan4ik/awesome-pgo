@@ -106,3 +106,15 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Write about a failed idea of extending PGO support across the ecosystem and GSoC (was discussed at FOSDEM 2024 with Google representatives)
 * Perform PGO benches on https://github.com/vercel/turbo/tree/main/crates/turbopack-bench
 * Lack of maintenance resource for PGO: https://github.com/facebook/hhvm/issues/9385#issuecomment-1943760010
+* Discuss a complicated case about applying PGO to a program that is written in multiple programming languages
+* Discuss the PGO state across operating systems. Discuss about PGO-edge experience in distributions like ClearLinux, CachyOS, Gentoo
+* Add a note about PGO in gamedev from drivers perspective: shader compilation, etc. - my Steam Deck case
+* PGO support for WASM in Clang: https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090
+* Write a note about Sampling PGO and special hardware requirements like Intel LBR or AMD BRS. It's not strictly required but recommended. What is the difference from the performance perspective in practice - needs to be investigated (but modern CPUs have support for this already. However, what about ARM - https://lwn.net/Articles/951316/ (Linux 6.7-rc1 - quite new stuff). What about RISC-V or LoongSoon?). ARM CPUs with it - https://en.wikipedia.org/wiki/ARM_architecture_family . What about PowerPC (as it was asked here - https://stackoverflow.com/questions/48616075/whats-the-equivalent-of-last-branch-record-lbr-on-arm-and-powerpc/)
+* Do I need to prepare more materials about PGO in C#?
+* Write a note about SPECINT benchmark in the article - it's a commonly used benchmark for evaluation performance of different compiler optimizations
+* Great paper about different sampling FDO approaches: https://hpctest.cs.tsinghua.edu.cn/papers/tc11.pdf
+* Check information about LIPO (lightweight IPO): https://static.googleusercontent.com/media/research.google.com/ru//pubs/archive/36355.pdf What is the current state of the LIPO in the compilers? ThinLTO is not the same thing. However, here I see some that ThinLTO somehow supports profile data: https://llvm.org/devmtg/2015-04/slides/ThinLTO_EuroLLVM2015.pdf . My question is here: https://discourse.llvm.org/t/thinlto-and-profile-based-module-groups/77120
+* https://clang.llvm.org/docs/ThinLTO.html - mold linker is not mentioned. Recheck if mold actually supports it, and if supports - change the documentation
+* Add to the article a note about llvm-profgen and its limitation with non-LBR profiles: https://discourse.llvm.org/t/llvm-profgen-with-non-lbr-profiles/77140
+* Check https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/36358.pdf paper for LBR efficiency in Sampling PGO in practice

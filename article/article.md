@@ -361,7 +361,7 @@ Different compilers have different PGO maturity levels. Some of them have suppor
 
 ### C and C++
 
-C has a veeeery long history, C++ is a bit younger but still is quite a mature technology. So compilers for C and C++ also evolved **a lot** during the decades from many viewpoints, including multiple optimizations.
+C has a very long history, C++ is a bit younger but still is quite a mature technology. So compilers for C and C++ also evolved **a lot** during the decades from many viewpoints, including multiple optimizations.
 
 TODO: add information when PGO first appeared in C compilers
 
@@ -379,25 +379,25 @@ TODO: MSVC PGO issue: https://developercommunity.visualstudio.com/t/Multiple-que
 With Clang I found the following issues:
 
 * [Missing](https://github.com/llvm/llvm-project/issues/63024) partial training support for instrumentation PGO. Right now, Clang [supports](https://releases.llvm.org/16.0.0/tools/clang/docs/ClangCommandLineReference.html#cmdoption-clang-fprofile-sample-accurate) partial training only for the sampling PGO with `-fno-profile-sample-accurate` flag.
-* By default, Clang [uses](https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update) non-atomic profile counters. It could be a problem since non-atomic counters can bring some non-determinism in your PGO pipelines.
-* As usual, [there are multiple](https://github.com/llvm/llvm-project/issues/74022) documentation issues in different areas. However, I would say Clang has **the best** PGO-related documentation at least among the open-source compilers.
+* By default, Clang [uses](https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update) non-atomic profile counters. It could be a problem since non-atomic counters can bring some non-determinism into your PGO pipelines.
+* As usual, there are multiple documentation issues (like [one](https://github.com/llvm/llvm-project/issues/74022), [two](https://github.com/llvm/llvm-project/issues/82140)) in different areas. However, I would say Clang has **the best** PGO-related documentation at least among the open-source compilers.
 
 With GCC I found the following issues:
 
-* [No](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112717) profiles compatibility guarantees at all. It means that for every GCC update in theory you need to regenerate your PGO profiles. In practice - who knows, I didn't test it. GL HF!
-* PGO profiles' runtime dumping capabilities [are limited](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829). Compared to LLVM, there is no easy way to dump PGO profile to a memory instead of filesystem. GCC developers in this case suggest mitigations like using RAM-disk, NFS and other fancy stuff. If you want to implement it - you need to tweak GCOV implementation on your own.
+* [No](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112717) profile compatibility guarantees at all. It means that for every GCC update in theory you need to regenerate your PGO profiles. In practice - who knows, I didn't test it. GL HF!
+* PGO profiles' runtime dumping capabilities [are limited](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829). Compared to LLVM, there is no easy way to dump PGO profile to a memory instead of a filesystem. GCC developers in this case suggest mitigations like using RAM-disk, NFS and other fancy stuff. If you want to implement it - you need to tweak GCOV implementation on your own.
 * It's [not clear](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806) how PGO in GCC interacts with user-defined `likely`/`unlikely` hints. It could be a problem when you apply PGO for the (partially) optimized codebase with such user hints. You can get some unexpected results.
 
 About MSVC I cannot say much - I didn't use MSVC for years and have no enough experience. However, after reading the corresponding PGO [documentation](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations) I can highlight the following things:
 
 * MSVC does not support sampling PGO. Probably there is a possibility to write a conversion tool from a profiler like Intel VTune and convert it to the MSVC-compatible PGO format. But I didn't see anything like this in the wild.
-* I didn't find PGO profiles compatibility guarantees in the documentation.
-* You cannot enable PGO without LTO. It could be a problem since LTO often breaks C/C++ program (due to different hidden UB in them) and LTO bumps requirements for your build machine (it could be a problem for the resource-constrained build environments).
+* I didn't find PGO profile compatibility guarantees in the documentation.
+* You cannot enable PGO without LTO. It could be a problem since LTO often breaks C and C++ program (due to different hidden UB in them) and LTO bumps requirements for your build machine (it could be a problem for the resource-constrained build environments).
 * There is no way to compare two PGO profiles (`llvm-profdata overlap` alternative).
 * No alternative to `-fprofile-partial-training` [flag](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-fprofile-partial-training) from GCC.
 * You cannot dump PGO profile into a memory. The only way to dump the profile is a save it to a filesystem.
 
-I [asked](https://developercommunity.visualstudio.com/t/Multiple-questions-about-Profile-Guided-/10537677) all these question on the Microsoft Developer community platform. I hope one day we will get answers there.
+I [asked](https://developercommunity.visualstudio.com/t/Multiple-questions-about-Profile-Guided-/10537677) all these questions on the Microsoft Developer community platform. I hope one day we will get answers there.
 
 ### Rust
 
@@ -415,29 +415,29 @@ Some details that I want to highlight about PGO in Rustc:
 
 Rustc documentation about PGO is available [here](https://doc.rust-lang.org/rustc/profile-guided-optimization.html).
 
-What about other Rust compilers? TBH, comparatively small amount of people in the Rust community cares about them. Anyway:
+What about other Rust compilers? TBH, a comparatively small amount of people in the Rust community cares about them. Anyway:
 
 * mrustc: [No PGO support](https://github.com/thepowersgang/mrustc/issues/304)
-* [Ferrocene](https://ferrous-systems.com/ferrocene/): Since it's a downstream for the Rustc compiler, it supports PGO. However, the compiler itself [is not built](https://github.com/ferrocene/ferrocene/issues/22) with PGO.
-* [gcc-rs](https://rust-gcc.github.io/): Honestly, too alpha-quality right now for pinging the developers about PGO support. One day if the project will be alive, the developers will be able add PGO support based on the GCC's PGO infrastructure. Now I believe that PGO does not work with `gcc-rs`.
+* [Ferrocene](https://ferrous-systems.com/ferrocene/): Since it's downstream for the Rustc compiler, it supports PGO. However, the compiler itself [is not built](https://github.com/ferrocene/ferrocene/issues/22) with PGO.
+* [gcc-rs](https://rust-gcc.github.io/): Honestly, too alpha-quality right now for pinging the developers about PGO support. One day if the project will be alive, the developers will be able to add PGO support based on the GCC's PGO infrastructure. Now I believe that PGO does not work with `gcc-rs`.
 
 ### Go
 
 PGO in Go appeared quite recently: 1.20 in Preview, 1.21 in GA state.
 
-TODO: add links about PGO implementation in Go compiler
+TODO: add links about PGO implementation in the Go compiler
 TODO: add my thoughts about current PGO implementation in Go and its disadvantages
 
 Current PGO implementation in the `go` compiler has the following issues/limitations/inconveniences:
 
-* **Very** limited amount implemented PGO optimizations. It's completely okay for now since this PGO implementation is pretty young. Although, for you as for an average PGO enjoyer it means that don't get all possible outcomes from enabling PGO. You can track already implemented optimizations in [this](https://github.com/golang/go/issues/62463) umbrella issue. However, Go dev team invests some money into their PGO implementation, so we can expect improving the sitation with missing PGO-related optimizations in the compiler over time - e.g. in Go 1.22 PGO-based devirtualization was [added](https://tip.golang.org/doc/go1.22#compiler).
+* **Very** limited amount implemented PGO optimizations. It's completely okay for now since this PGO implementation is pretty young. However, for you as for an average PGO enjoyer it means that don't get all possible outcomes from enabling PGO. You can track already implemented optimizations in [this](https://github.com/golang/go/issues/62463) umbrella issue. However, Go dev team invests some money into their PGO implementation, so we can expect improving the sitation with missing PGO-related optimizations in the compiler over time - e.g. in Go 1.22 PGO-based devirtualization was [added](https://tip.golang.org/doc/go1.22#compiler).
 * There is [no](https://github.com/golang/go/issues/64487) easy way to perform weighted merge for PGO profiles. It could be important in cases when you have PGO profiles with different importance for your needs - weighted merge solves this problem. There are some ways ([click](https://github.com/golang/go/issues/64487#issue-2019987476) and [clack](https://github.com/golang/go/issues/64487#issuecomment-1843692572)) to resolve the issue but with worse UX that it should be in the production-ready PGO tooling.
 * There is [no](https://github.com/golang/go/issues/64394#issuecomment-1830318982) easy way to measure difference between two PGO profiles. One of the common cases for it is tracking how different your PGO profiles are for different training workload. Based on this knowledge you can decide to build two separate binaries for two different target workloads. The only way to achieve it for now is manual implementation or just waiting for the implementation in the upstream - eventually it could implemented (I hope).
 * There is [no](https://github.com/golang/go/issues/62444) built-in option to dump the PGO profile after the program exits or trigger PGO dumping via a signal. This scenario is very convenient in cases when you optimize some CLI utilities or one-time jobs. Right now, the only way to get this functionality - implement it manually via patching sources. In other PGO implementations (like LLVM and GCC) such an option is available - and I can in a simple way optimize all my programs without touching the code.
 * [Limited](https://github.com/golang/go/issues/64489) integration with existing profiling tooling like Linux' `perf`. It could be an issue if you already have some existing profiling infrastructure - in this case, you need to spend initial efforts for integrating `pprof`-based PGO implementation from Go (if your profiling infra is already `pprof`-based - you are lucky). Not critical at all since it can be easily [fixed](https://github.com/golang/go/issues/64489#issuecomment-1846003368). I think eventually it will be fixed in the upstream. By the way, all currently supported external profilers for Go's PGO are listed [here](https://github.com/golang/go/wiki/PGO-Tools).
 * Small documentation issues like profile compatibility [guarantees](https://github.com/golang/go/issues/64394).
 
-My 50 cents about PGO in Go. I am **very** glad to see current PGO movement in the Go ecosystem. We already have a lot software written in Go, many of these applications are running with pretty high loads. Actually, almost all modern "cloud-native" stack is written in Go - it will be nice idea to improve all these applications with PGO. Yeah, for now you need to use pretty new compiler, current implementation has some flaws, etc. But the situation will quickly change so you can start experimenting with PGO in Go applications right now.
+My 50 cents about PGO in Go. I am **very** glad to see current PGO movement in the Go ecosystem. We already have a lot software written in Go, many of these applications are running with pretty high loads. Almost all modern "cloud-native" stack is written in Go - it will be nice idea to improve all these applications with PGO. Yeah, for now you need to use pretty new compiler, current implementation has some flaws, etc. But the situation will quickly change so you can start experimenting with PGO in Go applications right now.
 
 For those who want to research the PGO question in Go a bit deeper, I collected some links:
 
@@ -551,7 +551,7 @@ TODO: check Cobol compilers and PGO support in them (lol?)
 
 ### Common Lisp (CL)
 
-Regarding Common Lisp compilers it's simple - there are no compiler with PGO support. As far as I can udnerstand, there are no huge investments into the PGO implementation for them, so... If you want to use PGO with Common Lisp - you need to implement it manually in your favorite CL compiler. Below I collected PGO-related issues in them:
+Regarding Common Lisp compilers it's simple - there are no compilers with PGO support. As far as I can udnerstand, there are no huge investments into the PGO implementation for them, so... If you want to use PGO with Common Lisp - you need to implement it manually in your favorite CL compiler. Below I collected PGO-related issues in them:
 
 * SBCL: https://bugs.launchpad.net/sbcl/+bug/2045484 (rejected the idea)
 * CCL: https://github.com/Clozure/ccl/discussions/467
@@ -563,7 +563,7 @@ Regarding Common Lisp compilers it's simple - there are no compiler with PGO sup
 
 TODO: add more less-known programming languages to the list
 
-Regarding more minor programming technologies... I reviewed a lot of less known programming languages and their compilers (like [Circle](https://www.circle-lang.org/), [Odin](https://github.com/odin-lang/Odin/discussions/3081)) and can conclude that non of them support PGO in its compiler. Yes, I understand the reasons - some languages don't care much about the target performance, some of them are too young to implement PGO (there are more important features to implement), some projects simply do not have enough human resources to implement PGO in their compilers (and LLVM is not a universal answer in many situations). But hey - if you develop a **performance-oriented** language with AoT compilation model - please consider adding PGO into your compiler. Without it you lose too much optimization opportunities.
+Regarding more minor programming technologies... I reviewed a lot of less known programming languages and their compilers (like [Circle](https://www.circle-lang.org/), [Odin](https://github.com/odin-lang/Odin/discussions/3081)) and can conclude that non of them support PGO in its compiler. Yes, I understand the reasons - some languages don't care much about the target performance, some of them are too young to implement PGO (there are more important features to implement), some projects simply do not have enough human resources to implement PGO in their compilers (and LLVM is not a universal answer in many situations). But hey - if you develop a **performance-oriented** language with an AoT compilation model - please consider adding PGO into your compiler. Without it, you lose too many optimization opportunities.
 
 ---
 
@@ -585,9 +585,9 @@ So, what do we have now in the ecosystem?
 
 ### Cargo
 
-Cargo (the default build system for Rust) has no built-in support for PGO. However, the community (particularly [Jakub "Kobzol" Beranek](https://github.com/kobzol)) developed an extension - [cargo-pgo](https://github.com/Kobzol/cargo-pgo). I highly recommend you to use this Cargo extension if you are going to start optimizing Rust projects with PGO. I used for **every** Rust project that I PGOed (and I did it for a lot of them) - it always worked like a charm. It even supports optimizing with LLVM BOLT (we will talk about it later) as an additional post-PGO optimization step! I wish every other ecosystem eventually will get something similar.
+Cargo (the default build system for Rust) has no built-in support for PGO. However, the community (particularly [Jakub "Kobzol" Beranek](https://github.com/kobzol)) developed an extension - [cargo-pgo](https://github.com/Kobzol/cargo-pgo). I highly recommend you using this Cargo extension if you are going to start optimizing Rust projects with PGO. I used for **every** Rust project that I PGOed (and I did it for a lot of them) - it always worked like a charm. It even supports optimizing with LLVM BOLT (we will talk about it later) as an additional post-PGO optimization step! I wish every other ecosystem eventually will get something similar.
 
-Of course, even with such a handy tool there are some nuances:
+Of course, even with such a handy tool, there are some nuances:
 
 * [No](https://github.com/Kobzol/cargo-pgo/issues/33) sampling PGO support. Not a big deal if you are going to use instrumentation PGO. However, if you want to collect PGO profiles directly from production (as Google does) - sampling PGO is the only viable option. In this case, you need to patch `cargo-pgo` or just pass all required Rustc flags around manually without `cargo-pgo`.
 * If a Rust application has some non-Rust dependencies (like C or C++ "native" dependency - quite a common thing yet in the Rust ecosystem because RIIR movement is not powerful enough, lol), `cargo-pgo` [does not](https://github.com/Kobzol/cargo-pgo/issues/38) optimize these C or C++ dependencies with PGO. This is due to the difficult nature of building an application with different programming languages - in this case, `cargo-pgo` needs to detect the C compiler, depending on its vendor/version choose proper PGO-realted compiler flags, pass them properly, and other similar boring and error-prone to implement things. I completely understand why the `cargo-pgo` author doesn't want to implement it. But if you have such a case (as I [had](https://github.com/Kobzol/cargo-pgo/issues/38#issue-1878263921) with TiKV) - you need to resolve it manually. Some hacking around manual passing proper C/C++ flags in general should be enough.
@@ -626,7 +626,7 @@ The first idea that can appear in your mind - "We have unit/functional/integrati
 
 In most cases, the main aim of your tests is testing (!) your application in all possible situations (including rare and almost impossible scenarios aka corner cases). Instead, PGO optimizes not for all cases but for the most common from your *actual* workload. If you try to use tests as a sample workload for training PGO, you optimize your program not for the usual workload but for the corner cases. That's definetely not what you want to do. However, if you have "real-life" tests - it's fine to use them as a PGO training workload.
 
-TODO: add project examples where such way is used. AFAIK Python uses test suite for PGO training phase
+TODO: add project examples where such way is used. AFAIK, Python uses a test suite for the PGO training phase
 
 ### Benchmarks
 
@@ -808,7 +808,7 @@ Nowadays many people are crazy about clouds. So in my mind raised an idea - what
 * Yandex: no answer (waits for moderation)
 * VK Cloud: no answer (waits for moderation)
 
-From talks with my friends and asking proper questions on the [Highload](https://highload.ru/) conference I can say that local public clouds like Yandex cloud or VK cloud also don't use PGO internally for their products. I am pretty sure that the situation with other clouds is pretty much the same.
+From talks with my friends and asking proper questions at the [Highload](https://highload.ru/) conference I can say that local public clouds like Yandex cloud or VK cloud also don't use PGO internally for their products. I am pretty sure that the situation with other clouds is pretty much the same.
 
 ## LTO, PGO, PLO and proprietary software
 

@@ -1,15 +1,19 @@
 # awesome-pgo
 Various materials about Profile Guided Optimization (PGO) and other similar stuff like AutoFDO, Bolt, etc.
 
+## !!!ARTICLE!!!
+
+There is an (unfinished) article about all the details about PGO, PLO, etc. - [link](https://github.com/zamazan4ik/awesome-pgo/blob/main/article/article.md). With high chance, it will answer (almost) all your questions about PGO and PLO.
+
 ## Theory (a little bit)
 
 * What is PGO:
   - [Wiki](https://en.wikipedia.org/wiki/Profile-guided_optimization)
   - [Microsoft docs](https://learn.microsoft.com/en-us/cpp/build/profile-guided-optimizations)
 
-Also, you could find PDO (Profile Directed Optimization), FDO (Feedback Driven Optimization), FBO (Feedback Based Optimization), PDF (Profile Directed Feedback), PBO (Profile Based Optimization) - do not worry, that's just a PGO but with a different name. 
+Also, you could find PDO (Profile Directed Optimization), FDO (Feedback Driven Optimization), FBO (Feedback Based Optimization), PDF (Profile Directed Feedback), PBO (Profile Based Optimization) - do not worry, that's just a PGO but with a different name.
 
-Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it. More information about LTO you could find in `lto.md`.
+Additionally, I need to mention [Link-Time Optimization (LTO)](https://en.wikipedia.org/wiki/Interprocedural_optimization) since usually PGO is applied after LTO (since usually LTO is easier to enable and it brings significant performance and/or binary size improvements). PGO does not replace LTO but complements it. More information about LTO can be found in `lto.md`.
 
 ## PGO Showcases
 
@@ -105,8 +109,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [oneAPI report](https://www.oneapi.io/blog/tencent-gains-up-to-85-performance-boost-for-mysql-using-intel-oneapi-tools/)
   - [A user report](https://bugs.mysql.com/bug.php?id=99781)
 * [ClickHouse](https://clickhouse.com/): [GitHub issue](https://github.com/ClickHouse/ClickHouse/issues/44567#issuecomment-1589541199)
-* [MongoDB](https://www.mongodb.com/): see "mongodb.md" file in the repo
-* [Redis](https://redis.io/): see "redis.md" file in the repo
+* [MongoDB](https://www.mongodb.com/): See "mongodb.md" file in the repo
+* [Redis](https://redis.io/): See "redis.md" file in the repo
 * [SQLite](https://www.sqlite.org/index.html):
   - See "sqlite.md" file in the repo for the detailed report
   - [SQLite forum discussion](https://sqlite.org/forum/forumpost/d26f4eba26)
@@ -238,6 +242,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * logos: [GitHub issue](https://github.com/maciejhirsz/logos/issues/374#issue-2127942609)
 * llrt: [GitHub issue](https://github.com/awslabs/llrt/issues/117#issue-2128010022)
 * varpro: [GitHub issue](https://github.com/geo-ant/varpro/issues/27#issue-2129147949)
+* awk: [LWN article](https://lwn.net/Articles/680985/)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -528,7 +533,7 @@ Other pitfalls include the following things:
   - Requires multiple builds (at least two stages, in Context-Sensitive LLVM PGO ([CSPGO](https://reviews.llvm.org/D54175)) - three stages)
   - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare a "sample" workload
   - For services sometimes PGO reports are not flushed to the disk properly, so you need to do it manually like [here](https://github.com/scylladb/scylladb/pull/10808/files#diff-bf1eacd22947b4daf9f4c2639427b8593d489f093eb1acfbba3e4cc1c9b0288bR427)
-  - Reproducubility issues - could be important for some use-cases even more than performance
+  - Reproducibility issues - could be important for some use cases even more than performance
   - Bugs. E.g. LLVM issues when PGO is combined with LTO - [GitHub issue](https://github.com/llvm/llvm-project/issues/57501)
 * AutoFDO
   - Huge memory consumption during profile conversion: [GitHub issue](https://github.com/google/autofdo/issues/162)
@@ -540,7 +545,7 @@ Other pitfalls include the following things:
   - There are a lot of bugs - be careful
 * Propeller:
   - Too Google-oriented - could be hard to use outside of Google
-  - Relies on the latest compiler developments, also could be unstable
+  - Relies on the latest compiler developments, also unstable
 
 ## Useful links
 

@@ -313,6 +313,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * pgbouncer: https://github.com/pgbouncer/pgbouncer/discussions/990
 * oasysdb: https://github.com/oasysai/oasysdb/discussions/19
 * NativeDB: https://github.com/vincent-herlemont/native_db/discussions/92
+* Readyset: https://github.com/readysettech/readyset/discussions/1074
 
 ## Logging
 
