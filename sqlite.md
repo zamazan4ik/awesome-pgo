@@ -4065,3 +4065,19 @@ sys	0m0,168s
 More benchmarks you can find [here](https://sqlite.org/forum/forumpost/7ce7a5f03d).
 
 The measured improvement is quite consistent so it makes sense to optimize SQLite with PGO.
+
+Also, I did some benchmarks on Elbrus (`e2k`) architecture because why not.
+
+Test environment:
+
+* Hardware: 4 × Эльбрус-8СВ, 1200 МГц, 256 ГБ RAM
+* OS: Эльбрус ОС
+* Benchmark: SQLite's speedtest benchmark
+
+The results:
+
+* Release: https://gist.github.com/zamazan4ik/3c77f891d1da557069e89ed0d6717b8f
+* PGO optimized: https://gist.github.com/zamazan4ik/996a12c94ad192eb1ec49aba685d04ff
+* (just for reference) PGO instrumented: https://gist.github.com/zamazan4ik/e3cee54868ddf24251474ea63eb33079
+
+As we see, on Elbrus PGO helps to improve SQLite performance as well.

@@ -243,6 +243,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * llrt: [GitHub issue](https://github.com/awslabs/llrt/issues/117#issue-2128010022)
 * varpro: [GitHub issue](https://github.com/geo-ant/varpro/issues/27#issue-2129147949)
 * awk: [LWN article](https://lwn.net/Articles/680985/)
+* candy: [GitHub discussion](https://github.com/candy-lang/candy/discussions/953#discussion-6270541)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -499,6 +500,7 @@ Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
   - They said this question should be discussed in mailing lists
 * LLVM-mingw: [GitHub issue](https://github.com/mstorsjo/llvm-mingw/issues/383)
 * MinGW repo: [GitHub issue](https://github.com/msys2/MINGW-packages/issues/19273)
+* CBL-Mariner: [GitHub discussion](https://github.com/microsoft/CBL-Mariner/discussions/8072)
 
 ### Other optimization techniques like BOLT
 

@@ -170,7 +170,7 @@ The idea is completely the same as with FE PGO but instead of counters insertion
 
 ##### Context-Sensitive IR PGO (CSIR PGO)
 
-TODO
+TODO: write about CSIR PGO and LLVM BOLT - https://github.com/rust-lang/rust/issues/118562#issuecomment-1842738590
 
 The idea is completely the same as with IR PGO. However, PGO counters are inserted **after** the inlining phase. It makes profiles more precise in practice.
 
@@ -253,6 +253,7 @@ TODO: add as many projects as I can
 | Symbolicator | 1.19x | [link](https://github.com/getsentry/symbolicator/issues/1334#issue-2016488888) |
 | sage | ~1.8x | [link](https://github.com/adam-mcdaniel/sage/issues/70) |
 | lace-cli | ~1.23x | [link](https://github.com/promised-ai/lace/issues/172#issue-2104154605) |
+| candy vm | ~1.5x | [link](https://github.com/candy-lang/candy/discussions/953#discussion-6270541) |
 
 The same applies to libraries as well:
 
@@ -340,10 +341,9 @@ TODO
 * Double compilation - it hurts a lot smaller platforms like PowerPC in different CI pipelines
 * Increased compilation resource usage during the compilation - increased memory usage by the compiler and compile time
 
-
 #### Target support
 
-For some targets like Webassembly instrumentation PGO [is not available](https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090). Hopefully the situation [will change](https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090/4?u=zamazan4ik) in 2024.
+For some targets like Webassembly instrumentation PGO [is not available](https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090). Hopefully the situation [will change](https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090/4) in 2024.
 
 #### Build issues with instrumentation PGO
 
@@ -357,12 +357,12 @@ Sampling PGO has special relationships with Branch Stack Sampling (BSS) (this th
 
 However, BSS support is still kinda limited across the ecosystem, and support is not coherent across vendors since every CPU vendor has its own BSS implementation:
 
-TODO: add links to the corresponding pieces of documentation or LWN articles
-
 * Intel x86-64 - it's called Last Branch Record (LBR). AFAIK, since Nehalem (2008), added support to the Linux kernel - somewhen between 2010-2011.
 * AMD x86-64 - it's called BRS (BRanch Sampling). Available since Zen 3 (2020), Linux 5.19 (2022). However, [not all](https://discord.com/channels/636084430946959380/930647188944613406/1175827177405698170) Zen 3 supports BRS. More can be found [here](https://lwn.net/Articles/888996/).
 * ARM64 - it's called BRBE (Branch Record Buffer Extension): since ARMv9.2-A (2023), Linux 6.7-rc1 (2024). Related LWN article is [here](https://lwn.net/Articles/951316/).
-* Other architectures and operating systems combination - I don't know yet (please let me know!)
+* RISC-V - it's called Control Transfer Records (CTR). Current status - [under development](https://risc-v-international.slack.com/archives/C017LD0GJ8Z/p1708861135739819?thread_ts=1708839419.127049&cid=C017LD0GJ8Z). More information can be found here: [GitHub](https://github.com/riscv/riscv-control-transfer-records), [JIRA](https://jira.riscv.org/browse/RVG-62). No estimations when it will be implemented.
+* e2k (Elbrus) - an analogue to LBR is supported. Unfortunately, there is not support for that in Linux perf but there are plans implement this feature in the future.
+* Other architectures and operating systems combinations - I don't know yet (please let me know!)
 
 More advanced features about LBR can be found in these articles: [first](https://lwn.net/Articles/680985/), [second](https://lwn.net/Articles/680996/).
 
@@ -381,7 +381,13 @@ Another option is using [llvm-profgen](https://llvm.org/docs/CommandGuide/llvm-p
 
 ### Common PGO problems
 
+#### Applying PGO for multilingua software
+
 TODO: like building with PGO in multi-lang apps and passing PGO info to the dependencies. ast-grep as an interesting example where `cargo-pgo` failed and I could not figure out - what is wrong? Seems like `tree-sitter` is the issue since it's not optimized with PGO via `cargo-pgo`. It's the case where C++ + Rust PGO is involved.
+
+#### System libraries
+
+TODO: write a note that libraries from OS are not PGO-optimized for the application use-case
 
 ## PGO support in compilers
 
@@ -407,7 +413,7 @@ With Clang I found the following issues:
 
 * [Missing](https://github.com/llvm/llvm-project/issues/63024) partial training support for instrumentation PGO. Right now, Clang [supports](https://releases.llvm.org/16.0.0/tools/clang/docs/ClangCommandLineReference.html#cmdoption-clang-fprofile-sample-accurate) partial training only for the sampling PGO with `-fno-profile-sample-accurate` flag.
 * By default, Clang [uses](https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update) non-atomic profile counters. It could be a problem since non-atomic counters can bring some non-determinism into your PGO pipelines.
-* As usual, there are multiple documentation issues (like [one](https://github.com/llvm/llvm-project/issues/74022), [two](https://github.com/llvm/llvm-project/issues/82140)) in different areas. However, I would say Clang has **the best** PGO-related documentation at least among the open-source compilers.
+* As usual, there are multiple documentation issues (like [one](https://github.com/llvm/llvm-project/issues/74022), [two](https://github.com/llvm/llvm-project/issues/82140)) in different areas. E.g. if you check my one of the earliest PGO benchmarks, you will see `-fprofile-instr-generate` usage (FE PGO) instead of `-fprofile-generate` (IR PGO). As we discussed earlier, IR PGO nowadays should be preffered over FE PGO. But I didn't know that since this information wasn't written in the documentation! If I, a person who spent quite a lot of time with PGO, did this mistake - what about users who only start their PGO trip? Fortunately, right now the issue is resolved, and the Clang's PGO documentation [recommends](https://clang.llvm.org/docs/UsersManual.html#profiling-with-instrumentation) using IR PGO over FE PGO. Despite all of that, I would say Clang has **the best** PGO-related documentation at least among the open-source compilers.
 
 By the way, if you are interested in some PGO implementation details in Clang, I can recommend to watch [this](https://www.youtube.com/watch?v=CvbIPGSnes8) talk from C++ Russia 2021. The only limitation - the talk is in Russian so prepare your translators.
 
@@ -434,24 +440,47 @@ TODO: write about ICC
 
 Cannot say much about Intel C++ Compiler (ICC) since I don't use it. However, I've read its PGO documentation and can share some thoughts about:
 
+TODO: but what is it? https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2024-0/hardware-profile-guided-optimization.html
+
 * No sampling PGO support.
 
 According to the documentation, AOCC compiler (LLVM-based C++ compiler from AMD) has very limited PGO support. Documentation has only few words about PGO, and even these words are only about FE PGO. No IR PGO support, no sampling PGO support, no more advanced PGO versions or some PGO-related tricky options. I do not understand why AMD engineers don't care about PGO in their compilers. So at least from the PGO perspective I recommend using Clang instead.
 
 What about other proprietary compilers like [Cray C++ compiler](https://docs.lumi-supercomputer.eu/development/compiling/cce/) and others? I don't know and actually don't care much (because prefer open source compilers instead). If you are interested in these compilers - please check corresponding documentation. If PGO support is missing in them - ask vendors about implementing PGO in their compilers.
 
+TODO: Add information about LCC (Elbrus compiler)
+
+Do you want something more unique? Let's talk about [Elbrus](https://en.wikipedia.org/wiki/Elbrus_2000). Elbrus (aka `e2k`) is a [VLIW](https://en.wikipedia.org/wiki/Very_long_instruction_word)-based architecture. From PGO perspective we are interested only in one specific detail about all VLIW-based things - how much VLIW-based CPUs rely on a compiler. VLIW method depends on the programs providing all the decisions regarding which instructions to execute simultaneously. As a practical matter, this means that the compiler becomes more complex, but the hardware is simpler than in many other means of parallelism. In contrast, our usual x86-64/ARM CPUs do this things on the CPU side.
+
+This decision has an outcome - at least in theory, VLIW can get far more improvements from PGO than other architectures because suboptimal compiler decisions in VLIW have higher performance penalty.
+
+Elbrus engineers (from [MCST](https://en.wikipedia.org/wiki/MCST)) of course understand this thing, and they invest some (quite limited compared to giants like Google) resources into PGO too. MCST has its own compiler, [LCC](http://mcst.ru/LCC) (in Russian). Finding public-available information about the compiler is not an easy task due to closed nature of MCST. However, I had an awesome conversation with an engineer from MCST, and he answered almost all my questions regarding PGO state in the LCC compiler.
+
+So. The current PGO state in LCC is something like that:
+
+* Instrumentation PGO is supported (in IR PGO flavour).
+* No sampling PGO support yet but there are some plans to implement it.
+* LCC saves PGO profiles in its own format. There is a tool `eprof` to work with these profiles. This tool can merge profiles and show some statistics about PGO profiles. So in general it looks like a viable alternative to `llvm-profdata`.
+* No way to tweak PGO profiles dumping via compiler intrinsics (Clang [has](https://clang.llvm.org/docs/UsersManual.html#fine-tuning-profile-collection) such functionality).
+
+TODO: add a note about PGO documentation for LCC and where it's hidden: http://ftp.altlinux.org/pub/people/mike/elbrus/docs/elbrus_prog/html/chapter1.html#twostage-comp
+TODO: add information about SQLite benchmarks here
+
+What is the LCC's PGO implementation quality in practice? I don't know, I don't have such benchmarks (yet). It would be awesome if MCST engineers can provide some numbers here. Hm... does anyone have PGO benchmarks for Itanium? I am interested in such benchmarks as well (at least from the historical perspective since no one cares about Itanium anymore).
+
+By the way, if you want to play with e2k-based CPUs (because why not?), you can request **free** remote access [here](https://elbrus.kurisa.ch/). I checked - it really works, I got SSH access to a Elbrus-based machine in a 2 days after the request. Nice job!
+
 ### Rust
 
 Rust has only one major compiler - `rustc`. Rustc is based on LLVM so PGO implementation shares almost all details with Clang.
 
 TODO: write a note about sampling PGO support: https://github.com/rust-lang/rust/issues/117023 and https://github.com/rust-lang/rust/issues/64892
-TODO: Rust CSIR PGO request: https://github.com/rust-lang/rust/issues/118562
 
 Some details that I want to highlight about PGO in Rustc:
 
-* Annoying [bug](https://github.com/rust-lang/rust/issues/115344) with enabled LTO and PGO at the same time.
+* An annoying [bug](https://github.com/rust-lang/rust/issues/115344) with enabled LTO and PGO at the same time.
 * TODO: write a note about sampling PGO support: https://github.com/rust-lang/rust/issues/117023 and https://github.com/rust-lang/rust/issues/64892
-* TODO: Rust CSIR PGO request: https://github.com/rust-lang/rust/issues/118562
+* [Missing](https://github.com/rust-lang/rust/issues/118562) support for CSIR PGO. Not critical at all but according to Google engineers CSIR PGO can achieve additional few percents in performance compared to usual IR PGO.
 * [Missing parts](https://github.com/rust-lang/rust/issues/118561) in the PGO documentation. There a lot of undocumented places in the current documentation: PGO profiles compatibility guarantees, PGO dumping-related compiler intrinsics documentation, PGO counter atomicoty behavior, etc. Rust documentation for further details refers to the Clang documentation (since Rustc from PGO perspective completely relies on LLVM). It's kinda funny because Clang also has [some](https://github.com/llvm/llvm-project/issues/74022) documentation issues in PGO area. From my point of view, it would be much easier for the Rustc users to read all PGO-related information directly from the Rustc documentation, without jumping from time to time into the Clang docs.
 
 Rustc documentation about PGO is available [here](https://doc.rust-lang.org/rustc/profile-guided-optimization.html).
@@ -772,6 +801,7 @@ According to its [README](https://github.com/llvm/llvm-project/blob/main/bolt/RE
 TODO: write about BOLT advantages and disadvantages
 TODO: write about BOLT instrumentation slowdown like https://github.com/qarmin/czkawka/issues/1099 and https://github.com/crate-ci/typos/issues/827#issue-1888263250
 TODO: add https://discourse.llvm.org/t/bolt-open-projects/61857
+TODO: Cover question about CSIR PGO vs BOLT in the article
 
 Please do not mess LLVM BOLT with another [bolt](https://gitlab.freedesktop.org/bolt/bolt) project - a Thunderbolt devices manager. Naming collision happened even here. Anyway, it wouldn't be a huge problem in practice - just always search for "LLVM BOLT" and you will be fine.
 
@@ -896,7 +926,7 @@ PC:
 * RAM: 48 Gib of some default non-RGB RAM
 * SSD: Samsung 980 Pro 2 Tib
 * OS: Fedora 38/39
-* Kernel: Linux kernel 6.* (mostly 6.2.* - 6.6.*)
+* Kernel: Linux kernel 6.* (mostly 6.2.* - 6.7.*)
 
 Macbook:
 
@@ -1234,7 +1264,7 @@ Today machine-learning (ML) things are popular, and they are popular for a reaso
 
 One of the ideas is MLGO: a Machine Learning Guided Compiler Optimizations Framework ([paper](https://arxiv.org/pdf/2101.04808.pdf), [GitHub](https://github.com/google/ml-compiler-opt)). The idea is simple - try to use machine-learning-driven decisions in some optimizations in the compiler. Every modern compiler already has some kind of "implicit performance model" about the code: a bunch of heuristics for splitting hot/cold code, multiple semi-hidden inline thresholds (like [this](https://github.com/llvm/llvm-project/blob/main/llvm/lib/Analysis/InlineCost.cpp#L82) from LLVM), etc. All these numbers are appeared in compiler throught years of compilers optimizations - but this doesn't make all these hardcoded constants the best possible values in for every program! MLGO project tries to replace such hardcoded places in LLVM with something more flexible and twekable - with a ML model. E.g. MLGO uses Tensorflow-based neural network to perform better inlining decisions (see paper for more details). The work is still in early stages but looks promising. LLVM is not alone here - Intel® oneAPI DPC++/C++ Compiler has similar `-fprofile-ml-use` [option](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/fprofile-ml-use.html).
 
-Even if right now the options above look quite unstable (they are) I still think we will get more and more ML-driven tools around us, and compilers are not something special here. PGO and ML-based compilers have a common thing - they both need some kind of runtime profile of the application to perform better optimization decisions. I can expect that in the future we will see some hybrids between PGO and ML approaches.
+Even if right now the options above look quite unstable (they are) I still think we will get more and more ML-driven tools around us, and compilers are not something special here. PGO and ML-based compilers have a common thing - they both need some kind of runtime profile of the application to perform better optimization decisions. I can expect that in the future we will see some hybrids between PGO and ML approaches. There are semi-academic projects like [CompilerGym](https://github.com/facebookresearch/CompilerGym) with an aim to help with implementing and testing ML-based approaches for compiler problems.
 
 ### OCOLOS: Online COde Layout OptimizationS
 
@@ -1272,8 +1302,6 @@ TODO: continue advertising PGO addition to the compilers and languages (like Har
 
 ### Explore PGO for gamedev domain
 
-TODO: insert here my current PGO results for gamedev like UE PGO integration and other stuff
-
 TODO: write where performance can be valuable for gamedev domain: developer productivy (faster code-test loops), better drivers (CPU part), lowering systems requirement, battery life (steam deck and mobile gaming domains)
 
 For now, PGO is rarely mentioned with games. The only known to me case is the talk from GDC 2023 "Squeezing out the last 5% of performance: AGDE, profile-guided optimization, and automation" ([Youtube](https://www.youtube.com/watch?v=CNbpFTyHOe8)) - it mentions [this](https://developer.android.com/games/agde/pgo-overview) PGO guide in the Android Game Development Extension (AGDE) documentation.
@@ -1286,7 +1314,7 @@ Unity is an interesting beast here. Unity has a long-standing process about [Bur
 
 In other game engines, the situation is even worse. For [Godot](https://godotengine.org/) we have only [this](https://github.com/godotengine/godot-proposals/issues/2610) proposal with some tests. For [Bevy](https://bevyengine.org/) I did [some benchmarks](https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867). For other engines, we only have requests about PGO: [Fyrox](https://github.com/FyroxEngine/Fyrox/issues/498), [Cocos](https://github.com/cocos/cocos-engine/issues/16449), [Defold](https://github.com/defold/defold/issues/8193), [Dagor](https://github.com/GaijinEntertainment/DagorEngine/issues/1), etc. - the complete list is a bit longer.
 
-Regarding using PGO with games based on the engines above - I haven't enough information. I asked the question multiple times on different forums (Unreal Engine forum [post](https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240), Unity forum [post](https://forum.unity.com/threads/add-lto-pgo-and-plo-recommendations-to-il2cpp-documentation.1525315/)) - no response. Only one person from a local russian-speaking Telegram chat about UE said to me that they use PGO as a default optimization for their UE games. The PGO profiles are collected via crafted local test workloads (usually - the most difficult game scenes) with [Gauntlet](https://docs.unrealengine.com/4.27/en-US/TestingAndOptimization/Automation/Gauntlet/). The performance improvement is like 6-8% of CPU.
+Regarding using PGO with games based on the engines above - I don't have enough information. I asked the question multiple times on different forums (Unreal Engine forum [post](https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240), Unity forum [post](https://forum.unity.com/threads/add-lto-pgo-and-plo-recommendations-to-il2cpp-documentation.1525315/)) - no response. Only one person from a local russian-speaking Telegram chat about UE said to me that they use PGO as a default optimization for their UE games. The PGO profiles are collected via crafted local test workloads (usually - the most difficult game scenes) with [Gauntlet](https://docs.unrealengine.com/4.27/en-US/TestingAndOptimization/Automation/Gauntlet/). The performance improvement is like 6-8% of CPU.
 
 Another interesting area where PGO can help is driver optimization, especially video drivers. Modern video drivers - huge applications with a lot of branches inside. Even more - in drivers there are things like shader compilers. As we [see](https://github.com/gfx-rs/wgpu/discussions/4692), PGO helps in this cases in practice. However, more testing in more cases is needed. I hope one day shader compilers will be optimized too - I have too many lags due to the shader compilation process during the TOTK gameplay with Yuzu on my Steam Deck!
 
@@ -1328,7 +1356,20 @@ There are already some projects that integrated FE PGO in their PGO pipelines. W
 
 TODO: add an idea/suggestion to the article about using my "Are we PGO yet" issue list as a starting point to play with PGO for open-source projects
 
-I created "Are we PGO yet?" list for several reasons. Of course, at least I need a place to track where I already created a PGO request - human memory is not a very sustainable thing, you know. But this list also can be good place where any potentially interested in PGO person can find some open-source project, and try to contribute PGO into it. I create PGO evaluations requests only for projects where I expect some performance gains from enabling PGO. So if you want to play with PGO and just looking for a good playground - you can find something interesting in the list. It will be a win-win situation: you can polish your PGO skill on a project, and the project has a chance to get PGOed by the community.
+I created "[Are we PGO yet?](https://github.com/zamazan4ik/awesome-pgo/blob/main/are_we_pgo_yet.md)" list for several reasons. Of course, at least I need a place to track where I already created a PGO request - human memory is not a very sustainable thing, you know. But this list also can be good place where any potentially interested in PGO person can find some open-source project, and try to contribute PGO into it. I create PGO evaluations requests only for projects where I expect some performance gains from enabling PGO. So if you want to play with PGO and just looking for a good playground - you can find something interesting in the list. It will be a win-win situation: you can polish your PGO skill on a project, and the project has a chance to get PGOed by the community.
+
+### Perform more PGO benchmarks
+
+TODO: add a list of TODO projects here
+
+Even if I already performed PGO benchmarks for many projects, I have a bunch of other projects in my TODO list! For some projects I even didn't create a "Evaluate PGO usage" request in the corresponding issue tracker. Maybe one day I will have enough motivation to continue work in this direction. The main reason why PGO benchmarks for some projects are postponed is amount of efforts to perform the benchmarks. If a project something more difficult than `cargo pgo bench` && `cargo pgo optimize bench` - the priority for this project is decreased in my list because I have a lot of other easier-to-test projects anyway!
+
+But if someone wants to help, here I collected some potentially interesting from PGO perspective open-source projects:
+
+* Stract: [GitHub repo](https://github.com/StractOrg/stract)
+* chipStar: [GitHub repo](https://github.com/CHIP-SPV/chipStar)
+* starship: [GitHub repo](https://github.com/starship/starship)
+* littlefs: [GitHub repo](https://github.com/littlefs-project/littlefs)
 
 ### Contribute to project-specific PGO documentation
 
@@ -1381,7 +1422,7 @@ It seems to be an interesting idea to implement some kind of PGO profile integra
 
 The original idea is described [here](https://github.com/aaupov/school_topics/blob/main/perfd.md) (in Russian, so if you don't know this language - please use the translator or ask Amir about making it in English :), a few initial commits are available [here](https://github.com/linux-perfd/perfd).
 
-Exactly the same thing is already implemented internally in Google. This system samples all applications across Google servers with Google Wide Profiler (GWP), transforms sample profiles into a compiler-compatible format, and then passes converted profiles to the build pipelines. More about GWP and its connection to PGO at Google can be found in these papers: [one](https://research.google/pubs/autofdo-automatic-feedback-directed-optimization-for-warehouse-scale-applications/), [two](https://research.google/pubs/google-wide-profiling-a-continuous-profiling-infrastructure-for-data-centers/). Google, do you want to open-source this system? :)
+Exactly the same thing is already implemented internally in Google. This system samples all applications across Google servers with Google Wide Profiler (GWP), transforms sample profiles into a compiler-compatible format, and then passes converted profiles to the build pipelines. More about GWP and its connection to PGO at Google can be found in these papers: [one](https://research.google/pubs/autofdo-automatic-feedback-directed-optimization-for-warehouse-scale-applications/), [two](https://research.google/pubs/google-wide-profiling-a-continuous-profiling-infrastructure-for-data-centers/). Google, do you want to open-source this system (even if this system has too many dependencies on other closed-sourced Google projects)? :) Other large companies also has similar system-wide profilers like Yandex with its Yandex.Perforator. Unfortunately, this project cannot be used for continuous PGO yet. Maybe in the future Perforator will be extended with such functionality and open-sourced (as they already did for multiple awesome projects like [ClickHouse](https://clickhouse.com/), [YDB](https://ydb.tech/), [YTsaurus](https://ytsaurus.tech/)).
 
 There is an idea to implement a similar approach based on an open-source project like Grafana Pyroscope ([discussion](https://github.com/grafana/pyroscope/discussions/2783)) or Elastic Universal Profiling ([issue](https://github.com/elastic/elasticsearch/issues/105802)). However, the current state of these activities is just a discussion, nothing to try yet.
 
@@ -1408,9 +1449,57 @@ Here I collected a bunch of PGO and optimization-related links that I can recomm
 
 ## Some random thoughts why PGO usage is so low nowadays
 
-TODO: discuss some proposals about JIT-ting everything
+TODO: discuss some proposals about JIT-ing everything
 
-## Instead of Conclusion
+Sometimes I hear "Just use JIT-compiler - it "automatically" does all that optimizations without problems like profile transfer, profile format conversion, etc.". Unfortunately, JIT way has its own limitations:
+
+* Sometimes JIT usage is limited. As an example - Apple's [Hardened Runtime](https://developer.apple.com/documentation/security/hardened_runtime)
+* JIT has problems with cold start time. When you run your application at first time, it needs to be compiled on-demand. It could be a problem for one-shot workloads like serverless stuff. Of course it can be mitigated via "warming up" procedures but it can be non-trivial to do. AoT doesn't have such problems. How is big the difference in practice? Check [this](https://maxday.github.io/lambda-perf/).
+* JIT has runtime overhead on a target machine. The amount of overhead completely depends on your compiler (nice hint: if your JIT compiler is PGO-optimized, the overhead will be lower ;). However, if you want to apply as many as possible compiler optimizations (sometimes too time-consuming like [Souper](https://github.com/google/souper)) to optimize your code to the peak performance - overhead will be higher and higher. It's inevitable because all compiler optimizations, obviously, consume CPU resources. AoT compilation model solves this probelm with separating compilation and execution environments: users with their smartphones don't care how big and beefy your CI pipeline is but care a lot about battery life. And remember: JIT optimization will be executed on **every** target machine instead of being done once with AoT case (okay, N times if we do PGO build per workload but tbh it's quite rare case in practice).
+
+That's why I still think that investments into PGO (and similar) optimization techniques for AoT is still a way to go.
+
+From my experience, from talks with multiple developers (open-source and proprietary), from talks with package maintainers, I can highlight the following reasons why PGO adoption is low nowadays (IMHO):
+
+TODO: describe in details each point
+
+* Lack of knowledge about PGO existance.
+* Lack of knowledge about PGO efficiency in practice.
+* Weak tooling support.
+* Additional maintenance cost.
+* Lack of knowledge how to apply PGO in practice.
+* Conservative point of view regarding new compiler optimizations aka fear of additional compiler bugs.
+* Additional source of non-determinism.
+
+Let's discuss each point in details!
+
+### Lack of knowledge about PGO existance
+
+TODO: add multiple proofs when developers didn't hear before about PGO from GitHub
+
+### Lack of knowledge about PGO efficiency in practice
+
+TODO: add examples like https://github.com/candy-lang/candy/discussions/953#discussioncomment-8584992
+TODO: write a note about SPECINT benchmark in the article - it's a commonly used benchmark for evaluation performance of different compiler optimizations
+
+### Additional maintenance cost
+
+TODO: add examples:
+  - https://github.com/facebook/hhvm/issues/9385#issuecomment-1943760010
+  - https://github.com/ValveSoftware/SteamOS/issues/1287#issuecomment-1840835012
+  - https://github.com/BurntSushi/ripgrep/issues/1225#issuecomment-1828965231
+
+### Additional source of non-determinism
+
+TODO: write about expanding ML-based stuff and how it introduces more non-determinism. Add reference to a complicated ML-landscape
+TODO: mention reproducibility issue with non-deterministic stuff. Add a reference to Solarwinds and its reworked CI pipeline
+
+### Conservatism
+
+TODO: write about -O2 vs -O3 drama in the open source community
+TODO: huge lag for the technology adoption
+
+## Call for action (instead of conclusion)
 
 TODO: finish the chapter
 
@@ -1419,7 +1508,7 @@ TODO: finish the chapter
   - If you are a project developer - please consider providing better PGO integration into your project if you care about the performance
   - If you are a maintainer - please consider enabling PGO in your packages
   - If you are an OS package committee member (like Fedora FESCO) - please consider general PGO movement across the whole package policy
-  - If you have experience with PGO in production - please share your numbers/pains/experience with us!
+  - If you have experience with PGO in production - please share your numbers/pains/experience with us! Examples from huge companies are interesting to read and they are really motivating. E.g. Datadog developer [promised](https://twitter.com/felixge/status/1754772490889396415) to share their experience with PGO - I didn't forget ;)
 
 I want to finish with the call to the community.
 
@@ -1429,11 +1518,13 @@ If you are a language/compiler designer - please consider integrating PGO into y
 
 I hope you enjoyed the article! I tried to share all my experiences with PGO. And if at least one person after reading all these materials will try to integrate PGO into their applications - I would be happy!
 
+What about my short-term plans? I spent almost 1.5 year on this work on a **daily** basis, almost all my free time was contributed to this work. So yeah, I need some rest to restore my burnt down soul from PGO. Maybe go to a forest for a week or so, and listen to birds with a cup of warm shroom tea (youknowwhatimean)...
+
 ## My contacts
 
 If you want to discuss with me more things about PGO, think about contributing to PGO or know anything PGO-related, you can find me via:
 
-* Email: zamazan4ik (at) tut.by (primary email), zamazan4ik (at) gmail.com (secondary email)
+* Email: zamazan4ik (at) tut (dot) by (primary email), zamazan4ik (at) gmail (dot) com (secondary email)
 * Telegram: zamazan4ik
 * Discord: zamazan4ik
 * Twitter/X: [zamazan4ik](https://twitter.com/zamazan4ik)

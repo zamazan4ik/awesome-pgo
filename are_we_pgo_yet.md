@@ -87,6 +87,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Shady: https://github.com/Hugobros3/shady/issues/18
 * Wingc: https://github.com/winglang/wing/issues/5558
 * ZLUDA: https://github.com/vosen/ZLUDA/discussions/73
+* candy: https://github.com/candy-lang/candy/discussions/953
 
 ## Developer tooling
 
