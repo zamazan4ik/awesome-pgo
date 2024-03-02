@@ -217,7 +217,7 @@ TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
   - Exit-code issues - for some applications in the end the profile is not dumped (like Clangd). You need to tweak the application manually
   - Not all software can be built with PGO (Envoy) - some dependencies do not support PGO for some reason
 
-#### The instrumented binary is slower
+#### An instrumented binary is slower
 
 An instrumented binary is slower. But how much? Well, as usual - *it depends*. I didn't find such benchmarks for real-life applications so I did them and I'm ready to show you some numbers for several projects:
 
@@ -282,7 +282,7 @@ Generally speaking, there is no way to predict how slow your binary will be afte
 
 TODO: write about cases when an instrumented binary is faster (I met such cases in some strange situations. Probably some combination of compiler optimizations does this - who knows, didn't investigate deeply such cases).
 
-#### The instrumented binary is larger
+#### An instrumented binary is larger
 
 Instrumentation PGO works by inserting into your code some counters for tracking the program execution characteristics, so your binary will be larger after the instrumentation. In assembler, it looks something like:
 
@@ -361,7 +361,8 @@ However, BSS support is still kinda limited across the ecosystem, and support is
 * AMD x86-64 - it's called BRS (BRanch Sampling). Available since Zen 3 (2020), Linux 5.19 (2022). However, [not all](https://discord.com/channels/636084430946959380/930647188944613406/1175827177405698170) Zen 3 supports BRS. More can be found [here](https://lwn.net/Articles/888996/).
 * ARM64 - it's called BRBE (Branch Record Buffer Extension): since ARMv9.2-A (2023), Linux 6.7-rc1 (2024). Related LWN article is [here](https://lwn.net/Articles/951316/).
 * RISC-V - it's called Control Transfer Records (CTR). Current status - [under development](https://risc-v-international.slack.com/archives/C017LD0GJ8Z/p1708861135739819?thread_ts=1708839419.127049&cid=C017LD0GJ8Z). More information can be found here: [GitHub](https://github.com/riscv/riscv-control-transfer-records), [JIRA](https://jira.riscv.org/browse/RVG-62). No estimations when it will be implemented.
-* e2k (Elbrus) - an analogue to LBR is supported. Unfortunately, there is not support for that in Linux perf but there are plans implement this feature in the future.
+* [e2k](https://en.wikipedia.org/wiki/Elbrus_2000) (Elbrus) - an analogue to LBR is supported. Unfortunately, there is not support for that in Linux perf but there are plans implement this feature in the future.
+* [LoongSon](https://en.wikipedia.org/wiki/Loongson) (Chinese MIPS-based CPUs) - sent an email but no response yet :(
 * Other architectures and operating systems combinations - I don't know yet (please let me know!)
 
 More advanced features about LBR can be found in these articles: [first](https://lwn.net/Articles/680985/), [second](https://lwn.net/Articles/680996/).
@@ -448,8 +449,6 @@ According to the documentation, AOCC compiler (LLVM-based C++ compiler from AMD)
 
 What about other proprietary compilers like [Cray C++ compiler](https://docs.lumi-supercomputer.eu/development/compiling/cce/) and others? I don't know and actually don't care much (because prefer open source compilers instead). If you are interested in these compilers - please check corresponding documentation. If PGO support is missing in them - ask vendors about implementing PGO in their compilers.
 
-TODO: Add information about LCC (Elbrus compiler)
-
 Do you want something more unique? Let's talk about [Elbrus](https://en.wikipedia.org/wiki/Elbrus_2000). Elbrus (aka `e2k`) is a [VLIW](https://en.wikipedia.org/wiki/Very_long_instruction_word)-based architecture. From PGO perspective we are interested only in one specific detail about all VLIW-based things - how much VLIW-based CPUs rely on a compiler. VLIW method depends on the programs providing all the decisions regarding which instructions to execute simultaneously. As a practical matter, this means that the compiler becomes more complex, but the hardware is simpler than in many other means of parallelism. In contrast, our usual x86-64/ARM CPUs do this things on the CPU side.
 
 This decision has an outcome - at least in theory, VLIW can get far more improvements from PGO than other architectures because suboptimal compiler decisions in VLIW have higher performance penalty.
@@ -463,10 +462,9 @@ So. The current PGO state in LCC is something like that:
 * LCC saves PGO profiles in its own format. There is a tool `eprof` to work with these profiles. This tool can merge profiles and show some statistics about PGO profiles. So in general it looks like a viable alternative to `llvm-profdata`.
 * No way to tweak PGO profiles dumping via compiler intrinsics (Clang [has](https://clang.llvm.org/docs/UsersManual.html#fine-tuning-profile-collection) such functionality).
 
-TODO: add a note about PGO documentation for LCC and where it's hidden: http://ftp.altlinux.org/pub/people/mike/elbrus/docs/elbrus_prog/html/chapter1.html#twostage-comp
-TODO: add information about SQLite benchmarks here
+[ALT Linux](https://en.wikipedia.org/wiki/ALT_Linux) (a Russian Linux-based OS that support Elbrus CPUs)LCC [has](http://ftp.altlinux.org/pub/people/mike/elbrus/docs/elbrus_prog/html/chapter1.html#twostage-comp) a dedicated page about PGO. From that page you can find that LCC has a dedicated documentation about PGO. Unfortunately, this documentation is not availabe online - the only way to read it is get access to an Elbrus machine (see the link below). Fun fact: this documentation is so "well-known" that even some LCC engineers don't know about it existance :) I checked LCC's PGO documentation and would say that the documentation is quite detailed. Of course, more practical scenarios could be covered, etc. but in general it's fine.
 
-What is the LCC's PGO implementation quality in practice? I don't know, I don't have such benchmarks (yet). It would be awesome if MCST engineers can provide some numbers here. Hm... does anyone have PGO benchmarks for Itanium? I am interested in such benchmarks as well (at least from the historical perspective since no one cares about Itanium anymore).
+What is the LCC's PGO implementation quality in practice? There is no publicly-available benchmarks so I performed some for you instead. Since many software for Elbrus need to be patched, and available Elbrus machines are kinda slow (so I need to wait for the benchmark results) I did only one benchmark - for SQLite. The results are available [here](https://github.com/zamazan4ik/awesome-pgo/blob/main/sqlite.md#results). However, nothing too interesting, to be honest - PGO works in LCC as in other compilers, with similar performance improvements. It would be awesome if MCST engineers can provide more benchmarks in the future. Hm... does anyone have PGO benchmarks for Itanium? I am interested in such benchmarks as well (at least from the historical perspective since no one cares about Itanium anymore).
 
 By the way, if you want to play with e2k-based CPUs (because why not?), you can request **free** remote access [here](https://elbrus.kurisa.ch/). I checked - it really works, I got SSH access to a Elbrus-based machine in a 2 days after the request. Nice job!
 
@@ -474,12 +472,10 @@ By the way, if you want to play with e2k-based CPUs (because why not?), you can 
 
 Rust has only one major compiler - `rustc`. Rustc is based on LLVM so PGO implementation shares almost all details with Clang.
 
-TODO: write a note about sampling PGO support: https://github.com/rust-lang/rust/issues/117023 and https://github.com/rust-lang/rust/issues/64892
-
 Some details that I want to highlight about PGO in Rustc:
 
-* An annoying [bug](https://github.com/rust-lang/rust/issues/115344) with enabled LTO and PGO at the same time.
-* TODO: write a note about sampling PGO support: https://github.com/rust-lang/rust/issues/117023 and https://github.com/rust-lang/rust/issues/64892
+* An annoying [bug](https://github.com/rust-lang/rust/issues/115344) with enabled LTO and PGO at the same time. Since LTO is widely enabled in the Rust ecosystem, it can become a blocker for Rust projects for adopting PGO.
+* Rustc [supports](https://github.com/rust-lang/rust/issues/64892) PGO via sampling. However, official documentation [does not cover](https://github.com/rust-lang/rust/issues/117023) this option.
 * [Missing](https://github.com/rust-lang/rust/issues/118562) support for CSIR PGO. Not critical at all but according to Google engineers CSIR PGO can achieve additional few percents in performance compared to usual IR PGO.
 * [Missing parts](https://github.com/rust-lang/rust/issues/118561) in the PGO documentation. There a lot of undocumented places in the current documentation: PGO profiles compatibility guarantees, PGO dumping-related compiler intrinsics documentation, PGO counter atomicoty behavior, etc. Rust documentation for further details refers to the Clang documentation (since Rustc from PGO perspective completely relies on LLVM). It's kinda funny because Clang also has [some](https://github.com/llvm/llvm-project/issues/74022) documentation issues in PGO area. From my point of view, it would be much easier for the Rustc users to read all PGO-related information directly from the Rustc documentation, without jumping from time to time into the Clang docs.
 
@@ -494,9 +490,6 @@ What about other Rust compilers? TBH, a comparatively small amount of people in 
 ### Go
 
 PGO in Go appeared quite recently: 1.20 in Preview, 1.21 in GA state.
-
-TODO: add links about PGO implementation in the Go compiler
-TODO: add my thoughts about current PGO implementation in Go and its disadvantages
 
 Current PGO implementation in the `go` compiler has the following issues/limitations/inconveniences:
 
@@ -615,7 +608,7 @@ Out of the box, the `ocamlopt` compiler has no support for PGO. However, there i
 
 ### Cobol
 
-I am not joking - Cobol still matters. This technlogy is even (kinda?) alive: [Cobol 2023](https://en.wikipedia.org/wiki/COBOL#COBOL_2023) edition was released! Unfortunately, regarding PGO the situation is sad - I didn't any Cobol compiler with PGO support. There is a [feature request](https://sourceforge.net/p/gnucobol/feature-requests/456/) in GnuCobol,  
+Yeah, I am not joking - Cobol still matters. This technlogy is even (kinda?) alive: [Cobol 2023](https://en.wikipedia.org/wiki/COBOL#COBOL_2023) edition was released! Unfortunately, regarding PGO the situation is sad - I didn't any Cobol compiler with PGO support. There is a [feature request](https://sourceforge.net/p/gnucobol/feature-requests/456/) in GnuCobol,  
 
 TODO: check Cobol compilers and PGO support in them (lol?)
 
@@ -637,7 +630,10 @@ Regarding more minor programming technologies... I reviewed a lot of less known 
 
 ---
 
-TODO: create a table with programming languages and PGO support status
+## PGO profile processing
+
+TODO: write about typical operations with PGO profiles: merge, show summary, compare
+TODO: Write more about `llvm-profdata` tool usage. Check the documentation for the tool and find missing parts in it
 
 ## PGO support in build systems
 
@@ -694,9 +690,7 @@ Okay, you decided to give PGO a try in your application. But where can you colle
 
 The first idea that can appear in your mind - "We have unit/functional/integration/e2e-tests - let's use them as a sample workload for PGO". Please don't do that.
 
-In most cases, the main aim of your tests is testing (!) your application in all possible situations (including rare and almost impossible scenarios aka corner cases). Instead, PGO optimizes not for all cases but for the most common from your *actual* workload. If you try to use tests as a sample workload for training PGO, you optimize your program not for the usual workload but for the corner cases. That's definetely not what you want to do. However, if you have "real-life" tests - it's fine to use them as a PGO training workload.
-
-TODO: add project examples where such way is used. AFAIK, Python uses a test suite for the PGO training phase
+In most cases, the main aim of your tests is testing (!) your application in all possible situations (including rare and almost impossible scenarios aka corner cases). Instead, PGO optimizes not for all cases but for the most common from your **actual** workload. If you try to use tests as a sample workload for training PGO, you optimize your program not for the usual workload but for the corner cases. That's definetely not what you want to do. However, if you have "real-life" tests - it's fine to use them as a PGO training workload.
 
 ### Benchmarks
 
@@ -833,9 +827,9 @@ BOLT is already integrated into the optimization pipelines in several projects:
 
 E.g. the `rustc` compiler is already PGO + BOLT optimized for Linux platforms.
 
-More materials? Of course I have something to share:
+More materials? Of course, I have something to share:
 
-* BOLT original paper: [Facebok engineering blog](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
+* BOLT original paper: [Facebook engineering blog](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
 * 2016 EuroLLVM Developers' Meeting: Maksim Panchenko "Building a binary optimizer with LLVM": [Youtube](https://www.youtube.com/watch?v=gw3iDO3By5Y)
 * Facebook Research paper "Lightning BOLT: Powerful, Fast, and Scalable Binary Optimization": [Facebook engineering blog](https://research.facebook.com/publications/lightning-bolt-powerful-fast-and-scalable-binary-optimization/)
 * Optimizing Linux kernel with BOLT: [Youtube](https://www.youtube.com/watch?v=ivTCCTSMGZg)
@@ -1043,7 +1037,7 @@ SQLite is one of the most famous databases for good reasons. It's easy to use, p
 
 At first, I used [Clickbench](https://github.com/ClickHouse/ClickBench) (btw, nice OLAP benchmark!) for PGO experiments with SQLite, performed all required test routines, and [reported](https://sqlite.org/forum/forumpost/19870fae957d8c1a) the results back on the SQLite forum. After some discussions and performing another round of tests (since developers asked me to test additionally with a built-in SQLite benchmark instead of ClickBench), a PGO note was [removed](https://www.sqlite.org/docsrc/info/43c1154ec6af8b4dbbde3fe64b6c1887868c3f43cb72b1bfaa5821082cc1099c) from the documentation.
 
-I still wanted a bit more - explicitly mention in the SQLite documentation that PGO works, and PGO should be used by SQLite users if they want to achieve better performance with the database. That's why I created [another](https://sqlite.org/forum/forumpost/7fd3c9a43a) forum topic to add a note about **positive** PGO effects on SQLite. And... didn't get any answer at all. I even sent an email to "drh@sqlite.org" and "ggw@sqlite.org" (found these emails somewhere on the official SQLite website) - also no response. For now, it's the end of the story. If someone has good relationships with SQLite devs - please ask them about PGO documentation for the database. If you are a SQLite developer - you don't need even to ask, you can commit to the documentation directly ;)
+I still wanted a bit more - explicitly mention in the SQLite documentation that PGO works, and PGO should be used by SQLite users if they want to achieve better performance with the database. That's why I created [another](https://sqlite.org/forum/forumpost/7fd3c9a43a) forum topic to add a note about **positive** PGO effects on SQLite. And... didn't get any answer at all. I even sent an email to "drh at sqlite.org" and "ggw at sqlite.org" (found these emails somewhere on the official SQLite website) - also no response. For now, it's the end of the story. If someone has good relationships with SQLite devs - please ask them about PGO documentation for the database. If you are a SQLite developer - you don't need even to ask, you can commit to the documentation directly ;)
 
 Lessons learned:
 
@@ -1294,6 +1288,8 @@ Additionally, I recommend you [join](https://discord.gg/xS7Z362) the LLVM Discor
 
 Another awesome place to ask questions - compiler communities. Here I can recommend joining LLVM Discourse [forum](https://discourse.llvm.org/).
 
+One more hint to find PGO-related persons in project. If you see if in a project there is already PGO support in some way, `git blame` can help you to find a right person to ask PGO-related questions. Obvious tool but helpful enough to be mentioned here.
+
 ## Future plans and ideas
 
 I have several ideas about PGO and PLO's future improvements across the industry. Maybe something from my list will be so interesting to someone, that they eventually will be implemented.
@@ -1370,6 +1366,7 @@ But if someone wants to help, here I collected some potentially interesting from
 * chipStar: [GitHub repo](https://github.com/CHIP-SPV/chipStar)
 * starship: [GitHub repo](https://github.com/starship/starship)
 * littlefs: [GitHub repo](https://github.com/littlefs-project/littlefs)
+* Darktable. [These](https://github.com/darktable-org/darktable/blob/master/src/tests/benchmark/darktable-bench) can be used for PGO evaluation.
 
 ### Contribute to project-specific PGO documentation
 
@@ -1482,6 +1479,10 @@ TODO: add multiple proofs when developers didn't hear before about PGO from GitH
 TODO: add examples like https://github.com/candy-lang/candy/discussions/953#discussioncomment-8584992
 TODO: write a note about SPECINT benchmark in the article - it's a commonly used benchmark for evaluation performance of different compiler optimizations
 
+### Weak tooling support
+
+TODO: https://github.com/grafana/loki/issues/11939#issuecomment-1966915084
+
 ### Additional maintenance cost
 
 TODO: add examples:
@@ -1496,8 +1497,16 @@ TODO: mention reproducibility issue with non-deterministic stuff. Add a referenc
 
 ### Conservatism
 
-TODO: write about -O2 vs -O3 drama in the open source community
-TODO: huge lag for the technology adoption
+Developers have a lot of things to do. Implement features, fix bugs, fight with dependencies/OS updates, configure CI/CD, tooling traps and many-many other trickier things (like [-O2 vs -O3 performance differences](https://news.ycombinator.com/item?id=28895896)) - they are busy with all of that stuff. We like when things "just work" without a need to spend/waste additional amount of time to figure out "what is going on in this case again holy crap".
+
+And here appears PGO/PLO. Not so widely-used technology, with high-amount of non-determinism, weak tooling support, maintenance cost - too high risks for many projects (especially if we are talking about mature projects like PostgreSQL). And in exchange for all these risks you get a *chance* to improve performance for your application. Not so many applications care so much about its performance that taking these risks seem a good choice, tbh. We are tend to reduce risks as much as we can because we don't want to resolve all potential issues from enabling such fancy optimizations - we are humans, and we are lazy by design.
+
+What can we do here? Reduce risks. How? I have several ideas:
+
+TODO: more ideas?
+
+* Explain developers how PGO works in practice. Talk about unknown PGO things a lot and make them visible because unknown things are highly unpredictable.
+* Improve PGO tooling since it helps with reducing PGO maintenance cost for projects.
 
 ## Call for action (instead of conclusion)
 

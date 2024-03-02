@@ -34,7 +34,6 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Write about an observation that if in the upstream there is no PGO support - maintainers almost always do not enable PGO in their packages
 * Intel compiler has support for Sampling PGO too even outside `perf` - https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2024-0/hardware-profile-guided-optimization.html. Add to the article.
 * Test profiles PGO profiles overlap between OS with `llvm-profdata overlap` - they are not compatible at all for some reason. Write about it.
-* Write more about `llvm-profdata` tool usage. Check the documentation for the tool and find missing parts in it
 * Check https://www.youtube.com/watch?v=GBtQrYx_Jbc talk about PGO
 * Experiments regarding compiler options and PGO profile stability:
   - Enable/Disable LTO: ZERO OVERLAP
@@ -61,7 +60,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - Apple StackExchange: https://apple.stackexchange.com/questions/467215/profile-guided-optimization-pgo-in-xcode , https://apple.stackexchange.com/questions/467182/sampling-profile-guided-optimization-pgo-with-xcode-and-clang , https://apple.stackexchange.com/questions/467218/profile-guided-optimization-pgo-differences-between-clang-and-apple-clang
   - Apple developer forum: https://developer.apple.com/forums/thread/742840
 * Fix Android PGO docs: https://source.android.com/docs/core/perf/pgo - https://issuetracker.google.com/issues/315464624
-* An idea about macos to linux profile converter (original link somewhere in the llvm-mingw repo)
+* An idea about macos to linux profile converter (original link somewhere in the llvm-mingw repo): https://github.com/mstorsjo/llvm-mingw/issues/383#issuecomment-1838585818
 * GraalVM's LLVM toolchain and PGO optimization: https://github.com/oracle/graal/discussions/7989
 * Ask GraalVM about dumping PGO profile to a memory region and other PGO-related runtime intrinsics: https://github.com/oracle/graal/discussions/7991
 * GraalVM PGO profile optimization strategy for non-executed code: https://github.com/oracle/graal/discussions/7999
@@ -69,15 +68,12 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - Find more Phoronix publications on this topic
 * AOSP switches to AFDO: https://issuetracker.google.com/issues/315464624
 * Write about the instruction set bumping like https://www.phoronix.com/news/Ubuntu-x86-64-v3-Experiment
-* Add to the article a note about using git blame to find responsible for PGO people - a nice thing to remember during the PGO journey
-* Dataframe performance regressions with PGO in the benchmarks - what is the reason? Needs to be investigated
 * Write a note about reporting problems with PGO to the upstream - how to do it properly? Especially, if we are talking about debuggability of the performance regression
 * Check profile generation reproducibility across runs
 * Get in touch with https://twitter.com/ohmypy/status/1744664212952297640 regarding the SQLite and PGO situation
 * Some projects fail to build easily with PGO instrumentation: https://github.com/rust-lang/rust/issues/119848
 * Add a funny note to the article about reaching the Pastebin limit for PGO results - I needed to switch to GitHub's Gist since this limit.
 * Add a note to the article about debugging performance regressions with PGO - how you can do it
-* Perform PGO benchmarks on Darktable - it has some benchmarks: https://github.com/darktable-org/darktable/blob/master/src/tests/benchmark/darktable-bench
 * Talk with SerpentOS maintainers about enabling PGO for their packages: https://serpentos.com/
 * Talk with Nate Graham about trying to enable PGO for KDE. Seems KDE cares about performance too - https://www.phoronix.com/news/KDE-Plasma-6-Next-Month .
   - Sent a message on 28.01.2024 via a website form
@@ -90,7 +86,7 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Great paper about different sampling FDO approaches: https://hpctest.cs.tsinghua.edu.cn/papers/tc11.pdf
 * Check information about LIPO (lightweight IPO): https://static.googleusercontent.com/media/research.google.com/ru//pubs/archive/36355.pdf What is the current state of the LIPO in the compilers? ThinLTO is not the same thing. However, here I see some that ThinLTO somehow supports profile data: https://llvm.org/devmtg/2015-04/slides/ThinLTO_EuroLLVM2015.pdf . My question is here: https://discourse.llvm.org/t/thinlto-and-profile-based-module-groups/77120
 * Check https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/36358.pdf paper for LBR efficiency in Sampling PGO in practice
-* Ask Loongson maintainers about LBR support: sent an email to Loongson maintainers on 25/02/2024
 * Write about how to report performance degradation from PGO and why it could be difficult to do
 * Write about llvm-profdata version - it's important otherwise you will get errors
 * Check ThinLTO with PGO results: https://ieeexplore.ieee.org/document/7863733?reload=true
+* Strange issue policy: https://github.com/kcl-lang/kcl/issues/647#issuecomment-1972561465

@@ -244,6 +244,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * varpro: [GitHub issue](https://github.com/geo-ant/varpro/issues/27#issue-2129147949)
 * awk: [LWN article](https://lwn.net/Articles/680985/)
 * candy: [GitHub discussion](https://github.com/candy-lang/candy/discussions/953#discussion-6270541)
+* axum: [GitHub dicussion](https://github.com/tokio-rs/axum/discussions/2625#discussion-6289057)
+* rustls: [GitHub issue](https://github.com/rustls/rustls/issues/1823#issue-2161780638)
+* python-libipld: [GitHub PR](https://github.com/MarshalX/python-libipld/pull/21)
 
 ## Projects with already integrated PGO into their build scripts
 
