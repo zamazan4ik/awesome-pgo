@@ -90,3 +90,4 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Write about llvm-profdata version - it's important otherwise you will get errors
 * Check ThinLTO with PGO results: https://ieeexplore.ieee.org/document/7863733?reload=true
 * Strange issue policy: https://github.com/kcl-lang/kcl/issues/647#issuecomment-1972561465
+* Check PGO on arrow-datafusion: https://github.com/apache/arrow-datafusion (as was suggested here: https://github.com/sqlparser-rs/sqlparser-rs/discussions/1163#discussioncomment-8658556)

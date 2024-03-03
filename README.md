@@ -247,6 +247,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * axum: [GitHub dicussion](https://github.com/tokio-rs/axum/discussions/2625#discussion-6289057)
 * rustls: [GitHub issue](https://github.com/rustls/rustls/issues/1823#issue-2161780638)
 * python-libipld: [GitHub PR](https://github.com/MarshalX/python-libipld/pull/21)
+* sqlparser-rs: [GitHub discussion](https://github.com/sqlparser-rs/sqlparser-rs/discussions/1163#discussion-6310515)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -367,7 +368,7 @@ Here we collect and track PGO integrations into build systems:
 * Cargo: No built-in support but there is awesome [cargo-pgo](https://github.com/Kobzol/cargo-pgo)
 * Bazel: Supports ([command-line reference](https://bazel.build/reference/command-line-reference#flag--fdo_instrument))
 * CMake: No support yet ([GitLab issue](https://gitlab.kitware.com/cmake/cmake/-/issues/19273))
-* Meson: Supports (`b_pgo` in the [docs](https://mesonbuild.com/Builtin-options.html)) but has some limitations ([GitHub issue](https://github.com/mesonbuild/meson/issues/5251))
+* Meson: Supports (`b_pgo` in the [docs](https://mesonbuild.com/Builtin-options.html)).
 * SCons: No support yet ([GitHub discussion](https://github.com/SCons/scons/discussions/4437))
 
 ### Sampling PGO (AutoFDO) support

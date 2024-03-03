@@ -457,6 +457,10 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * varpro: https://github.com/geo-ant/varpro/issues/27
 * Gnome: https://discourse.gnome.org/t/evaluate-using-profile-guided-optimization-pgo-and-post-link-optimization-plo-for-gnome-projects/19341
 * KDE: https://discuss.kde.org/t/evaluate-using-profile-guided-optimization-pgo-and-post-link-optimization-plo-for-kde-projects/10290
+* axum: https://github.com/tokio-rs/axum/discussions/2625
+* rusttls: https://github.com/rustls/rustls/issues/1823
+* python-libipld: https://github.com/MarshalX/python-libipld/pull/21
+* sqlparser-rs: https://github.com/sqlparser-rs/sqlparser-rs/discussions/1163
 
 ## PGO in distributions
 
