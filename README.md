@@ -560,7 +560,7 @@ Other pitfalls include the following things:
 * A rejected idea to integrate BOLT into `cpython` build: [link](https://github.com/faster-cpython/ideas/issues/224#issuecomment-1022371595)
 * [cperl notes on LTO, PGO, BOLT](https://perl11.github.io/blog/bolt.html)
 * `.profraw` internal details: [blog](https://leodido.dev/demystifying-profraw/)
-* Slides about PGO: [link](https://assets.ctfassets.net/oxjq45e8ilak/41KrMkvfzUDEu6MDOEQL7q/dd4575d45a19aef27eebae411faa7952/PGO-___________________________________________________________.pdf) (in Russian)
+* Slides about PGO from C++ Russia 2021 (Pavel Kosov): [slides](https://github.com/kpdev/rnd_code_blog_utils/blob/main/util/PGO_CPP_RUS_15-11-2021.pdf) (in Russian), [video](https://www.youtube.com/watch?v=CvbIPGSnes8)
 * Overview of all kinds of PGO in LLVM: [link](https://aaupov.github.io/blog/2023/07/09/pgo)
 * MSVC insights about PGO (a video from 2012): [Microsoft learn](https://learn.microsoft.com/en-us/shows/c9-goingnative/c9goingnative-12-c-build-2012-inside-profile-guided-optimization)
 
