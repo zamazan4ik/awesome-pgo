@@ -461,6 +461,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * rusttls: https://github.com/rustls/rustls/issues/1823
 * python-libipld: https://github.com/MarshalX/python-libipld/pull/21
 * sqlparser-rs: https://github.com/sqlparser-rs/sqlparser-rs/discussions/1163
+* arrow-datafusion: https://github.com/apache/arrow-datafusion/discussions/9507
+* libmdbx: https://gitflic.ru/project/erthink/libmdbx/issue/14
+* actson-rs: https://github.com/michel-kraemer/actson-rs/issues/33
 
 ## PGO in distributions
 

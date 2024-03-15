@@ -248,6 +248,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * rustls: [GitHub issue](https://github.com/rustls/rustls/issues/1823#issue-2161780638)
 * python-libipld: [GitHub PR](https://github.com/MarshalX/python-libipld/pull/21)
 * sqlparser-rs: [GitHub discussion](https://github.com/sqlparser-rs/sqlparser-rs/discussions/1163#discussion-6310515)
+* arrow-datafusion: [GitHub discussion](https://github.com/apache/arrow-datafusion/discussions/9507#discussion-6341224)
+* libmdbx: [GitFlic issue](https://gitflic.ru/project/erthink/libmdbx/issue/14) (in Russian)
+* actson-rs: [GitHub issue](https://github.com/michel-kraemer/actson-rs/issues/33#issue-2187587484)
 
 ## Projects with already integrated PGO into their build scripts
 

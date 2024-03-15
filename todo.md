@@ -72,22 +72,21 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Check profile generation reproducibility across runs
 * Get in touch with https://twitter.com/ohmypy/status/1744664212952297640 regarding the SQLite and PGO situation
 * Some projects fail to build easily with PGO instrumentation: https://github.com/rust-lang/rust/issues/119848
-* Add a funny note to the article about reaching the Pastebin limit for PGO results - I needed to switch to GitHub's Gist since this limit.
 * Add a note to the article about debugging performance regressions with PGO - how you can do it
 * Talk with SerpentOS maintainers about enabling PGO for their packages: https://serpentos.com/
 * Talk with Nate Graham about trying to enable PGO for KDE. Seems KDE cares about performance too - https://www.phoronix.com/news/KDE-Plasma-6-Next-Month .
-  - Sent a message on 28.01.2024 via a website form
+  - Sent a message on 28.01.2024 via a website form, got a response in a month that Nate is too busy :)
 * Add PGO documentation to Lace: https://github.com/promised-ai/lace/issues/172#issuecomment-1917406027
 * Write about a failed idea of extending PGO support across the ecosystem and GSoC (was discussed at FOSDEM 2024 with Google representatives)
 * Discuss a complicated case about applying PGO to a program that is written in multiple programming languages
 * Discuss the PGO state across operating systems. Discuss about PGO-edge experience in distributions like ClearLinux, CachyOS, Gentoo
-* Write a note about Sampling PGO and special hardware requirements like Intel LBR or AMD BRS. It's not strictly required but recommended. What is the difference from the performance perspective in practice - needs to be investigated (but modern CPUs have support for this already. However, what about ARM - https://lwn.net/Articles/951316/ (Linux 6.7-rc1 - quite new stuff). What about RISC-V or LoongSoon?). ARM CPUs with it - https://en.wikipedia.org/wiki/ARM_architecture_family . What about PowerPC (as it was asked here - https://stackoverflow.com/questions/48616075/whats-the-equivalent-of-last-branch-record-lbr-on-arm-and-powerpc/)
 * Do I need to prepare more materials about PGO in C#?
 * Great paper about different sampling FDO approaches: https://hpctest.cs.tsinghua.edu.cn/papers/tc11.pdf
 * Check information about LIPO (lightweight IPO): https://static.googleusercontent.com/media/research.google.com/ru//pubs/archive/36355.pdf What is the current state of the LIPO in the compilers? ThinLTO is not the same thing. However, here I see some that ThinLTO somehow supports profile data: https://llvm.org/devmtg/2015-04/slides/ThinLTO_EuroLLVM2015.pdf . My question is here: https://discourse.llvm.org/t/thinlto-and-profile-based-module-groups/77120
 * Check https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/36358.pdf paper for LBR efficiency in Sampling PGO in practice
 * Write about how to report performance degradation from PGO and why it could be difficult to do
-* Write about llvm-profdata version - it's important otherwise you will get errors
+* Write about llvm-profdata version compatibility - it's important otherwise you will get errors
 * Check ThinLTO with PGO results: https://ieeexplore.ieee.org/document/7863733?reload=true
-* Strange issue policy: https://github.com/kcl-lang/kcl/issues/647#issuecomment-1972561465
-* Check PGO on arrow-datafusion: https://github.com/apache/arrow-datafusion (as was suggested here: https://github.com/sqlparser-rs/sqlparser-rs/discussions/1163#discussioncomment-8658556)
+* Extract binary size data from `bench_*` directories on my PC to the article
+* Add PGO request to https://github.com/inlinedio/ikv-store
+* Write some statistics about how projected reacted to PGO reports to them

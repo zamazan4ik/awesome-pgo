@@ -363,8 +363,8 @@ However, BSS support is still kinda limited across the ecosystem, and support is
 * ARM64 - it's called BRBE (Branch Record Buffer Extension): since ARMv9.2-A (2023), Linux 6.7-rc1 (2024). Related LWN article is [here](https://lwn.net/Articles/951316/).
 * RISC-V - it's called Control Transfer Records (CTR). Current status - [under development](https://risc-v-international.slack.com/archives/C017LD0GJ8Z/p1708861135739819?thread_ts=1708839419.127049&cid=C017LD0GJ8Z). More information can be found here: [GitHub](https://github.com/riscv/riscv-control-transfer-records), [JIRA](https://jira.riscv.org/browse/RVG-62). No estimations when it will be implemented.
 * [e2k](https://en.wikipedia.org/wiki/Elbrus_2000) (Elbrus) - an analogue to LBR is supported. Unfortunately, there is not support for that in Linux perf but there are plans implement this feature in the future.
-* [LoongSon](https://en.wikipedia.org/wiki/Loongson) (Chinese MIPS-based CPUs) - sent an email but no response yet :(
-* Other architectures and operating systems combinations - I don't know yet (please let me know!)
+* [LoongSon](https://en.wikipedia.org/wiki/Loongson) (Chinese MIPS-based CPUs) - no public-available information at the moment.
+* Other architectures like PowerPC and operating systems combinations - I don't know yet (please let me know!)
 
 More advanced features about LBR can be found in these articles: [first](https://lwn.net/Articles/680985/), [second](https://lwn.net/Articles/680996/).
 
@@ -376,7 +376,7 @@ To make things even worse - BSS does not work with virtualization for now (LWN [
 
 Sampling PGO approach requires a tool to convert profiler report into a compiler-compatible format. Nowadays, the amount of available tooling is very limited. The default option for both GCC and Clang is Google AutoFDO ([GitHub](https://github.com/google/autofdo), [paper](https://research.google/pubs/autofdo-automatic-feedback-directed-optimization-for-warehouse-scale-applications/)). This project supports converting only Linux perf profiles into the GCOV format (GCC-compatible format) with `create_gcov` tool or LLVM-compatible format with `create_llvm_prof` tool. Unfortunately, this tool is not ideal, and has the following issues:
 
-* Google engineers don't care much about compatibility with recent LLVM version. It means that if you want to build AutoFDO with latest LLVM version - with high probability you'll get multiple compiler errors (like [this](https://github.com/google/autofdo/issues/179) and [this](https://github.com/google/autofdo/issues/157)). In the issue tracker you will find more build-related errors. Just be ready to fix them locally.
+* Google engineers don't care much about compatibility with recent LLVM version. It means that if you want to build AutoFDO with latest LLVM version - with high probability you'll get multiple compiler errors (like [this](https://github.com/google/autofdo/issues/179) and [this](https://github.com/google/autofdo/issues/157)). In the issue tracker you will find more build-related errors. Just be ready to fix them locally. Hopefully, the issue will be resolved soon since Google [plans](https://github.com/google/autofdo/issues/140#issuecomment-1986154525) to merge AutoFDO tooling to the LLVM repo.
 * AutoFDO tooling consumes ridiculous amount of memory during processing large perf profiles ([issue](https://github.com/google/autofdo/issues/162)). Since the upstream didn't provide a fix - you can try to mitigate it with reducing input profile size. How can you do it? Reduce Linux perf sample rate or just record smaller time frame of your workload - however, it's not always possible to do. Imagine the case, when your application has **really** long process that takes hours/days to complete, this process consists of multiple different steps, and you want to optimize the whole process. In this case, I can suggest to collect N Linux perf profiles, convert them with AutoFDO one by one, and then merge them into with `llvm-profdata merge` utility - it should help with the issue.
 
 Another option is using [llvm-profgen](https://llvm.org/docs/CommandGuide/llvm-profgen.html) tool. This tool is already a part of the LLVM monorepo so will no be problems with different compilation errors due to unsupported LLVM version. I don't have much experience with this tool but already found at least one issue - the tool [does not support](https://github.com/llvm/llvm-project/issues/82901) Linux perf samples without Branch Stack Sampling. This limitation can be significant for people who don't have BSS support in their environments.
@@ -715,6 +715,8 @@ Some examples:
 * Firefox: [Uses](https://github.com/mozilla/gecko-dev/blob/master/build/pgo/profileserver.py#L25) WebKit performance test suite.
 * Pydantic-core: [Uses](https://github.com/pydantic/pydantic-core/blob/main/Makefile#L74) own benchmarks.
 
+Several times I heard something like "Hey, training PGO on benchmarks and then testing PGO efficiency on the same benchmark is not fair - of course it will work! What about real world cases?". I cannot understand such a point of view. If your benchmark represents real workload well - it's totally fine to use it for the PGO training phase. If it doesn't represent real world well - why do you have such benchmarks? :)
+
 ### Manually crafted workload
 
 Here I collected some examples of real-life projects that use this approach for doing PGO:
@@ -792,6 +794,7 @@ TL;DR, the idea behind PLO is simple - try to reduce [CPU instruction cache (I-c
 Right now, there are two of the most mature tools in this area: [LLVM BOLT](https://github.com/llvm/llvm-project/blob/main/bolt/README.md) (from Facebook/Meta) and Propeller (from Google). Let's discuss each of them.
 
 TODO: Write about BOLT, Propeller, and others (like Dynamic BOLT)
+TODO: plans about Propeller - https://github.com/google/autofdo/issues/140#issuecomment-1986154525
 
 ### LLVM BOLT
 
@@ -991,7 +994,7 @@ TODO: finish chapter
   - Problems with hardware architecture availability in CI (GitHub Actions as an example of such CI service)
 
 
-During my PGO tests across the ecosystem, I collected some interesting PGO-related stories. I think it would be a good thing to share them here and learn some lessons.
+During my PGO tests across the ecosystem, I collected some interesting PGO-related stories. I think it would be a good thing to share them here and learn some lessons. And some of them are funny too!
 
 When I was trying to find suitable projects for PGO, I found the following sources the most helpful:
 
@@ -1009,6 +1012,10 @@ In each project I quickly searched for PGO existence with the following "algorit
 * (rip)grep sources for PGO-related compiler flags like `-fprofile-generate`, `-fprofile-use`, `-fprofile-instr-generate`, etc.
 
 If I found something related - good catch! It's a chance to learn something new about PGO in another project. If I found nothing - well, the issue about PGO can be created.
+
+### Pastebin vs GitHub
+
+If you check the PGO benchmark reports, you can find one detail - early PGO results are saved to Pastebin but later reports use gist.github.com service. There is a simple reason for that change. One day I did so many benchmarks in one day for different projects that reached the daily limit for pastes! It wasn't a big issue - I quickly switched to the GitHub service that has no such low limits. Seems like my PGO productivity was too high for Pastebin service :)
 
 ### ClickHouse
 
@@ -1094,6 +1101,20 @@ Both ChatGPT 3.5 and Bing (in a precise mode) both generated almost sane content
 As a small conclusion - LLM is not a good PGO friend yet. Maybe with this article and wider PGO adoption in the community the situation will change. As for now - reading the old but gold documentation is still a better option to start with PGO.
 
 And every time when I hear things like "all we need here is AI", my brain automatically plays [this](https://www.youtube.com/watch?v=D0q0QeQbw9U) video. Don't be a **blind** Ayaya!
+
+### Issue close policy
+
+TODO: Strange issue policy: https://github.com/kcl-lang/kcl/issues/647#issuecomment-1972561465
+
+### Enemy language
+
+TODO: https://gitflic.ru/project/erthink/libmdbx/issue/14
+TODO: add some reflections about user profile, lol - https://gitflic.ru/user/erthink
+
+### Barriers for creating issues about PGO
+
+TODO: need to register in different issue trackers since no available SSO via providers like Google - tired
+TODO: sometimes registration is not approved like https://git.picodata.io/picodata/picodata/picodata
 
 ## PGO tips
 
@@ -1291,7 +1312,7 @@ Today machine-learning (ML) things are popular, and they are popular for a reaso
 
 One of the ideas is MLGO: a Machine Learning Guided Compiler Optimizations Framework ([paper](https://arxiv.org/pdf/2101.04808.pdf), [GitHub](https://github.com/google/ml-compiler-opt)). The idea is simple - try to use machine-learning-driven decisions in some optimizations in the compiler. Every modern compiler already has some kind of "implicit performance model" about the code: a bunch of heuristics for splitting hot/cold code, multiple semi-hidden inline thresholds (like [this](https://github.com/llvm/llvm-project/blob/main/llvm/lib/Analysis/InlineCost.cpp#L82) from LLVM), etc. All these numbers are appeared in compiler throught years of compilers optimizations - but this doesn't make all these hardcoded constants the best possible values in for every program! MLGO project tries to replace such hardcoded places in LLVM with something more flexible and twekable - with a ML model. E.g. MLGO uses Tensorflow-based neural network to perform better inlining decisions (see paper for more details). The work is still in early stages but looks promising. LLVM is not alone here - Intel® oneAPI DPC++/C++ Compiler has similar `-fprofile-ml-use` [option](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/fprofile-ml-use.html).
 
-Even if right now the options above look quite unstable (they are) I still think we will get more and more ML-driven tools around us, and compilers are not something special here. PGO and ML-based compilers have a common thing - they both need some kind of runtime profile of the application to perform better optimization decisions. I can expect that in the future we will see some hybrids between PGO and ML approaches. There are semi-academic projects like [CompilerGym](https://github.com/facebookresearch/CompilerGym) with an aim to help with implementing and testing ML-based approaches for compiler problems.
+Even if right now the options above look quite unstable (they are) I still think we will get more and more ML-driven tools around us, and compilers are not something special here. PGO and ML-based compilers have a common thing - they both need some kind of runtime profile of the application to perform better optimization decisions. I can expect that in the future we will see some hybrids between PGO and ML approaches. There are semi-academic projects like [CompilerGym](https://github.com/facebookresearch/CompilerGym) with an aim to help with implementing and testing ML-based approaches for compiler problems. Already [there are](https://llvm.org/devmtg/2024-03/#talk4) some talks from LLVM dev meetings about expanding ML usage.
 
 ### OCOLOS: Online COde Layout OptimizationS
 
@@ -1454,7 +1475,7 @@ The original idea is described [here](https://github.com/aaupov/school_topics/bl
 
 Exactly the same thing is already implemented internally in Google. This system samples all applications across Google servers with Google Wide Profiler (GWP), transforms sample profiles into a compiler-compatible format, and then passes converted profiles to the build pipelines. More about GWP and its connection to PGO at Google can be found in these papers: [one](https://research.google/pubs/autofdo-automatic-feedback-directed-optimization-for-warehouse-scale-applications/), [two](https://research.google/pubs/google-wide-profiling-a-continuous-profiling-infrastructure-for-data-centers/). Google, do you want to open-source this system (even if this system has too many dependencies on other closed-sourced Google projects)? :) Other large companies also has similar system-wide profilers like Yandex with its Yandex.Perforator. Unfortunately, this project cannot be used for continuous PGO yet. Maybe in the future Perforator will be extended with such functionality and open-sourced (as they already did for multiple awesome projects like [ClickHouse](https://clickhouse.com/), [YDB](https://ydb.tech/), [YTsaurus](https://ytsaurus.tech/)).
 
-There is an idea to implement a similar approach based on an open-source project like Grafana Pyroscope ([discussion](https://github.com/grafana/pyroscope/discussions/2783)) or Elastic Universal Profiling ([issue](https://github.com/elastic/elasticsearch/issues/105802)). However, the current state of these activities is just a discussion, nothing to try yet.
+There is an idea to implement a similar approach based on an open-source project like Grafana Pyroscope ([discussion](https://github.com/grafana/pyroscope/discussions/2783)) or Elastic Universal Profiling ([issue](https://github.com/elastic/elasticsearch/issues/105802)). I am not alone with such an idea - other people outside Google already [tried](https://discuss.elastic.co/t/continuous-profile-guided-optimization-pgo-platform-based-on-elastic-universal-profiling/354605/2) to implement a similar approach with positive results. However, the current state of these activities is just a discussion, nothing to try yet.
 
 Another idea is gathering PGO profiles (instrumentation or sampling, whatever) via a crowd-sourcing-like mechanism. One of the biggest issues with PGO is collecting actual usage profiles. But what if we had a repository where each software engineer can get actual PGO profiles for its application and use it for PGO-optimized builds on their official site? It could be done e.g. via a specific OS build where all PGO-potent applications are built with instrumentation or continually collect sampling profiles via `perf` or something like that. There are **a lot** of concerns here like privacy issues (potential mapping "some_user_id -> application execution profiles"), security issues (organizing an attack on an application performance via messing publicly-gathered PGO profiles), implementation (who and how would implement all this stuff?!), and much more. Maybe community-driven projects like [Boinc](https://boinc.berkeley.edu/) could be a good example here - right now it's just an idea, no more. And I am [not alone](https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1422805-llvm-now-using-pgo-for-building-x86_64-windows-release-binaries-~22-faster-builds?p=1422977#post1422977) with this idea.
 
