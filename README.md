@@ -251,6 +251,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * arrow-datafusion: [GitHub discussion](https://github.com/apache/arrow-datafusion/discussions/9507#discussion-6341224)
 * libmdbx: [GitFlic issue](https://gitflic.ru/project/erthink/libmdbx/issue/14) (in Russian)
 * actson-rs: [GitHub issue](https://github.com/michel-kraemer/actson-rs/issues/33#issue-2187587484)
+* oha: [GitHub PR](https://github.com/hatoo/oha/pull/268#issue-1805965954)
+* rust_serialization_benchmark: [GitHub issue](https://github.com/djkoloski/rust_serialization_benchmark/issues/18#issuecomment-2002184386)
+* ada-url: [GitHub issue](https://github.com/ada-url/rust/issues/61#issue-2190406874)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -299,6 +302,7 @@ Below you can find some examples of where and how PGO is integrated into differe
 * hck: [Justfile](https://github.com/sstadick/hck/blob/master/justfile#L27)
 * ast-grep: [GitHub discussion](https://github.com/ast-grep/ast-grep/discussions/738)
 * Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
+* oha: [GitHub PR](https://github.com/hatoo/oha/pull/268)
 
 ## Project with package-manager integration level
 

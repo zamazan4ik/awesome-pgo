@@ -464,6 +464,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * arrow-datafusion: https://github.com/apache/arrow-datafusion/discussions/9507
 * libmdbx: https://gitflic.ru/project/erthink/libmdbx/issue/14
 * actson-rs: https://github.com/michel-kraemer/actson-rs/issues/33
+* rust_serialization_benchmark: https://github.com/djkoloski/rust_serialization_benchmark/issues/18
+* ada-url: https://github.com/ada-url/rust/issues/61
 
 ## PGO in distributions
 

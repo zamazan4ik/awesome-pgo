@@ -13,7 +13,6 @@ Here I collect random thoughts and ideas about further PGO investigation.
   - In-house builds (if we build binary somewhere in a closed perimeter)
 * Extract actual numbers directly into the document for avoiding the cases like [this](https://github.com/facebook/mariana-trench/issues/137#issuecomment-1658195725).
 * Describe different PGO application scenarios: for SaaS, for open-source, for closed-source but delivered to the customers, etc.
-* Committing PGO profiles into a project - transparency problem if you do not describe how this profile is collected
 * Discussion BOLT and Propeller: https://discourse.llvm.org/t/practical-compiler-optimizations-for-wsc-workshop-us-llvm-dev-meeting-2023/73998/
 * Play locally with Propeller: https://github.com/google/llvm-propeller and discuss integrating it into the cargo-pgo
 * Do not forget to add a mention about monitoring actual workload and tracking - does it match your current PGO-profile or not
@@ -74,10 +73,9 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Some projects fail to build easily with PGO instrumentation: https://github.com/rust-lang/rust/issues/119848
 * Add a note to the article about debugging performance regressions with PGO - how you can do it
 * Talk with SerpentOS maintainers about enabling PGO for their packages: https://serpentos.com/
-* Talk with Nate Graham about trying to enable PGO for KDE. Seems KDE cares about performance too - https://www.phoronix.com/news/KDE-Plasma-6-Next-Month .
   - Sent a message on 28.01.2024 via a website form, got a response in a month that Nate is too busy :)
 * Add PGO documentation to Lace: https://github.com/promised-ai/lace/issues/172#issuecomment-1917406027
-* Write about a failed idea of extending PGO support across the ecosystem and GSoC (was discussed at FOSDEM 2024 with Google representatives)
+* Write about a failed idea of extending PGO support across the ecosystem and GSoC (was discussed at FOSDEM 2024 with Google representatives - it's not so easy to do via GSoC as I thought before)
 * Discuss a complicated case about applying PGO to a program that is written in multiple programming languages
 * Discuss the PGO state across operating systems. Discuss about PGO-edge experience in distributions like ClearLinux, CachyOS, Gentoo
 * Do I need to prepare more materials about PGO in C#?
@@ -87,6 +85,9 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Write about how to report performance degradation from PGO and why it could be difficult to do
 * Write about llvm-profdata version compatibility - it's important otherwise you will get errors
 * Check ThinLTO with PGO results: https://ieeexplore.ieee.org/document/7863733?reload=true
-* Extract binary size data from `bench_*` directories on my PC to the article
 * Add PGO request to https://github.com/inlinedio/ikv-store
 * Write some statistics about how projected reacted to PGO reports to them
+* Add PGO request to https://github.com/hydradatabase/hydra
+* Add an example about how PGO changes code by simple example from my TechInternals slides
+* Add a tip about asking for support from Arch maintainers in Linux: https://www.kernel.org/doc/linux/MAINTAINERS
+* Ask MIPS maintainers in the Linux kernel about LBR support for MIPS CPUs: in which CPUs it's available, from which version, Linux perf support
