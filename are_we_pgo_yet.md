@@ -316,6 +316,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * oasysdb: https://github.com/oasysai/oasysdb/discussions/19
 * NativeDB: https://github.com/vincent-herlemont/native_db/discussions/92
 * Readyset: https://github.com/readysettech/readyset/discussions/1074
+* IKV: https://github.com/inlinedio/ikv-store/issues/143
 
 ## Logging
 
@@ -466,6 +467,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * actson-rs: https://github.com/michel-kraemer/actson-rs/issues/33
 * rust_serialization_benchmark: https://github.com/djkoloski/rust_serialization_benchmark/issues/18
 * ada-url: https://github.com/ada-url/rust/issues/61
+* struson: https://github.com/Marcono1234/struson/discussions/59
 
 ## PGO in distributions
 

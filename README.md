@@ -254,6 +254,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268#issue-1805965954)
 * rust_serialization_benchmark: [GitHub issue](https://github.com/djkoloski/rust_serialization_benchmark/issues/18#issuecomment-2002184386)
 * ada-url: [GitHub issue](https://github.com/ada-url/rust/issues/61#issue-2190406874)
+* struson: [GitHub discussion](https://github.com/Marcono1234/struson/discussions/59#discussion-6392876)
 
 ## Projects with already integrated PGO into their build scripts
 
