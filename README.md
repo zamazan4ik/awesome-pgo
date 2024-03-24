@@ -39,6 +39,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [KDE blog](https://planet.kde.org/lubos-lunak-2021-04-18-the-effect-of-cpu-link-time-lto-and-profile-guided-pgo-optimizations-on-the-compiler-itself/)
   - Libclang on Windows: [Article](https://cristianadam.eu/20160104/speeding-up-libclang-on-windows/)
   - Homebrew benchmarks: [one](https://github.com/Homebrew/homebrew-core/issues/77975#issuecomment-859190783), [two](https://github.com/Homebrew/homebrew-core/pull/79454#issuecomment-869055079)
+  - ScyllaDB benchmarks: [GitHub issue](https://github.com/scylladb/scylladb/issues/10985)
   - Clang on Windows: [Phoronix post](https://www.phoronix.com/news/LLVM-PGO-Windows-Build)
 * [GCC](https://gcc.gnu.org/):
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
@@ -243,6 +244,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * llrt: [GitHub issue](https://github.com/awslabs/llrt/issues/117#issue-2128010022)
 * varpro: [GitHub issue](https://github.com/geo-ant/varpro/issues/27#issue-2129147949)
 * awk: [LWN article](https://lwn.net/Articles/680985/)
+* gawk: [GitHub commit](https://github.com/serpent-os/recipes/commit/b62808b8659f2a2747711550d5d72c72f623fc07)
 * candy: [GitHub discussion](https://github.com/candy-lang/candy/discussions/953#discussion-6270541)
 * axum: [GitHub dicussion](https://github.com/tokio-rs/axum/discussions/2625#discussion-6289057)
 * rustls: [GitHub issue](https://github.com/rustls/rustls/issues/1823#issue-2161780638)
@@ -255,6 +257,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * rust_serialization_benchmark: [GitHub issue](https://github.com/djkoloski/rust_serialization_benchmark/issues/18#issuecomment-2002184386)
 * ada-url: [GitHub issue](https://github.com/ada-url/rust/issues/61#issue-2190406874)
 * struson: [GitHub discussion](https://github.com/Marcono1234/struson/discussions/59#discussion-6392876)
+* ast-grep: [GitHub discussion](https://github.com/ast-grep/ast-grep/discussions/738)
+* Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -301,8 +305,6 @@ Below you can find some examples of where and how PGO is integrated into differe
   - [Script](https://github.com/SWI-Prolog/swipl-devel/blob/master/scripts/pgo-compile.sh)
   - [CMake module](https://github.com/SWI-Prolog/swipl-devel/blob/master/cmake/PGO.cmake)
 * hck: [Justfile](https://github.com/sstadick/hck/blob/master/justfile#L27)
-* ast-grep: [GitHub discussion](https://github.com/ast-grep/ast-grep/discussions/738)
-* Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268)
 
 ## Project with package-manager integration level
@@ -416,6 +418,7 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * MySQL, MongoDB, memcached, Verilator: [Paper](https://people.ucsc.edu/~hlitz/papers/ocolos.pdf)
 * ast-grep: [GitHub issue](https://github.com/ast-grep/ast-grep/discussions/738)
 * Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
+* Pango: [Gnome blog](https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/)
 
 ## Projects with already integrated BOLT into their build scripts
 
