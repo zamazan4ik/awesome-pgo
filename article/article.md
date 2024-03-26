@@ -81,7 +81,7 @@ Good modern compilers nowadays perform many optimizations like:
 * Loop roll/unroll
 * Devirtualization
 * Hot/cold code splitting
-* Link-Time Optimization (LTO) (if you are brave enough to use it! Just joking - it works stable-enough nowadays)
+* Link-Time Optimization (LTO) (if you are brave enough to use it! Just joking - it works good-enough nowadays)
 * And many other funny things!
 
 Inlining is a special thing here since it influences a lot on other compiler optimizations since it gives a *context* to other optimizations - that's why it's so special.
@@ -273,7 +273,7 @@ TODO: add a diagram of a typical LLVM-based compiler: frontend-middlend-backend
 
 FE PGO approach is simple. The compiler during the compilation process automatically inserts counters before translating to the LLVM IR. A bit more information about this approach you can read [here](https://clang.llvm.org/docs/SourceBasedCodeCoverage.html). As far as I know, Clang is the only compiler (at least the only open-source compiler) that implements this approach.
 
-Despite source-based coverage being widely used for code coverage calculations and similar stuff, for PGO nowadays [it's not a recommended](https://github.com/llvm/llvm-project/issues/45668) approach anymore. All current investments into the PGO infrastructure in LLVM are done into IR PGO-based approaches.
+Despite source-based coverage being widely used for code coverage calculations and similar stuff, for PGO nowadays [it's not a recommended](https://github.com/llvm/llvm-project/issues/45668) approach anymore. All current investments into the PGO infrastructure in LLVM are done into IR PGO-based approaches. Some deeper details can be found [here](https://discourse.llvm.org/t/couple-of-general-questions-about-pgo/72279) and [here](https://discourse.llvm.org/t/status-of-ir-vs-frontend-pgo-fprofile-generate-vs-fprofile-instr-generate/58323).
 
 ##### IR PGO
 
@@ -317,9 +317,9 @@ TODO: https://lists.llvm.org/pipermail/llvm-dev/2020-November/146694.html
 
 TODO: Write here about other PGO types from https://aaupov.github.io/blog/2023/07/09/pgo
 
+There is a [PR](https://github.com/llvm/llvm-project/pull/69535) (previous version is [here](https://reviews.llvm.org/D63949)) with implementation sampling approach for instrumentation PGO phase. The idea is simple - instead of incrementing each instrumentation counter each time we increment them with some sampling rate. Accoriding to tests, it helps to reduce instrumentation overhead in some cases up to 5x still with pretty good PGO profile overlap compared to default instrumentation - something about 90%. Current status: WIP.
+
 ---
-
-
 
 ## PGO caveats
 
@@ -594,6 +594,8 @@ With Clang I found the following issues:
 
 By the way, if you are interested in some PGO implementation details in Clang, I can recommend to watch [this](https://www.youtube.com/watch?v=CvbIPGSnes8) talk from C++ Russia 2021. The only limitation - the talk is in Russian so prepare your translators.
 
+Apple has a special Clang version - Apple Clang. Unfortunately, Apple Clang [documentation](https://opensource.apple.com/source/clang/clang-23/clang/tools/clang/docs/UsersManual.html) is not as rich as for the "main" Clang. I asked multiple questions about: [supported instrumentation PGO kinds](https://apple.stackexchange.com/questions/467215/profile-guided-optimization-pgo-kinds-in-xcode), [sampling PGO support](https://apple.stackexchange.com/questions/467182/sampling-profile-guided-optimization-pgo-with-xcode-and-clang), [differences between Clang and Apple Clang from PGO perspective](https://apple.stackexchange.com/questions/467218/profile-guided-optimization-pgo-differences-between-clang-and-apple-clang) (additionally [asked](https://developer.apple.com/forums/thread/742840) all these questions on the official Apple developer forum) - no answers. For now I guess a good idea with Apple Clang will be using the command-line reference to track supported compiler options and rely on the "main" Clang documentation in deeper questions. Of course, here there is a risk that Apple ported some features partially or didn't implement them at all in their Clang version. The best idea, however, will be just considering switching to the upstream Clang instead ;) For now I cannot say you why PGO situation with Apple Clang is so questionable. Maybe PGO is not very popular in the Apple ecosystem. Maybe even Apple-oriented users prefer to use other compilers...
+
 #### GCC
 
 With GCC I found the following issues:
@@ -619,19 +621,19 @@ I [asked](https://developercommunity.visualstudio.com/t/Multiple-questions-about
 
 #### Intel compilers
 
-TODO: write about ICC and ICX - https://community.intel.com/t5/Intel-C-Compiler/What-s-the-difference-between-icx-icl-and-icc-compilers/m-p/1224714
+At first, we [have](https://community.intel.com/t5/Intel-C-Compiler/What-s-the-difference-between-icx-icl-and-icc-compilers/m-p/1224714) two Intel compiler generations: Intel C++ Compiler Classic aka `icc`/`icl` and Intel oneAPI DPC++/C++ Compiler (a LLVM-based compiler with some proprietary extensions) aka `icx`. ICC is already deprecated however is still used.
 
-Cannot say much about Intel C++ Compiler (ICC) since I don't use it. However, I've read its PGO documentation and can share some thoughts about:
+`icc` compiler [supports](https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-10/profile-an-application-with-instrumentation.html) only Instrumentation PGO. Since the compiler uses it's own PGO profile format, it also [has](https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-10/pgo-tools.html) dedicated tooling to work with them. PGO-related compiler intrinsics are also [supported](https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-10/pgo-api-support.html).
 
-TODO: but what is it? https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2024-0/hardware-profile-guided-optimization.html
+`icx` compiler has Instrumentation PGO support. Seems like instrumentation PGO in this compiler is fully based on the LLVM implementation - the [documentation](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2024-0/instrumented-profile-guided-optimization.html) even has references to the LLVM documentation about PGO. However, it's unclear about support for additional PGO features like CSIR PGO, which `llvm-profdata` version shall be used with each `icx` version (since otherwise can and will be PGO profile version mismatch errors), PGO profile dumping intrinsics availability - no information for that in the documentation.
 
-* No sampling PGO support.
+`icx` also has Sampling PGO support - it's called "Hardware Profile-Guided Optimization" aka [HWPGO](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2024-0/hardware-profile-guided-optimization.html). According to the description it works pretty like a usual SPGO except an interesting note - it also works with Intel VTune profiles (with enabled [SEP](https://www.intel.com/content/www/us/en/content-details/686066/sampling-enabling-product-user-s-guide.html)). Didn't try it yet but sounds interesting!
 
-In my opinion, Intel compilers have the best PGO-related documentation on the market - great job!
+Honestly, cannot say many things about PGO quality in Intel compilers in practice - didn't play with them a lot. However, since new Intel C++ compiler is based on LLVM, I can expect quite good PGO performance in practice. And, in my opinion, Intel compilers have the best PGO-related documentation on the market - great job!
 
 #### AMD
 
-According to the documentation, AOCC compiler (a LLVM-based C++ compiler from AMD) has very limited PGO support. Documentation has only few words about PGO, and even these words are only about FE PGO. No IR PGO support, no sampling PGO support, no more advanced PGO versions or some PGO-related tricky options. I do not understand why AMD engineers don't care about PGO in their compilers. So at least from the PGO perspective I recommend using Clang instead.
+According to the documentation, AOCC compiler (a LLVM-based C++ compiler from AMD) has very limited PGO support. Documentation has only few words about PGO, and even these words are only about FE PGO. No IR PGO support, no sampling PGO support, no more advanced PGO versions or some PGO-related tricky options. I don't know - it is a real compiler limitation or *just* documentation issues. I do not understand why AMD engineers don't care about PGO in their compilers. So at least from the PGO perspective I recommend using Clang instead.
 
 #### MCST and Elbrus
 
@@ -641,7 +643,7 @@ This decision has an outcome - at least in theory, VLIW can get far more improve
 
 Elbrus engineers (from [MCST](https://en.wikipedia.org/wiki/MCST)) of course understand this thing, and they invest some (quite limited compared to giants like Google) resources into PGO too. MCST has its own compiler, [LCC](http://mcst.ru/LCC) (in Russian). Finding public-available information about the compiler is not an easy task due to closed nature of MCST. However, I had an awesome conversation with an engineer from MCST, and he answered almost all my questions regarding PGO state in the LCC compiler.
 
-So. The current PGO state in LCC is something like that:
+The current PGO state in LCC is something like that:
 
 * Instrumentation PGO is supported (in IR PGO flavour).
 * No sampling PGO support yet but there are some plans to implement it.
@@ -654,7 +656,7 @@ What is the LCC's PGO implementation quality in practice? There is no publicly-a
 
 By the way, if you want to play with e2k-based CPUs (because why not?), you can request **free** remote access [here](https://elbrus.kurisa.ch/). I checked - it really works, I got SSH access to a Elbrus-based machine in a 2 days after the request. Nice job!
 
-#### Other compilers
+#### Other C++ compilers
 
 What about other proprietary compilers like [Cray C++ compiler](https://docs.lumi-supercomputer.eu/development/compiling/cce/) and others? I don't know and actually don't care much (because prefer open source compilers instead). If you are interested in these compilers - please check corresponding documentation. If PGO support is missing in them - ask vendors about implementing PGO in their compilers.
 
@@ -735,7 +737,9 @@ With GraalVM PGO I found the following issues:
 * [Lack](https://github.com/oracle/graal/discussions/7901) of some PGO-related tooling,
 * [Questions](https://github.com/oracle/graal/discussions/7892) about the PGO profile compatibility.
 * [Unknown](https://github.com/oracle/graal/discussions/7990) behavior in case of conflict between manually written `likely`/`unlikely` attributes and PGO profiles.
-* [Limited](https://github.com/oracle/graal/discussions/7991) PGO profile dumping functionality.
+* [Limited](https://github.com/oracle/graal/discussions/7991) PGO profile dumping functionality. Only dumping to a filesystem is officially supported. No dumping to a memory, no PGO-related compiler intrinsics - at least in the documentation.
+* It's [unclear](https://github.com/oracle/graal/discussions/7999) how GraalVM optimizes non-executed during the PGO training phase code. Is it considered as a "cold" code or just optimized as a regular Release code? E.g. GCC [has](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-fprofile-partial-training) `-fprofile-partial-training` option for that.
+* Not exactly an issue with PGO quality but I wanna mention it anyway. According to the [issue](https://github.com/oracle/graal/discussions/7989), GraalVM has own LLVM distribution. I am almost sure that this distribution is not optimized with PGO. However, according to my [tests](https://github.com/llvm/llvm-project/issues/63486), performance of many LLVM parts can be improved with PGO. So probably PGO usage can be extended in this area too ;)
 
 PGO in GraalVM is available only in GraalVM Enterprise license but don't worry - Enterprise license is free [now](https://blogs.oracle.com/java/post/graalvm-free-license) so you do not need to pay at least for a license if you want to use PGO in Java. Good? Great!
 
@@ -743,7 +747,7 @@ One of the biggest issues with GraalVM right now is its adoption across the Java
 
 What about GraalVM PGO efficiency? Honestly, I don't know. I have no hands-on experience with it on real applications. All found public benchmarks for GraalVM PGO also too simple and synthetic to consider them seriously (IMHO). I opened a [request](https://github.com/oracle/graal/discussions/7988) in the upstream for sharing more benchmarks - maybe eventually the collection will be bigger. According to my not-so-deep research, in many cases, GraalVM Native Image + PGO still performs worse than usual JIT from the peak performance perspective.
 
-By the way, GraalVM supports AoT compilation mode for Python, Ruby, R, Javascript (and maybe something). So you can try to apply GraalVM-flavoured PGO on them too.
+By the way, GraalVM supports AoT compilation mode for Python, Ruby, R, Javascript (and maybe something). So you can try to apply GraalVM-flavoured PGO on them too (not many people tried to do such things so bugs should be expected).
 
 ### Kotlin
 
@@ -813,11 +817,11 @@ Regarding Common Lisp compilers it's simple - there are no compilers with PGO su
 * ECL: https://gitlab.com/embeddable-common-lisp/ecl/-/issues/725
 * ABCL: https://github.com/armedbear/abcl/issues/646
 
-### Other technologies
+### Other programming langs
 
-Regarding more minor programming technologies... I reviewed a lot of less known programming languages and their compilers (like [Circle](https://www.circle-lang.org/), [Odin](https://github.com/odin-lang/Odin/discussions/3081), and many-many others) and can conclude that non of them support PGO in its compiler. Yes, I understand the reasons - some languages don't care much about the target performance, some of them are too young to implement PGO (there are more important features to implement), some projects simply do not have enough human resources to implement PGO in their compilers (and LLVM is not a universal answer in many situations). But hey - if you develop a **performance-oriented** language with an AoT compilation model - please consider adding PGO into your compiler. Without it, you lose too many optimization opportunities.
+Regarding more minor programming technologies... I reviewed a lot of less known programming languages and their compilers (like [Circle](https://www.circle-lang.org/), [Odin](https://github.com/odin-lang/Odin/discussions/3081), and many-many others) and can conclude that (almost) non of them support PGO in its compiler. Yes, I understand the reasons - some languages don't care much about the target performance, some of them are too young to implement PGO (there are more important features to implement), some projects simply do not have enough human resources to implement PGO in their compilers (and LLVM is not a universal answer in many situations. Even with LLVM the Rustc compiler [had](https://rust-lang.github.io/compiler-team/working-groups/pgo/) a dedicated working group for implementing PGO). But hey - if you develop a **performance-oriented** language with an AoT compilation model - please consider adding PGO into your compiler. Without it, you lose too many optimization opportunities.
 
-If you are motivated-enough to research the question about non-mentioned above compilers you can try to use [this](https://en.wikipedia.org/wiki/List_of_compilers) compilers list and contact corresponding developers!
+If you are motivated-enough to research the question about non-mentioned above compilers you can try to use [this](https://en.wikipedia.org/wiki/List_of_compilers) list of compilers and contact corresponding developers!
 
 ---
 
@@ -828,6 +832,14 @@ TODO: Write more about `llvm-profdata` tool usage. Check the documentation for t
 TODO: write about GCC tools
 TODO: write about pprof tools
 TODO: write about other compilers and importance of such tools
+
+Let's talk a bit about operations with PGO profiles. In practice, you want to perform the following things:
+
+* Merge multiple PGO profiles into one.
+* Compare different PGO profiles with each other.
+* Get some statistics about a PGO profile.
+
+Merging multiple PGO profiles into one is the most common task with PGO. In many cases, you may want to run multiple PGO training phase multiple times, collect multiple PGO profiles from different workloads. And if you want to optimize your application simulateneosly to multiple workloads, you need to merge profiles from multiple workloads into a one "generic" profile. LLVM has a generic tool for working with profiles. If you have some priorities between workloads, merging with some weights is also a nice-to-have feature. In LLVM you can do it with `llvm-profdata merge` command (weights are supported too).
 
 ## PGO support in build systems
 
@@ -1028,6 +1040,7 @@ TODO: write about BOLT advantages and disadvantages
 TODO: write about BOLT instrumentation slowdown like https://github.com/qarmin/czkawka/issues/1099 and https://github.com/crate-ci/typos/issues/827#issue-1888263250
 TODO: add https://discourse.llvm.org/t/bolt-open-projects/61857
 TODO: Cover question about CSIR PGO vs BOLT in the article
+TODO: Some materials about BOLT and other things: https://discourse.llvm.org/t/practical-compiler-optimizations-for-wsc-workshop-us-llvm-dev-meeting-2023/73998
 
 Please do not mess LLVM BOLT with another [bolt](https://gitlab.freedesktop.org/bolt/bolt) project - a Thunderbolt devices manager. Naming collision happened even here. Anyway, it wouldn't be a huge problem in practice - just always search for "LLVM BOLT" and you will be fine.
 
@@ -1088,14 +1101,186 @@ From my experience, right now BOLT would be the better option to start with if w
 
 TODO: add thoughts about unification efforts between BOLT and Propeller: https://github.com/google/llvm-propeller/issues/10
 
-## PLO state in the ecosystem
+## LTO, PGO, PLO state in the ecosystem
 
 TODO: PLO has no integration in the Linux distros yet
 TODO: PLO has no integration in the build systems
 
-## PGO and SaaS
+### Open-source projects
+
+TODO: describe more about PGO integration into the build scripts
+TODO: write some statistics about how projects reacted to PGO reports to them
+TODO: write about special software umbrellas like DEs - Gnome, KDE. Gnome has some interest in PGO at least in articles - https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/ and https://blogs.gnome.org/alatiera/2024/03/26/thoughts-on-employing-pgo-and-bolt-on-the-gnome-stack/ . Write here about FOSDEM's discussion about it
+
+PGO usually is **not** enabled by the upstream developers due to a lack of support for sample load or a lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
+
+TODO: finish the thought about DEs . Didn't propose to other smaller DEs due to limited resources (mine and their). Of course I will be happy if other project will start to use PGO and PLO
+
+One of my ideas for improving PGO coverage across ecosystem was proposing PGO enabling for desktop environments (DE) like Gnome and KDE. These "umbrella" projects have many different software and trying to enable PGO across one DE will cover a lot of projects. Sounds great, doesn't it? And of course the idea failed.
+
+However, at least Gnome project recently posted several articles ([one](https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/), [two](https://blogs.gnome.org/alatiera/2024/03/26/thoughts-on-employing-pgo-and-bolt-on-the-gnome-stack/)) about PGO and PLO so probably at least *some* interest exists.
+
+#### Documentation
+
+Some projects already have dedicated pages about PGO:
+
+* ClickHouse: [Profile-Guided Optimization](https://clickhouse.com/docs/en/operations/optimizing-performance/profile-guided-optimization)
+* Databend: [PGO](https://databend.rs/doc/contributing/pgo)
+* Vector: [PGO](https://vector.dev/docs/administration/tuning/pgo/)
+* Nebula: [AutoFDO](https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/)
+* GCC: Official [Docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback"
+* Clang: [How to build with PGO](https://llvm.org/docs/HowToBuildWithPGO.html) and [Advanced builds](https://llvm.org/docs/AdvancedBuilds.html) instructions
+* Rustc: [Optimized build](https://rustc-dev-guide.rust-lang.org/building/optimized-build.html#profile-guided-optimization)
+* tsv-utils: [Building with Link Time Optimization and Profile Guided Optimization](https://github.com/eBay/tsv-utils/blob/master/docs/BuildingWithLTO.md)
+
+I hope having PGO-related documentation in project helps users in the following ways:
+
+* Find information about PGO usage with project. It also improves PGO visibility overall. Without corresponding documentation users with high probability will not find the possibility to optimize your project with PGO even if you invested a lot of resources into the actual PGO integration.
+* Find information about how much performance improvement can be expected from enabling PGO for the project at least in some cases. Of course, user can have different cases and can get in reality worse (or better - who knows) results with PGO for the project - but having some kind of baseline is really important during the idea evaluation stage.
+* Find information about how the project can be build with PGO. Sometimes it's *just* a build system switch, sometimes it's a more sophisticated process with direct playing around compiler switches, PGO profiles, etc. Having this process documented lowers **a lot** PGO entrance level for the project because fighting with unfamiliar (to the project user) build scripts is a **very** demotivating task. Developers UX matters here too, trust me.
+
+One more wish - please, place PGO-related documentation somewhere in the visible place. It can be just a README file note (for smaller projects) or a dedicated page (for larger projects with a dedicated website). It would be awesome if you have some kind of search over the documention where I can type "PGO" and go to the corresponding piece of documentation. Otherwise finding the corresponding page can be a difficult task. E.g. let's check MariaDB case. MariaDB [has](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf) PGO documentation but unfortunately it's in a form of PDF file. And I even don't know how to find this file via the official [documentation](https://mariadb.com/kb/en/documentation/) - I found this guide only via Google search! MariaDB's built-in search engine on its website cannot find anything related to PGO. I discussed this topic with MariaDB's devs on FOSDEM 2024 and they promised me taking a look on it. I remember your promise ;)
+
+All information above targets mostly PGO documentation for applications. What about libraries? Since libraries are *usually* smaller than an application, possibly leaving some PGO benchmarks in the README file will be enough. If your library supports building artifacts like dynamic, static libraries or some packages like Python wheels and you support building them with PGO (like `pydantic` project [does](https://github.com/pydantic/pydantic-core/pull/678)) - document this process as well.
+
+#### Prebuilt binaries
+
+Even if PGO is somehow implemented in the project, it doesn't mean at all that binaries provided by the project will be optimized with PGO! E.g. ISPC project [supports](https://github.com/ispc/ispc/blob/main/superbuild/README.md) buliding with PGO but provided binaries [don't](https://github.com/ispc/ispc/issues/2687) use this optimization. I am pretty sure that for other projects like ClickHouse and YugabyteDB situation is the same - they support somehow (via a dedicated build switch or at least describe building with PGO in the documentation) PGO build but don't use for their binaries. Why? In many cases developers cannot predict target workload for their users - it's especially true for performance-critical things like databases. Access patterns can be too different, and upstream developers can be just too conservative to preoptimize their binaries with some reference workload. Maintaining several binary version? Yeah, it's possible but additional maintenance cost. Collect actual workload from customers? Yeah, it's possible to do but requires additional efforts from developers and establishing this process + additional maintenance cost once again.
+
+### OS distributions
+
+TODO: finish the chapter
+
+Even if PGO is supported by a project, it does not mean that your favorite Linux distro builds this project with PGO enabled. For this there are a lot of reasons: maintainer burden (because we are humans (yet)), build machines burden (in general you need to compile twice), reproducibility issues (like profile is an additional input to the build process and you need to make it reproducible), a maintainer just don't know about PGO, etc.
+
+So here I will try to collect information about the PGO status across the Linux distros for the projects that support PGO in the upstream. If you didn't find your distro - don't worry! Just check it somehow (probably in some chats/distros' build systems, etc.) and report it here (e.g. via Issues) - I will add it to the list.
+
+* GCC:
+  - Note: PGO for GCC usually is not enabled for all architectures since it requires too much from the build systems
+  - Debian: yes
+  - Ubuntu: same as Debian
+  - RedHat: Yes. And that is the reason why PGO is enabled for GCC in all RedHat-based distros.
+  - Fedora: [yes](https://src.fedoraproject.org/rpms/gcc/blob/rawhide/f/gcc.spec#_1182)
+  - Rocky Linux: [yes](https://git.rockylinux.org/staging/rpms/gcc-toolset-11-gcc/-/blob/r8/SPECS/gcc.spec#L1130)
+  - Alma Linux: [yes](https://git.almalinux.org/rpms/gcc/src/branch/c8/SPECS/gcc.spec#L1164)
+  - NixOS: [no](https://github.com/NixOS/nixpkgs/pull/112928)
+  - OpenSUSE: [yes](https://build.opensuse.org/package/view_file/openSUSE:Factory/gcc12/gcc12.spec), see line `2414`
+* Clang:
+  - Binaries from LLVM are already PGO-optimized (according to the [note](https://apt.llvm.org/) about using "stage2" build - it's PGO optimized build)
+  - RedHat (CentOS Stream): [no](https://bugzilla.redhat.com/show_bug.cgi?id=2224925)
+  - Fedora: [no](https://bugzilla.redhat.com/show_bug.cgi?id=2156679)
+  - AlmaLinux: [no](https://bugs.almalinux.org/view.php?id=350)
+  - Rocky Linux: [no](https://bugs.rockylinux.org/view.php?id=1618)
+  - NixOS: [no](https://github.com/NixOS/nixpkgs/issues/208188)
+  - Arch Linux: sent an email to the Clang maintainer in Arch Linux - no response yet
+* Rustc:
+  - Fedora: [yes](https://src.fedoraproject.org/rpms/rust/blob/rawhide/f/rust.spec#_773)
+* CPython:
+  - Fedora: [yes](https://src.fedoraproject.org/rpms/python3.11/blob/f38/f/python3.11.spec#_73). Also, check [this](https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/2H4ZDRR326XAZ2EPCQKTNRMQYG5YZQ2K/) discussion. I guess other RedHat-based distro builds are the same for this package (however I didn't check it but Rocky Linux is the [same](https://git.rockylinux.org/staging/rpms/python3.11/-/blame/r8/SPECS/python3.11.spec#L70)).
+
+Sometimes PGO is not supported in the upstream for some reason. In this case, a package manager/OS maintainers can decide to enable PGO on their own and patch the application correspondingly. Here are some examples:
+
+* libtre in FreeBSD: [Makefile](https://cgit.freebsd.org/ports/tree/textproc/libtre/Makefile)
+
+TODO: write about Propeller adoption - nowhere adopted
+
+What about PLO adoption?
+
+TODO: what about Windows package managers? BOLT is unavailable for Windows right now but PGO can be used too.
+
+Here we track LLVM BOLT enablement across various projects in various OS-specific build scripts:
+
+* Clang:
+  - [Gentoo bugtracker](https://bugs.gentoo.org/907931)
+* GCC: TODO
+* Rustc:
+  - Fedora: no
+  - RedHat: no
+* CPython: TODO
+* Pyston: TODO  
+
+Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
+
+* Fedora: [Bugzilla](https://bugzilla.redhat.com/show_bug.cgi?id=2249353)
+* RedHat: [JIRA](https://issues.redhat.com/browse/RHEL-16308)
+* ClearLinux: [GitHub issue](https://github.com/clearlinux/distribution/issues/2996)
+* CachyOS ([Website](https://cachyos.org/)): according to the search over its GitHub repositories - they are trying to integrate BOLT as much as possible
+* OpenSUSE: Cannot create an account to create a corresponding issue
+* Ubuntu: [Ubuntu forums](https://ubuntuforums.org/showthread.php?t=2492480&p=14165131#post14165131)
+* Alpine Linux: [Gitlab issue](https://gitlab.alpinelinux.org/alpine/aports/-/issues/15465)
+* Mageia: [Bugzilla](https://bugs.mageia.org/show_bug.cgi?id=32511)
+* Void Linux: [GitHub issue](https://github.com/void-linux/void-packages/issues/47215)
+* Chromebrew: [GitHub discussion](https://github.com/chromebrew/chromebrew/discussions/8941)
+* Homebrew: [GitHub discussion](https://github.com/orgs/Homebrew/discussions/4902)
+* Spack: [GitHub discussion](https://github.com/spack/spack/discussions/41090)
+* Vcpkg: [GitHub discussion](https://github.com/microsoft/vcpkg/discussions/35190)
+* FreeBSD: [FreeBSD forum](https://forums.freebsd.org/threads/expand-profile-guided-optimization-pgo-usage-across-freebsd-packages.91034/)
+* Conan: [GitHub issue](https://github.com/conan-io/conan-center-index/issues/21245)
+* MacPorts: [Ticket](https://trac.macports.org/ticket/68746#ticket)
+  - They said this question should be discussed in mailing lists
+* LLVM-mingw: [GitHub issue](https://github.com/mstorsjo/llvm-mingw/issues/383)
+* MinGW repo: [GitHub issue](https://github.com/msys2/MINGW-packages/issues/19273)
+* CBL-Mariner: [GitHub discussion](https://github.com/microsoft/CBL-Mariner/discussions/8072)
+
+How PGO can be integrated on the OS level? One of the ideas can be creating additional version of the package like "PGO-optimized packages"
+
+TODO: what about distribution-wide performance changes like https://www.phoronix.com/news/Ubuntu-x86-64-v3-Experiment ? PGO can be in the same field
+
+---
+
+TODO: merge with previous one
+
+## PGO state across Linux distributions - TEMPORAL
+
+TODO: finish the chapter
+TODO: some distributions tend to enable PGO and BOLT in more cases like Gentoo, ClearLinux, CachyOS, SerpentOS
+TODO: someone even proposed me to become a maintainer to push PGO activities: https://bugs.mageia.org/show_bug.cgi?id=32511#c1
+TODO: Write about an observation that if in the upstream there is no PGO support - maintainers almost always do not enable PGO in their packages
+
+In many cases, we don't use binaries directly from developers or we don't rebuild all the things in our perimeter (despite knowing such security requirements in some areas!) - we use *prebuilt* binaries from our favorite OS distribution. But if the binaries are prebuilt by someone, there is a chance that PGO can be disabled even if the PGO-optimized build is supported by the upstream. How does it work in practice?
+
+ Let's take a look at some examples:
+
+Unfortunately, PGO is rarely enabled in the provided by OS repositories. I see the following reasons for that:
+
+* Sometimes PGO is disabled on some platforms due to a lack of build resources
+* Sometimes PGO is disabled due to reproducible builds concerns. Concern about reproducing the profile. Bugs: https://bugzilla.opensuse.org/show_bug.cgi?id=1040589 , NixOS comment (find and link it here)
+* Could we trust the profiles from the upstream to use them instead of our own? Good question. That’s why is important to commit scripts for reproducing the profile (and still can differ due to time-based things like I had in YDB)
+
+Even if the upstream project supports building with PGO, it doesn't mean that in your favorite operating system, this package is built with PGO support. Let's study several examples:
+
+| Application | Fedora | Alpine | Mageia | NixOS | Solus | Void Linux |
+|---|---|---|---|---|---|---|
+| GCC |  |  |  |  | [Yes](https://github.com/getsolus/packages/blob/main/packages/g/gcc/package.yml#L164) | [No](https://github.com/void-linux/void-packages/blob/master/srcpkgs/gcc/template) |
+| Clang |  |  |  |  | [Yes](https://github.com/getsolus/packages/blob/main/packages/l/llvm/package.yml#L116) | [No](https://github.com/void-linux/void-packages/blob/master/srcpkgs/llvm15/template) |
+| Rustc |  |  |  |  |  | [No](https://github.com/void-linux/void-packages/blob/master/srcpkgs/rust/template) |
+| CPython |  |  |  |  | | [Yes](https://github.com/void-linux/void-packages/pull/43791) |
+| Chromium |||||||
+| Firefox | [Yes](https://src.fedoraproject.org/rpms/firefox/blob/rawhide/f/firefox.spec) ||||||
+||||||||
+||||||||
+
+
+#### PGO integration into OS-specific build systems
+
+TODO: SerpentOS example - https://github.com/serpent-os/boulder/blob/main/data/macros/actions/pgo.yml
+
+What about PLO integration into operating systems? Since the approach is much younger than PGO you can expect that adoption is lower compared to PGO - and you will be right.
+
+From PLO perspective, right now only LLVM BOLT is considered *sometimes* as a tool for that kind of optimization - almost nobody talks about Google's Propeller.
+
+TODO: finish chapter
+
+https://github.com/getsolus/packages/blob/main/packages/l/llvm/package.yml#L116 - example of BOLT integration in the upstream
+
+#### PGO / PLO state across package managers
+
+TODO: Check Altinity builds for ClickHouse and suggest PGO for their CH build. Their sources are available here: https://github.com/Altinity/ClickHouse
+
+### SaaS platforms
 
 TODO: Write more about what to do with it and add a note about pure responsiveness from big corps
+TODO: Add more motivation for open-source products like PostgreSQL and others
 
 Nowadays many people are crazy about clouds. So in my mind raised an idea - what is the current state of PGO usage in different SaaS environments? Quick googling gave me nothing so I just asked major public clouds via the official channels about their PGO state. Here we go:
 
@@ -1112,7 +1297,7 @@ In general, communication with corps sucks a lot. Yeah, I know that it's obvious
 
 From my experience it's much better to find a right person from interesting for you corp via mailing lists/Twitter/HackerNews/etc. and write directly to them. In this case, with higher probability you will get an answer (hopefully without NDA violation, haha) from a knowledgable about your question person and not from a first line "support" or even a LLM-based operator. However, no guarantees here either. Sometimes your requests will become forgotten, sometimes people just don't check their email or simply ignores you. E.g. I sent an email to Brendan Gregg (I hope you know who is this performance semi-god. If don't - [you are welcome](https://www.brendangregg.com/)) about using PGO for the Intel products - no response.
 
-## LTO, PGO, PLO and proprietary software
+### Proprietary software
 
 Everyday we use not only open-source software, that can be (simply) optimized with LTO, PGO, PLO and other fansy stuff by our own hands in a Gentoo-style but also some proprietary software where we have no such an option. And still proprietary software performance can be valuable for us: CI performance with closed-source compilers, IDE performance, closed-source database performance (in both on-premise and SaaS versions) - there are many of them. So what could we do instead?
 
@@ -1142,13 +1327,7 @@ There are multiple reasons for that:
 * Because I can
 * Just for lulz
 
-## Software pipeline
-
-Let's take a look at how looks like a default **open-source** software pipeline:
-
-TODO: insert a diagram here
-
-## Test environments
+## Test environment
 
 ### Hardware and OS
 
@@ -1178,47 +1357,6 @@ In the article, my PC setup is called "Linux", and Macbook as "macOS". Sorry Win
 For all Rust projects, I use the `rustc` compiler with LLVM backend, versions somewhere in 1.68 - 1.73 range. For C and C++ I prefer using Clang 16, sometimes I use GCC 13 as an additional compiler. I have nothing against GCC and GPL - I just prefer LLVM and the ecosystem around LLVM due to better flexibility, from my point of view.
 
 All these compilers are in their "default" state with no custom patches from my side: `rustc` from the official website, Clang and GCC from the official Fedora repository.
-
-## PGO state across Linux distributions
-
-TODO: finish the chapter
-TODO: some distributions tend to enable PGO and BOLT in more cases like Gentoo, ClearLinux, CachyOS, SerpentOS
-TODO: someone even proposed me to become a maintainer to push PGO activities: https://bugs.mageia.org/show_bug.cgi?id=32511#c1
-
-  - Sometimes PGO is disabled on some platforms due to a lack of build resources
-  - Sometimes PGO is disabled due to reproducible builds concerns. Concern about reproducing the profile. Bugs: https://bugzilla.opensuse.org/show_bug.cgi?id=1040589 , NixOS comment (find and link it here)
-  - Could we trust the profiles from the upstream to use them instead of our own? Good question. That’s why is important to commit scripts for reproducing the profile (and still can differ due to time-based things like I had in YDB)
-
-In many cases, we don't use binaries directly from developers or we don't rebuild all the things in our perimeter (despite knowing such security requirements in some areas!) - we use *prebuilt* binaries from our favorite OS distribution. But if the binaries are prebuilt by someone, there is a chance that PGO can be disabled even if the PGO-optimized build is supported by the upstream. How does it work in practice?
-
-Unfortunately, PGO is rarely enabled in the provided by OS repositories. Let's take a look at some examples:
-
-Even if the upstream project supports building with PGO, it doesn't mean that in your favorite operating system, this package is built with PGO support. Let's study several examples:
-
-| Application | Fedora | Alpine | Mageia | NixOS | Solus | Void Linux |
-|---|---|---|---|---|---|---|
-| GCC |  |  |  |  | [Yes](https://github.com/getsolus/packages/blob/main/packages/g/gcc/package.yml#L164) | [No](https://github.com/void-linux/void-packages/blob/master/srcpkgs/gcc/template) |
-| Clang |  |  |  |  | [Yes](https://github.com/getsolus/packages/blob/main/packages/l/llvm/package.yml#L116) | [No](https://github.com/void-linux/void-packages/blob/master/srcpkgs/llvm15/template) |
-| Rustc |  |  |  |  |  | [No](https://github.com/void-linux/void-packages/blob/master/srcpkgs/rust/template) |
-| CPython |  |  |  |  | | [Yes](https://github.com/void-linux/void-packages/pull/43791) |
-| Chromium |||||||
-| Firefox | [Yes](https://src.fedoraproject.org/rpms/firefox/blob/rawhide/f/firefox.spec) ||||||
-||||||||
-||||||||
-
-### PGO integration into OS-specific build systems
-
-TODO: SerpentOS example - https://github.com/serpent-os/boulder/blob/main/data/macros/actions/pgo.yml
-
-## PLO state across operating systems
-
-TODO: finish chapter
-
-https://github.com/getsolus/packages/blob/main/packages/l/llvm/package.yml#L116 - example of BOLT integration in the upstream
-
-## PGO / PLO state across package managers
-
-TODO: Check Altinity builds for ClickHouse and suggest PGO for their CH build. Their sources are available here: https://github.com/Altinity/ClickHouse
 
 ## Stories
 
@@ -1398,6 +1536,8 @@ If you are interested in more details about LTO, I collected several links for y
 
 * ThinLTO: [Google Research](https://research.google/pubs/pub47584/), [Youtube](https://www.youtube.com/watch?v=9OIEZAj243g)
 
+By the way, ThinLTO works [better](https://discourse.llvm.org/t/thinlto-and-profile-based-module-groups/77120/10) with PGO according to ThinLTO developers due to better modules grouping decisions. More information can be found in [these](https://llvm.org/devmtg/2015-04/slides/ThinLTO_EuroLLVM2015.pdf) slides and in [this](https://ieeexplore.ieee.org/document/7863733) publication.
+
 TODO:
 - add more information about Fat and Thin LTO
 - add about LTO state across Linux distributions
@@ -1512,7 +1652,7 @@ By the way, there is a project about optimizing binary size on the linker step f
 
 ### Does PGO/PLO work with stripped binaries?
 
-Instrumentation PGO *should* work with stripped binaries. So after the instrumentation phase it's ok to strip the binary. Sampling PGO **does not work** with stripping. Debug symbols or at least some other samples-to-source mapping is required. Clang [says](https://clang.llvm.org/docs/UsersManual.html#using-sampling-profilers) about it in the SPGO documentation via enabling `-gline-tables-only` or `-g` option. GCC [has](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-fauto-profile) the same note in the `-fauto-profile` documentation. LLVM BOLT also [requires](https://github.com/llvm/llvm-project/blob/main/bolt/README.md#input-binary-requirements) non-stripped binaries. 
+Instrumentation PGO *should* work with stripped binaries. So after the instrumentation phase it's ok to strip the binary. Sampling PGO **does not work** with stripping. Debug symbols or at least some other samples-to-source mapping is required. Clang [says](https://clang.llvm.org/docs/UsersManual.html#using-sampling-profilers) about it in the SPGO documentation via enabling `-gline-tables-only` or `-g` option. GCC [has](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-fauto-profile) the same note in the `-fauto-profile` documentation. LLVM BOLT also [requires](https://github.com/llvm/llvm-project/blob/main/bolt/README.md#input-binary-requirements) non-stripped binaries.
 
 ### PGO **decreases** performance - what can I do?
 
@@ -1549,12 +1689,17 @@ All information above is written about instrumentation PGO. What about sampling 
 
 ### How should I dump PGO profiles?
 
-TODO: PGO profiles are not written to a disk due to signal handlers. Overwrite them or customize. I highly recommend to tune software to write a profile to a disk with a signal (call `__llvm_dump_profile()` or [similar functions](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) if you use Clang)
-TODO: Write in the article about manual profile dump via the compiler runtime profile infra
-TODO: write about "save on exit" possible issues
-TODO: add YugabyteDB example here
+By default, all major compilers save instrumentation PGO profiles at exit of your program. You may ask - what does it mean, "at exit"? LLVM [means](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfilingFile.c#L1216 ) an [atexit](https://en.cppreference.com/w/cpp/utility/program/atexit) handler. I am pretty sure that other compilers have the same behavior (but I didn't check it). From such definition we can get a helpful inside - if our application crashes or is killed, PGO profiles will not be saved.
 
-By default, all major compilers save instrumentation PGO profilers at exit of your program.
+Here we can start asking about possibilities to tweak PGO profile dumping behavior that we can use in different scenarios. What if we want to dump PGO profiles with some (tweakable by us in runtime) frequency? Or trigger PGO dumping via a signal or even a HTTP handler? Compilers have something for that. LLVM can [suggest](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/profile/InstrProfiling.h) you to use several `compiler-rt` intrinsics - they are pretty useful in practice. E.g. YugabyteDB developers [implemented](https://github.com/yugabyte/yugabyte-db/blob/master/src/yb/common/llvm_profile_dumper.cc) a dedicated thread that dumps PGO profiles periodically. During my PGO benchmarks then an application didn't exit normally, I many times tweaked an application and inserted PGO profiles dump capability with `__llvm_dump_profile()` somewhere near the program exit flow or just added a corresponding signal handler with PGO profile dump functionality - it saved me a lot of time! With LLVM it's even possible to write a PGO profile to a memory if you don't have an RW access to a filesystem or simply don't have a filesystem.
+
+What about other compilers? Go compiler has similar functionality via `pprof` infrastructure. GCC, unfortunately, has [quite limited](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829) dumping capabilities compared to Clang. MSVC is a bit better but also cannot save a PGO profile to a memory. What about other compilers? I don't know, you need to check the corresponding documentation... Of course I am joking here - I am almost sure that it will not documented in your case so you need to ask your compiler developers about such functionality ;)
+
+### Can I use PGO/PLO for library optimization?
+
+TODO: finish the chapter
+
+Yes, you can!
 
 ## Related projects
 
@@ -1638,7 +1783,7 @@ TODO: continue advertising PGO addition to the compilers and languages (like Har
 
 TODO: write where performance can be valuable for gamedev domain: developer productivy (faster code-test loops), better drivers (CPU part), lowering systems requirement, battery life (steam deck and mobile gaming domains)
 
-For now, PGO is rarely mentioned with games. The only known to me case is the talk from GDC 2023 "Squeezing out the last 5% of performance: AGDE, profile-guided optimization, and automation" ([Youtube](https://www.youtube.com/watch?v=CNbpFTyHOe8)) - it mentions [this](https://developer.android.com/games/agde/pgo-overview) PGO guide in the Android Game Development Extension (AGDE) documentation. It's great to see PGO mentions in such places!
+For now, PGO is rarely mentioned with games. The only known to me case is the talk from GDC 2023 "Squeezing out the last 5% of performance: AGDE, profile-guided optimization, and automation" ([Youtube](https://www.youtube.com/watch?v=CNbpFTyHOe8)) - it mentions [this](https://developer.android.com/games/agde/pgo-overview) PGO guide in the Android Game Development Extension (AGDE) documentation. It's great to see PGO mentions in such places! Fun fact: even such proficient in PGO companies like Google sometimes [have](https://issuetracker.google.com/issues/315487999) mistakes in their PGO-related documentation!
 
 One of the interesting areas here - game engine optimization with PGO.
 
@@ -1698,8 +1843,6 @@ I created "[Are we PGO yet?](https://github.com/zamazan4ik/awesome-pgo/blob/main
 
 ### Perform more PGO benchmarks
 
-TODO: add a list of TODO projects here
-
 Even if I already performed PGO benchmarks for many projects, I have a bunch of other projects in my TODO list! For some projects I even didn't create a "Evaluate PGO usage" request in the corresponding issue tracker. Maybe one day I will have enough motivation to continue work in this direction. The main reason why PGO benchmarks for some projects are postponed is amount of efforts to perform the benchmarks. If a project something more difficult than `cargo pgo bench` && `cargo pgo optimize bench` - the priority for this project is decreased in my list because I have a lot of other easier-to-test projects anyway!
 
 But if someone wants to help, here I collected some potentially interesting from PGO perspective open-source projects:
@@ -1710,22 +1853,11 @@ But if someone wants to help, here I collected some potentially interesting from
 * littlefs: [GitHub repo](https://github.com/littlefs-project/littlefs)
 * Darktable. [These](https://github.com/darktable-org/darktable/blob/master/src/tests/benchmark/darktable-bench) can be used for PGO evaluation.
 
+Much more projects can be found in the "Are we PGO yet?" [list](https://github.com/zamazan4ik/awesome-pgo/blob/main/are_we_pgo_yet.md).
+
 ### Contribute to project-specific PGO documentation
 
-It's always convenient to have project-specific information as close to the project as possible like in a project documentation. Especially if the project has some implementation nuances in its PGO implementation (like a [custom logic](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d) in PGO dumping process).
-
-Some projects already have dedicated pages about PGO:
-
-* ClickHouse: [Profile-Guided Optimization](https://clickhouse.com/docs/en/operations/optimizing-performance/profile-guided-optimization)
-* Databend: [PGO](https://databend.rs/doc/contributing/pgo)
-* Vector: [PGO](https://vector.dev/docs/administration/tuning/pgo/)
-* Nebula: [AutoFDO](https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/)
-* GCC: Official [Docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback"
-* Clang: [How to build with PGO](https://llvm.org/docs/HowToBuildWithPGO.html) and [Advanced builds](https://llvm.org/docs/AdvancedBuilds.html) instructions
-* Rustc: [Optimized build](https://rustc-dev-guide.rust-lang.org/building/optimized-build.html#profile-guided-optimization)
-* tsv-utils: [Building with Link Time Optimization and Profile Guided Optimization](https://github.com/eBay/tsv-utils/blob/master/docs/BuildingWithLTO.md)
-
-Although, more projects still miss such information like Rsyslog ([GitHub comment](https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1694533339)), YugabyteDB ([GitHub issue](https://github.com/yugabyte/yugabyte-db/issues/18497)) or Lace ([GitHub comment](https://github.com/promised-ai/lace/issues/172#issuecomment-1917406027)).
+It's always convenient to have project-specific information as close to the project as possible like in a project documentation. Especially if the project has some implementation nuances in its PGO implementation (like a [custom logic](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d) in PGO dumping process). Many projects still miss PGO-related documentation like Rsyslog ([GitHub comment](https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1694533339)), YugabyteDB ([GitHub issue](https://github.com/yugabyte/yugabyte-db/issues/18497)) or Lace ([GitHub comment](https://github.com/promised-ai/lace/issues/172#issuecomment-1917406027)). Having such documentation can improve PGO adoption across projects' users.
 
 ### "Are we PGO yet" website
 

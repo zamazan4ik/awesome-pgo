@@ -41,6 +41,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - Homebrew benchmarks: [one](https://github.com/Homebrew/homebrew-core/issues/77975#issuecomment-859190783), [two](https://github.com/Homebrew/homebrew-core/pull/79454#issuecomment-869055079)
   - ScyllaDB benchmarks: [GitHub issue](https://github.com/scylladb/scylladb/issues/10985)
   - Clang on Windows: [Phoronix post](https://www.phoronix.com/news/LLVM-PGO-Windows-Build)
+  - Fedora experiments: [GitHub repo](https://github.com/kwk/pgo-experiment//?tab=readme-ov-file#step6)
 * [GCC](https://gcc.gnu.org/):
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
@@ -307,12 +308,6 @@ Below you can find some examples of where and how PGO is integrated into differe
 * hck: [Justfile](https://github.com/sstadick/hck/blob/master/justfile#L27)
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268)
 
-## Project with package-manager integration level
-
-Sometimes PGO is not supported in the upstream for some reason. In this case, a package manager/OS maintainers can decide to enable PGO on their own and patch the application correspondingly. Here are some examples:
-
-* libtre in FreeBSD: [Makefile](https://cgit.freebsd.org/ports/tree/textproc/libtre/Makefile)
-
 ## Project-specific documentation about PGO
 
 Here we collect projects where PGO is described as an optimization option in the documentation:
@@ -480,8 +475,6 @@ So here I will try to collect information about the PGO status across the Linux 
   - Fedora: [yes](https://src.fedoraproject.org/rpms/python3.11/blob/f38/f/python3.11.spec#_73). Also, check [this](https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/2H4ZDRR326XAZ2EPCQKTNRMQYG5YZQ2K/) discussion. I guess other RedHat-based distro builds are the same for this package (however I didn't check it but Rocky Linux is the [same](https://git.rockylinux.org/staging/rpms/python3.11/-/blame/r8/SPECS/python3.11.spec#L70)).
 
 ## BOLT adoption across Linux distros
-
-TODO: what about Windows package managers? BOLT is unavailable for Windows right now but PGO can be used too.
 
 Here we track LLVM BOLT enablement across various projects in various OS-specific build scripts:
 
