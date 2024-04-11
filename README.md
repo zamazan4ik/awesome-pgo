@@ -260,6 +260,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * struson: [GitHub discussion](https://github.com/Marcono1234/struson/discussions/59#discussion-6392876)
 * ast-grep: [GitHub discussion](https://github.com/ast-grep/ast-grep/discussions/738)
 * Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
+* libjxl: [GitHub issue](https://github.com/libjxl/libjxl/issues/3456#issue-2225475925)
+* nucleo: [GitHub discussion](https://github.com/helix-editor/nucleo/discussions/44#discussion-6483115)
+* martin: [GitHub discussion](https://github.com/maplibre/martin/discussions/1294#discussion-6483582)
 
 ## Projects with already integrated PGO into their build scripts
 

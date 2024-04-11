@@ -89,6 +89,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ZLUDA: https://github.com/vosen/ZLUDA/discussions/73
 * candy: https://github.com/candy-lang/candy/discussions/953
 * dyon: https://github.com/PistonDevelopers/dyon/issues/746
+* Mojo: https://github.com/modularml/mojo/discussions/2261
 
 ## Developer tooling
 
@@ -151,6 +152,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ast-grep: https://github.com/ast-grep/ast-grep/discussions/738
 * Symbolicator: https://github.com/getsentry/symbolicator/issues/1334
 * llvm-mctoll: https://github.com/microsoft/llvm-mctoll/discussions/195
+* HEIR: https://github.com/google/heir/discussions/613
 
 ## Build systems
 
@@ -317,6 +319,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * NativeDB: https://github.com/vincent-herlemont/native_db/discussions/92
 * Readyset: https://github.com/readysettech/readyset/discussions/1074
 * IKV: https://github.com/inlinedio/ikv-store/issues/143
+* Valkey: https://github.com/orgs/valkey-io/discussions/64
 
 ## Logging
 
@@ -350,6 +353,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * rten: https://github.com/robertknight/rten/issues/38
 * SentencePiece: https://github.com/google/sentencepiece/issues/961
 * lace: https://github.com/promised-ai/lace/issues/172
+* rust-tokenizers: https://github.com/guillaume-be/rust-tokenizers/issues/103
 
 ## Message brokers
 
@@ -468,6 +472,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * rust_serialization_benchmark: https://github.com/djkoloski/rust_serialization_benchmark/issues/18
 * ada-url: https://github.com/ada-url/rust/issues/61
 * struson: https://github.com/Marcono1234/struson/discussions/59
+* libjxl: https://github.com/libjxl/libjxl/issues/3456
+* nucleo: https://github.com/helix-editor/nucleo/discussions/44
+* martin: https://github.com/maplibre/martin/discussions/1294
 
 ## PGO in distributions
 

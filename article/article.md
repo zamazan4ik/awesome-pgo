@@ -843,8 +843,8 @@ Merging multiple PGO profiles into one is the most common task with PGO. In many
 
 ## PGO support in build systems
 
+TODO:
 * Overview of the PGO state across build systems
-  - Add a note about Bazel integration
   - Add links to the issues in other build systems like CMake, Meson, etc. (maybe I need to check it across all popular build systems and create proper issues for that)
 
 In 99.9(9)% cases, we do not compile our applications via direct compiler invocations - we use build systems. What kind of PGO support could we expect from a build system? I have the following wishes:
@@ -875,13 +875,13 @@ Of course, even with such a handy tool, there are some nuances:
 
 ### Bazel
 
-Bazel [has](https://bazel.build/reference/command-line-reference#flag--fdo_instrument) built-in PGO support. With provided by Bazel command-line options, you will be able to optimize your program with PGO without needing to know how to properly invoke PGO stuff in your favorite compiler.
+Bazel [has](https://bazel.build/reference/command-line-reference#flag--fdo_instrument) built-in PGO support with `--fdo_instrument`/`--fdo_optimize` options. With provided by Bazel command-line options, you will be able to optimize your program with PGO without needing to know how to properly invoke PGO stuff in your favorite compiler. Unfortunately, there is no built-in support for using sampling PGO or more advanced instrumentation PGO modes like CSIR PGO. If you want to use them - pass corresponding flags manually.
 
 But even such a "native" PGO integration into the build system could have some problems. I [found](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679) one of them during the PGO testing for Envoy. For some unknown reason, Bazel denied compiling with PGO one of Envoy's dependencies when I tried to use the PGO option. But if I just pass the required compiler flags recursively for all dependencies - it works fine! I don't know what is the root cause for such behavior in this case (honestly, I don't care much since I got my job done there)... Anyway, now you know about this possible caveat and how to avoid the problem :)
 
 ### Meson
 
-Meson [supports](https://mesonbuild.com/Builtin-options.html) building with instrumentation PGO via `b_pgo` option, more precisely - IR PGO. Unfortunately, there is no built-in support for using sampling PGO or more advanced instrumentation PGO modes like CSIR PGO. So if you want to do something more advanced than simple instrumentation PGO - be ready to pass all required compiler switches manually.
+Meson [supports](https://mesonbuild.com/Builtin-options.html) building with instrumentation PGO via `b_pgo` option, more precisely - IR PGO. Similarly to Bazel, there is no built-in support for using sampling PGO or more advanced instrumentation PGO modes like CSIR PGO. So if you want to do something more advanced than simple instrumentation PGO - be ready to pass all required compiler switches manually.
 
 ### CMake
 
@@ -1103,22 +1103,28 @@ TODO: add thoughts about unification efforts between BOLT and Propeller: https:/
 
 ## LTO, PGO, PLO state in the ecosystem
 
-TODO: PLO has no integration in the Linux distros yet
 TODO: PLO has no integration in the build systems
+
+In this chapter I want to discuss PGO adoption across different parts of our ecosystem: applications (open-source and proprietary), packaged software in different OS distributions (and not only in them), and cloud compute providers.
 
 ### Open-source projects
 
+I decided to start my PGO enablement investigation from the most available for research purposes place - open source software. Since I am a regular open source tools user, it's also nice to contribute something back to the community. 
+
 TODO: describe more about PGO integration into the build scripts
 TODO: write some statistics about how projects reacted to PGO reports to them
-TODO: write about special software umbrellas like DEs - Gnome, KDE. Gnome has some interest in PGO at least in articles - https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/ and https://blogs.gnome.org/alatiera/2024/03/26/thoughts-on-employing-pgo-and-bolt-on-the-gnome-stack/ . Write here about FOSDEM's discussion about it
 
 PGO usually is **not** enabled by the upstream developers due to a lack of support for sample load or a lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
 
-TODO: finish the thought about DEs . Didn't propose to other smaller DEs due to limited resources (mine and their). Of course I will be happy if other project will start to use PGO and PLO
+#### Desktop environments (DE)
 
 One of my ideas for improving PGO coverage across ecosystem was proposing PGO enabling for desktop environments (DE) like Gnome and KDE. These "umbrella" projects have many different software and trying to enable PGO across one DE will cover a lot of projects. Sounds great, doesn't it? And of course the idea failed.
 
-However, at least Gnome project recently posted several articles ([one](https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/), [two](https://blogs.gnome.org/alatiera/2024/03/26/thoughts-on-employing-pgo-and-bolt-on-the-gnome-stack/)) about PGO and PLO so probably at least *some* interest exists.
+At FOSDEM 2024 a had several conversations about enabling PGO with Gnome and KDE developers (their stands were placed together, huh). Opinions about PGO were almost identical - "Yes, it would be useful to give it a try. However, we need to figure out how we can collect good PGO profiles. And we need more human resources to implement it. Btw, contributions are welcomed!". I interpret it as "If you are interested in it - you need to implement it.". Honestly, pretty fair point of view - that's how open-source works. At least the developers suggested me to create some sort of discussions on the corresponding platforms. I did it for [Gnome](https://discourse.gnome.org/t/evaluate-using-profile-guided-optimization-pgo-and-post-link-optimization-plo-for-gnome-projects/19341) and [KDE](https://discuss.kde.org/t/evaluate-using-profile-guided-optimization-pgo-and-post-link-optimization-plo-for-kde-projects/10290) - unfortunately, not so much activity. Do I need to start a conversation somewhere else? However, at least Gnome project recently posted several articles ([one](https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/), [two](https://blogs.gnome.org/alatiera/2024/03/26/thoughts-on-employing-pgo-and-bolt-on-the-gnome-stack/)) about PGO and PLO so probably at least *some* interest exists. I just recommend starting with regular PGO, and only after that start thinking about BOLT integration - PGO is much more stable technology with fewer limitations.
+
+By the way, discussions at FOSDEM were pretty interesting - I learnt a lot of stuff about internal benchmark systems in Gnome and KDE.
+
+For anyone who wants to complain about "Where is my favorite X DE???" - I just started from the most widely-used DE in the Linux ecosystem. If you are interested in bringing PGO to other great projects like LXDE, Cinammon, etc. - you are welcome! I will be happy to see PGO adoption in as much projects as possible! I didn't create corresponding discussions into all DEs only because my resources are kinda limited. Maybe in the future my backlog will be a bit shorter (it won't) and I'll create more PGO discussions for more DEs.
 
 #### Documentation
 
@@ -1236,6 +1242,8 @@ TODO: finish the chapter
 TODO: some distributions tend to enable PGO and BOLT in more cases like Gentoo, ClearLinux, CachyOS, SerpentOS
 TODO: someone even proposed me to become a maintainer to push PGO activities: https://bugs.mageia.org/show_bug.cgi?id=32511#c1
 TODO: Write about an observation that if in the upstream there is no PGO support - maintainers almost always do not enable PGO in their packages
+TODO: PLO has no integration in the Linux distros yet
+TODO: sometimes PGO PRs just dying - https://github.com/void-linux/void-packages/issues/29526
 
 In many cases, we don't use binaries directly from developers or we don't rebuild all the things in our perimeter (despite knowing such security requirements in some areas!) - we use *prebuilt* binaries from our favorite OS distribution. But if the binaries are prebuilt by someone, there is a chance that PGO can be disabled even if the PGO-optimized build is supported by the upstream. How does it work in practice?
 
@@ -1681,7 +1689,7 @@ One possible caveat that you can find with large profiles that PGO-related tooli
 
 Reproducible builds is a hot topic nowadays for various reasons: security, build cross-validation, etc. More about it you can read [here](https://reproducible-builds.org/). From PGO perspective we have a problem here since PGO introduces another source of non-determenism to your build that consequently sacrifices your reproducibility efforts. Since some distributions like Rocky Linux cares a lot about reproducibility (I had a great conversation about it with a Rocky Linux maintainer at FOSDEM 2024), expanding PGO usage across software can become a problem.
 
-Fortunately, reproducibility issue with PGO can be mitigated. The most obvious way - collect PGO profiles once, commit them to a VCS, and use these profiles for every build. Since your PGO profile is static, you will get the same binary each time. Easy-peasy! However, when you commit a profile to a repo, and then users will try to use this profile during the PGO build, they will ask you a question - "How did you collect this profile? What was the training workload?". They care because if the training workload differs a lot from their target workload - they simply cannot use your PGO profile! I [met](https://github.com/ozontech/file.d/issues/468#issuecomment-1703866524) this problem with the `file.d` project: they commited a profile, and there is no way to understand from which workload the profile was collected. How can you fix it? At very least, you can describe somehow your training workload. Even a small piece of text like "For File.d the PGO training workload was reading logs from a file, transforming them with regular expressions and sending them to a ClickHouse cluster" (just an example, not an actual description). Providing training workload Bash scripts (or whatever similar) improves the situation even more since in this case a user can run your scripts in their environment and recreate PGO profile. Or tweak these scripts a bit and adapt to their specific workloads. As a rule of thumb: if you don't understand how a PGO profile was collected - just regenerate it. And please do not forget one more thing - if your applications evolves and/or your target workload is changed, you need to regenerate your PGO profile and commit it to the repository once again. If you don't do it, your PGO optimization becomes less and less efficient over the time since less and less actual source code is covered by the saved PGO profile.
+Fortunately, reproducibility issue with PGO can be mitigated. The most obvious way - collect PGO profiles once, commit them to a VCS, and use these profiles for every build. Since your PGO profile is static, you will get the same binary each time. Also it's possible to generate PGO workloads based on some random inputs - just be sure that you use a fixed seed. E.g. this way was [used](https://github.com/void-linux/void-packages/issues/29526#issuecomment-872803985) for Foot's PGO optimization in Void Linux. Easy-peasy! However, when you commit a profile to a repo, and then users will try to use this profile during the PGO build, they will ask you a question - "How did you collect this profile? What was the training workload?". They care because if the training workload differs a lot from their target workload - they simply cannot use your PGO profile! I [met](https://github.com/ozontech/file.d/issues/468#issuecomment-1703866524) this problem with the `file.d` project: they commited a profile, and there is no way to understand from which workload the profile was collected. How can you fix it? At very least, you can describe somehow your training workload. Even a small piece of text like "For File.d the PGO training workload was reading logs from a file, transforming them with regular expressions and sending them to a ClickHouse cluster" (just an example, not an actual description). Providing training workload Bash scripts (or whatever similar) improves the situation even more since in this case a user can run your scripts in their environment and recreate PGO profile. Or tweak these scripts a bit and adapt to their specific workloads. As a rule of thumb: if you don't understand how a PGO profile was collected - just regenerate it. And please do not forget one more thing - if your applications evolves and/or your target workload is changed, you need to regenerate your PGO profile and commit it to the repository once again. If you don't do it, your PGO optimization becomes less and less efficient over the time since less and less actual source code is covered by the saved PGO profile.
 
 One step beyond this idea and we come to an interesting topic - making a PGO profile itself reproducible, not a PGO-optimized builds. Here the things quickly become more complicated. At first, if your instrumented application has some non-deterministic logic inside (like time-based things or relies on any other external non-reproducible source like hardware RNG), different code paths may be executed -> you get different PGO profiles. This things usually can be fixed manually in your software somehow (e.g. mocking all sources of non-determinism or reworking the source code). Another thing to consider - how your compiler creates PGO profile. Some compiler like Clang by default uses [non-atomic counter updates](https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update). So if your application is multi-threaded, with a huge chance PGO profile will differ. Fortunately, this behavior can be changed via `-fprofile-update` compiler switch. As a downside, instrumenation overhead will increase. The overhead shouldn't be too big in practice but anyway. If you use another compiler - please check the corresponding documentation. According to my experiments, usually Instrumentation PGO produces reproducible PGO profiles if you have determenistic logic inside your application, the same training input, etc. However, it is not always the case. E.g. let's check the reproducibility [issue](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93398) for the PGO-optimized GCC build. According to the issue, things like Address Space Layout Randomization ([ASLR](https://en.wikipedia.org/wiki/Address_space_layout_randomization)) and "randomness" in places like hash-tables can introduce problems. Generally speaking, we need to perform more tests across different compilers (including proprietary) and software to understand better the common practical problems with PGO in reproducible build pipelines.
 
@@ -1699,7 +1707,7 @@ What about other compilers? Go compiler has similar functionality via `pprof` in
 
 TODO: finish the chapter
 
-Yes, you can!
+Yes, you can! PGO and PLO can be applied to libraries as well. There are no big differences between a library and an application - here and there it's simply a code. However, there are *some* differences about use cases that can affect PGO implementation for them.
 
 ## Related projects
 
@@ -1791,13 +1799,13 @@ Unreal Engine (UE) supports building with PGO since 4.27 ([release notes](https:
 
 Unity is an interesting beast here. Unity has a long-standing process about [Burst](https://docs.unity3d.com/Packages/com.unity.burst@0.2/manual/index.html) - a compiler for translating from IL/.NET bytecode to highly optimized native code using LLVM. Burst aims to be a compiler for "high-performance C# subset" (or something like that). Unfortunately, this high-performance toy [doesn't support](https://forum.unity.com/threads/profile-guided-optimisation-for-burst.931419/) PGO - Burst developers don't think that PGO will work well with Burst. From my perspective - all the mentioned problems from the forum post above are solvable in practice, and outcomes from PGO are far better than problems. Anyway, it's only my opinion, and I have no power to forcefully change Unity developers' minds (Illithid Powers are not allowed here). If we are talking about more "classic" Unity, we have [IL2CPP](https://docs.unity3d.com/Manual/IL2CPP.html) - a tool for converting C# code into C++, and then compiling C++ code with usual C++ compilers. Here there is a possibility to apply PGO after IL2CPP: compile your game into C++ code, then run PGO for C++ code - C++ compilers have one of the best PGO implementations nowadays - it should work at least in theory. In practice - I never heard about using such an optimization pipeline for real games.
 
-In other game engines, the situation is even worse. For [Godot](https://godotengine.org/) we have only [this](https://github.com/godotengine/godot-proposals/issues/2610) proposal with some tests. For [Bevy](https://bevyengine.org/) I did [some benchmarks](https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867). For other engines, we only have requests about PGO: [Fyrox](https://github.com/FyroxEngine/Fyrox/issues/498), [Cocos](https://github.com/cocos/cocos-engine/issues/16449), [Defold](https://github.com/defold/defold/issues/8193), [Dagor](https://github.com/GaijinEntertainment/DagorEngine/issues/1), etc. - the complete list is a bit longer.
+In other game engines, the situation is even worse. For [Godot](https://godotengine.org/) we have only [this](https://github.com/godotengine/godot-proposals/issues/2610) proposal with some tests. For [Bevy](https://bevyengine.org/) I did [some benchmarks](https://github.com/bevyengine/bevy/issues/4586#issuecomment-1674097867). For other engines, we only have requests about PGO: [Fyrox](https://github.com/FyroxEngine/Fyrox/issues/498), [Cocos](https://github.com/cocos/cocos-engine/issues/16449), [Defold](https://github.com/defold/defold/issues/8193), [Dagor Engine](https://github.com/GaijinEntertainment/DagorEngine/issues/1), [Flax Engine](https://github.com/FlaxEngine/FlaxEngine/issues/1833), [Bitty](https://github.com/paladin-t/bitty/issues/38), [Hazel](https://github.com/TheCherno/Hazel/issues/645), [Open 3D Engine](https://github.com/o3de/o3de/discussions/16883). I am sure that I missed a lot of other engines - it will be nice to PGO results for them too.
 
 Regarding using PGO with games based on the engines above - I don't have enough information. I asked the question multiple times on different forums (Unreal Engine forum [post](https://forums.unrealengine.com/t/profile-guided-optimization-pgo-results-with-unreal-engine/1253240), Unity forum [post](https://forum.unity.com/threads/add-lto-pgo-and-plo-recommendations-to-il2cpp-documentation.1525315/)) - no response. Only one person from a local russian-speaking Telegram chat about UE said to me that they use PGO as a default optimization for their UE games. The PGO profiles are collected via crafted local test workloads (usually - the most difficult game scenes) with [Gauntlet](https://docs.unrealengine.com/4.27/en-US/TestingAndOptimization/Automation/Gauntlet/). The performance improvement is like 6-8% of CPU.
 
 Another interesting area where PGO can help is driver optimization, especially video drivers. Modern video drivers - huge applications with a lot of branches inside. Even more - in drivers there are things like shader compilers. As we [see](https://github.com/gfx-rs/wgpu/discussions/4692), PGO helps in this cases in practice. However, more testing in more cases is needed. I hope one day shader compilers will be optimized too - I have too many lags due to the shader compilation process during the TOTK gameplay with Yuzu on my Steam Deck!
 
-### Explore PGO for embedded domain
+### Explore PGO for the embedded domain
 
 PGO for embedded cases can be an interesting option since PGO can help with achieving better CPU efficiency (better battery life, lower requirements for CPU), and binary size optimization (because we can perform fewer optimizations for the "cold" parts of an application).
 
@@ -1805,7 +1813,7 @@ One of the interesting issues that arises quickly with the embedded domain is PG
 
 Usual option is to try mounting something like `tmpfs` and then save the PGO profile to this in-memory disk. If even this option is not available for you - it's still possible to dump the PGO profile directly to a memory, and then export the profile via any interface like TCP, HTTP, MQTT, etc. Profile dumping runtime intrinsics are usually undocumented so you need to check sources for your favorite compiler (and create an issue about improving documentation). These intrinsics are partially discussed in the article somewhere above.  
 
-Right now I don't have enough data about PGO usage in the embedded domain. If you know something about the topic and want to share your thoughts - go ahead and reach me out!
+Right now I don't have enough data about PGO usage in the embedded domain. If you know something about the topic and want to share your thoughts - go ahead and reach out to me!
 
 ### Explore PGO for mobile domain
 
@@ -1817,7 +1825,26 @@ There are so many questions to research in this area and so much experience to g
 
 ### Explore PGO for HPC domain
 
-TODO: Check https://hpsfoundation.github.io/ and its projects. Probably they will be interested in PGO as well since it's HPC foundation
+High-Performance Computing (HPC) domain, according to the name, is very interested in better optimizations. Here even several percent optimization results are valuable since in many situations calculations can take several *weeks* on large computing clusters.
+
+I don't have any results to share for HPC-related software since I don't have enough experience in this area. My friend that have a lot experience with HPC applied PGO to some internal developments and got very interesting results (unfortunately nothing to share publicly).
+
+I think it will be interesting to perform multiple benchmarks on software like [HPC Foundation](https://hpsfoundation.github.io/). If you have something to share - please let me know!
+
+### Explore PGO for machine learning domain
+
+TODO: add https://guillaume-be.github.io/2020-11-21/generation_benchmarks and https://aclanthology.org/2020.nlposs-1.4/
+TODO: add https://github.com/guillaume-be/rust-bert and https://github.com/guillaume-be/rust-tokenizers examples
+
+### Explore PGO for OS and drivers
+
+TODO: add thoughts about using PGO for more kernels like *BSD
+
+Operating systems are **very** good candidates for PGO.
+
+For Linux kernel we have a lot of available PGO materials: the ASOS idea discussed above, a [paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf), a [presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf) from Microsoft, Linux Plumbers 2020 [slides](https://lpc.events/event/7/contributions/798/attachments/661/1214/LTO_PGO_and_AutoFDO_-_Plumbers_2020_-_Tolvanen_Wendling_Desaulniers.pdf), more [slides](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf) from Linux Plumbers, a benchmark [results](https://github.com/h0tc0d3/linux_pgo) and corresponding [article](https://habr.com/ru/companies/ruvds/articles/696236/) (in Russian), "Experiences in Profile-Guided Operating System Kernel Optimization" [paper](http://coolypf.com/apsys2014.pdf) with corresponding [article](http://coolypf.com/kpgo.htm) (10 years old - just a warning), Phoronix [post](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next) about kernel PGO with Clang, Gentoo [wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance). For Windows the only found by me material is already [linked](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf) above presentation from Linux Plumbers (lol) - check the last slides of the presentation.
+
+Drivers are another topic for investigation. I can expect that drivers performance (CPU part) can be improved as well. Drivers are not something so specific that cannot be optimized with PGO: usual code (mostly in "native" technologies like C, C++, Rust), many branches, executed mostly on CPU - sounds like a good PGO candidate. Right now I have nothing to show you about PGO in drivers. I [opened](https://gitlab.freedesktop.org/mesa/mesa/-/issues/10155) such request in Mesa project but with no results yet. Other good candidates to test - Linux in-tree drivers like filesystems and networking. Since they are in-tree and Linux kernel already has ready-to-use PGO switches, it should be easy enough to test drivers performance with PGO. Of course, drivers for other operating systems can be optimized with PGO as well.
 
 ### Expand PGO usage across the Go ecosystem
 
@@ -1852,6 +1879,7 @@ But if someone wants to help, here I collected some potentially interesting from
 * starship: [GitHub repo](https://github.com/starship/starship)
 * littlefs: [GitHub repo](https://github.com/littlefs-project/littlefs)
 * Darktable. [These](https://github.com/darktable-org/darktable/blob/master/src/tests/benchmark/darktable-bench) can be used for PGO evaluation.
+* revng: [GitHub repo](https://github.com/revng/revng-c)
 
 Much more projects can be found in the "Are we PGO yet?" [list](https://github.com/zamazan4ik/awesome-pgo/blob/main/are_we_pgo_yet.md).
 
@@ -1893,7 +1921,7 @@ It seems to be an interesting idea to implement some kind of PGO profile integra
 
 The original idea is described [here](https://github.com/aaupov/school_topics/blob/main/perfd.md) (in Russian, so if you don't know this language - please use the translator or ask Amir about making it in English :), a few initial commits are available [here](https://github.com/linux-perfd/perfd).
 
-Exactly the same thing is already implemented internally in Google. This system samples all applications across Google servers with Google Wide Profiler (GWP), transforms sample profiles into a compiler-compatible format, and then passes converted profiles to the build pipelines. More about GWP and its connection to PGO at Google can be found in these papers: [one](https://research.google/pubs/autofdo-automatic-feedback-directed-optimization-for-warehouse-scale-applications/), [two](https://research.google/pubs/google-wide-profiling-a-continuous-profiling-infrastructure-for-data-centers/). Google, do you want to open-source this system (even if this system has too many dependencies on other closed-sourced Google projects)? :) Other large companies also has similar system-wide profilers like Yandex with its Yandex.Perforator. Unfortunately, this project cannot be used for continuous PGO yet. Maybe in the future Perforator will be extended with such functionality and open-sourced (as they already did for multiple awesome projects like [ClickHouse](https://clickhouse.com/), [YDB](https://ydb.tech/), [YTsaurus](https://ytsaurus.tech/)).
+The same thing is already implemented internally in Google. This system samples all applications across Google servers with Google Wide Profiler (GWP), transforms sample profiles into a compiler-compatible format, and then passes converted profiles to the build pipelines. More about GWP and its connection to PGO at Google can be found in these papers: [one](https://research.google/pubs/autofdo-automatic-feedback-directed-optimization-for-warehouse-scale-applications/), [two](https://research.google/pubs/google-wide-profiling-a-continuous-profiling-infrastructure-for-data-centers/). Google, do you want to open-source this system (even if this system has too many dependencies on other closed-sourced Google projects)? :) Other large companies also has similar system-wide profilers like Yandex with its Yandex.Perforator. Unfortunately, this project cannot be used for continuous PGO yet. Maybe in the future Perforator will be extended with such functionality and open-sourced (as they already did for multiple awesome projects like [ClickHouse](https://clickhouse.com/), [YDB](https://ydb.tech/), [YTsaurus](https://ytsaurus.tech/)).
 
 There is an idea to implement a similar approach based on an open-source project like Grafana Pyroscope ([discussion](https://github.com/grafana/pyroscope/discussions/2783)) or Elastic Universal Profiling ([issue](https://github.com/elastic/elasticsearch/issues/105802)). I am not alone with such an idea - other people outside Google already [tried](https://discuss.elastic.co/t/continuous-profile-guided-optimization-pgo-platform-based-on-elastic-universal-profiling/354605/2) to implement a similar approach with positive results. However, the current state of these activities is just a discussion, nothing to try yet.
 
@@ -1908,6 +1936,11 @@ Talk more about PGO at the conferences. I like conferences because of having a l
 This year I attended [FOSDEM 2024](https://fosdem.org/2024/) (it was my first FOSDEM btw) where I discussed PGO from different perspectives (open-source project developers, OS maintainers) and gathered a lot of valuable thoughts about this optimization. It was a win-win (IMHO): I started to better understand the main PGO pain points for different stakeholders, and I hope at least some people started to consider using PGO for their projects. Would be nice to have the same kind of conversation at many other conferences!
 
 I am thinking about trying to collaborate with large firms like Google on a project about integrating PGO into different kinds of software as a part of [Google Summer Of Code](https://summerofcode.withgoogle.com/) (GSoC). Regarding GSoC I have talked about at FOSDEM with GSoC representatives on the conference. Unfortunately, GSoC is not a place where I can suggest integrating PGO into multiple projects - I need to propose this idea for each project instead, one by one, and only then it's possible to use GSoC resources for integrating PGO into each project. It's a pity but maybe there are other places? What about making collaboration between PGO and Hacktoberfest, huh?
+
+### Expand PGO usage across programming languages
+
+TODO: write here why it's important
+TODO: cover the topic about build system integration
 
 ## Helpful/interesting links to know about
 
