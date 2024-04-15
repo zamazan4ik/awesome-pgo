@@ -153,6 +153,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Symbolicator: https://github.com/getsentry/symbolicator/issues/1334
 * llvm-mctoll: https://github.com/microsoft/llvm-mctoll/discussions/195
 * HEIR: https://github.com/google/heir/discussions/613
+* pylyzer: https://github.com/mtshiba/pylyzer/discussions/80
 
 ## Build systems
 
@@ -475,6 +476,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * libjxl: https://github.com/libjxl/libjxl/issues/3456
 * nucleo: https://github.com/helix-editor/nucleo/discussions/44
 * martin: https://github.com/maplibre/martin/discussions/1294
+* serde-sqlite-jsonb: https://github.com/lovasoa/serde-sqlite-jsonb/discussions/1#discussion-6500343
+* nearcore: https://github.com/near/nearcore/issues/10916
 
 ## PGO in distributions
 

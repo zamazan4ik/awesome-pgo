@@ -45,6 +45,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [GCC](https://gcc.gnu.org/):
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
+  - [PGO effects on devirtualization in C++](https://hubicka.blogspot.com/2014/04/devirtualization-in-c-part-5-feedback.html)
   - According to the experiments from a person in a local Telegram chat with optimization GCC in Gentoo: +4% to compilation speed with LTO, +10% to compilation speed with PGO
 * [Python](https://www.python.org/):
   - [Blog](https://www.activestate.com/blog/python-performance-boost-using-profile-guided-optimization/)
@@ -54,7 +55,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [Go compiler performance numbers](https://go-review.googlesource.com/c/go/+/495596)
 * D:
   - DMD: [GitHub issue](https://github.com/dlang/dmd/pull/13791#issue-1164476335)
-  - LDC: [GitHub comment](https://github.com/ldc-developers/ldc/discussions/4524#discussioncomment-7537608)
+  - LDC: [GitHub comment](https://github.com/ldc-developers/ldc/discussions/4524#discussioncomment-7537608) and this [article](https://johanengelen.github.io/ldc/2016/07/15/Profile-Guided-Optimization-with-LDC.html)
 * Julia: [GitHub PR](https://github.com/JuliaLang/julia/pull/45641#issue-1268010204)
 * [PHP](https://www.php.net/):
   - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
@@ -78,6 +79,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Android tooling like `dex2oat`: [Medium](https://medium.com/androiddevelopers/pgo-for-native-android-applications-1a48a99e95d0)
 * [typos](https://github.com/crate-ci/typos): [GitHub issue](https://github.com/crate-ci/typos/issues/827#issue-1888263250)
 * [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
+* pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
 
 ### Operating systems
 
@@ -263,6 +265,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * libjxl: [GitHub issue](https://github.com/libjxl/libjxl/issues/3456#issue-2225475925)
 * nucleo: [GitHub discussion](https://github.com/helix-editor/nucleo/discussions/44#discussion-6483115)
 * martin: [GitHub discussion](https://github.com/maplibre/martin/discussions/1294#discussion-6483582)
+* serde-sqlite-jsonb: [GitHub discussion](https://github.com/lovasoa/serde-sqlite-jsonb/discussions/1#discussion-6500343)
+* LibreOffice: [Blog](https://hubicka.blogspot.com/2014/09/linktime-optimization-in-gcc-part-3.html). The article is from 2014 - keep it in mind.
+* A lot of insights, history, and great benchmarks for LTO and PGO efficiency in LLVM and GCC in various software (including Firefox and LibreOffice) from Honza Hubička: [GCC 4.8](https://hubicka.blogspot.com/2014/04/linktime-optimization-in-gcc-2-firefox.html), [GCC 5](https://hubicka.blogspot.com/2015/04/GCC5-IPA-LTO-news.html), [GCC 6 and Clang 3.9](https://hubicka.blogspot.com/2016/03/building-libreoffice-with-gcc-6-and-lto.html), [GCC8 and Clang 6](https://hubicka.blogspot.com/2018/12/even-more-fun-with-building-and.html), [GCC9](https://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -417,6 +422,7 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * ast-grep: [GitHub issue](https://github.com/ast-grep/ast-grep/discussions/738)
 * Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
 * Pango: [Gnome blog](https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/)
+* pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
 
 ## Projects with already integrated BOLT into their build scripts
 
