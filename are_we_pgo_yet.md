@@ -90,6 +90,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * candy: https://github.com/candy-lang/candy/discussions/953
 * dyon: https://github.com/PistonDevelopers/dyon/issues/746
 * Mojo: https://github.com/modularml/mojo/discussions/2261
+* koto: https://github.com/koto-lang/koto/discussions/312
 
 ## Developer tooling
 
@@ -197,6 +198,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Fuchsia: https://bugs.fuchsia.dev/p/fuchsia/issues/detail?id=137125
 * SteamOS: https://github.com/ValveSoftware/SteamOS/issues/1287
 * Tock: https://github.com/tock/tock/discussions/3850
+* Asterinas: https://github.com/asterinas/asterinas/issues/760
 
 ## Virtual machines and emulators
 
@@ -476,8 +478,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * libjxl: https://github.com/libjxl/libjxl/issues/3456
 * nucleo: https://github.com/helix-editor/nucleo/discussions/44
 * martin: https://github.com/maplibre/martin/discussions/1294
-* serde-sqlite-jsonb: https://github.com/lovasoa/serde-sqlite-jsonb/discussions/1#discussion-6500343
+* serde-sqlite-jsonb: https://github.com/lovasoa/serde-sqlite-jsonb/discussions/1
 * nearcore: https://github.com/near/nearcore/issues/10916
+* prost: https://github.com/tokio-rs/prost/discussions/1041
 
 ## PGO in distributions
 

@@ -292,6 +292,10 @@ More about CSIR PGO you can watch at "2020 LLVM Developers’ Meeting: “PGO In
 #### PGO via Sampling (SPGO)
 
 TODO: add info about Sampling PGO aka AutoFDO aka AFDO
+TODO: add information about how profiles can be collected: Linux perf, Intel Sampling Enabling Product (SEP), other tools (possibly proprietary)
+TODO: compare Linux perf and Intel SEP. E.g. the latest Intel SEP doesn't work with 6.x Linux kernels due to compilation errors
+TODO: SEP user guide - https://www.intel.com/content/www/us/en/content-details/686066/sampling-enabling-product-user-s-guide.html
+TODO: AutoFDO support was added in GCC 5 and LLVM 3.5 - https://hubicka.blogspot.com/2015/04/GCC5-IPA-LTO-news.html
 
 By the way, Sampling PGO is often called as FDO. From my understanding, this is due to Google AutoFDO project - a special set of tools to implement Sampling PGO for GCC and LLVM-based compilers. We will cover this project a bit later - stay tuned ;)
 
@@ -505,9 +509,9 @@ However, BSS support is still kinda limited across the ecosystem, and support is
 * Intel x86-64 - it's called Last Branch Record (LBR). AFAIK, since Nehalem (2008), added support to the Linux kernel - somewhen between 2010-2011.
 * AMD x86-64 - it's called BRS (BRanch Sampling). Available since Zen 3 (2020), Linux 5.19 (2022). However, [not all](https://discord.com/channels/636084430946959380/930647188944613406/1175827177405698170) Zen 3 supports BRS. More can be found [here](https://lwn.net/Articles/888996/).
 * ARM64 - it's called BRBE (Branch Record Buffer Extension): since ARMv9.2-A (2023), Linux 6.7-rc1 (2024). Related LWN article is [here](https://lwn.net/Articles/951316/).
-* PowerPC - it's called BHRB (Branch History Rolling Buffer): since Power8 (~2013), Linux perf support is also in place. Is this feature supported by your exact CPU or not - you need to check it on your own. By the way, if you are interested in PowerPC, you can try to get a remote access to a machine [here](https://osuosl.org/services/powerdev/request_powerci/). I [am not the only](https://stackoverflow.com/questions/48616075/whats-the-equivalent-of-last-branch-record-lbr-on-arm-and-powerpc) who is interested in it!
-* RISC-V - it's called Control Transfer Records (CTR). Current status - [under development](https://risc-v-international.slack.com/archives/C017LD0GJ8Z/p1708861135739819?thread_ts=1708839419.127049&cid=C017LD0GJ8Z). More information can be found here: [GitHub](https://github.com/riscv/riscv-control-transfer-records), [JIRA](https://jira.riscv.org/browse/RVG-62). No estimations when it will be implemented.
-* [e2k](https://en.wikipedia.org/wiki/Elbrus_2000) (Elbrus) - an analogue to LBR is supported. Unfortunately, there is not support for that in Linux perf but there are plans implement this feature in the future.
+* PowerPC - it's called BHRB (Branch History Rolling Buffer): since Power8 (~2013), Linux perf support is also in place. Is this feature supported by your exact CPU or not - you need to check it on your own. By the way, if you are interested in PowerPC, you can try to get remote access to a machine [here](https://osuosl.org/services/powerdev/request_powerci/). I [am not the only](https://stackoverflow.com/questions/48616075/whats-the-equivalent-of-last-branch-record-lbr-on-arm-and-powerpc) who is interested in it!
+* RISC-V - it's called Control Transfer Records (CTR). Current status - [under development](https://risc-v-international.slack.com/archives/C017LD0GJ8Z/p1708861135739819?thread_ts=1708839419.127049&cid=C017LD0GJ8Z). More information can be found here: [GitHub](https://github.com/riscv/riscv-control-transfer-records), [JIRA](https://jira.riscv.org/browse/RVG-62). No estimations for when it will be implemented.
+* [e2k](https://en.wikipedia.org/wiki/Elbrus_2000) (Elbrus) - an analog to LBR is supported. Unfortunately, there is not support for that in Linux perf but there are plans implement this feature in the future.
 * [LoongSon](https://en.wikipedia.org/wiki/Loongson) (Chinese MIPS-based CPUs) - no public-available information at the moment.
 * Other architectures (e.g. Linux [supports](https://en.wikipedia.org/wiki/List_of_Linux-supported_computer_architectures) many of them) and operating systems combinations - I don't know (please let me know!). You can try to find corresponding for an architecture person in the Linux [maintainer list](https://www.kernel.org/doc/linux/MAINTAINERS) and ask them directly. I did it multiple times and always got very valuable responses.
 
@@ -605,7 +609,7 @@ With GCC I found the following issues:
 * PGO profiles' runtime dumping capabilities [are limited](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112829). Compared to LLVM, there is no easy way to dump PGO profile to a memory instead of a filesystem. GCC developers in this case suggest mitigations like using RAM-disk, NFS and other fancy stuff. If you want to implement it - you need to tweak GCOV implementation on your own.
 * It's [not clear](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806) how PGO in GCC interacts with user-defined `likely`/`unlikely` hints. It could be a problem when you apply PGO for the (partially) optimized codebase with such user hints. You can get some unexpected results.
 
-More issues about PGO in GCC can be found in its Bugzilla with [this](https://gcc.gnu.org/bugzilla/buglist.cgi?quicksearch=PGO&list_id=403385) filter. If you want to learn more about PGO-related GCC internals, I can recommend [this](https://trofi.github.io/posts/243-gcc-profiler-internals.html) article to read. If you are interested in Sampling PGO implementation details in GCC you can start [here](https://github.com/gcc-mirror/gcc/blob/master/gcc/auto-profile.cc#L55).
+More issues about PGO in GCC can be found in its Bugzilla with [this](https://gcc.gnu.org/bugzilla/buglist.cgi?quicksearch=PGO&list_id=403385) filter. If you want to learn more about PGO-related GCC internals, I can recommend [this](https://trofi.github.io/posts/243-gcc-profiler-internals.html) article to read. If you are interested in Sampling PGO implementation details in GCC you can start [here](https://github.com/gcc-mirror/gcc/blob/master/gcc/auto-profile.cc#L55). If you are interested in PGO history inside GCC, I highly recommend read articles from [Honza Hubička](https://hubicka.blogspot.com/) about GCC internals: [GCC 4.8](https://hubicka.blogspot.com/2014/04/linktime-optimization-in-gcc-2-firefox.html), [GCC 5](https://hubicka.blogspot.com/2015/04/GCC5-IPA-LTO-news.html), [GCC 6 and Clang 3.9](https://hubicka.blogspot.com/2016/03/building-libreoffice-with-gcc-6-and-lto.html), [GCC8 and Clang 6](https://hubicka.blogspot.com/2018/12/even-more-fun-with-building-and.html), [GCC9](https://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html). Don't forget to follow the links inside these articles - they also have many interesting details!
 
 #### MSVC
 
@@ -772,7 +776,7 @@ What to do? Try to ping Swift developers once again to clarify (and document) th
 
 D language [has](https://wiki.dlang.org/Compilers) multiple compilers. The major compilers are DMD (default D compiler), GDC (GCC-based compiler), LDC (LLVM-based compiler).
 
-LDC [supports](https://wiki.dlang.org/LDC_LLVM_profiling_instrumentation) PGO.
+LDC [supports](https://wiki.dlang.org/LDC_LLVM_profiling_instrumentation) PGO. Also, I can recommend to watch the "Profile-Guided Optimization in the LDC D compiler" [talk](https://av.tib.eu/media/42272) from FOSDEM 2017.
 
 TODO
 
@@ -921,7 +925,7 @@ Why do we have this situation? Here we have a "standard" set of problems:
 
 * Many maintainers don't know/don't care about PGO or don't believe in the PGO efficiency.
 * Even if they know/care/believe, enabling PGO will require tweaking package recipe, implementing somehow 2/3-stage build, etc. Maintainers don't want to spend time on it - they have a lot of other work to do.
-* Even if they care and ready to spend some time on enabling it - where do they need to collect PGO profiles? What if a user use case is different 
+* Even if they care and ready to spend some time on enabling it - where do they need to collect PGO profiles? What if a user use case is different? Is it ok 
 
 ### Language-specific package managers
 
@@ -1122,6 +1126,8 @@ Do you want more? Here we go:
 
 ### Intel Thin Layout Optimizer (TLO)
 
+TODO: add wiki link https://github.com/intel/thin-layout-optimizer/wiki
+
 Intel recently [open-sourced](https://github.com/intel/thin-layout-optimizer) its vision about how PLO should be implemented - Intel Thin Layout Optimizer (or simply TLO because we love abbreviations).
 
 For now, I see the following limitations/risks in this tool:
@@ -1131,7 +1137,7 @@ For now, I see the following limitations/risks in this tool:
 * Works only with Linux perf profiles.
 * According to the TLO's [wiki](https://github.com/intel/thin-layout-optimizer/wiki#5-performance-comparison), there are questionable performance results for now compared to BOLT.
 
-I [asked](https://github.com/intel/thin-layout-optimizer/issues/2) many questions about several TLO implementation details from different perspectives - but no answers yet. Hopefully, one day at least some questions will be resolved.
+I [asked](https://github.com/intel/thin-layout-optimizer/issues/2) many questions about several TLO implementation details from different perspectives - you can check the answers there.
 
 I don't have enough experience with the tool since my CPU doesn't support LBR technology.
 
@@ -1646,7 +1652,50 @@ In many programming languages and compilers, it's possible to insert different h
 
 The question is complicated. On the one hand, If a PGO-based decision is preferred, then for some users such behavior can be surprising since they explicitly added the hint to tweak the compiler behavior. On the other hand, if the user hint is chosen, we can miss some optimization opportunity since the PGO profile is a data-driven decision and our hint can be just outdated due to various reasons. Maybe try to "merge" PGO and user hint with some weights? Maybe just raise a mismatch warning about a conflict between user hint and the PGO profile? So many options.
 
-Unfortunately, it's a dark area in the compilers. I didn't find **any** compiler that documents such behavior well. There are such questions for [LLVM](https://github.com/llvm/llvm-project/issues/58189), [GCC](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806), [GraalVM](https://github.com/oracle/graal/discussions/7990). There is an [answer](https://github.com/golang/go/issues/64460#issuecomment-1834294715) for the Go compiler - PGO should respect the user's hints - but it should be tested in practice. For other compilers (especially proprietary ones) you need to do additional research.
+Unfortunately, it's a dark area in the compilers. I didn't find **any** compiler that documents such behavior well. There are such questions for [LLVM](https://github.com/llvm/llvm-project/issues/58189), [GCC](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112806), [GraalVM](https://github.com/oracle/graal/discussions/7990). There is an [answer](https://github.com/golang/go/issues/64460#issuecomment-1834294715) for the Go compiler - PGO should respect the user's hints - but it should be tested in practice. For other compilers (especially proprietary ones) you need to do additional research. And I already made some experiements too ;)
+
+For the following code:
+
+```cpp
+[[clang::noinline]]
+bool some_top_secret_checker(int var)
+{
+    if (var == 42) [[unlikely]] return true;
+    if (var == 322) [[unlikely]] return true;
+    if (var == 1337) [[likely]] return true;
+
+    return false;
+}
+
+int main()
+{
+    int var;
+    std::scanf("%d", &var);
+    std::printf("%d\n", some_top_secret_checker(var));
+    return 0;
+}
+```
+
+and training workload with 322 values we get the following assembly (compiled with Clang 17: `clang++ -O3 -fprofile-use=likely.profdata -S -masm=intel main_likely.cpp`):
+
+```
+	mov	al, 1
+	cmp	edi, 322
+	jne	.LBB1_1
+.LBB1_4:
+	ret
+.LBB1_1:
+	cmp	edi, 42
+	je	.LBB1_4
+# %bb.2:
+	cmp	edi, 1337
+	je	.LBB1_4
+# %bb.3:
+	xor	eax, eax
+	jmp	.LBB1_4
+```
+
+At least in this case with Clang PGO profile has higher priority than a user-specified attribute - the branch with 322 is moved to the beginning of the function even if it's marked as `unlikely` in the source code. It's not a guarantee of course - it's just an example, and probably in other cases Clang can make different optimization decisions. However, it's better than nothing. Also, I did the same experiment with GCC. For some reasons, GCC [ignores](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114761) `likely`/`__builtin_expect` attributes and PGO profiles for this code, so we need to prepare something else for the test.
 
 Why do the compilers hesitate to document such behavior? At first, there was no interest in such information before (at least I didn't find it in the public field) :) If no one is interested in it - there is no reason to document it. At second, internally compilers are pretty complicated things, with multiple optimization passes, etc. Tracking interaction between user hints and PGO can be a tricky task that depends on multiple compiler internal details. I am pretty sure that without additional semiresearch/semidebug compiler engineers also don't know the exact behavior in all cases. And even if they know - guaranteeing it can be a limitation since if you guarantee something you need to test it, make regression tests, etc. But we are humans == we are lazy by design so we don't like to do extra things. So actually I don't expect that such things will be documented in the near future.
 
@@ -1864,6 +1913,8 @@ Usual option is to try mounting something like `tmpfs` and then save the PGO pro
 Right now I don't have enough data about PGO usage in the embedded domain. If you know something about the topic and want to share your thoughts - go ahead and reach out to me!
 
 ### Explore PGO for mobile domain
+
+TODO: add here about autofdo in Android - https://source.android.com/docs/core/perf/autofdo and already deprecated https://source.android.com/docs/core/perf/pgo
 
 I didn't hear much about using PGO for mobile devices. Maybe it's because on mobile platforms nowadays we have not-so-PGO-friendly stack (mostly Android/Java and Apple/Swift) - both of these programming languages definetely are not huge PGO users. However, having better CPU performance is still important: better UI responsiveness, better battery life - nice things to have.
 

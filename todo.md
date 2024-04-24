@@ -27,13 +27,27 @@ Here I collect random thoughts and ideas about further PGO investigation.
 * Write about how to report performance degradation from PGO and why it could be difficult to do
 * Write about llvm-profdata version compatibility - it's important otherwise you will get errors
 * Add more benchmark numbers when a PGO training workload and target workload are not completely the same
-* Evaluate PGO on https://github.com/guillaume-be/rust-bert and https://github.com/guillaume-be/rust-tokenizers
 * Discuss a question about UI applications and PGO optimization during the build phase: https://github.com/slint-ui/slint/issues/3909#issuecomment-1816054164
-* Check https://www.phoronix.com/news/Intel-Thin-Layout-Optimizer tool - like LLVM BOLT but from Intel. Highly recommend reading this: https://github.com/intel/thin-layout-optimizer/wiki . Add to the article
-* HighTec compilers like https://hightec-rt.com/en/rust - are they PGO-optimized? Started a conversation with a HighTec dev on Reddit
 * Found a huge slowdown from BOLT instrumentation compared to PGO instrumentation in the Pylyzer case
 * Library documentation about PGO can look like this: https://github.com/lovasoa/serde-sqlite-jsonb/pull/2
-* AutoFDO support was added in GCC 5 and LLVM 3.5 - https://hubicka.blogspot.com/2015/04/GCC5-IPA-LTO-news.html
 * Extract useful information about PGO in LDC and add to the article: https://johanengelen.github.io/ldc/2016/04/13/PGO-in-LDC-virtual-calls.html
-* FOSDEM 2017 talk about PGO in LDC: https://av.tib.eu/media/42272
 * Add to the article info about link errors and passing PGO flags to LD too
+* Some people read article! https://github.com/asterinas/asterinas/issues/760#issuecomment-2060277998
+* Rework article a bit since Intel SEP can be used for Sampling PGO on Linux, Windows, FreeBSD platforms - https://clang.llvm.org/docs/UsersManual.html#using-sampling-profilers . But latest version of this tool doesn't work at least on Linux kernel 6.x - https://community.intel.com/t5/Analyzers/socwatch2-15-module-is-not-loaded-correctly-when-using-kernel-6/td-p/1584234
+* Discuss it in the article: https://github.com/zamazan4ik/awesome-pgo/issues/3#issuecomment-2065582161
+* Add to the article information about PGO profile file formats. Discuss at least LLVM-compatible format. Sampling file format is described here - https://clang.llvm.org/docs/UsersManual.html#sample-profile-formats . But not instrumentation formats
+* Android switches to use AFDO instead of PGO: https://source.android.com/docs/core/perf/autofdo according to https://issuetracker.google.com/issues/315464624#comment3 . Check more on this topic
+* Sometimes PGO is disabled: https://github.com/llvm/llvm-project/commit/e6c3289804a67ea0bb6a86fadbe454dd93b8d855
+* Ask Android devs about collection PGO profiles from an emulator. Now it says "simpleperf E event_type.cpp:508] Unknown event_type 'cs-etm', try `simpleperf list` to list all possible event type names" so it doesn't work with an emulator. From my Pixel 8 I also cannot gather profiles due to the "adbd cannot be runned in the production builds" adb error
+* Temporal PGO: https://issues.chromium.org/issues/326463850 + https://groups.google.com/a/chromium.org/g/chromium-dev/c/Awq_xBXQgFY/m/8N2L2W2vAQAJ + https://discourse.llvm.org/t/rfc-temporal-profiling-extension-for-irpgo/68068
+* What about talking about PGO at mobile-development-oriented conferences? Need to be considered
+* libvpx performance with PGO: https://issues.chromium.org/issues/325103518#comment8
+* Measured PGO degradation due to failed benchmarks: https://issues.chromium.org/issues/41491803#comment17
+* Interesting discussions about multiple PGO profiles, memory degradation and performance boost due to better PGO training set: https://issues.chromium.org/issues/41490637
+* PGO training workloads can be shared between companies and can be quite private: https://issues.chromium.org/issues/325519354 + https://chromium.googlesource.com/chromium/src.git/+/master/docs/pgo.md
+* PGO and experiments (aka Finch) in Chromium: https://issues.chromium.org/issues/326465539 + https://news.ycombinator.com/item?id=12954588 (explains what Finch is)
+* Long discussion about enabling PGO with Clang for the Linux kernel: https://groups.google.com/g/clang-built-linux/c/85eKdM9_Jeg/m/cX7-6Kk7AQAJ
+* Request for enabling PGO for the Rustc compiler in Fuchsia: https://issues.fuchsia.dev/issues/42083760
+* Enable PGO, LTO for Fuchsia: https://issues.fuchsia.dev/issues/335919004 + https://issues.fuchsia.dev/issues/331995728
+* LLVM PGO hash mismatch and the fix for it: https://issues.fuchsia.dev/issues/336358027
+* Another PGO abbreviation: https://en.m.wikipedia.org/wiki/PGO_waves
