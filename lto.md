@@ -19,6 +19,7 @@ Performance improvements from enabling LTO:
 * Ladybird: https://twitter.com/awesomekling/status/1702247511698587678
 * Symbolicator: https://github.com/getsentry/symbolicator/issues/1334
 * pylyzer: https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001
+* Rustc: https://issues.fuchsia.dev/issues/42066512
 
 Links:
 

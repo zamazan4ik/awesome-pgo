@@ -197,7 +197,8 @@ Quickly I found another issue: there are multiple meanings for PGO:
 
 * [PostrgreSQL Operator](https://github.com/CrunchyData/postgres-operator). This one is the most annoying since Google shows it often (at least in my queries). I recommend resolving it with excluding "postgresql" word from the results.
 * PGO [company](https://pl.wikipedia.org/wiki/PGO_(polskie_przedsi%C4%99biorstwo)). I do not think they are Profile-Guided Optimization gurus but who knows...
-* Pokemon GO (as The Expert said above)
+* Ponto-geniculo-occipital waves or [PGO waves](https://en.wikipedia.org/wiki/PGO_waves). I tried to understand what is it but quickly gave up - too boring stuff (IMHO).
+* Pokemon GO (as The Expert said above).
 
 Not critical at all but keep in mind this information during your googling/binging sessions.
 
@@ -284,6 +285,7 @@ The idea is completely the same as with FE PGO but instead of counters insertion
 ##### Context-Sensitive IR PGO (CSIR PGO)
 
 TODO: write about CSIR PGO and LLVM BOLT - https://github.com/rust-lang/rust/issues/118562#issuecomment-1842738590
+TODO: CSIR PGO results for LLVM: https://issuetracker.google.com/issues/200085858#comment5 + https://issues.chromium.org/issues/40147394
 
 The idea is completely the same as with IR PGO. However, PGO counters are inserted **after** the inlining phase. It makes profiles more precise in practice.
 
@@ -296,6 +298,9 @@ TODO: add information about how profiles can be collected: Linux perf, Intel Sam
 TODO: compare Linux perf and Intel SEP. E.g. the latest Intel SEP doesn't work with 6.x Linux kernels due to compilation errors
 TODO: SEP user guide - https://www.intel.com/content/www/us/en/content-details/686066/sampling-enabling-product-user-s-guide.html
 TODO: AutoFDO support was added in GCC 5 and LLVM 3.5 - https://hubicka.blogspot.com/2015/04/GCC5-IPA-LTO-news.html
+TODO: Profi algorithm https://issues.chromium.org/issues/40242999
+TODO: some AutoFDO benchmarks - https://issuetracker.google.com/issues/259718081
+TODO: Rework article a bit since Intel SEP can be used for Sampling PGO on Linux, Windows, FreeBSD platforms - https://clang.llvm.org/docs/UsersManual.html#using-sampling-profilers . But latest version of this tool doesn't work at least on Linux kernel 6.x - https://community.intel.com/t5/Analyzers/socwatch2-15-module-is-not-loaded-correctly-when-using-kernel-6/td-p/1584234
 
 By the way, Sampling PGO is often called as FDO. From my understanding, this is due to Google AutoFDO project - a special set of tools to implement Sampling PGO for GCC and LLVM-based compilers. We will cover this project a bit later - stay tuned ;)
 
@@ -320,6 +325,9 @@ TODO: https://lists.llvm.org/pipermail/llvm-dev/2020-November/146694.html
 #### Other PGO types
 
 TODO: Write here about other PGO types from https://aaupov.github.io/blog/2023/07/09/pgo
+TODO: Temporal PGO: https://issues.chromium.org/issues/326463850 + https://groups.google.com/a/chromium.org/g/chromium-dev/c/Awq_xBXQgFY/m/8N2L2W2vAQAJ + https://discourse.llvm.org/t/rfc-temporal-profiling-extension-for-irpgo/68068
+TODO: Topics about more advanced PGO types: https://groups.google.com/g/llvm-dev/c/-Ao1uXCi8QM/m/Be9794ZeBAAJ + https://groups.google.com/g/llvm-dev/c/U6zI4M1l1SI + https://groups.google.com/g/llvm-dev/c/1p1rdYbL93s/m/iJjcmUS7AwAJ + https://lists.llvm.org/pipermail/llvm-dev/2020-November/146694.html
+TODO: CSFDO benchmarks: https://issuetracker.google.com/issues/223669638
 
 There is a [PR](https://github.com/llvm/llvm-project/pull/69535) (previous version is [here](https://reviews.llvm.org/D63949)) with implementation sampling approach for instrumentation PGO phase. The idea is simple - instead of incrementing each instrumentation counter each time we increment them with some sampling rate. Accoriding to tests, it helps to reduce instrumentation overhead in some cases up to 5x still with pretty good PGO profile overlap compared to default instrumentation - something about 90%. Current status: WIP.
 
@@ -448,13 +456,17 @@ How much binary space does it take in practice? Let's check it (all tests are do
 | jql | 3.3 Mib | 6.3 Mib | 3.4 Mib | 1.9x | Rust |
 | legba | 17 Mib | 53 Mib | 15 Mib | 3.11x | Rust |
 | lua | 324 Kib | 548 Kib | 329 Kib | 1.69x | C |
-| pylyzer | 36 Mib | 66 Mib | 34 Mib |  | Rust |
+| pylyzer | 36 Mib | 66 Mib | 34 Mib | 1.8x | Rust |
+
+So in regular scenarios, you should not expect a *huge* binary size increase (however, it depends on your "huge" definition that is context-dependent). For cases like web backends disk space usually is not a problem at all since modern disks are cheap enough. In other domains like embedded with limited storage it can become a problem. Also, you can meet some very niche limitations like a [limit](https://issues.fuchsia.dev/issues/42070037) for the Zircon Boot Image (ZBI) in Fuchsia - just be ready for that.
 
 In general, there is no way to make a *precise* prediction of how large your binary will be after the instrumentation without the actual compilation process. There are so many variables involved in this process (how many branches your application has, do you recompile with PGO your statically-linked dependencies, etc.) that much easier will be just recompile with instrumentation and check it. Maybe one day the compilers (or an ecosystem around the compiler) will provide you some estimations before the actual compilation process but not today.
 
 PGO optimized size hugely depends on your test workflow. If you execute a larger amount of code, with a higher probability the inlining will be triggered during the optimization, and your binary due to this will be larger.
 
-#### Compilation times
+#### Compilation times and memory consumption
+
+TODO: Increased memory consumption during the link phase for PGO instrumentation: https://issues.chromium.org/issues/40120956 and slower - https://issues.chromium.org/issues/40121663
 
 Since the instrumentation PGO means a double-compilation model (or even triple, if we are using CSIR PGO). It creates a significant load on your build pipelines.
 
@@ -467,21 +479,25 @@ TODO
 
 * Double compilation - it hurts a lot smaller platforms like PowerPC in different CI pipelines
 
-By the way, the memory usage by a compiler is also increased since the compiler must perform additional things. During my PGO benchmarks I met multiple times a situation when my PC was Out-Of-Memory (OOM) during the building instrumented binaries (and successfully compiled a project in a usual Release mode). So be careful: add more RAM to your build machines, reduce number of parallel build jobs. And, of course, properly configure handling the OOM situation on your machine - user-space OOM service like `systemd-oomd` (or any other) can be your friend (or just run build jobs with `systemd-run -p MemoryMax=40G` command as I did multiple times).
+By the way, the memory usage by a compiler is also increased since the compiler must perform additional things. During my PGO benchmarks I met multiple times a situation when my PC was Out-Of-Memory (OOM) during the building instrumented binaries (and successfully compiled a project in a usual Release mode). So be careful: add more RAM to your build machines, reduce number of parallel build jobs. And, of course, properly configure handling the OOM situation on your machine - user-space OOM service like `systemd-oomd` (or any other) can be your friend (or just run build jobs with `systemd-run -p MemoryMax=40G` command as I did multiple times. 40 Gib is just an example!).
 
 #### Target support
 
-For some targets like Webassembly instrumentation PGO [is not available](https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090). Hopefully the situation [will change](https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090/4) in 2024.
+For some targets like Webassembly instrumentation PGO [can be unavailable](https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090) in your compiler (in this case - LLVM). Hopefully the situation [will change](https://discourse.llvm.org/t/profile-guided-optimization-pgo-and-webassembly/77090/4) in 2024. Also, you can [read](https://issues.chromium.org/issues/42203147) about experiments with enabling PGO for WASM in Chromium (with the [Liftoff](https://v8.dev/blog/liftoff) compiler).
 
-If there are some targets without instrumentation PGO support - please let me know!
+If there are some targets without instrumentation PGO support or you know other WebAssembly compilers with PGO support - please let me know!
 
 #### Build issues with instrumentation PGO
 
 Sometimes a project cannot be built with instrumentation PGO due to some build issues. Firstly, I [met](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679) such an issue with Envoy. When I tried to use a built-in support for PGO in Bazel, Envoy failed to compiler in the instrumentation mode with errors like "FDO instrumnentation is not supported" for the `luajit` dependency. I tried to figure out how to fix it properly but failed. So I just passed manually all required compiler flags directly to Envoy and then recompiled the project with instrumentation successfully.
 
-Another example - a build [issue](https://github.com/rust-lang/rust/issues/119848) with Zen. Here we have many linking errors for a bindgen between Rust and NodeJS API. I didn't dig a lot into the issue - just letting you know that such problem exist.
+Another example - a build [issue](https://github.com/rust-lang/rust/issues/119848) with Zen. Here we have many linking errors for a bindgen between Rust and NodeJS API. I didn't dig a lot into the issue - just letting you know that such problem exist. Or [this](https://issuetracker.google.com/issues/187789784#comment6) example where instrumentation PGO didn't work nicely for [libFuzzer](https://llvm.org/docs/LibFuzzer.html). Even LLVM itself sometimes [disables](https://github.com/llvm/llvm-project/commit/e6c3289804a67ea0bb6a86fadbe454dd93b8d855) building with PGO due to some linker errors!
 
 In my experience, you should not expect many build issues with instrumentation PGO in practice but sometimes you will meet them.
+
+#### Runtime issues with instrumentation PGO
+
+In some cases, instrumentation PGO can even change runtime behavior of your program! It's not expected by default, however it can happen. Personally, I met such problem with YDB when during the PGO training phase some internal timeouts were triggered, and training workload failed to complete (since in the instrumentation mode YDB is much slower). More examples: V8 is (was?) [broken](https://issues.chromium.org/issues/40096239) after applying the PGO instrumentation, Chromium [started](https://issues.chromium.org/issues/40280518) flooding errors after the instrumentation, [another](https://issues.chromium.org/issues/40729923#comment6) example with V8 - runtime errors due to lifetime issues and PGO dumping logic. I suppose it's possible to find more examples but I am a bit lazy for that too. So don't be surprised if something goes wrong in runtime after applying instrumentation - shit happens.
 
 #### PGO profiles sensitivity to other compiler switches
 
@@ -504,7 +520,7 @@ TODO: mention compiler update and possible internal constants or optimization se
 
 Sampling PGO has special relationships with Branch Stack Sampling (BSS) (this thing also commonly called as Last Branch Record (LBR)). According to the [paper](https://hpctest.cs.tsinghua.edu.cn/papers/tc11.pdf), BSS improves sampling PGO quality in practice. However, right now I have no "BSS vs non-BSS" sampling PGO benchmarks for real applications since I have no hardware with BSS support and I am lazy for doing such benchmarks. As a rule of thumb - please use BSS with sampling if it's available in your context.
 
-However, BSS support is still kinda limited across the ecosystem, and support is not coherent across vendors since every CPU vendor has its own BSS implementation:
+However, BSS support is still kinda [limited](https://issuetracker.google.com/issues/200184657#comment14) across the ecosystem, and support is not coherent across vendors since every CPU vendor has its own BSS implementation:
 
 * Intel x86-64 - it's called Last Branch Record (LBR). AFAIK, since Nehalem (2008), added support to the Linux kernel - somewhen between 2010-2011.
 * AMD x86-64 - it's called BRS (BRanch Sampling). Available since Zen 3 (2020), Linux 5.19 (2022). However, [not all](https://discord.com/channels/636084430946959380/930647188944613406/1175827177405698170) Zen 3 supports BRS. More can be found [here](https://lwn.net/Articles/888996/).
@@ -517,7 +533,7 @@ However, BSS support is still kinda limited across the ecosystem, and support is
 
 It's kinda funny that almost the same feature has different names in different architectures. Does anyone know the reason for that? Are they trademarked or patented? :D
 
-More advanced features about LBR can be found in these articles: [first](https://lwn.net/Articles/680985/), [second](https://lwn.net/Articles/680996/).
+More advanced information about LBR can be found in these articles: [first](https://lwn.net/Articles/680985/), [second](https://lwn.net/Articles/680996/).
 
 As you see, Intel implemented this technology many years ago, but other vendors are trying to fill the gap only during the last years.
 
@@ -547,6 +563,7 @@ Almost the same situation is with custom compilers with custom PGO profiles form
 
 TODO: like building with PGO in multi-lang apps and passing PGO info to the dependencies. `ast-grep` as an interesting example where `cargo-pgo` failed and I could not figure out - what is wrong? Seems like `tree-sitter` is the issue since it's not optimized with PGO via `cargo-pgo`. It's the case where C++ + Rust PGO is involved. `ada-url` for Rust is also a good example.
 TODO: Mention ugly https://docs.rs/cc/latest/cc/ when building Rust apps with C++ libraries (inevitable evil)
+TODO: different llvm-profdata versions for Rust and C++ can be required https://issues.fuchsia.dev/issues/42075308
 
 Building software that consists of multiple programming languages was always a problem. Passing values from one programming language to another, writing or generating endless amount of bindings, setuping all required toolchains for eash language, dealing with bugs in each language/toolchain, developing a proper build pipeline in your favourite build system - and I can continue this list of horrible things. That's why we all like write software in one language, and if there is a need to use multiple - we try to separate them in a more strict way (like (micro)service approach).
 
@@ -590,18 +607,23 @@ TODO: add GCC vs Clang vs MSVC comparison
 
 #### Clang
 
+TODO: Empty PGO profiles problem: https://issues.chromium.org/issues/40277089 + https://issues.chromium.org/issues/40219172 + https://github.com/zamazan4ik/awesome-pgo/issues/3#issuecomment-2065582161
+
 With Clang I found the following issues:
 
 * [Missing](https://github.com/llvm/llvm-project/issues/63024) partial training support for instrumentation PGO. Right now, Clang [supports](https://releases.llvm.org/16.0.0/tools/clang/docs/ClangCommandLineReference.html#cmdoption-clang-fprofile-sample-accurate) partial training only for the sampling PGO with `-fno-profile-sample-accurate` flag.
 * By default, Clang [uses](https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update) non-atomic profile counters. It could be a problem since non-atomic counters can bring some non-determinism into your PGO pipelines.
 * As usual, there are multiple documentation issues (like [one](https://github.com/llvm/llvm-project/issues/74022), [two](https://github.com/llvm/llvm-project/issues/82140)) in different areas. E.g. if you check my one of the earliest PGO benchmarks, you will see `-fprofile-instr-generate` usage (FE PGO) instead of `-fprofile-generate` (IR PGO). As we discussed earlier, IR PGO nowadays should be preffered over FE PGO. But I didn't know that since this information wasn't written in the documentation! If I, a person who spent quite a lot of time with PGO, did this mistake - what about users who only start their PGO trip? Fortunately, right now the issue is resolved, and the Clang's PGO documentation [recommends](https://clang.llvm.org/docs/UsersManual.html#profiling-with-instrumentation) using IR PGO over FE PGO. Despite all of that, I would say Clang has **the best** PGO-related documentation at least among the open-source compilers.
-* Sometimes you can [meet](https://bugs.fuchsia.dev/p/fuchsia/issues/detail?id=111987) "Unable to track new values: Running out of static counters..." warning. This is due some LLVM internal implementations details about how much memory is allocated during the instrumentation phase for some counters. In most situtations, you can ignore/suppress such warnings. If you care you can try to increase the amout of counters via `-mllvm -vp-counters-per-site` compiler switch. However, I didn't find benchmarks about how it influences on the resulting PGO optimization quality - you can be the first one! More information can be found in LLVM [sources](https://llvm.org/doxygen/InstrProfiling_8cpp_source.html).
+* Sometimes you can [meet](https://issues.fuchsia.dev/issues/42063306) "Unable to track new values: Running out of static counters..." warning. This is due some LLVM internal implementations details about how much memory is allocated during the instrumentation phase for some counters. In most situtations, you can ignore/suppress such warnings. If you care you can try to increase the amout of counters via `-mllvm -vp-counters-per-site` compiler switch. However, I didn't find benchmarks about how it influences on the resulting PGO optimization quality - you can be the first one! More information can be found in LLVM [sources](https://llvm.org/doxygen/InstrProfiling_8cpp_source.html).
+* Some smaller undocumented limitations like [impossibility](https://issues.fuchsia.dev/issues/42072804) to write multiple PGO profiles in continous mode or an annoying "function control flow change detected (hash mismatch)" warning ([Fuchsia](https://issues.fuchsia.dev/issues/336358027), [Chromium](https://issues.chromium.org/issues/40272404)) that can be "fixed" with `-Wno-backend-plugin` supressor.
 
 By the way, if you are interested in some PGO implementation details in Clang, I can recommend to watch [this](https://www.youtube.com/watch?v=CvbIPGSnes8) talk from C++ Russia 2021. The only limitation - the talk is in Russian so prepare your translators.
 
 Apple has a special Clang version - Apple Clang. Unfortunately, Apple Clang [documentation](https://opensource.apple.com/source/clang/clang-23/clang/tools/clang/docs/UsersManual.html) is not as rich as for the "main" Clang. I asked multiple questions about: [supported instrumentation PGO kinds](https://apple.stackexchange.com/questions/467215/profile-guided-optimization-pgo-kinds-in-xcode), [sampling PGO support](https://apple.stackexchange.com/questions/467182/sampling-profile-guided-optimization-pgo-with-xcode-and-clang), [differences between Clang and Apple Clang from PGO perspective](https://apple.stackexchange.com/questions/467218/profile-guided-optimization-pgo-differences-between-clang-and-apple-clang) (additionally [asked](https://developer.apple.com/forums/thread/742840) all these questions on the official Apple developer forum) - no answers. For now I guess a good idea with Apple Clang will be using the command-line reference to track supported compiler options and rely on the "main" Clang documentation in deeper questions. Of course, here there is a risk that Apple ported some features partially or didn't implement them at all in their Clang version. The best idea, however, will be just considering switching to the upstream Clang instead ;) For now I cannot say you why PGO situation with Apple Clang is so questionable. Maybe PGO is not very popular in the Apple ecosystem. Maybe even Apple-oriented users prefer to use other compilers...
 
 #### GCC
+
+TODO: add a note about ccache, GCC profiles based on a filepath and changed filepaths with ccache. Also mention this one: https://issuetracker.google.com/issues/223669638#comment6
 
 With GCC I found the following issues:
 
@@ -837,6 +859,7 @@ TODO: Write more about `llvm-profdata` tool usage. Check the documentation for t
 TODO: write about GCC tools
 TODO: write about pprof tools
 TODO: write about other compilers and importance of such tools
+TODO: Write about merging instrumentation PGO with sampling PGO profiles: https://reviews.llvm.org/D81981 + https://issuetracker.google.com/issues/259718081#comment18
 
 Let's talk a bit about operations with PGO profiles. In practice, you want to perform the following things:
 
@@ -960,6 +983,8 @@ Generally speaking, with the current PGO state across build systems manual compi
 
 ## PGO profile collection
 
+TODO: Some work about PGO builds automation for LLVM builds: https://issuetracker.google.com/issues/334876457
+
 Okay, you decided to give PGO a try in your application. But where can you collect a profile? And, what is more important, where can you collect *a good* profile? There are multiple approaches - let's discuss all of them!
 
 ### Tests
@@ -981,6 +1006,7 @@ From my experience, I met the following problems with using benchmarks as a PGO 
 TODO: insert here a meme about a parrot who learned to say "It depends" and became an architect
 TODO: add project examples where such an approach is used
 TODO: write about benchmark infra standardization in some ecosystems as Rust with `cargo bench`
+TODO: benchmark run fail can lead to PGO performance decrease: https://issues.chromium.org/issues/41491803#comment17
 
 Some examples of using benchmarks as a PGO training workload:
 
@@ -1095,7 +1121,7 @@ From my perspective, BOLT has the following problems/caveats/nuances:
 * BOLT [supports](https://github.com/llvm/llvm-project/blob/main/bolt/README.md#input-binary-requirements) only x86-64 and AArch64 architectures, AArch64 implementation is less tested than x86-64. Since BOLT works as a disassembler it means if you want to apply BOLT to other architectures like RISC-V or something like that - you need to carefully patch BOLT for that. Chances for the upstream support for other architectures are also quite low - Facebook dev team does not care much about it.
 * Limited support for languages. For C, C++ and Rust binaries BOLT works well. However, for other languages you can meet different problems. Let's take a look on Golang support for LLVM BOLT: [GitHub issue](https://github.com/golang/go/issues/49031#issuecomment-1837418788) - unfortunately for now there is no way to use BOLT with Go binaries. And once again - upstream developers are not very interested in such functionality. This is quite strage because performance results are promising: [YouTube timestamp](https://www.youtube.com/watch?v=AT-ttb6VwRA&t=402s).
 * Memory consumption. During the profile conversion via `perf2bolt` or the instrumentation phase - in [both](https://github.com/llvm/llvm-project/issues/62320) [cases](https://github.com/llvm/llvm-project/issues/61711) BOLT can be memory hungry. This problem can be only partially mitigated: the case with PGO profile conversion can be resolved with using smaller profiles (but it's not suitable option if you have no ability to collect a representative small profile - completely real-life case if you are trying to optimize a long-running process with multiple steps inside); instrumentation phase can be "patched" with [using](https://github.com/llvm/llvm-project/issues/61711#issuecomment-1484246795) `-strict=0` option (but it disables some optimizations in BOLT). During my BOLT tests I did another trick - just threw money into my PC and got from a friend an additional 16 Gib RAM :)
-* Broken binaries. Sometimes after BOLTing an application crashes. There are multiple examples like [MySQL](https://github.com/llvm/llvm-project/issues/62307), [Clang](https://github.com/llvm/llvm-project/issues/60045), [ananicy-cpp](https://github.com/llvm/llvm-project/issues/73992), a shared library [issue](https://github.com/llvm/llvm-project/issues/64634). I am not saying that your binary will be broken as well, I just warned you about the issue - be ready for that.
+* Broken binaries. Sometimes after BOLTing an application crashes. There are multiple examples like [MySQL](https://github.com/llvm/llvm-project/issues/62307), [Clang](https://github.com/llvm/llvm-project/issues/60045), [ananicy-cpp](https://github.com/llvm/llvm-project/issues/73992), [Julia](https://github.com/llvm/llvm-project/issues/89117), a shared library [issue](https://github.com/llvm/llvm-project/issues/64634). I am not saying that your binary will be broken as well, I just warned you about the issue - be ready for that. Anyway, the BOLT dev team tries to fix such errors.
 * According to the [README](https://github.com/llvm/llvm-project/blob/main/bolt/README.md#for-services) file, when non-LBR profiles will be used for optimization with BOLT, the optimization result will be less efficient. However, no information is available about how much performance loss will be in practice. I understand that it highly depends on many variables like application type, target workload, etc. but as a user I need at least some initial numbers for some applications to understand the difference in practice. [Here](https://github.com/llvm/llvm-project/issues/61902) is the corresponding issue for that question in the upstream. If someone wants to perform such experiments - please ping me in the issue!
 
 BOLT is already integrated into the optimization pipelines in several projects:
@@ -1118,6 +1144,9 @@ More materials? Of course, I have something to share:
 ### Propeller
 
 TODO: Do I have any benchmarks? I guess putting from the official Google papers is fine here
+TODO: interest in Propeller: https://issues.fuchsia.dev/issues/42162813 + https://issuetracker.google.com/issues/200184657
+TODO: LBR limitation: https://issuetracker.google.com/issues/200184657#comment14
+TODO: ask to unify efforts with BOLT: https://github.com/google/llvm-propeller/issues/10
 
 Do you want more? Here we go:
 
@@ -1150,6 +1179,8 @@ Binary optimization is not a novel technique - this idea is quite old. Since thi
 From my experience, right now BOLT would be the better option to start with if we are talking about PLO usage.
 
 TODO: add thoughts about unification efforts between BOLT and Propeller: https://github.com/google/llvm-propeller/issues/10
+TODO: Android's toolchain uses BOLT instead of CSFDO: https://issuetracker.google.com/issues/223669638#comment16
+TODO: Some notes about BOLT vs Propeller for Chromium: https://issues.chromium.org/issues/40740472
 
 ## LTO, PGO, PLO state in the ecosystem
 
@@ -1197,7 +1228,7 @@ I hope having PGO-related documentation in the project helps users in the follow
 
 One more wish - please, place PGO-related documentation somewhere in the visible place. It can be just a README file note (for smaller projects) or a dedicated page (for larger projects with a dedicated website). It would be awesome if you have some kind of search over the documentation where I can type "PGO" and go to the corresponding piece of documentation. Otherwise finding the corresponding page can be a difficult task. E.g. let's check MariaDB case. MariaDB [has](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf) PGO documentation but, unfortunately, it's in the form of PDF file. I even don't know how to find this file via the official [documentation](https://mariadb.com/kb/en/documentation/) - I found this guide only via Google search! MariaDB's built-in search engine on its website cannot find anything related to PGO. I discussed this topic with MariaDB's devs at FOSDEM 2024 and they promised me take a look at it. I remember your promise ;)
 
-All information above targets mostly PGO documentation for applications. What about libraries? Since libraries are *usually* smaller than an application, possibly leaving some PGO benchmarks in the README file will be enough. If your library supports building artifacts like dynamic, static libraries or some packages like Python wheels and you support building them with PGO (like `pydantic` project [does](https://github.com/pydantic/pydantic-core/pull/678)) - document this process as well.
+All information above targets mostly PGO documentation for applications. What about libraries? Since libraries are *usually* smaller than an application, possibly leaving some PGO benchmarks in the README file will be enough (something like [this](https://github.com/lovasoa/serde-sqlite-jsonb/pull/2) one). If your library supports building artifacts like dynamic, static libraries or some packages like Python wheels and you support building them with PGO (like `pydantic` project [does](https://github.com/pydantic/pydantic-core/pull/678)) - document this process as well.
 
 #### Prebuilt binaries
 
@@ -1238,6 +1269,7 @@ Sometimes PGO is not supported in the upstream for some reason. In this case, a 
 
 * libtre in FreeBSD: [Makefile](https://cgit.freebsd.org/ports/tree/textproc/libtre/Makefile)
 
+TODO: Request for enabling PGO for the Rustc compiler in Fuchsia: https://issues.fuchsia.dev/issues/42083760
 TODO: write about Propeller adoption - nowhere adopted
 
 What about PLO adoption?
@@ -1349,7 +1381,7 @@ Nowadays many people are crazy about clouds. So in my mind raised an idea - what
 * OVH: no answer yet (waits for moderation)
 * Yandex and VK clouds: no answer. Waits for moderation or just silently rejected - I don't know
 
-From chatting with my friends and asking proper questions at the [Highload](https://highload.ru/) conference I can say that local public clouds like Yandex cloud or VK cloud also don't use PGO internally for their products. I am pretty sure that the situation with other clouds is pretty much the same.
+From chatting with my friends and asking proper questions at the [Highload](https://highload.ru/) conference I can say that local public clouds like Yandex Cloud or VK Cloud also don't use PGO internally for their products. I am pretty sure that the situation with other clouds is pretty much the same.
 
 In general, communication with corporations sucks a lot. Yeah, I know that it's obvious and bla-bla-bla. But I needed to highlight it once again. Even developers from these companies confirm that this communication way sucks (ofc no names here)!
 
@@ -1552,13 +1584,18 @@ TODO: add some reflections about user profile, lol - https://gitflic.ru/user/ert
 TODO: need to register in different issue trackers since no available SSO via providers like Google - tired
 TODO: sometimes registration is not approved like https://git.picodata.io/picodata/picodata/picodata
 
+### Other
+
+TODO: Sometimes you need to ask explicitly about sharing PGO benchmarks: https://issues.chromium.org/issues/325103518#comment8
+TODO: Source for many interesting PGO-related things: https://issuetracker.google.com/issues?q=PGO (during the look through don't forget to look at "Similar issues"!)
+
 ## PGO tips
 
 TODO: finish the chapter
 
 ## FAQ
 
-### Is PGO a silver bullet?
+### Is PGO a silver bullet? :D
 
 TODO: What to do with performance regressions after PGO? Rustc question: https://users.rust-lang.org/t/how-to-report-performance-regressions-with-profile-guided-optimization-pgo/98225
 TODO: doesn't work for IO-bound things - PGO doesn't help for IO-bound workloads: https://github.com/near/nearcore/issues/10916#issuecomment-2041807052
@@ -1628,7 +1665,7 @@ And many other [known unknowns](https://www.theuncertaintyproject.org/tools/rums
 
 Another possible caveat - different mangling rules between OS. I [met](https://github.com/mstorsjo/llvm-mingw/issues/383#issuecomment-1838585818) such an issue at least once and confirmed it with my local tests, the Rustc project also [found](https://discord.com/channels/636084430946959380/1041903397873406012/1177366981368877127) the same issue. For fixing this there is an idea to write a PGO profile converter Linux <-> macOS for changing OS-specific symbol name details. Current status - just an idea, nothing more. If you want to implement it - you are welcome (pls don't forget to open-source it!).
 
-So by default, I recommend regenerating the PGO profile for each operating system. If you cannot do it for some reason (e.g. there is no possibility to collect PGO profiles on some target OS due to various reasons like [lack of](https://github.com/pydantic/pydantic-core/issues/732) corresponding runners in a CI pipeline) - you could try to apply a PGO profile from one OS to PGO-optimized build for another OS but you need to track somehow that this PGO profile has good coverage for the target OS too.
+So by default, I recommend regenerating the PGO profile for each operating system. If you cannot do it for some reason (e.g. there is no possibility to collect PGO profiles on some target OS due to various reasons like [lack of](https://github.com/pydantic/pydantic-core/issues/732) corresponding runners in a CI pipeline) - you could try to apply a PGO profile from one OS to PGO-optimized build for another OS but you need to track somehow that this PGO profile has good coverage for the target OS too. Practical [example](https://issues.chromium.org/issues/40281799) of such reusage - Chrome on Android.
 
 ### Does PGO/PLO depend on a CPU architecture?
 
@@ -1699,6 +1736,8 @@ At least in this case with Clang PGO profile has higher priority than a user-spe
 
 Why do the compilers hesitate to document such behavior? At first, there was no interest in such information before (at least I didn't find it in the public field) :) If no one is interested in it - there is no reason to document it. At second, internally compilers are pretty complicated things, with multiple optimization passes, etc. Tracking interaction between user hints and PGO can be a tricky task that depends on multiple compiler internal details. I am pretty sure that without additional semiresearch/semidebug compiler engineers also don't know the exact behavior in all cases. And even if they know - guaranteeing it can be a limitation since if you guarantee something you need to test it, make regression tests, etc. But we are humans == we are lazy by design so we don't like to do extra things. So actually I don't expect that such things will be documented in the near future.
 
+TODO: Clang -Wmisexpect warning: https://clang.llvm.org/docs/DiagnosticsReference.html#wmisexpect + https://issues.chromium.org/issues/40694104 + https://llvm.org/docs/MisExpect.html . GCC doesn't have such functionality (yet): https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114851#c1
+
 What about the mentioned above "clever" strategies for handling PGO and user-hints at the same time like warnings, merging, etc.? Unfortunately, I didn't find anyhting like that in the modern compilers. Possibly a good improvement point for current PGO implementations.
 
 ### Regenerating vs caching PGO profiles
@@ -1749,7 +1788,7 @@ More about handling inline assembly in LLVM you can find in the "2021 LLVM Dev M
 
 ### How does PGO/PLO help with binary size optimization?
 
-Sometimes you want to optimize not for speed but for size. In most cases, such requests I heard from the embedded world. For PGO I didn't find good investigations in this area. The only finding is [this](https://bugs.fuchsia.dev/p/fuchsia/issues/detail?id=79458) issue in the Fuchsia issue tracker with some measurements. However, the dataset is small - we need more evaluations in this area. If you have something - please share it!
+Sometimes you want to optimize not for speed but for size. In most cases, such requests I heard from the embedded world. For PGO I didn't find good investigations in this area. The only finding is [this](https://issues.fuchsia.dev/issues/42159696) issue in the Fuchsia issue tracker with some measurements. However, the dataset is small - we need more evaluations in this area. If you have something - please share it!
 
 BOLT [cannot](https://discord.com/channels/636084430946959380/930647188944613406/1183491352382689432) reduce the binary size. There was some ongoing work on it but the original author [lost interest](https://discord.com/channels/636084430946959380/930647188944613406/1183493533894725663) in the project.
 
@@ -1778,7 +1817,7 @@ Narrowing the place where the performance is decreased is another topic to discu
 
 ### How long should I collect PGO profiles?
 
-Actually, compiler doesn't care about how long you collect your PGO profile. The only thing that the compiler cares is how much of your code is *covered* in your PGO profile. If ~100% percent of your code is executed during the 100ms of execution and this execution completely represents your target workload - there is no need to spend more time with PGO profile collection. In many real scenarios, even if your training workload takes **hours** to complete, you spend most of the time in the same places of your code, so there is no critical need to wait for the end. As an example, you can check my [experiment](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028) with LLD and ClickHouse. However, if your workload takes a long period of time to complete, and during the execution it touches different places of code at different time points, and you want to optimize your application as much as possible - in ideal world, you need to collect the PGO profile from the whole training script. So statements like "You don't need to large PGO profiles for optimizing your software" ([click](https://github.com/llvm/llvm-project/issues/61711#issuecomment-1497184801)) are only partially true. In practice, the answer is, again - "It depends".
+Actually, compiler doesn't care about how long you collect your PGO profile. The only thing that the compiler cares is how much of your code is *covered* in your PGO profile. If ~100% percent of your code is executed during the 100ms of execution and this execution completely represents your target workload - there is no need to spend more time with PGO profile collection. In many real scenarios, even if your training workload takes **hours** to complete, you spend most of the time in the same places of your code, so there is no critical need to wait for the end. As an example, you can check my [experiment](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028) with LLD and ClickHouse. However, if your workload takes a long period of time to complete, and during the execution it touches different places of code at different time points, and you want to optimize your application as much as possible - in ideal world, you need to collect the PGO profile from the whole training script. If some places are [not covered](https://issues.chromium.org/issues/40244486) - they will not be optimized. So statements like "You don't need to large PGO profiles for optimizing your software" ([click](https://github.com/llvm/llvm-project/issues/61711#issuecomment-1497184801)) are only partially true. In practice, the answer is, again - "It depends".
 
 One possible caveat that you can find with large profiles is that PGO-related tooling is not optimized for such cases. It could crash or just [get OOMed](https://github.com/llvm/llvm-project/issues/61711). In this case, you can try to do a trick. Instead of collecting one big profile and processing it via a tool, collect N smaller profiles, process them with a tool, and then try to merge processed PGO profiles into one once again. it works since during the conversion phase the tool can perform some heavy and not-so-memory-optimized operations but during the merge phase performed routines are quite simple - "just" merge counters from multiple files into a big one.
 
@@ -1786,7 +1825,7 @@ One possible caveat that you can find with large profiles is that PGO-related to
 
 Reproducible builds are a hot topic nowadays for various reasons: security, build cross-validation, etc. More about it you can read [here](https://reproducible-builds.org/). From the PGO perspective we have a problem here since PGO introduces another source of non-determinism to your build that consequently sacrifices your reproducibility efforts. Since some distributions like Rocky Linux care a lot about reproducibility (I had a great conversation about it with a Rocky Linux maintainer at FOSDEM 2024), expanding PGO usage across software can become a problem.
 
-Fortunately, the reproducibility issue with PGO can be mitigated. The most obvious way - collect PGO profiles once, commit them to a VCS, and use these profiles for every build. Since your PGO profile is static, you will get the same binary each time. Also, it's possible to generate PGO workloads based on some random inputs - just be sure that you use a fixed seed. E.g. this way was [used](https://github.com/void-linux/void-packages/issues/29526#issuecomment-872803985) for Foot's PGO optimization in Void Linux. Easy-peasy! However, when you commit a profile to a repo, and then users try to use this profile during the PGO build, they will ask you a question - "How did you collect this profile? What was the training workload?". They care because if the training workload differs a lot from their target workload - they simply cannot use your PGO profile! I [met](https://github.com/ozontech/file.d/issues/468#issuecomment-1703866524) this problem with the `file.d` project: they committed a profile, and there is no way to understand from which workload the profile was collected. How can you fix it? At the very least, you can describe somehow your training workload. Even a small piece of text like "For File.d the PGO training workload was reading logs from a file, transforming them with regular expressions and sending them to a ClickHouse cluster" (just an example, not an actual description). Providing training workload Bash scripts (or whatever similar) improves the situation even more since in this case a user can run your scripts in their environment and recreate the PGO profile. Or tweak these scripts a bit and adapt to their specific workloads. As a rule of thumb: if you don't understand how a PGO profile was collected - just regenerate it. And please do not forget one more thing - if your applications evolve and/or your target workload is changed, you need to regenerate your PGO profile and commit it to the repository once again. If you don't do it, your PGO optimization becomes less and less efficient over time since less and less actual source code is covered by the saved PGO profile.
+Fortunately, the reproducibility issue with PGO can be mitigated. The most obvious way - collect PGO profiles once, commit them to a VCS, and use these profiles for every build. Since your PGO profile is static, you will get the same binary each time. Also, it's possible to generate PGO workloads based on some random inputs - just be sure that you use a fixed seed. E.g. this way was [used](https://github.com/void-linux/void-packages/issues/29526#issuecomment-872803985) for Foot's PGO optimization in Void Linux and [proposed](https://issues.chromium.org/issues/41438361#comment10) in Chromium. Easy-peasy! However, when you commit a profile to a repo, and then users try to use this profile during the PGO build, they will ask you a question - "How did you collect this profile? What was the training workload?". They care because if the training workload differs a lot from their target workload - they simply cannot use your PGO profile! I [met](https://github.com/ozontech/file.d/issues/468#issuecomment-1703866524) this problem with the `file.d` project: they committed a profile, and there is no way to understand from which workload the profile was collected. How can you fix it? At the very least, you can describe somehow your training workload. Even a small piece of text like "For File.d the PGO training workload was reading logs from a file, transforming them with regular expressions and sending them to a ClickHouse cluster" (just an example, not an actual description). Providing training workload Bash scripts (or whatever similar) improves the situation even more since in this case a user can run your scripts in their environment and recreate the PGO profile. Or tweak these scripts a bit and adapt to their specific workloads. As a rule of thumb: if you don't understand how a PGO profile was collected - just regenerate it. And please do not forget one more thing - if your applications evolve and/or your target workload is changed, you need to regenerate your PGO profile and commit it to the repository once again. If you don't do it, your PGO optimization becomes less and less efficient over time since less and less actual source code is covered by the saved PGO profile. In advanced PGO pipelines the profiles efficiency is [measured](https://issuetracker.google.com/issues/301994149) on a regular basis.
 
 One step beyond this idea, we come to an interesting topic - making a PGO profile itself reproducible, not a PGO-optimized build. Here things quickly become more complicated. At first, if your instrumented application has some non-deterministic logic inside (like time-based things or relies on any other external non-reproducible source like hardware RNG), different code paths may be executed -> you get different PGO profiles. These things usually can be fixed manually in your software somehow (e.g. mocking all sources of non-determinism or reworking the source code). Another thing to consider is how your compiler creates PGO profiles. Some compiler like Clang by default uses [non-atomic counter updates](https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-update). So if your application is multi-threaded, with a huge chance PGO profile will differ. Fortunately, this behavior can be changed via `-fprofile-update` compiler switch. As a downside, instrumentation overhead will increase. The overhead shouldn't be too big in practice but anyway. If you use another compiler - please check the corresponding documentation. According to my experiments, usually Instrumentation PGO produces reproducible PGO profiles if you have deterministic logic inside your application, the same training input, etc. However, this is not always the case. E.g. let's check the reproducibility [issue](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93398) for the PGO-optimized GCC build. According to the issue, things like Address Space Layout Randomization ([ASLR](https://en.wikipedia.org/wiki/Address_space_layout_randomization)) and "randomness" in places like hash-tables can introduce problems. Generally speaking, we need to perform more tests across different compilers (including proprietary) and software to understand better the common practical problems with PGO in reproducible build pipelines.
 
@@ -1830,9 +1869,12 @@ Applications" [paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-f
   - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
   - [Gentoo Wiki about the Linux kernel optimization](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
   - Optimizing Linux kernel with Clang. An [article](https://habr.com/ru/companies/ruvds/articles/696236/)(in Russian) and the [results](https://github.com/h0tc0d3/linux_pgo)
+  - Also highly recommend to read [this](https://groups.google.com/g/clang-built-linux/c/85eKdM9_Jeg/) thread about enabling PGO for the Linux kernel with Clang. A lot of interesting insights!
 * Windows: 5-20% improvement according to the [presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
 
 Unfortunately, I have no PGO results for other operating systems like macOS (almost impossible to get insights from Apple, you know) or *BSD (e.g. see [this](https://www.reddit.com/r/freebsd/comments/150codp/profileguided_optimization_pgo_on_freebsd_kernel/) Reddit post). If you can perform tests for other operating systems or already know some PGO results - please let me know!
+
+TODO: Enable PGO, LTO for Fuchsia: https://issues.fuchsia.dev/issues/335919004 + https://issues.fuchsia.dev/issues/331995728
 
 Operating systems can be optimized with PGO in the same as we do for usual applications: compile with instrumentation (if we choose instrumentation PGO), run target workload on the operating system, collect PGO profiles, and recompile the OS once again.
 
@@ -1844,7 +1886,7 @@ This idea can go even further! What about building Application Specific Interpre
 
 Today machine-learning (ML) things are popular, and they are popular for a reason - in many cases, they work great! So it's natural to have an idea about using ML somehow in the compilers.
 
-One of the ideas is MLGO: a Machine Learning Guided Compiler Optimizations Framework ([paper](https://arxiv.org/pdf/2101.04808.pdf), [GitHub](https://github.com/google/ml-compiler-opt)). The idea is simple - try to use machine-learning-driven decisions in some optimizations in the compiler. Every modern compiler already has some kind of "implicit performance model" about the code: a bunch of heuristics for splitting hot/cold code, multiple semi-hidden inline thresholds (like [this](https://github.com/llvm/llvm-project/blob/main/llvm/lib/Analysis/InlineCost.cpp#L82) from LLVM), etc. All these numbers have appeared in compiler through years of compiler optimizations - but this doesn't make all these hardcoded constants the best possible values in for every program! MLGO project tries to replace such hardcoded places in LLVM with something more flexible and twekable - with a ML model. E.g. MLGO uses a Tensorflow-based neural network to perform better inlining decisions (see paper for more details). The work is still in the early stages but looks promising. LLVM is not alone here - Intel® oneAPI DPC++/C++ Compiler has similar `-fprofile-ml-use` [option](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/fprofile-ml-use.html).
+One of the ideas is MLGO: a Machine Learning Guided Compiler Optimizations Framework ([paper](https://arxiv.org/pdf/2101.04808.pdf), [article](https://research.google/blog/mlgo-a-machine-learning-framework-for-compiler-optimization/), [GitHub](https://github.com/google/ml-compiler-opt), some [benchmarks](https://chromium-review.googlesource.com/c/chromium/src/+/3829793) for Chrome). The idea is simple - try to use machine-learning-driven decisions in some optimizations in the compiler. Every modern compiler already has some kind of "implicit performance model" about the code: a bunch of heuristics for splitting hot/cold code, multiple semi-hidden inline thresholds (like [this](https://github.com/llvm/llvm-project/blob/main/llvm/lib/Analysis/InlineCost.cpp#L82) from LLVM), etc. All these numbers have appeared in compiler through years of compiler optimizations - but this doesn't make all these hardcoded constants the best possible values in for every program! MLGO project tries to replace such hardcoded places in LLVM with something more flexible and twekable - with a ML model. E.g. MLGO uses a Tensorflow-based neural network to perform better inlining decisions (see paper for more details). The work is still in the early stages but looks promising. LLVM is not alone here - Intel® oneAPI DPC++/C++ Compiler has similar `-fprofile-ml-use` [option](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2023-2/fprofile-ml-use.html).
 
 Even if right now the options above look quite unstable (they are) I still think we will get more and more ML-driven tools around us, and compilers are not something special here. PGO and ML-based compilers have a common thing - they both need some kind of runtime profile of the application to perform better optimization decisions. I can expect that in the future we will see some hybrids between PGO and ML approaches. There are semi-academic projects like [CompilerGym](https://github.com/facebookresearch/CompilerGym) with an aim to help with implementing and testing ML-based approaches for compiler problems. Already [there are](https://llvm.org/devmtg/2024-03/#talk4) some talks from LLVM dev meetings about expanding ML usage.
 
@@ -1914,9 +1956,9 @@ Right now I don't have enough data about PGO usage in the embedded domain. If yo
 
 ### Explore PGO for mobile domain
 
-TODO: add here about autofdo in Android - https://source.android.com/docs/core/perf/autofdo and already deprecated https://source.android.com/docs/core/perf/pgo
+I didn't hear much about using PGO for mobile devices. Maybe it's because on mobile platforms nowadays we have not-so-PGO-friendly stack (mostly Android/Java and Apple/Swift) - both of these programming languages definetely are not huge PGO users. However, having better CPU performance is still important: better UI responsiveness, better battery life - nice things to have. Also, don't forget about underlying components on Android/iOS - they are written in native technologies and definitely can be optimized with PGO!
 
-I didn't hear much about using PGO for mobile devices. Maybe it's because on mobile platforms nowadays we have not-so-PGO-friendly stack (mostly Android/Java and Apple/Swift) - both of these programming languages definetely are not huge PGO users. However, having better CPU performance is still important: better UI responsiveness, better battery life - nice things to have.
+Android has two pages about using PGO with it: [one](https://source.android.com/docs/core/perf/pgo) for instrumentation PGO, [another one](https://source.android.com/docs/core/perf/autofdo) for sampling PGO. Instrumentation PGO is deprecated for usage with Android 14 and newer, so if you target the newest Android versions - probably there are no big reasons to invest your time into instrumentation PGO. Why did they deprecate it? Google invested and invests a lot of resources into polishing sampling PGO, they use mainly sampling PGO on their backends - they simply [don't want](https://issuetracker.google.com/issues/315464624#comment3) to maintain redundant (from their point of view) technology. Fair enough, I would say. Fun fact: even Google [had](https://issuetracker.google.com/issues/315464624) some issues regarding Frontend PGO vs IR PGO recommendations in their documentation - no one is perfect ;) What about iOS and other mobile operating systems - do they use PGO for building kernels and related things? I don't know - I wasn't able to find information about that in public sources.
 
 Apple and Google with their centralized App Store/Play Store infrastructure can bring additional value to PGO movement. One of the biggest issues with using PGO for applications on mobile platforms is the question "How to collect PGO profiles from clients?". Implementing PGO profile collection logic from clients' smartphones for each developer is too complicated way. It would be much better to integrate it as a developer platform. Ideally, this can look like just as an additional option in the application settings like "Enable PGO profiles collection". Users during the installation can opt-in/opt-out "Share with developers application execution profiles for improving performance" button, App Store/Play store then provides all required routines for delivering profiles from mobile phones to a developer build machine for further usage. It will allow developers in a much easier way collect actual PGO profiles from real users - a good thing to have for the whole ecosystem. Unfortunately, now there is no such functionality out of the box - if you want something similar, you need to implement it manually.
 
@@ -2024,6 +2066,10 @@ The original idea is described [here](https://github.com/aaupov/school_topics/bl
 The same thing is already implemented internally in Google. This system samples all applications across Google servers with Google Wide Profiler (GWP), transforms sample profiles into a compiler-compatible format, and then passes converted profiles to the build pipelines. More about GWP and its connection to PGO at Google can be found in these papers: [one](https://research.google/pubs/autofdo-automatic-feedback-directed-optimization-for-warehouse-scale-applications/), [two](https://research.google/pubs/google-wide-profiling-a-continuous-profiling-infrastructure-for-data-centers/). Google, do you want to open-source this system (even if this system has too many dependencies on other closed-sourced Google projects)? :) Other large companies also has similar system-wide profilers like Yandex with its Yandex.Perforator. Unfortunately, this project cannot be used for continuous PGO yet. Maybe in the future Perforator will be extended with such functionality and open-sourced (as they already did for multiple awesome projects like [ClickHouse](https://clickhouse.com/), [YDB](https://ydb.tech/), [YTsaurus](https://ytsaurus.tech/)).
 
 There is an idea to implement a similar approach based on an open-source project like Grafana Pyroscope ([discussion](https://github.com/grafana/pyroscope/discussions/2783)) or Elastic Universal Profiling ([issue](https://github.com/elastic/elasticsearch/issues/105802)). I am not alone with such an idea - other people outside Google already [tried](https://discuss.elastic.co/t/continuous-profile-guided-optimization-pgo-platform-based-on-elastic-universal-profiling/354605/2) to implement a similar approach with positive results. However, the current state of these activities is just a discussion, nothing to try yet.
+
+Google Cloud has a [Cloud Profiler](https://cloud.google.com/profiler/docs/about-profiler) product that also can be used for Continuous PGO. I am guessing that Cloud Profiler internally somehow reuses Google Wide Profiler. This project allows continuosly measure performance of GCP-deployed applications (out-of-GCP scenarios are also supported) from multiple perspectives: CPU, RAM, thread and lock contentions, etc. I [asked](https://www.googlecloudcommunity.com/gc/Google-Cloud-s-operations-suite/Continuous-Profile-Guided-Optimization-PGO-platform-based-on/m-p/743125) about evolving Cloud Profiler into a Continuous PGO platform - let's wait for the answer. Some people also [wants](https://issuetracker.google.com/issues/296460994) such functionality. I didn't play with the product yet but from reading the documentation I found a strange limitation - at least from the documentation point of view measuring performance for applications written in C, C++, Rust, etc. is not supported yet. I [opened](https://www.googlecloudcommunity.com/gc/Google-Cloud-s-operations-suite/Support-for-more-programming-languages-in-Cloud-Profiler/m-p/743114) a discussion about that. What about other cloud providers like AWS and Azure? I didn't see similar products in their portfolio. If you know more about that - please let me know.
+
+TODO: PGO training workloads can be shared between companies and can be quite private: https://issues.chromium.org/issues/325519354 + https://chromium.googlesource.com/chromium/src.git/+/master/docs/pgo.md
 
 Another idea is gathering PGO profiles (instrumentation or sampling, whatever) via a crowd-sourcing-like mechanism. One of the biggest issues with PGO is collecting actual usage profiles. But what if we had a repository where each software engineer can get actual PGO profiles for its application and use it for PGO-optimized builds on their official site? It could be done e.g. via a specific OS build where all PGO-potent applications are built with instrumentation or continually collect sampling profiles via `perf` or something like that. There are **a lot** of concerns here like privacy issues (potential mapping "some_user_id -> application execution profiles"), security issues (organizing an attack on an application performance via messing publicly-gathered PGO profiles), implementation (who and how would implement all this stuff?!), and much more. Maybe community-driven projects like [Boinc](https://boinc.berkeley.edu/) could be a good example here - right now it's just an idea, no more. And I am [not alone](https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1422805-llvm-now-using-pgo-for-building-x86_64-windows-release-binaries-~22-faster-builds?p=1422977#post1422977) with this idea.
 

@@ -139,6 +139,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [Microbenchmarks](https://github.com/qdrant/qdrant/issues/2354#issuecomment-1701936793)
 * [OceanBase](https://en.oceanbase.com/): [GitHub comment](https://github.com/oceanbase/oceanbase/issues/1580#issuecomment-1732874282)
 * [NativeDB](https://github.com/vincent-herlemont/native_db): [GitHub issue](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050)
+* Dolt: [Blog](https://www.dolthub.com/blog/2024-02-02-profile-guided-optimization/)
 
 ### Logging
 
@@ -317,6 +318,8 @@ Below you can find some examples of where and how PGO is integrated into differe
   - [CMake module](https://github.com/SWI-Prolog/swipl-devel/blob/master/cmake/PGO.cmake)
 * hck: [Justfile](https://github.com/sstadick/hck/blob/master/justfile#L27)
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268)
+* Dolt: [Blog](https://www.dolthub.com/blog/2024-04-19-golang-pgo-builds-using-github-actions/)
+* libvpx: [Chromium issue tracker](https://issues.chromium.org/issues/325103518#comment10)
 
 ## Project-specific documentation about PGO
 
