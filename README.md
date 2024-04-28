@@ -55,7 +55,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [Go compiler performance numbers](https://go-review.googlesource.com/c/go/+/495596)
 * D:
   - DMD: [GitHub issue](https://github.com/dlang/dmd/pull/13791#issue-1164476335)
-  - LDC: [GitHub comment](https://github.com/ldc-developers/ldc/discussions/4524#discussioncomment-7537608) and this [article](https://johanengelen.github.io/ldc/2016/07/15/Profile-Guided-Optimization-with-LDC.html)
+  - LDC: [GitHub comment](https://github.com/ldc-developers/ldc/discussions/4524#discussioncomment-7537608), [this](https://johanengelen.github.io/ldc/2016/07/15/Profile-Guided-Optimization-with-LDC.html) and [this](https://johanengelen.github.io/ldc/2016/04/13/PGO-in-LDC-virtual-calls.html) articles
 * Julia: [GitHub PR](https://github.com/JuliaLang/julia/pull/45641#issue-1268010204)
 * [PHP](https://www.php.net/):
   - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
