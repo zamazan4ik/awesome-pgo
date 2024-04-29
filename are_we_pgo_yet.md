@@ -199,6 +199,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SteamOS: https://github.com/ValveSoftware/SteamOS/issues/1287
 * Tock: https://github.com/tock/tock/discussions/3850
 * Asterinas: https://github.com/asterinas/asterinas/issues/760
+* rt-thread: https://github.com/RT-Thread/rt-thread/discussions/8877
 
 ## Virtual machines and emulators
 
