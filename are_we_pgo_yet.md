@@ -334,6 +334,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * parseable: https://github.com/parseablehq/parseable/issues/224
 * Hayabusa: https://github.com/Yamato-Security/hayabusa/discussions/1247
 * Loki: https://github.com/grafana/loki/issues/11939
+* angle-grinder: https://github.com/rcoh/angle-grinder/discussions/203
 
 ## Machine learning
 

@@ -271,6 +271,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * A lot of insights, history, and great benchmarks for LTO and PGO efficiency in LLVM and GCC in various software (including Firefox and LibreOffice) from Honza Hubička: [GCC 4.8](https://hubicka.blogspot.com/2014/04/linktime-optimization-in-gcc-2-firefox.html), [GCC 5](https://hubicka.blogspot.com/2015/04/GCC5-IPA-LTO-news.html), [GCC 6 and Clang 3.9](https://hubicka.blogspot.com/2016/03/building-libreoffice-with-gcc-6-and-lto.html), [GCC8 and Clang 6](https://hubicka.blogspot.com/2018/12/even-more-fun-with-building-and.html), [GCC9](https://hubicka.blogspot.com/2019/05/gcc-9-link-time-and-inter-procedural.html)
 * koto: [GitHub discussion](https://github.com/koto-lang/koto/discussions/312#discussion-6534310)
 * prost: [GitHub discussion](https://github.com/tokio-rs/prost/discussions/1041#discussion-6549416)
+* angle-grinder: [GitHub discussion](https://github.com/rcoh/angle-grinder/discussions/203#discussion-6583612)
 
 ## Projects with already integrated PGO into their build scripts
 
