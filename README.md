@@ -272,6 +272,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * koto: [GitHub discussion](https://github.com/koto-lang/koto/discussions/312#discussion-6534310)
 * prost: [GitHub discussion](https://github.com/tokio-rs/prost/discussions/1041#discussion-6549416)
 * angle-grinder: [GitHub discussion](https://github.com/rcoh/angle-grinder/discussions/203#discussion-6583612)
+* zune-image: [GitHub discussion](https://github.com/etemesi254/zune-image/discussions/193#discussion-6605993)
+* graphql-lint: [GitHub issue](https://github.com/grafbase/grafbase/issues/1689#issue-2279168725)
 
 ## Projects with already integrated PGO into their build scripts
 

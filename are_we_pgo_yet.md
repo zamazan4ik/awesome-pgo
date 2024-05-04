@@ -483,6 +483,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * serde-sqlite-jsonb: https://github.com/lovasoa/serde-sqlite-jsonb/discussions/1
 * nearcore: https://github.com/near/nearcore/issues/10916
 * prost: https://github.com/tokio-rs/prost/discussions/1041
+* zune-image: https://github.com/etemesi254/zune-image/discussions/193
+* graphql-lint: https://github.com/grafbase/grafbase/issues/1689
 
 ## PGO in distributions
 

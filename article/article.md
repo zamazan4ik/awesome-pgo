@@ -834,9 +834,6 @@ As a small conclusion about PGO support in different programming languages. C an
 ## PGO profile processing
 
 TODO: Write more about `llvm-profdata` tool usage. Check the documentation for the tool and find missing parts in it
-TODO: write about GCC tools
-TODO: write about pprof tools
-TODO: write about other compilers and importance of such tools
 
 Let's talk a bit about operations with PGO profiles. In practice, you want to perform at least the following things with profiles:
 
@@ -846,13 +843,15 @@ Let's talk a bit about operations with PGO profiles. In practice, you want to pe
 
 Usually, all these operations are done not with compilers but with dedicated tools. Each PGO ecosystem brings different tools for that. Let's do a quick overview for them.
 
-### LLVM
-
 In the LLVM ecosystem, the main tool to work with PGO profiles is [llvm-profdata](https://llvm.org/docs/CommandGuide/llvm-profdata.html). It supports all mentioned above scenarios like merging, comparing and showing summary and much-much more - just check the amount of different switches in it! It even supports SOTA (State-of-the-Art) scenarios like [merging](https://issuetracker.google.com/issues/259718081#comment18) Sampling and Instrumentation PGO profiles together with a goal to get the best from the both worlds: precision of instrumentation profiles (that can be collected rarely) and lightness of sampling profiles (that can be collected as frequent as we want due to low runtime overhead during the collection process). Implementation details for that can be found [here](https://reviews.llvm.org/D81981).
 
-### GCC
+The GCC's alternative to `llvm-profdata` is `gcov-tool` ([docs](https://gcc.gnu.org/onlinedocs/gcc/Gcov-tool.html)). This tool also allows merging multiple PGO profiles, comparing them and showing some statistics - basic scenarios are covered well. However, it supports far less "advanced" options compared to `llvm-profdata` so this tool provides you less flexibility. Since some scenarios like merging multiple PGO profiles at once [are not supported](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=47618#c29), community already developed extensions like [gcov-tool-many](https://github.com/yugr/maintainer-scripts/blob/master/gcov-tool-many). However, such extensions can be less maintained than the "official" GCOV tools so be keep it in mind.
 
-TODO: write about GCOV format and tools for it
+TODO: finish about pprof
+
+The official Go compiler [supports](https://go.dev/wiki/PGO-Tools) multiple tool. The main tool for work with the profiles is [pprof](https://github.com/google/pprof).
+
+If you know other dedicated PGO-related tools - please let me know. I am especially interested if they support some non-usual scenarios for processing PGO profiles.
 
 ### Proprietary tooling
 
@@ -932,7 +931,7 @@ Source-based package managers don't provide prebuilt binaries. Instead, a packag
 
 Next station - binary package managers. They can deliver already precompiled dependencies for you. In that case, you don't need to spend your or CI's time on building dependencies once again - someone already did it for you. From the PGO point of view, it can be a problem - what if precompiled library uses not good enough for your use case PGO profile? Different package managers solves it in different ways. Some of them like Cargo just doesn't support prebuilt dependencies. You won't need to resolve issues with prebuild binaries if you don't have prebuilt binaries at all - clever enough! Some of them like Conan allow you in a one click switch between source/binary library versions: if you are ok with the prebuilt version - use it and save your CI time, if you are not - use source version and recompile it locally (probably with PGO).
 
-How many dependencies do support PGO nowadays? I did a small research, and the results are sad: almost all libraries don't support building with PGO. It's true for both source- and binary-based things. A pleasant exclusions are [pydantic-core](https://github.com/pydantic/pydantic-core/pull/741) and [python-libipld](https://github.com/MarshalX/python-libipld/pull/30) libraries: they optimize prebuilt binaries (a Rust library + Python bindings packed into a Python wheel) with some predefined PGO training scenario. Unfortunately, these examples are just exclusions from the overall state across package managers.
+How many dependencies do support PGO nowadays? I did a small research, and the results are not fascinating: almost all libraries don't have a *dedicated* support for building with PGO. It's true for both source- and binary-based things. A pleasant exclusions are [pydantic-core](https://github.com/pydantic/pydantic-core/pull/741) and [python-libipld](https://github.com/MarshalX/python-libipld/pull/30) libraries: they optimize prebuilt binaries (a Rust library + Python bindings packed into a Python wheel) with some predefined PGO training scenario. Unfortunately, these examples are just exclusions from the overall state across package managers.
 
 In theory, it's possible to optimize prebuilt binary libraries on the package manager side, and then deliver preoptimized library.
 
@@ -997,7 +996,7 @@ From my experience, I met the following problems with using benchmarks as a PGO 
 
 TODO: insert here a meme about a parrot who learned to say "It depends" and became an architect
 TODO: add project examples where such an approach is used
-TODO: write about benchmark infra standardization in some ecosystems as Rust with `cargo bench`
+TODO: write about benchmark infra standardization in some ecosystems as Rust with `cargo bench` and an effect
 TODO: benchmark run fail can lead to PGO performance decrease: https://issues.chromium.org/issues/41491803#comment17
 TODO: an interesting discussions about multiple PGO profiles, memory degradation and performance boost due to better PGO training set: https://issues.chromium.org/issues/41490637
 TODO: Add more benchmark numbers when a PGO training workload and target workload are not completely the same
@@ -1006,6 +1005,10 @@ Some examples of using benchmarks as a PGO training workload:
 
 * Firefox: [Uses](https://github.com/mozilla/gecko-dev/blob/master/build/pgo/profileserver.py#L25) WebKit performance test suite.
 * Pydantic-core: [Uses](https://github.com/pydantic/pydantic-core/blob/main/Makefile#L74) own benchmarks.
+
+Some ecosystems (like Rust) allows you to use benchmarks as a PGO training scenario in an easier way. In Rust you can use the benchmarks for PGO training phase with a simple `cargo pgo bench` command. In Rust it's possible to achieve since the community "standardized" not only how the Rust projects are built but other related routines like unit-tests, documentation, benchmarking.
+
+It's an another example where tooling matters - if you make something convenient enough to use without (huge) pain - people will use it more frequently. I can confirm it since I used the `cargo-pgo` approach for many projects specifically for the "PGO training on benchmarks" use case - it worked flawlessly. It would be nice to see similar tools for other PGO-enabled ecosystems like C++, Fortran, etc.
 
 Several times I heard something like "Hey, training PGO on benchmarks and then testing PGO efficiency on the same benchmark is not fair - of course, it will work! What about real-world cases?". I cannot understand such a point of view. If your benchmark represents "live" workload well - it's fine to use it for the PGO training phase. If it doesn't represent real world well - why do you have such benchmarks? :)
 
@@ -1175,6 +1178,8 @@ Binary optimization is not a novel technique - this idea is quite old. Since thi
 ### What to choose?
 
 Since we have so many PLO tools, the obvious question appears - what should I use? From my experience, right now BOLT will be the best option to start with if we are talking about PLO usage. Start by default with BOLT. If it works for you - great, stay with it. If you meet some limitations and they cannot be easily mitigated - consider switching to another tools like Propeller and TLO.
+
+Someone may ask - why do we have PGO and PLO at the same time? Why do need two dedicated approaches that do the same things - optimize an application based on runtime statistics. That's a very good question.
 
 TODO: add thoughts about unification efforts between BOLT and Propeller: https://github.com/google/llvm-propeller/issues/10
 TODO: Android's toolchain uses BOLT instead of CSFDO: https://issuetracker.google.com/issues/223669638#comment16
