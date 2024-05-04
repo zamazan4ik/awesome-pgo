@@ -206,9 +206,9 @@ PGO has two major types:
 * Instrumentation-based
 * Sampling-based
 
-To make things even more complicated - there are a bunch of hybrid approaches as well. We will check them a bit later. Right now let's take a deeper look at the major ones.
+To make things even more complicated - there are a bunch of hybrid approaches as well. We will check them a bit later. Right now let's take a deeper look at the most common PGO type - Instrumentation PGO.
 
-#### PGO via instrumentation
+### Instrumentation PGO
 
 Right now, instrumentation mode is the de-facto default PGO mode in for almost all PGO implementations (except the Go compiler). So if you hear somewhere something about PGO, in 99% of cases, it is the instrumentation PGO. How does it work?
 
@@ -265,71 +265,35 @@ In LLVM, there are several instrumentation PGO subtypes:
 
 A big "Thank you!" to [Amir](https://twitter.com/disruptnhandlr) for his excellent [write-up](https://aaupov.github.io/blog/2023/07/09/pgo) about this topic!
 
-##### FrontEnd PGO (FE PGO)
+#### FrontEnd PGO (FE PGO)
 
-TODO: add a diagram of a typical LLVM-based compiler: frontend-middlend-backend
+We need to understand (just a bit!) the internal LLVM [architecture](https://aosabook.org/en/v1/llvm.html). It consists of three main parts:
 
-FE PGO approach is simple. The compiler during the compilation process automatically inserts counters before translating to the LLVM IR. A bit more information about this approach you can read [here](https://clang.llvm.org/docs/SourceBasedCodeCoverage.html). As far as I know, Clang is the only compiler (at least the only open-source compiler) that implements this approach.
+* Frontend: where your language is parsed from a source to a intermediate representation (LLVM IR). Each programming language has a dedicated frontend (like Clang, Rustc, LDC, etc.)
+* Middle-end (aka "the optimizer"): where almost all compiler optimizations are performed on LLVM IR.
+* Backend - where the LLVM IR is converted to the machine code is generated (and some more low-level optimizations are also performed).
 
-Despite source-based coverage being widely used for code coverage calculations and similar stuff, for PGO nowadays [it's not a recommended](https://github.com/llvm/llvm-project/issues/45668) approach anymore. All current investments into the PGO infrastructure in LLVM are done into IR PGO-based approaches. Some deeper details can be found [here](https://discourse.llvm.org/t/couple-of-general-questions-about-pgo/72279) and [here](https://discourse.llvm.org/t/status-of-ir-vs-frontend-pgo-fprofile-generate-vs-fprofile-instr-generate/58323).
+Of course I omitted a lot of interesting details but we don't need them here. Some compilers can have fewer internal parts, some of them - more, actually doesn't matter for our case.
 
-##### IR PGO
+Knowing it, FE PGO approach is simple. The compiler during the compilation process automatically inserts counters and other PGO-related things on the frontend part, before translating to the LLVM IR. A bit more information about this approach you can read [here](https://clang.llvm.org/docs/SourceBasedCodeCoverage.html). As far as I know, Clang is the only compiler (at least the only open-source compiler) that implements this approach. In Clang this type of PGO is enabled with `-fprofile-instr-generate`/`-fprofile-instr-use`.
 
-TODO
+Despite source-based coverage being widely used for code coverage calculations and similar stuff, for PGO nowadays [it's not a recommended](https://github.com/llvm/llvm-project/issues/45668) approach anymore. All current investments into the PGO infrastructure in LLVM are done into IR PGO-based approaches (described below). Some deeper details can be found [here](https://discourse.llvm.org/t/couple-of-general-questions-about-pgo/72279) and [here](https://discourse.llvm.org/t/status-of-ir-vs-frontend-pgo-fprofile-generate-vs-fprofile-instr-generate/58323).
 
-The idea is completely the same as with FE PGO but instead of counters insertion on the frontend side, we insert them on IR level.
+#### IR PGO
 
-##### Context-Sensitive IR PGO (CSIR PGO)
+The idea is completely the same as with FE PGO but instead inserting PGO things on the frontend side, we insert them on the middle-end. What does it change from the user perspective? Nothing. What does it change from the compiler perspective? I don't know enough LLVM implementation details so I guess here. At least inserting PGO things on the middle-end can help to unify PGO infrastructure and make it reusable across multiple languages: you don't need to implement PGO instrumentation code on each frontend, instead we do most things once on the middle-end. On the frontend side usually you need to pass only a few things.
 
-TODO: write about CSIR PGO and LLVM BOLT - https://github.com/rust-lang/rust/issues/118562#issuecomment-1842738590
-TODO: CSIR PGO results for LLVM: https://issuetracker.google.com/issues/200085858#comment5 + https://issues.chromium.org/issues/40147394
-TODO: CSFDO (CSPGO) benchmarks: https://issuetracker.google.com/issues/223669638
+Clang implements this approach with `-fprofile-generate`/`-fprofile-use` options. This is the recommended way to use instrumentation PGO with Clang. AFAIK, GCC implements a similar approach with its [GIMPLE](https://gcc.gnu.org/onlinedocs/gccint/GIMPLE.html) representation.
 
-The idea is completely the same as with IR PGO. However, PGO counters are inserted **after** the inlining phase. It makes profiles more precise in practice.
+#### Context-Sensitive IR PGO (CSIR PGO)
+
+The idea with CSIR PGO is completely the same as with IR PGO with one difference: the PGO machinery is inserted **after** the inlining phase - with IR PGO it's done **before** the inlining phase. If inlining is performed after the instrumentation PGO, it can affect negatively PGO profiles precision, that consequently negatively affects PGO optimization efficiency.
+
+I collected some benchmarks regarding applying CSIR PGO in practice: [one](https://issuetracker.google.com/issues/200085858#comment5), [two](https://issues.chromium.org/issues/40147394), [three](https://issuetracker.google.com/issues/223669638). During my PGO benchmarks I tried to use CSIR PGO several times and didn't find the performance difference in practice between IR PGO and CSIR PGO - maybe I was too unlucky, who knows. You also can raise the question: if we have CSIR PGO why do we need IR PGO at all? The answer is still [unclear](https://discourse.llvm.org/t/profile-guided-optimization-pgo-related-questions-and-suggestions/75232/21).
+
+My personal recommendation: start with the regular IR PGO approach first. Only after integrating IR PGO you can try to additionally apply CSIR PGO and measure the performance difference. If it works for you - great, use IR PGO + CSIR PGO. If it doesn't - well, don't waste your time with CSIR PGO.
 
 More about CSIR PGO you can watch at "2020 LLVM Developers’ Meeting: “PGO Instrumentation: Example of CallSite-Aware Profiling”" ([Youtube](https://www.youtube.com/watch?v=GBtQrYx_Jbc)).
-
-#### PGO via Sampling (SPGO)
-
-TODO: add info about Sampling PGO aka AutoFDO aka AFDO
-TODO: add information about how profiles can be collected: Linux perf, Intel Sampling Enabling Product (SEP), other tools (possibly proprietary)
-TODO: compare Linux perf and Intel SEP. E.g. the latest Intel SEP doesn't work with 6.x Linux kernels due to compilation errors
-TODO: SEP user guide - https://www.intel.com/content/www/us/en/content-details/686066/sampling-enabling-product-user-s-guide.html
-TODO: AutoFDO support was added in GCC 5 and LLVM 3.5 - https://hubicka.blogspot.com/2015/04/GCC5-IPA-LTO-news.html
-TODO: Profi algorithm https://issues.chromium.org/issues/40242999
-TODO: some AutoFDO benchmarks - https://issuetracker.google.com/issues/259718081
-TODO: Rework article a bit since Intel SEP can be used for Sampling PGO on Linux, Windows, FreeBSD platforms - https://clang.llvm.org/docs/UsersManual.html#using-sampling-profilers . But latest version of this tool doesn't work at least on Linux kernel 6.x - https://community.intel.com/t5/Analyzers/socwatch2-15-module-is-not-loaded-correctly-when-using-kernel-6/td-p/1584234
-TODO: Good paper about different sampling FDO approaches: https://hpctest.cs.tsinghua.edu.cn/papers/tc11.pdf
-
-By the way, Sampling PGO is often called as FDO. From my understanding, this is due to Google AutoFDO project - a special set of tools to implement Sampling PGO for GCC and LLVM-based compilers. We will cover this project a bit later - stay tuned ;)
-
-More about AutoFDO you can find here:
-
-* Original AutoFDO paper: [Google research](https://research.google/pubs/pub45290/)
-* "Taming Hardware Event Samples for FDO Compilation" [paper](https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/36358.pdf)
-
-#### Other PGO types
-
-There are additional PGO ways that are mostly presented only in LLVM infrastructure and the Clang compiler since in this area the most advanced PGO developments are done nowadays (IMO).
-
-* Context-sensitive Sample PGO with Pseudo-Instrumentation (CSS PGO). This PGO type tries to resolve one of the biggest challenges with Samling PGO - improving PGO profiles quality. Here it's done via some kind of pseudo-instrumentation that brings little overhead compared to a "naive" sampling PGO but measurably improves PGO profiles quality and consequently the quality of PGO-driven optimizations (at least in the reported benchmarks). More details: [Google groups](https://groups.google.com/g/llvm-dev/c/1p1rdYbL93s/), [RFC](https://aaupov.github.io/assets/csspgo-rfc-email.html), CSS PGO profile generation [instructions](https://groups.google.com/g/llvm-dev/c/U6zI4M1l1SI), some performance [results](https://groups.google.com/g/llvm-dev/c/-Ao1uXCi8QM). I didn't test it in practice though.
-* Control Flow Sensitive AutoFDO (FS-AFDO). Another attempt to improve Sampling PGO quality. In this work, PGO developers try to implement some mitigations against compiler optimizations that can influence Sampling PGO profile precision. More details - [clack](https://lists.llvm.org/pipermail/llvm-dev/2020-November/146694.html).
-* Temporal PGO. This kind of PGO tries to optimize another thing - startup time for applications by reshuffling functions inside generated binaries by execution times to reduce the amount of page faults. Startup time is especially important for the mobile domain - that's why this work is done by Meta. More materials about Temporal PGO: [RFC](https://discourse.llvm.org/t/rfc-temporal-profiling-extension-for-irpgo/68068), [Google Groups](https://groups.google.com/a/chromium.org/g/chromium-dev/c/Awq_xBXQgFY/), Chrome on Android [experiments](https://issues.chromium.org/issues/326463850) with Temporal PGO.
-* There is a [PR](https://github.com/llvm/llvm-project/pull/69535) (previous version is [here](https://reviews.llvm.org/D63949)) with implementation sampling approach for instrumentation PGO phase. The idea is simple - instead of incrementing each instrumentation counter each time we increment them with some sampling rate. Accoriding to tests, it helps to reduce instrumentation overhead in some cases up to 5x still with pretty good PGO profile overlap compared to default instrumentation - something about 90%. Current status: WIP.
-
-Hard to say, how many things from the topics above are already upstreamed to LLVM, how many things are just temporal (heh) experiments - I didn't check it. At least we see many interesting developments with PGO - it's a good sign!
-
----
-
-We can conclude that for now there are two the most stable PGO approaches: Instrumentation and Sampling. Instrumentation has far longer history than Sampling so we can *expect* higher availability across industry. Sampling PGO is a younger PGO approach but still pretty tested in the wild (at least by Google). Other PGO types are pretty experimental things and should be considered to use with some higher attention level.
-
-We did a quick overview of different PGO types. What about their practical nuances?
-
-## PGO caveats
-
-I have read **many** articles about PGO. Unfortunately, I found almost nothing about PGO issues and difficulties in different situations. So I just collected as many as possible traps myself and want to share my experience (not traps) with you. Niels Bohr once said: “An expert is a person who has made all the mistakes that can be made in a very narrow field.”. Am I a PGO expert now, huh?
-
-TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
 
 ### Instrumentation PGO: problems
 
@@ -491,6 +455,29 @@ I performed several experiments on my test machine. The idea of the experiments 
 
 As you see, PGO profiles are **very** sensitive to changing compiler flags. The compiler update also with high probability will invalidate your PGO profiles since between compiler versions inside the compiler can be done many changes: new optimization can be implemented, internal optimization thresholds can be tweaked, optimization passes order can be changed (this thing also influence generated code), etc. Rule of thumb is simple - after changing **anything** related to the code generation don't forget to regenerate PGO profiles.
 
+### Sampling PGO (aka SPGO)
+
+As we see, Instrumentation PGO has so many problems. Some of them like instrumentation runtime overhead are so critical that people decided to implement another approach for doing PGO. Regarding compilers support, it's available [for a while](https://hubicka.blogspot.com/2015/04/GCC5-IPA-LTO-news.html) in C++ compilers: since GCC 5 and LLVM 3.5. The Go compiler also uses Sampling PGO approach (however it's avaialble only since 2023).
+
+TODO: add info about Sampling PGO aka AutoFDO aka AFDO
+
+By the way, Sampling PGO is often called as FDO. From my understanding, this is due to Google AutoFDO project - a special set of tools to implement Sampling PGO for GCC and LLVM-based compilers. We will cover this project a bit later - stay tuned ;)
+
+There are different ways of how the PGO profiles can be collected for Sampling PGO. The most commonly used tool for that is Linux perf. The biggest disadvantage of it - Linux perf works only on Linux. To avoid this limitation, LLVM also [supports](https://clang.llvm.org/docs/UsersManual.html#using-sampling-profilers) reading sampling PGO profiles generated with [Intel SEP](https://www.intel.com/content/www/us/en/content-details/686066/sampling-enabling-product-user-s-guide.html) (Sampling Enabling Product) - this tools works on Windows, Linux, BSD and Android platforms (at least according to the documentation). I tried to use it during my tests but failed - unfortunately the tool [doesn't work](https://community.intel.com/t5/Analyzers/socwatch2-15-module-is-not-loaded-correctly-when-using-kernel-6/td-p/1584234) with the latest Linux kernel versions due to compilation errors and I didn't want to downgrade my Fedora setup. Hopefully, Intel engineers will resolve the issue soon. However, you need to keep this information in mind since the similar issues can appear in the future too. Does PGO profile from Intel SEP work well on all platforms with LLVM? I am not sure at all since I believe this feature was tested only wit Linux so be careful. Android [uses](https://android.googlesource.com/platform/system/extras/+/refs/heads/master/simpleperf/doc/collect_etm_data_for_autofdo.md) the Simpleperf profiler (via the `profcollectd` system [daemon](https://android.googlesource.com/platform/system/extras/+/main/profcollectd/)) for doing the same thing - I didn't test it too. From all the tools above, Linux perf is the most batlle-tested profiler for collecting PGO profiles.
+
+More about AutoFDO you can find here:
+
+* Original AutoFDO paper: [Google research](https://research.google/pubs/pub45290/) (some benches included)
+* "Taming Hardware Event Samples for FDO Compilation" [paper](https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/36358.pdf)
+* "Taming Hardware Event Samples for Precise and Versatile Feedback Directed Optimizations" [paper](https://hpctest.cs.tsinghua.edu.cn/papers/tc11.pdf)
+* Sampling PGO benchmarks from the Chromium project: [link](https://issuetracker.google.com/issues/259718081)
+
+## PGO caveats
+
+I have read **many** articles about PGO. Unfortunately, I found almost nothing about PGO issues and difficulties in different situations. So I just collected as many as possible traps myself and want to share my experience (not traps) with you. Niels Bohr once said: “An expert is a person who has made all the mistakes that can be made in a very narrow field.”. Am I a PGO expert now, huh?
+
+TODO: insert here a meme with Garold with pain (about all my PGO mistakes)
+
 ### Sampling PGO problems
 
 #### Branch Stack Sampling support
@@ -534,20 +521,35 @@ What if you use another external profiler with custom profile format - you'll ne
 
 Almost the same situation is with custom compilers with custom PGO profiles format - you need to implement your own profile converter. So here is the obvious recommendation - try to use more widely-used tooling. In this case, with higher chances something already will be available on the market and won't be alone warrior in the profile converting field.
 
+#### Other PGO types
+
+There are additional PGO ways that are mostly presented only in LLVM infrastructure and the Clang compiler since in this area the most advanced PGO developments are done nowadays (IMO).
+
+* Context-sensitive Sample PGO with Pseudo-Instrumentation (CSS PGO). This PGO type tries to resolve one of the biggest challenges with Samling PGO - improving PGO profiles quality. Here it's done via some kind of pseudo-instrumentation that brings little overhead compared to a "naive" sampling PGO but measurably improves PGO profiles quality and consequently the quality of PGO-driven optimizations (at least in the reported benchmarks). More details: [Google groups](https://groups.google.com/g/llvm-dev/c/1p1rdYbL93s/), [RFC](https://aaupov.github.io/assets/csspgo-rfc-email.html), CSS PGO profile generation [instructions](https://groups.google.com/g/llvm-dev/c/U6zI4M1l1SI), some performance [results](https://groups.google.com/g/llvm-dev/c/-Ao1uXCi8QM). I didn't test it in practice though.
+* Control Flow Sensitive AutoFDO (FS-AFDO). Another attempt to improve Sampling PGO quality. In this work, PGO developers try to implement some mitigations against compiler optimizations that can influence Sampling PGO profile precision. More details - [clack](https://lists.llvm.org/pipermail/llvm-dev/2020-November/146694.html).
+* Temporal PGO. This kind of PGO tries to optimize another thing - startup time for applications by reshuffling functions inside generated binaries by execution times to reduce the amount of page faults. Startup time is especially important for the mobile domain - that's why this work is done by Meta. More materials about Temporal PGO: [RFC](https://discourse.llvm.org/t/rfc-temporal-profiling-extension-for-irpgo/68068), [Google Groups](https://groups.google.com/a/chromium.org/g/chromium-dev/c/Awq_xBXQgFY/), Chrome on Android [experiments](https://issues.chromium.org/issues/326463850) with Temporal PGO.
+* There is a [PR](https://github.com/llvm/llvm-project/pull/69535) (previous version is [here](https://reviews.llvm.org/D63949)) with implementation sampling approach for instrumentation PGO phase. The idea is simple - instead of incrementing each instrumentation counter each time we increment them with some sampling rate. Accoriding to tests, it helps to reduce instrumentation overhead in some cases up to 5x still with pretty good PGO profile overlap compared to default instrumentation - something about 90%. Current status: WIP.
+* There is an ongoing [work](https://issues.chromium.org/issues/40242999) about improving Sampling PGO profile error correction efficiency with implementing a different approach aka "the Profi algorithm". Probably you also will be interested in it. I don't know what is the current status about this in the LLVM upstream.
+
+Hard to say, how many things from the topics above are already upstreamed to LLVM, how many things are just temporal (heh) experiments - I didn't check it. At least we see many interesting developments with PGO - it's a good sign!
+
+---
+
+We can conclude that for now there are two the most stable PGO approaches: Instrumentation and Sampling. Instrumentation has far longer history than Sampling so we can *expect* higher availability across industry. Sampling PGO is a younger PGO approach but still pretty tested in the wild (at least by Google). Other PGO types are pretty experimental things and should be considered to use with some higher attention level.
+
+We did a quick overview of different PGO types. What about their practical nuances?
+
 ### Common PGO problems
 
 #### Applying PGO for multilingua software
 
-TODO: like building with PGO in multi-lang apps and passing PGO info to the dependencies. `ast-grep` as an interesting example where `cargo-pgo` failed and I could not figure out - what is wrong? Seems like `tree-sitter` is the issue since it's not optimized with PGO via `cargo-pgo`. It's the case where C++ + Rust PGO is involved. `ada-url` for Rust is also a good example.
-TODO: Mention ugly https://docs.rs/cc/latest/cc/ when building Rust apps with C++ libraries (inevitable evil)
-TODO: different llvm-profdata versions for Rust and C++ can be required https://issues.fuchsia.dev/issues/42075308
-TODO: Write about llvm-profdata version compatibility with generated PGO profile - it's important otherwise you will get errors
-
-Building software that consists of multiple programming languages was always a problem. Passing values from one programming language to another, writing or generating endless amount of bindings, setuping all required toolchains for eash language, dealing with bugs in each language/toolchain, developing a proper build pipeline in your favourite build system - and I can continue this list of horrible things. That's why we all like write software in one language, and if there is a need to use multiple - we try to separate them in a more strict way (like (micro)service approach).
+Building software that consists of multiple programming languages was always a problem. Passing values from one programming language to another, writing or generating endless amount of bindings, setuping all required toolchains for eash language, dealing with bugs in each language/toolchain, developing a proper build pipeline in your favourite build system, using "dirty hacks" like Rust's [cc](https://docs.rs/cc/latest/cc/) (inevitable evil, bruh)  - and I can continue this list of horrible things. That's why we all like write software in one language, and if there is a need to use multiple - we try to separate them in a more strict way (like (micro)service approach).
 
 Unfortunately, it's not possible in all cases to avoid such problems, and we still need to do all the things above in many situtations. When we try to apply PGO for such projects, we meet additional amount of problems.
 
 Right no there is no a build system that can *automatically* enable building with PGO all dependencies in different languages - we will discuss reasons for that a bit later. Instead, you will need to pass all required compiler flags for each programming language and this experience can be a bit tricky sometimes. At first, you need to figure out that an application consists of multiple languages. Because when you perform a build, usually there is no an indication like "Hey! In your Rust application there is a bunch of C and C++ dependencies too. Don't forget to pass PGO flags to them too. Cheers mate!" - you need to guess on your own. Good indicators to check: requirements to install a C/C++/whatever_lang compiler additionally to the main language of your software. Also, during the build I check with my eyes the executed process in `btop`/`htop` and if I see usually unexpected things like `cc`/`gcc`/`clang` - I start to dig deeper into the build scripts. If you think that it's obvious - nope, it isn't, especially if we are talking about huge software with dozens of dependencies like ClickHouse. When I tried to optimize [ast-grep](https://github.com/ast-grep/ast-grep/discussions/738#discussion-5899721) with PGO, at the beginning I was wondered why PGO didn't help for performance in such so suitable for PGO case. Only a bit later I found that there is [tree-sitter](https://github.com/tree-sitter/tree-sitter) C library as a dependency in `ast-grep`, and this library is responsible for parsing routines so at first I need to apply PGO on it to improve the `ast-grep` performance. Another similar example - Rust [bindings](https://github.com/ada-url/rust/issues/61#issue-2190406874) for `ada-url`. But here the situation was obvious enough since it's the binding project - I knew from the beginning that I need to resolve cross-language PGO question. So, usually, you need to play somehow with `CC`/`CXX` flags (via environment variables or directly in the build scripts) to resolve the issue.
+
+Another issue with multilingua PGO - PGO profile format compatbility. E.g. if an application consists of two different parts in C++ and Rust, and for building each part you use Clang and Rustc compiler that under-the-hood have different LLVM versions (quite a common thing in practice since syncing such implementation details is almost impossible goal to achieve due to multiple reasons like different compiler release cycles, etc.) - you need to use two different `llvm-profdata` versions. Otherwise, you will get incompatibilty [errors](https://issues.fuchsia.dev/issues/42075308). Keep it in mind when you configure your PGO pipelines and always use tools for working with PGO profiles that are usually delivered with your compiler - in this case, you will avoid all the problems.
 
 #### Third-party and system libraries
 
@@ -681,7 +683,7 @@ What about other Rust compilers? TBH, a comparatively small amount of people in 
 
 * mrustc: [No PGO support](https://github.com/thepowersgang/mrustc/issues/304) for the compiler itself and for compiling Rust programs with the compiler.
 * [Ferrocene](https://ferrous-systems.com/ferrocene/): Since it's downstream for the Rustc compiler, it supports PGO. However, the compiler itself [is not built](https://github.com/ferrocene/ferrocene/issues/22) with PGO.
-* [gcc-rs](https://rust-gcc.github.io/): Honestly, too alpha-quality right now for pinging the developers about PGO support. One day if the project still will be alive, the developers will be able to add PGO support based on the GCC's PGO infrastructure. For now I believe that PGO does not work with `gcc-rs`. However, I asked about it in gcc-rs's Zulip chat - let's wait for the answer.
+* [gcc-rs](https://rust-gcc.github.io/): [No](https://gcc-rust.zulipchat.com/#narrow/stream/266897-general/topic/Profile-Guided.20Optimization.20.28PGO.29.20support.20with.20.20gcc-rs/near/436664530) support. Honestly, too alpha-quality right now for having such a thing like PGO. One day if the project still will be alive, the developers will be able to add PGO support based on the GCC's PGO infrastructure.
 
 ### Go
 
@@ -831,26 +833,37 @@ As a small conclusion about PGO support in different programming languages. C an
 
 ## PGO profile processing
 
-TODO: write about typical operations with PGO profiles: merge, show summary, compare
 TODO: Write more about `llvm-profdata` tool usage. Check the documentation for the tool and find missing parts in it
 TODO: write about GCC tools
 TODO: write about pprof tools
 TODO: write about other compilers and importance of such tools
-TODO: Write about merging instrumentation PGO with sampling PGO profiles: https://reviews.llvm.org/D81981 + https://issuetracker.google.com/issues/259718081#comment18
 
 Let's talk a bit about operations with PGO profiles. In practice, you want to perform at least the following things with profiles:
 
-* Merge multiple PGO profiles into one. Useful when you gather profiles from multiple workloads.
+* Merge multiple PGO profiles into one. Useful when you gather profiles from multiple workloads and want to prepare one PGO build to rule all of them.
 * Compare different PGO profiles with each other. Useful for understanding how different are execution paths of your application in different workloads or how many differences in PGO profiles are for different application versions.
 * Get some statistics about a PGO profile. How many functions/branches are executed, find most commonly used functions, etc.
 
 Usually, all these operations are done not with compilers but with dedicated tools. Each PGO ecosystem brings different tools for that. Let's do a quick overview for them.
 
-In the LLVM ecosystem, the main tool to work with PGO profiles is [llvm-profdata](https://llvm.org/docs/CommandGuide/llvm-profdata.html). It supports all mentioned above scenarios and much-much more - just check the amount of different switches in it!
+### LLVM
+
+In the LLVM ecosystem, the main tool to work with PGO profiles is [llvm-profdata](https://llvm.org/docs/CommandGuide/llvm-profdata.html). It supports all mentioned above scenarios like merging, comparing and showing summary and much-much more - just check the amount of different switches in it! It even supports SOTA (State-of-the-Art) scenarios like [merging](https://issuetracker.google.com/issues/259718081#comment18) Sampling and Instrumentation PGO profiles together with a goal to get the best from the both worlds: precision of instrumentation profiles (that can be collected rarely) and lightness of sampling profiles (that can be collected as frequent as we want due to low runtime overhead during the collection process). Implementation details for that can be found [here](https://reviews.llvm.org/D81981).
+
+### GCC
+
+TODO: write about GCOV format and tools for it
 
 ### Proprietary tooling
 
-TODO: write about proprietary tools
+If you use a proprietary compiler with custom PGO implementation without reusing LLVM/GCC infrastructure, highly-likely you will need to use a custom PGO tooling. Some examples of such tools:
+
+* `profmerge`, `proforder` [tools](https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-10/pgo-tools.html) for Intel Classic Compiler.
+* `pgomgr`, `pgosweep` [tools](https://learn.microsoft.com/en-us/cpp/build/pgomgr?view=msvc-170) for MSVC.
+* `cleanpdf`, `showpdf`, and `mergepdf` [commands](https://www.ibm.com/docs/en/openxl-c-and-cpp-aix/17.1.2?topic=compatibility-profile-guided-optimization-pgo) for the older IBM XL C/C++ compiler (replaced by `ibm-llvm-profdata` tool in the newer IBM Open XL C/C++ compiler that is probably a fork from LLVM's `llvm-profdata`).
+* `eprof` tool for the Elbrus's `LCC` compiler.
+
+Cannot say much about these tools since I didn't try them in practice. In practice, one of the biggest limitation with them is their proprietarity. Since current PGO is not widely used nowadays, there is a (small) chance that your PGO scenario will not be covered by existing tools. With open-source, you are able to patch the tools according your needs,least check implementation details (since documentation in this area is not great) or even extract some helpful information about the PGO file format (could be the case if you implement your own PGO-related tool). You cannot do all these things with propritary stuff - you are tied to the provided by the compiler developers scenarios. My recommendation - prefer to use open ecosystems.
 
 ## PGO support in build systems
 
@@ -1070,7 +1083,7 @@ Right now, there are three of the most mature tools in this area: [LLVM BOLT](ht
 
 According to its [README](https://github.com/llvm/llvm-project/blob/main/bolt/README.md), BOLT is a post-link optimizer developed to speed up large applications. It achieves the improvements by optimizing application's code layout based on execution profile gathered by sampling profiler, such as Linux `perf` tool.
 
-TODO: Cover question about CSIR PGO vs BOLT in the article
+TODO: write about CSIR PGO and LLVM BOLT - https://github.com/rust-lang/rust/issues/118562#issuecomment-1842738590
 
 Please do not mess LLVM BOLT with another [bolt](https://gitlab.freedesktop.org/bolt/bolt) project - a Thunderbolt devices manager. Naming collision happened even here. Anyway, it wouldn't be a huge problem in practice - just always search for "LLVM BOLT" and you will be fine.
 
@@ -2067,7 +2080,6 @@ Maybe one day I will write something similar but not today - I am too tired. May
 ### Improve PGO state in various ecosystems
 
 TODO: write here at least about Java AoT state (that blocks PGO efforts) and Go (we are waiting for the more mature PGO implementation in the main Go compiler), CNCF projects opportunity
-TODO: continue advertising PGO addition to the compilers and languages (like Harelang: https://harelang.org/)
 
 * We have a lot of Java software nowadays. And before we Rewrite It In Rust (RIIR) we need to care about the Java performance too. [GraalVM](https://www.graalvm.org/) helps with AoT compiling Java applications to the native mode. Since we want to integrate PGO into Java too, at first we need to integrate GraalVM well into the ecosystem.
 
@@ -2103,8 +2115,9 @@ I am thinking about trying to collaborate with large firms like Google on a proj
 
 ### Expand PGO usage across programming languages
 
-TODO: write here why it's important
-TODO: cover the topic about build system integration
+Nowadays we have many programming languages. If we want expand PGO usage, these programming languages (more precisely - compilers for these programming languages) should support PGO. In this case, all programs written in a programming language X can be optimized with PGO.
+
+As we've seen above, current support for PGO across different language ecosystems isn't so great... I already created many issues regarding that across multiple compilers. Unfortunately, I didn't see much interest from compiler developers in implementing it. Maybe they just don't believe in the PGO efficiency (that's why I wrote the article!). Of course, ideally PGO should be integrated not only into the compiler: a build system, a package manager, etc. - but the compiler support is the most important part. If you evaluate some new programming language for your use cases and you care about performance - please ask about PGO support in the upstream. Demand creates supply.
 
 ## Some random thoughts why PGO usage is so low nowadays
 
