@@ -140,6 +140,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [OceanBase](https://en.oceanbase.com/): [GitHub comment](https://github.com/oceanbase/oceanbase/issues/1580#issuecomment-1732874282)
 * [NativeDB](https://github.com/vincent-herlemont/native_db): [GitHub issue](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050)
 * Dolt: [Blog](https://www.dolthub.com/blog/2024-02-02-profile-guided-optimization/)
+* bbolt-rs: [GitHub comment](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885)
 
 ### Logging
 
@@ -194,8 +195,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * matchit: [GitHub issue](https://github.com/ibraheemdev/matchit/issues/38)
 * QOAudio (Rust version): [GitHub issue](https://github.com/rafaelcaricio/qoaudio/issues/5)
 * JSON libraries (`serde_json`, `rustc_serialize`, `simd-json`): [GitHub issue](https://github.com/serde-rs/json-benchmark/issues/23)
-* `xml-rs`: [GitHub issue](https://github.com/netvl/xml-rs/issues/228)
-* `quick-xml`: [GitHub issue](https://github.com/tafia/quick-xml/issues/632)
+* XML libraries:
+  - `xml-rs`: [GitHub issue](https://github.com/netvl/xml-rs/issues/228)
+  - `quick-xml`: [GitHub issue](https://github.com/tafia/quick-xml/issues/632)
+  - `roxmltree`: [GitHub issue](https://github.com/RazrFalcon/roxmltree/issues/118#issue-2295151269)
 * `tonic`: [GitHub issue](https://github.com/hyperium/tonic/issues/1486)
 * `tantivy`: [GitHub issue](https://github.com/quickwit-oss/tantivy/issues/2163)
 * Lychee: [GitHub issue](https://github.com/lycheeverse/lychee/issues/1247)
@@ -274,6 +277,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * angle-grinder: [GitHub discussion](https://github.com/rcoh/angle-grinder/discussions/203#discussion-6583612)
 * zune-image: [GitHub discussion](https://github.com/etemesi254/zune-image/discussions/193#discussion-6605993)
 * graphql-lint: [GitHub issue](https://github.com/grafbase/grafbase/issues/1689#issue-2279168725)
+* nom: [GitHub comment](https://github.com/rust-bakery/nom/issues/1763#issue-2292116078)
+* prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -431,6 +436,8 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
 * Pango: [Gnome blog](https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/)
 * pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
+* prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
+* bbolt-rs: [GitHub comment](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885)
 
 ## Projects with already integrated BOLT into their build scripts
 

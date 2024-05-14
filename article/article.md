@@ -337,6 +337,7 @@ An instrumented binary is slower. But how much? Well, as usual - *it depends*. I
 | lace-cli | ~1.23x | [link](https://github.com/promised-ai/lace/issues/172#issue-2104154605) |
 | candy vm | ~1.5x | [link](https://github.com/candy-lang/candy/discussions/953#discussion-6270541) |
 | angle-grinder | ~1.6x | [link](https://github.com/rcoh/angle-grinder/discussions/203#discussion-6583612) |
+| bbolt-rs | ~1.64x | [link](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885) |
 
 The same applies to libraries as well:
 
@@ -346,6 +347,9 @@ The same applies to libraries as well:
 | tonic | up to 1.55x | [link](https://github.com/hyperium/tonic/issues/1486#issue-1871968898) |
 | quick-xml | up to 2.5x| [link](https://github.com/tafia/quick-xml/issues/632#issue-1852200475) |
 | xml-rs | 1.45x | [link](https://github.com/netvl/xml-rs/issues/228#issue-1852007193) |
+| roxmltree | ~2.5x | [link](https://github.com/RazrFalcon/roxmltree/issues/118#issue-2295151269) |
+| sxd-document | ~2.0x | [link](https://github.com/RazrFalcon/roxmltree/issues/118#issue-2295151269) |
+| xmltree-rs | ~1.4x | [link](https://github.com/RazrFalcon/roxmltree/issues/118#issue-2295151269) |
 | tquic | up to 1.3x | [link](https://github.com/Tencent/tquic/issues/19#issue-1972443474) |
 | lingua-rs | up to 146x (not an error!) | [link](https://github.com/pemistahl/lingua-rs/discussions/273#discussion-5864708) |
 | tokenizers | up to 20x | [link](https://github.com/huggingface/tokenizers/issues/1426#issue-2069318532) |
@@ -358,6 +362,7 @@ The same applies to libraries as well:
 | needletail | up to 3x | [link](https://github.com/onecodex/needletail/issues/72#issue-2127271081) |
 | logos | up to 1.2x | [link](https://github.com/maciejhirsz/logos/issues/374#issue-2127942609) |
 | varpro | up to 1.3x | [link](https://github.com/geo-ant/varpro/issues/27#issue-2129147949) |
+| prettyplease | 1.3x | [link](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589) |
 
 I could prepare more advanced analyses like slowdown p50/p95/p99 percentiles, and test across more different configurations (like trying to replicate tests across different hardware/software, etc) but I am a bit lazy about doing it right now. Maybe next time ;)
 
@@ -408,6 +413,9 @@ As we've discussed above, Instrumentation PGO works by inserting into your code 
 | lua | 324 Kib | 548 Kib | 329 Kib | 1.69x | C |
 | pylyzer | 36 Mib | 66 Mib | 34 Mib | 1.8x | Rust |
 | angle-grinder | 74 Mib | 75 Mib | 61 Mib | 1.01x | Rust |
+| CreuSAT (stripped) | 748 Kib | 1.2 Mib | 643 Kib | 1.6x | Rust |
+| bbolt-rs | 1.3 Mib | 3.4 Mib | 1.3 Mib | 2.6x | Rust |
+| prettyplease | 1.5 Mib | 2.6 Mib | 1.6 Mib | 1.7x | Rust |
 
 So in regular scenarios, you should not expect a *huge* binary size increase (however, it depends on your "huge" definition that is context-dependent). For cases like web backends disk space usually is not a problem at all since modern disks are cheap enough. In other domains like embedded with limited storage it can become a problem. Also, you can meet some very niche limitations like a [limit](https://issues.fuchsia.dev/issues/42070037) for the Zircon Boot Image (ZBI) in Fuchsia - just be ready for that.
 
@@ -674,6 +682,7 @@ Some details that I want to highlight about PGO in this compiler:
 * Rustc [supports](https://github.com/rust-lang/rust/issues/64892) PGO via sampling. However, official documentation [does not cover](https://github.com/rust-lang/rust/issues/117023) this option.
 * [Missing](https://github.com/rust-lang/rust/issues/118562) support for CSIR PGO. Not critical at all but according to Google engineers CSIR PGO can achieve additional few percents in performance compared to usual IR PGO.
 * [Missing parts](https://github.com/rust-lang/rust/issues/118561) in the PGO documentation. There a lot of undocumented places in the current documentation: PGO profiles compatibility guarantees, PGO dumping-related compiler intrinsics documentation, PGO counter atomicoty behavior, etc. Rust documentation for further details refers to the Clang documentation (since Rustc from PGO perspective completely relies on LLVM). It's kinda funny because Clang also has [some](https://github.com/llvm/llvm-project/issues/74022) documentation issues in PGO area. From my point of view, it would be much easier for the Rustc users to read all PGO-related information directly from the Rustc documentation, without jumping from time to time into the Clang docs.
+* Rarely you can meet [mysterious](https://github.com/rust-lang/rust/issues/123361) issues about SIGSEGV somewhere in the LLVM depths... Or a bug/feature about changing the way how command line arguments are passed from Cargo to Rustc - it [caused](https://github.com/rust-lang/cargo/issues/7416) PGO issues too. You find something similar - GL & HF! Sorry, wanted to say "collect all statistics, core dumps, backtraces, logs, input, environment configuration, MRE (Minimal Running Example) if it possible to prepare - and create the issue about that in the compiler bug tracker". PGO journey sometimes is suffering ;)
 
 Rustc documentation about PGO is available [here](https://doc.rust-lang.org/rustc/profile-guided-optimization.html).
 
@@ -885,12 +894,14 @@ Rust build ecosystem has a standard way to run benchmarks - `cargo bench`. One o
 * Run `cargo pgo bench` to collect PGO profiles from the benchmarks with Instrumentation PGO.
 * Run `cargo pgo optmize bench` to perform PGO optimization and compare PGO-optimized results with the Release results.
 
-That's it - it's really simple to do. `cargo-pgo` supports collecting PGO profiles not only from benchmarks; it even supports optimizing your software with LLVM BOLT (covered later in this article). Actually, `cargo-pgo` is the reason why most of my PGO benchmarks are performed for Rust projects. When I look at a random C or C+ project, my thoughts are somehting like "Ehh, at first I need to figure out how to build it properly (with installing all required dependencies in a *right* way). Then I need to figure out how to run benchmarks... Nah, I am too lazy, let's try to find a Rust alternative in the same application domain and perform PGO benches on it instead". Hey, C++ [committee](https://isocpp.org/std/the-committee) SG15 ("Tooling" study group) - what about having something like this for C++ too? Because, well, you know - tooling matters **a lot**.
+That's it - it's really simple to do. `cargo-pgo` supports collecting PGO profiles not only from benchmarks; it even supports optimizing your software with LLVM BOLT (covered later in this article).
 
 Of course, even with such a handy tool, there are some nuances:
 
 * [No](https://github.com/Kobzol/cargo-pgo/issues/33) sampling PGO support. Not a big deal if you are going to use instrumentation PGO. However, if you want to collect PGO profiles directly from production (as Google does) - sampling PGO is the only viable option. In this case, you need to patch `cargo-pgo` or just pass all required Rustc flags around manually without `cargo-pgo`. Sampling not supported also for PLO tools like LLVM BOLT - we will about them a bit later.
 * If a Rust application has some non-Rust dependencies (like C or C++ "native" dependency - quite a common thing yet in the Rust ecosystem because RIIR movement is not powerful enough, lol), `cargo-pgo` [does not](https://github.com/Kobzol/cargo-pgo/issues/38) optimize these C or C++ dependencies with PGO. This is due to the difficult nature of building an application with different programming languages - in this case, `cargo-pgo` needs to detect the C compiler, depending on its vendor/version choose proper PGO-realted compiler flags, pass them properly, and other similar boring and error-prone to implement things. I completely understand why the `cargo-pgo` author doesn't want to implement it. But if you have such a case (as I [had](https://github.com/Kobzol/cargo-pgo/issues/38#issue-1878263921) with TiKV) - you need to resolve it manually. Some hacking around manually passing proper C/C++ flags in general should be enough.
+
+Actually, `cargo-pgo` is the reason why most of my PGO benchmarks are performed for Rust projects. When I look at a random C or C+ project, my thoughts are somehting like "Ehh, at first I need to figure out how to build it properly (with installing all required dependencies in a *right* way). Then I need to figure out how to run benchmarks... Nah, I am too lazy, let's try to find a Rust alternative in the same application domain and perform PGO benches on it instead". Hey, C++ [committee](https://isocpp.org/std/the-committee) SG15 ("Tooling" study group) - what about having something like this for C++ too? Because, well, you know - tooling matters **a lot**.
 
 ### Bazel
 
@@ -1098,11 +1109,12 @@ From my perspective, BOLT has the following problems/caveats/nuances:
 * BOLT [supports](https://github.com/llvm/llvm-project/blob/main/bolt/README.md#input-binary-requirements) only x86-64 and AArch64 architectures, AArch64 implementation is less tested than x86-64. Since BOLT works as a disassembler it means if you want to apply BOLT to other architectures like RISC-V or something like that - you need to carefully patch BOLT for that. Chances for the upstream support for other architectures are also quite low - Facebook dev team does not care much about it.
 * Limited support for languages. For C, C++ and Rust binaries BOLT works well. However, for other languages you can meet different problems. Let's take a look on Golang support for LLVM BOLT: [GitHub issue](https://github.com/golang/go/issues/49031#issuecomment-1837418788) - unfortunately for now there is no way to use BOLT with Go binaries. And once again - upstream developers are not very interested in such functionality. This is quite strage because performance results are promising: [YouTube timestamp](https://www.youtube.com/watch?v=AT-ttb6VwRA&t=402s).
 * Memory consumption. During the profile conversion via `perf2bolt` or the instrumentation phase - in [both](https://github.com/llvm/llvm-project/issues/62320) [cases](https://github.com/llvm/llvm-project/issues/61711) BOLT can be memory hungry. This problem can be only partially mitigated: the case with PGO profile conversion can be resolved with using smaller profiles (but it's not suitable option if you have no ability to collect a representative small profile - completely real-life case if you are trying to optimize a long-running process with multiple steps inside); instrumentation phase can be "patched" with [using](https://github.com/llvm/llvm-project/issues/61711#issuecomment-1484246795) `-strict=0` option (but it disables some optimizations in BOLT). During my BOLT tests I did another trick - just threw money into my PC and got from a friend an additional 16 Gib RAM :)
-* Broken binaries. Sometimes after BOLTing an application crashes. There are multiple examples like [MySQL](https://github.com/llvm/llvm-project/issues/62307), [Clang](https://github.com/llvm/llvm-project/issues/60045), [ananicy-cpp](https://github.com/llvm/llvm-project/issues/73992), [Julia](https://github.com/llvm/llvm-project/issues/89117), a shared library [issue](https://github.com/llvm/llvm-project/issues/64634). I am not saying that your binary will be broken as well, I just warned you about the issue - be ready for that. Anyway, the BOLT dev team tries to fix such errors.
+* Broken binaries - sometimes after BOLTing an application crashes. There are multiple SIGSEGV-flavoured issues for [MySQL](https://github.com/llvm/llvm-project/issues/62307), [Clang](https://github.com/llvm/llvm-project/issues/60045), [ananicy-cpp](https://github.com/llvm/llvm-project/issues/73992), [Julia](https://github.com/llvm/llvm-project/issues/89117), a shared library [issue](https://github.com/llvm/llvm-project/issues/64634). I am not saying that your binary will be broken as well, I just warned you about the issue - be ready for that. Anyway, the BOLT dev team tries to fix such errors.
 * According to the [README](https://github.com/llvm/llvm-project/blob/main/bolt/README.md#for-services) file, when non-LBR profiles will be used for optimization with BOLT, the optimization result will be less efficient. However, no information is available about how much performance loss will be in practice. I understand that it highly depends on many variables like application type, target workload, etc. but as a user I need at least some initial numbers for some applications to understand the difference in practice. [Here](https://github.com/llvm/llvm-project/issues/61902) is the corresponding issue for that question in the upstream. If someone wants to perform such experiments - please ping me in the issue!
 * Sampling mode works only with Linux perf profiles. If you want to use other profilers - you will need to implement some kind of profile conversion routine or tweak BOLT sources. However, since BOLT supports only the Linux platform, it shouldn't be a big limitation.
+* Lack of documentation. Even if basic usage is described in the README [file](https://github.com/llvm/llvm-project/blob/main/bolt/README.md), there are many-MANY options from `llvm-bolt --help`,  that are not even mentioned somewhere else. `llvm-bolt --help | rg '\-\-' | wc -l` gives me 113, and it isn't the end since we have *hidden* options :D So `llvm-bolt --help-list-hidden | rg '\-\-' | wc -l` gives me 247 options! Don't forget that many options have multiple parameters, there different switch combinations, etc. If you to figure out what an option does **in practice** - better just ask on LLVM Discord, Discourse platform, etc. Even if from the "man page" you are able to understand an idea in general (spoiler: you don't for all of them since we are not all compiler engineers, huh), possibly important details beyond the "beginner" stuff will be unclear.
 
-Quite a long list of disadvantages, isn't it? However, the biggest advantage of BOLT (IMO) is that this tool is the most used PLO tool nowadays not only inside Meta - open-source developers also try to integrate it (and some of them already added BOLT to their optimization pipelines). Also as an advantage I want to highlight responsive developers in the LLVM Discord channel - it's a big advantage if you are hacking such things.
+Quite a long list of disadvantages, isn't it? However, the biggest advantage of BOLT (IMO) is that this tool is the most used PLO tool nowadays not only inside Meta - open-source developers also try to integrate it (and some of them already added BOLT to their optimization pipelines). As a huge advantage, I want to highlight responsive developers in the LLVM Discord channel - it's a big advantage if you are hacking such things.
 
 I collected some numbers about binary slowdown from the BOLT instrumentation:
 
@@ -1112,6 +1124,7 @@ I collected some numbers about binary slowdown from the BOLT instrumentation:
 | Symbolicator | 1.64x | [link](https://github.com/getsentry/symbolicator/issues/1334#issue-2016488888) |
 | typos | ~3.1x | [link](https://github.com/crate-ci/typos/issues/827#issue-1888263250) |
 | pylyzer | **32x** | [link](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001) |
+| bbolt-rs | 1.33x | [link](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885) |
 
 At least in the cases above, nothing too critical except the `pylyzer` case. For some unknown yet reason, the actual slowdown from the BOLT instrumentation is a quite big. I [asked](https://discord.com/channels/636084430946959380/930647188944613406/1233792727498363020) about it in the `#bolt` channel at LLVM Discord - let's wait for the answer.
 
@@ -1122,10 +1135,13 @@ What about binary size increase from instrumentation?
 | Symbolicator | 27 Mib | 136 Mib | 33 Mib | ~5x | Rust |
 | pylyzer | 27 Mib | 126 Mib | 37 Mib | ~4.7x | Rust |
 | angle-grinder | 45 Mib | 69 Mib | 47 Mib | 1.53x | Rust |
+| prettyplease | 1.6 Mib | 15 Mib | 4.3 Mib | 9.4x | Rust |
+| bbolt-rs | 1.3 Mib | 14 Mib | 4.3 Mib | 10.8x | Rust |
+| CreuSAT | 623 Kib | 9.2 Mib | 4.1 Mib | 14.7x | Rust |
 
 The binary size increase is bigger compared to PGO instrumentation. Mostly this is due to a [limitation](https://github.com/Kobzol/cargo-pgo?tab=readme-ov-file#bolt--pgo) with stripping binary - you can get some linking errors if you strip your binary during the BOLT instrumentation phase. Except that, nothing criminal. Remember one more thing - you can try to avoid the slowdown and binary size increase with using BOLT with Sampling instead of Instrumentation.
 
-I know, I know - not a huge benchmark list (compared to the PGO lists above). That's only because I mostly spent my time with more stable and battle-tested PGO approach! Later more numbers can be provided. At least having small amount of benchmarks is better than nothing ;)
+I know, I know - not a huge benchmark list (compared to the PGO lists above). That's only because I mostly spent my time with more stable and battle-tested PGO approach! You also may noticed that all my numbers are for Rust applications - it's only because I started performing BOLT benchmarks together with PGO for applications (and one of the reasons - *very* convenient [way](https://github.com/Kobzol/cargo-pgo?tab=readme-ov-file#bolt--pgo) to use BOLT together with PGO). Later more numbers for more programs and more programming languages can (not a promise!) be provided. At least having small amount of benchmarks is better than nothing ;)
 
 BOLT is already integrated into the optimization pipelines in several projects:
 
@@ -1142,7 +1158,7 @@ Wanna more materials about BOLT? Of course, I have something to share with you:
 * Optimizing Linux kernel with BOLT: [Youtube](https://www.youtube.com/watch?v=ivTCCTSMGZg)
 * 2023 EuroLLVM Tutorial: Maksim Panchenko and Amir Ayupov "Developing BOLT pass": [Youtube](https://www.youtube.com/watch?v=kPKPkg5ugMg)
 * Some additional [materials](https://discourse.llvm.org/t/practical-compiler-optimizations-for-wsc-workshop-us-llvm-dev-meeting-2023/73998) about BOLT and similar things
-* [Ideas](https://discourse.llvm.org/t/bolt-open-projects/61857) about future improvements in BOLT
+* [Ideas](https://discourse.llvm.org/t/bolt-open-projects/61857) about future BOLT improvements
 
 ### Propeller
 
@@ -1471,7 +1487,7 @@ For performing PGO benchmarks at first I need to find suitable projects for the 
 * Reddit. The [Rust subreddit](https://www.reddit.com/r/rust/) was the most helpful. Some PGO issues were created after several **minutes** after the publication (the fastest "Evaluate using Profile-Guided Optimization (PGO)" issue generator in the world!)
 * Hackernews. That's a great place to learn about something new and hyping (and create a PGO issue for them of course!)
 * GitHub [trending](https://github.com/trending/rust?spoken_language_code=). I was using it to scrape the most starred applications in C, C++, and Rust domains. Scrape, evaluate PGO applicability, create an issue - a simple algorithm, isn't it?
-* Different "Awesome-X" repos. Oh, these sources are my favorite! In one place I get a lot of applications for the same domain. E.g. we see that PGO shines in the compilers domain. Just use [awesome-compilers](https://github.com/aalhour/awesome-compilers), evaluate **all** compilers (okay, not all compilers - all alive compilers), and create for them a PGO issue. As far as I remember, I used the following "awesome-*" repos: [awesome-compilers](https://github.com/aalhour/awesome-compilers), [(awesome-)static-analysis](https://github.com/analysis-tools-dev/static-analysis), [awesome-llvm](https://github.com/learn-llvm/awesome-llvm), [awesome-rust](https://github.com/rust-unofficial/awesome-rust), [awesome-cpp](https://github.com/fffaraz/awesome-cpp), [awesome-game-engine](https://github.com/stevinz/awesome-game-engine-dev). Or even a simple [list](https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a) of Rust command-line tools.
+* Different "Awesome-X" repos. Oh, these sources are my favorite! In one place I get a lot of applications for the same domain. E.g. we see that PGO shines in the compilers domain. Just use [awesome-compilers](https://github.com/aalhour/awesome-compilers), evaluate **all** compilers (okay, not all compilers - all alive compilers), and create for them a PGO issue. As far as I remember, I used the following "awesome-*" repos: [awesome-compilers](https://github.com/aalhour/awesome-compilers), [(awesome-)static-analysis](https://github.com/analysis-tools-dev/static-analysis), [awesome-llvm](https://github.com/learn-llvm/awesome-llvm), [awesome-rust](https://github.com/rust-unofficial/awesome-rust), [awesome-cpp](https://github.com/fffaraz/awesome-cpp), [awesome-game-engine](https://github.com/stevinz/awesome-game-engine-dev), [awesome-rust-formalized-reasoning](https://github.com/newca12/awesome-rust-formalized-reasoning). Or even a simple [list](https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a) of Rust command-line tools.
 * Other domain-specific software registries. For databases, I used [Database of Databases](dbdb.io) (nice registry btw),for cloud-native apps (whatever it means) I used [CNCF landscape](https://landscape.cncf.io/), for ML stuff - [AI & Data landscape](https://landscape.lfai.foundation/).
 * Categories in package managers. Like a "Lang" group in FreeBSD [ports](https://cgit.freebsd.org/ports/tree/lang).
 * Sometimes recommendations from the github.com main page were quite interesting to investigate as well!
@@ -1831,7 +1847,7 @@ Imagine the case, when you applied PGO to an application, ran benchmarks, and oh
 * There conflicting workloads in your training scenario.
 * A compiler bug.
 
-If after all previous steps, you believe that it's a compiler bug... Well, in this case, if you want a fix you need to report the problem to the compiler developers (of course if you are not a compiler engineer and can try to fix the compiler locally (doesn't work with proprietary compilers, though)). Debugging such problems could be a tough job for compiler developers, so be ready to prepare a Minimal Running Example (MRE) with your problem.
+If after all previous steps, you believe that it's a compiler bug... Well, in this case, if you want a fix you need to report the problem to the compiler developers (of course if you are not a compiler engineer and can try to fix the compiler locally (doesn't work with proprietary compilers, though)). Debugging such problems could be a tough job for compiler developers, so be ready to prepare a Minimal Running Example (MRE) with your problem. As an example of non-trivial PGO performance regression debug, you can take a look at [this](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=90364) one in GCC. Here we can check how tough it could be to debug PGO-related problem.
 
 Narrowing the place where the performance is decreased is another topic to discuss. Here you will need to profile your application before and after PGO optimization, and then compare them to find a diff. Tools like [Differential Flame Graphs](https://www.brendangregg.com/blog/2014-11-09/differential-flame-graphs.html) can help here. If you prefer to use other profiling tools - please check the corresponding documentation for them.
 

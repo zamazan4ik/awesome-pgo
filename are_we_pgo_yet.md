@@ -324,6 +324,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Readyset: https://github.com/readysettech/readyset/discussions/1074
 * IKV: https://github.com/inlinedio/ikv-store/issues/143
 * Valkey: https://github.com/orgs/valkey-io/discussions/64
+* bbolt-rs: https://github.com/ambaxter/bbolt-rs/issues/2
 
 ## Logging
 
@@ -485,6 +486,10 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * prost: https://github.com/tokio-rs/prost/discussions/1041
 * zune-image: https://github.com/etemesi254/zune-image/discussions/193
 * graphql-lint: https://github.com/grafbase/grafbase/issues/1689
+* Symbolica: https://reform.zulipchat.com/#narrow/stream/345757-general/topic/Profile-Guided.20Optimization.20.28PGO.29.20for.20optimizing.20Symbolica/near/438204509
+* nom: https://github.com/rust-bakery/nom/issues/1763
+* prettyplease: https://github.com/dtolnay/prettyplease/issues/74
+* roxmltree: https://github.com/RazrFalcon/roxmltree/issues/118
 
 ## PGO in distributions
 

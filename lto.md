@@ -20,6 +20,7 @@ Performance improvements from enabling LTO:
 * Symbolicator: https://github.com/getsentry/symbolicator/issues/1334
 * pylyzer: https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001
 * Rustc: https://issues.fuchsia.dev/issues/42066512
+* prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
 
 Links:
 
