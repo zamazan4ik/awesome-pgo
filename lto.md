@@ -21,6 +21,7 @@ Performance improvements from enabling LTO:
 * pylyzer: https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001
 * Rustc: https://issues.fuchsia.dev/issues/42066512
 * prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
+* resvg: https://github.com/RazrFalcon/resvg/issues/765#issue-2314946307
 
 Links:
 

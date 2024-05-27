@@ -1,5 +1,7 @@
 # Profile-Guided Optimization (PGO): the Way
 
+TODO: what about the "Life and Suffering with Profile-Guided Optimization (PGO)" name for the article?
+
 In this article, I want to discuss one compiler optimization technique - Profile-Guided Optimization (PGO). We will talk about PGO pros and cons, obvious and tricky traps with PGO, and take a look at the current PGO ecosystem from different perspectives (programming languages, build systems, operating systems, etc.). I spent many days applying PGO to different applications... Tweaking build scripts, many measurements, sometimes tricky debug sessions, several compiler bugs and much more - it was (and still is) a great journey! I think my experience would be helpful for other people so you will be able to avoid my mistakes from the beginning and much nicer optimization experience.
 
 The article is written in a story style. So the information about PGO is mixed with a lot of examples (because I like examples from the real world) and my thoughts regarding multiple aspects PGO and PGO-related aspects. Also, I prepared a lot of inline links if you are interested in deeper details in certain topics so don't hesitate to click on them!
@@ -416,6 +418,7 @@ As we've discussed above, Instrumentation PGO works by inserting into your code 
 | CreuSAT (stripped) | 748 Kib | 1.2 Mib | 643 Kib | 1.6x | Rust |
 | bbolt-rs | 1.3 Mib | 3.4 Mib | 1.3 Mib | 2.6x | Rust |
 | prettyplease | 1.5 Mib | 2.6 Mib | 1.6 Mib | 1.7x | Rust |
+| Bend | 2.5 Mib | 6.2 Mib | 2.7 Mib | 2.5x | Rust |
 
 So in regular scenarios, you should not expect a *huge* binary size increase (however, it depends on your "huge" definition that is context-dependent). For cases like web backends disk space usually is not a problem at all since modern disks are cheap enough. In other domains like embedded with limited storage it can become a problem. Also, you can meet some very niche limitations like a [limit](https://issues.fuchsia.dev/issues/42070037) for the Zircon Boot Image (ZBI) in Fuchsia - just be ready for that.
 
@@ -1639,14 +1642,14 @@ TODO: doesn't work well for already manually heavily-optimized projects like FFm
 
 TODO: add info that ThinLTO is not so slow compared to FatLTO like it was proven in https://github.com/ldc-developers/ldc/issues/2168#issuecomment-313969487
 
-Yes! Link-Time Optimization (LTO) and PGO are completely independent and can be used without each other with almost all compilers. AFAIK, the only exception is MSVC - with this compiler you cannot enable PGO without LTO.
+Yes! Link-Time Optimization (LTO) and PGO are completely independent and can be used without each other with almost all compilers. AFAIK, the only exception is MSVC - with this compiler, you cannot enable PGO without LTO.
 
 Usually, LTO is enabled before PGO. Why it happens? Because both LTO and PGO are optimization techniques with an aim to optimize your program. In most cases, enabling LTO is much easier than PGO because enabling one compiler/linker switch with LTO is an easier task than introducing 2-stage build pipelines with PGO. So please - before trying to add PGO to your program try to use LTO at first.
 
 There are some situations, when you may want to avoid using LTO with PGO:
 
 * Weak build machines. LTO (even in ThinLTO mode) consumes a large amount of RAM on your build machines. That means if your build environment is highly memory-constrained - you may want to use PGO without LTO since PGO usually has lighter RAM requirements for your CI. (TODO: add Linux distribution examples here in the build scripts)
-* Compiler bugs. Sometimes PGO does not work for some reason with LTO (like [this](https://github.com/rust-lang/rust/issues/115344) and [this](https://github.com/rust-lang/rust/issues/117220) bugs in the Rustc compiler). Even without PGO enabling LTO can bring multiple bugs - e.g. check YugabyteDB LLVM [fix](https://github.com/yugabyte/llvm-project/commit/64d871949eb23145af7b97cb13feaeeeee7ab39a).
+* Compiler bugs. Sometimes PGO does not work for some reason with LTO (like [this](https://github.com/rust-lang/rust/issues/115344) and [this](https://github.com/rust-lang/rust/issues/117220) bugs in the Rustc compiler). Even without PGO enabling LTO can bring multiple bugs - e.g. check YugabyteDB LLVM [fix](https://github.com/yugabyte/llvm-project/commit/64d871949eb23145af7b97cb13feaeeeee7ab39a) or `resvg` [experience](https://github.com/RazrFalcon/resvg/commit/dc6182f32fec2ba0d1c58ccaf42eee271f0dc633).
 
 Besides that, you can meet other smaller inconviniences with LTO like [thread contention](https://issues.chromium.org/issues/40942246#comment4) during the build process that also can be mitigated with some efforts.
 

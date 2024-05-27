@@ -91,6 +91,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * dyon: https://github.com/PistonDevelopers/dyon/issues/746
 * Mojo: https://github.com/modularml/mojo/discussions/2261
 * koto: https://github.com/koto-lang/koto/discussions/312
+* Futhark: https://github.com/diku-dk/futhark/discussions/2151
+* Bend: https://github.com/HigherOrderCO/Bend/issues/517
 
 ## Developer tooling
 
@@ -155,6 +157,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * llvm-mctoll: https://github.com/microsoft/llvm-mctoll/discussions/195
 * HEIR: https://github.com/google/heir/discussions/613
 * pylyzer: https://github.com/mtshiba/pylyzer/discussions/80
+* datadog-static-analyzer: https://github.com/DataDog/datadog-static-analyzer/discussions/377
 
 ## Build systems
 
@@ -490,6 +493,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * nom: https://github.com/rust-bakery/nom/issues/1763
 * prettyplease: https://github.com/dtolnay/prettyplease/issues/74
 * roxmltree: https://github.com/RazrFalcon/roxmltree/issues/118
+* genson-rs: https://github.com/junyu-w/genson-rs/issues/1
+* resvg: https://github.com/RazrFalcon/resvg/issues/765
+* rustwire: https://github.com/Basis-Health/rustwire/issues/2
 
 ## PGO in distributions
 

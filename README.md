@@ -141,6 +141,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [NativeDB](https://github.com/vincent-herlemont/native_db): [GitHub issue](https://github.com/vincent-herlemont/native_db/discussions/92#discussion-6053050)
 * Dolt: [Blog](https://www.dolthub.com/blog/2024-02-02-profile-guided-optimization/)
 * bbolt-rs: [GitHub comment](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885)
+* libmdbx: [GitFlic issue](https://gitflic.ru/project/erthink/libmdbx/issue/14) (in Russian)
 
 ### Logging
 
@@ -258,7 +259,6 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * python-libipld: [GitHub PR](https://github.com/MarshalX/python-libipld/pull/21)
 * sqlparser-rs: [GitHub discussion](https://github.com/sqlparser-rs/sqlparser-rs/discussions/1163#discussion-6310515)
 * arrow-datafusion: [GitHub discussion](https://github.com/apache/arrow-datafusion/discussions/9507#discussion-6341224)
-* libmdbx: [GitFlic issue](https://gitflic.ru/project/erthink/libmdbx/issue/14) (in Russian)
 * actson-rs: [GitHub issue](https://github.com/michel-kraemer/actson-rs/issues/33#issue-2187587484)
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268#issue-1805965954)
 * rust_serialization_benchmark: [GitHub issue](https://github.com/djkoloski/rust_serialization_benchmark/issues/18#issuecomment-2002184386)
@@ -279,6 +279,11 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * graphql-lint: [GitHub issue](https://github.com/grafbase/grafbase/issues/1689#issue-2279168725)
 * nom: [GitHub comment](https://github.com/rust-bakery/nom/issues/1763#issue-2292116078)
 * prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
+* genson-rs: [GitHub comment](https://github.com/junyu-w/genson-rs/issues/1#issue-2312519250)
+* resvg: [GitHub comment](https://github.com/RazrFalcon/resvg/issues/765#issue-2314946307)
+* Cloudflare (internal services): [Blog](https://blog.cloudflare.com/reclaiming-cpu-for-free-with-pgo)
+* rustwire: [GitHub comment](https://github.com/Basis-Health/rustwire/issues/2#issue-2317852317)
+* Bend: [GitHub comment](https://github.com/HigherOrderCO/Bend/issues/517#issue-2319505187)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -328,6 +333,8 @@ Below you can find some examples of where and how PGO is integrated into differe
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268)
 * Dolt: [Blog](https://www.dolthub.com/blog/2024-04-19-golang-pgo-builds-using-github-actions/)
 * libvpx: [Chromium issue tracker](https://issues.chromium.org/issues/325103518#comment10)
+* Symbolica: [Zulip message](https://reform.zulipchat.com/#narrow/stream/345757-general/topic/Profile-Guided.20Optimization.20.28PGO.29.20for.20optimizing.20Symbolica/near/438962380)
+* oxc: [GitHub comment](https://github.com/oxc-project/oxc/issues/812#issuecomment-2116233196)
 
 ## Project-specific documentation about PGO
 
@@ -438,6 +445,7 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
 * prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
 * bbolt-rs: [GitHub comment](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885)
+* resvg: [GitHub comment](https://github.com/RazrFalcon/resvg/issues/765#issue-2314946307)
 
 ## Projects with already integrated BOLT into their build scripts
 
