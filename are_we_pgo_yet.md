@@ -93,6 +93,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * koto: https://github.com/koto-lang/koto/discussions/312
 * Futhark: https://github.com/diku-dk/futhark/discussions/2151
 * Bend: https://github.com/HigherOrderCO/Bend/issues/517
+* Amber: https://github.com/Ph0enixKM/Amber/discussions/147
 
 ## Developer tooling
 
@@ -328,6 +329,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * IKV: https://github.com/inlinedio/ikv-store/issues/143
 * Valkey: https://github.com/orgs/valkey-io/discussions/64
 * bbolt-rs: https://github.com/ambaxter/bbolt-rs/issues/2
+* Chroma: https://github.com/chroma-core/chroma/issues/2296
 
 ## Logging
 
@@ -370,6 +372,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * BlazingMQ: https://github.com/bloomberg/blazingmq/issues/42
 * rumqttd: https://github.com/bytebeamio/rumqtt/discussions/717
 * Akasa: https://github.com/akasamq/akasa/issues/3
+* Iggy-rs: https://github.com/orgs/iggy-rs/discussions/990
 
 ## Proxies
 

@@ -25,3 +25,10 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * PGO benchmark for https://github.com/dalance/amber . Blocked by https://github.com/dalance/amber/issues/335
 * Add resvg and Bend numbers to the article (also other numbers should be extracted)
 * Strange responses about PGO - https://github.com/microsoft/qsharp/issues/752#issuecomment-1773194243
+* Compiler statistics of PGO: https://github.com/oxc-project/oxc/issues/812#issuecomment-2134080943
+* Search over compiler options: https://github.com/google/heir/discussions/613#discussioncomment-9606880
+* PGO benches for https://github.com/sarah-ek/faer-rs
+* Write about a stupid idea about waiting for the loooong benchmarks during the training phase (ClickHouse and faer-rs cases). Add a warning for using benchmarks as a PGO training workload. PGO instrumentation phase for faer-rs was finished in 40 hours (!!!)
+* Check PGO for https://github.com/root-project/root (build issues with LTO: https://github.com/root-project/root/issues/11657)
+* An error with BOLTing a project: https://discord.com/channels/636084430946959380/652264942778449934/1247133234719100929
+* PGO continuous profiling in Ozon: https://habr.com/ru/companies/ozontech/articles/817309/

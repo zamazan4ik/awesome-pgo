@@ -284,6 +284,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Cloudflare (internal services): [Blog](https://blog.cloudflare.com/reclaiming-cpu-for-free-with-pgo)
 * rustwire: [GitHub comment](https://github.com/Basis-Health/rustwire/issues/2#issue-2317852317)
 * Bend: [GitHub comment](https://github.com/HigherOrderCO/Bend/issues/517#issue-2319505187)
+* Amber: [GitHub discussion](https://github.com/Ph0enixKM/Amber/discussions/147#discussion-6770832)
 
 ## Projects with already integrated PGO into their build scripts
 
