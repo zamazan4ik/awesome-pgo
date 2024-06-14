@@ -209,7 +209,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * fd: [GitHub comment](https://github.com/sharkdp/fd/discussions/1384)
 * [MRCC](https://mrcc.hu/): up to 40% performance boost with PGO according to the private benchmarks
 * Broot: [GitHub issue](https://github.com/Canop/broot/issues/741)
-* Geant4 (a CERN project): [Slides](https://indico.cern.ch/event/394788/contributions/2357347/attachments/1368686/2074705/slides.pdf)
+* Geant4 (a CERN project):
+  - "Testing AutoFDO for Geant4" ([slides](https://indico.cern.ch/event/394788/contributions/2357347/attachments/1368686/2074705/slides.pdf))
+  - "Speeding up CMS simulations, reconstruction and HLT code using advanced compiler options" ([link](https://indico.cern.ch/event/1106990/contributions/4991214/))
 * Youki: [GitHub issue](https://github.com/containers/youki/issues/2386)
 * sd: [GitHub issue](https://github.com/chmln/sd/issues/237)
 * frawk: [GitHub comment](https://github.com/ezrosent/frawk/issues/103#issuecomment-1751781163)
@@ -285,6 +287,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * rustwire: [GitHub comment](https://github.com/Basis-Health/rustwire/issues/2#issue-2317852317)
 * Bend: [GitHub comment](https://github.com/HigherOrderCO/Bend/issues/517#issue-2319505187)
 * Amber: [GitHub discussion](https://github.com/Ph0enixKM/Amber/discussions/147#discussion-6770832)
+* Iggy-rs: [GitHub comment](https://github.com/orgs/iggy-rs/discussions/990#discussioncomment-9687418)
 
 ## Projects with already integrated PGO into their build scripts
 

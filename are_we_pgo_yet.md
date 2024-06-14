@@ -330,6 +330,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Valkey: https://github.com/orgs/valkey-io/discussions/64
 * bbolt-rs: https://github.com/ambaxter/bbolt-rs/issues/2
 * Chroma: https://github.com/chroma-core/chroma/issues/2296
+* CloudberryDB: https://github.com/orgs/cloudberrydb/discussions/461
 
 ## Logging
 
@@ -499,6 +500,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * genson-rs: https://github.com/junyu-w/genson-rs/issues/1
 * resvg: https://github.com/RazrFalcon/resvg/issues/765
 * rustwire: https://github.com/Basis-Health/rustwire/issues/2
+* Root: https://github.com/root-project/root/issues/15778
 
 ## PGO in distributions
 
