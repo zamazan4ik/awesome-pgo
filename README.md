@@ -288,6 +288,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Bend: [GitHub comment](https://github.com/HigherOrderCO/Bend/issues/517#issue-2319505187)
 * Amber: [GitHub discussion](https://github.com/Ph0enixKM/Amber/discussions/147#discussion-6770832)
 * Iggy-rs: [GitHub comment](https://github.com/orgs/iggy-rs/discussions/990#discussioncomment-9687418)
+* html5ever: [GitHub comment](https://github.com/servo/html5ever/issues/545#issue-2365897370)
 
 ## Projects with already integrated PGO into their build scripts
 

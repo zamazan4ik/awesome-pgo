@@ -17,10 +17,8 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Bench PGO for https://github.com/HigherOrderCO/Bend
 * PGO benchmark for vers
 * Sometimes people aren't interested enough in PGO without benchmarks - https://github.com/oxc-project/oxc/issues/812#issuecomment-2116285554
-* Write an answer to https://blog.cloudflare.com/reclaiming-cpu-for-free-with-pgo
 * PGO benchmark for https://github.com/dalance/amber . Blocked by https://github.com/dalance/amber/issues/335
 * Add resvg and Bend numbers to the article (also other numbers should be extracted)
-* Strange responses about PGO - https://github.com/microsoft/qsharp/issues/752#issuecomment-1773194243
 * Compiler statistics of PGO: https://github.com/oxc-project/oxc/issues/812#issuecomment-2134080943
 * Search over compiler options: https://github.com/google/heir/discussions/613#discussioncomment-9606880
 * PGO benches for https://github.com/sarah-ek/faer-rs
@@ -33,5 +31,5 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * PGO issues with cross-compilation: https://github.com/LadybirdWebBrowser/ladybird/commit/3ff7b76502ff2b7492660475a881befe2cda42f9
 * PGO is not enabled for an LLVM fork: https://github.com/Xilinx/llvm-aie
 * Once again - closing a PGO issue without interest at all: https://github.com/SerenityOS/serenity/issues/19549
-* CERN's Root closed the PGO issue: https://github.com/root-project/root/issues/15778#issuecomment-2154453640
-* SerenityOS (and Ladybird) policy, 8th one - "Talk is cheap. Don't waste other people's time by talking about your great ideas if you don't also spend time implementing your ideas. We have no need for "idea guys"". LOL, how do I need to propose an idea?
+* Add https://github.com/chroma-core/chroma/issues/2296#issuecomment-2176556475 comment as proof of my work usefulness
+* Make PGO benchmark for https://github.com/apache/arrow-rs - benchmarks are done, they are saved on a local machine. Need to be published to the upstream

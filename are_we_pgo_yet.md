@@ -94,6 +94,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Futhark: https://github.com/diku-dk/futhark/discussions/2151
 * Bend: https://github.com/HigherOrderCO/Bend/issues/517
 * Amber: https://github.com/Ph0enixKM/Amber/discussions/147
+* Vlang: https://github.com/vlang/v/issues/7024
 
 ## Developer tooling
 
@@ -501,6 +502,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * resvg: https://github.com/RazrFalcon/resvg/issues/765
 * rustwire: https://github.com/Basis-Health/rustwire/issues/2
 * Root: https://github.com/root-project/root/issues/15778
+* tach: https://www.reddit.com/r/rust/comments/1div01p/comment/l9i3pdg/
+* html5ever: https://github.com/servo/html5ever/issues/545
 
 ## PGO in distributions
 
