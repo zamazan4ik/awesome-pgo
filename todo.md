@@ -27,9 +27,18 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Difference between Rustc and Clang in reordering: https://users.rust-lang.org/t/differences-in-an-optimization-decision-between-rustc-and-clang/112593
 * Add PGO request to https://github.com/davidlattimore/wild
 * Add a chapter about starting LTO/PGO/PLO journey
-* HALO: https://dl.acm.org/doi/pdf/10.1145/3368826.3377914
 * PGO issues with cross-compilation: https://github.com/LadybirdWebBrowser/ladybird/commit/3ff7b76502ff2b7492660475a881befe2cda42f9
 * PGO is not enabled for an LLVM fork: https://github.com/Xilinx/llvm-aie
 * Once again - closing a PGO issue without interest at all: https://github.com/SerenityOS/serenity/issues/19549
 * Add https://github.com/chroma-core/chroma/issues/2296#issuecomment-2176556475 comment as proof of my work usefulness
 * Make PGO benchmark for https://github.com/apache/arrow-rs - benchmarks are done, they are saved on a local machine. Need to be published to the upstream
+* Perform PGO benchmarks for https://github.com/unicode-org/icu4x . Blocked by https://github.com/unicode-org/icu4x/issues/5105
+* Suggest LTO + PGO for https://github.com/verus-lang/verus
+* Perform PGO benchmarks for Sequoia (also check for LTO - they are not against it, open an issue for that). It has link errors during the instrumentation phase (as I met for Tach project). Need to fugure out the reason
+* Make PGO benchmarks (or at least a request) for https://github.com/prisma/prisma-engines
+* Make PGO benches for https://github.com/udoprog/musli
+* Make PGO request for https://github.com/OpenRadioss/OpenRadioss
+* Lady Dreidra's documentation about PGO - https://github.com/Eliah-Lakhin/lady-deirdre/commit/63b54ec04b2bac26812f066737f807f6a5b21ebf - is not visible for users of the library. It should be placed in a more visible place like the official documentation (the place which users read) - https://lady-deirdre.lakhin.com/
+* Add to the article a comment from RustFest about PGO profile collection time, possible strategies for reduction it and hot/cold ratio for different PGO traing phase durations
+* Suggest using LTO + PGO for https://github.com/pendulum-project/ntpd-rs/blob/main/Cargo.toml
+* https://github.com/ojdkbuild/tools_toolchain_vs2017bt_1416/blob/master/VC/Tools/MSVC/14.16.27023/crt/src/vcruntime/exe_common.inl#L204 - what the hell is going on with PGO instrumentation on Windows

@@ -30,7 +30,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Hashlink: https://github.com/HaxeFoundation/hashlink/issues/606
 * Boa: https://github.com/boa-dev/boa/issues/3139
 * loxcraft: https://github.com/ajeetdsouza/loxcraft/issues/18
-* Deno: https://github.com/denoland/rusty_v8/pull/1063
+* Deno: https://github.com/denoland/deno/discussions/24312
 * Piccolo: https://github.com/triplehex/piccolo/issues/30
 * HHVM: https://github.com/facebook/hhvm/issues/9385
 * Burst (Unity Engine): https://forum.unity.com/threads/profile-guided-optimisation-for-burst.931419/
@@ -160,6 +160,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * HEIR: https://github.com/google/heir/discussions/613
 * pylyzer: https://github.com/mtshiba/pylyzer/discussions/80
 * datadog-static-analyzer: https://github.com/DataDog/datadog-static-analyzer/discussions/377
+* farm: https://github.com/orgs/farm-fe/discussions/1419
 
 ## Build systems
 
@@ -504,6 +505,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Root: https://github.com/root-project/root/issues/15778
 * tach: https://www.reddit.com/r/rust/comments/1div01p/comment/l9i3pdg/
 * html5ever: https://github.com/servo/html5ever/issues/545
+* lady-deirdre: https://github.com/Eliah-Lakhin/lady-deirdre/issues/5
 
 ## PGO in distributions
 

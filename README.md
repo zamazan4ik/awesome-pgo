@@ -293,6 +293,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Amber: [GitHub discussion](https://github.com/Ph0enixKM/Amber/discussions/147#discussion-6770832)
 * Iggy-rs: [GitHub comment](https://github.com/orgs/iggy-rs/discussions/990#discussioncomment-9687418)
 * html5ever: [GitHub comment](https://github.com/servo/html5ever/issues/545#issue-2365897370)
+* Symbolica: [Zulip message](https://reform.zulipchat.com/#narrow/stream/345757-general/topic/Profile-Guided.20Optimization.20.28PGO.29.20for.20optimizing.20Symbolica/near/438962380)
+* oxc: [GitHub comment](https://github.com/oxc-project/oxc/issues/812#issuecomment-2116233196)
+* libvpx: [Chromium issue tracker](https://issues.chromium.org/issues/325103518#comment10)
+* lady-deirdre: [GitHub comment](https://github.com/Eliah-Lakhin/lady-deirdre/issues/5#issue-2367810122)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -341,9 +345,6 @@ Below you can find some examples of where and how PGO is integrated into differe
 * hck: [Justfile](https://github.com/sstadick/hck/blob/master/justfile#L27)
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268)
 * Dolt: [Blog](https://www.dolthub.com/blog/2024-04-19-golang-pgo-builds-using-github-actions/)
-* libvpx: [Chromium issue tracker](https://issues.chromium.org/issues/325103518#comment10)
-* Symbolica: [Zulip message](https://reform.zulipchat.com/#narrow/stream/345757-general/topic/Profile-Guided.20Optimization.20.28PGO.29.20for.20optimizing.20Symbolica/near/438962380)
-* oxc: [GitHub comment](https://github.com/oxc-project/oxc/issues/812#issuecomment-2116233196)
 
 ## Project-specific documentation about PGO
 
@@ -431,6 +432,7 @@ Check "are_we_pgo_yet.md" file in the repo to check the PGO status in a project.
 
 Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 
+* Linux kernel: [GitHub docs](https://github.com/llvm/llvm-project/blob/main/bolt/docs/OptimizingLinux.md)
 * Rustc:
   - [Rustc itself (GitHub PR)](https://github.com/rust-lang/rust/pull/116352)
   - [LLVM in Rustc (Reddit)](https://www.reddit.com/r/rust/comments/y4w2kr/llvm_used_by_rustc_is_now_optimized_with_bolt_on/)
