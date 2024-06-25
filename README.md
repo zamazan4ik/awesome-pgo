@@ -5,6 +5,10 @@ Various materials about Profile Guided Optimization (PGO) and other similar stuf
 
 There is an (unfinished) article about all the details about PGO, PLO, etc. - [link](https://github.com/zamazan4ik/awesome-pgo/blob/main/article/article.md). With high chance, it will answer (almost) all your questions about PGO and PLO.
 
+## How to fail with PGO?
+
+![The PGO implementer](/the_pgo_implementer.png)
+
 ## Theory (a little bit)
 
 * What is PGO:
