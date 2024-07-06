@@ -23,6 +23,11 @@ Performance improvements from enabling LTO:
 * prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
 * resvg: https://github.com/RazrFalcon/resvg/issues/765#issue-2314946307
 
+Some LTO-only issues:
+
+* ntpd-rs: https://github.com/pendulum-project/ntpd-rs/discussions/1522
+* sequoia: https://gitlab.com/sequoia-pgp/sequoia/-/issues/1113
+
 Links:
 
 * https://convolv.es/guides/lto/

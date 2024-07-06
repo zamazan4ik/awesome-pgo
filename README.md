@@ -296,7 +296,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Symbolica: [Zulip message](https://reform.zulipchat.com/#narrow/stream/345757-general/topic/Profile-Guided.20Optimization.20.28PGO.29.20for.20optimizing.20Symbolica/near/438962380)
 * oxc: [GitHub comment](https://github.com/oxc-project/oxc/issues/812#issuecomment-2116233196)
 * libvpx: [Chromium issue tracker](https://issues.chromium.org/issues/325103518#comment10)
-* lady-deirdre: [GitHub comment](https://github.com/Eliah-Lakhin/lady-deirdre/issues/5#issue-2367810122)
+* lady-deirdre: [GitHub comment](https://github.com/Eliah-Lakhin/lady-deirdre/discussions/7#discussion-6849845)
+* musli: [GitHub discussion](https://github.com/udoprog/musli/discussions/166#discussion-6903244)
+* limbo: [GitHub comment](https://github.com/penberg/limbo/issues/78#issue-2393613784)
+* amber: [GitHub comment](https://github.com/dalance/amber/issues/343#issue-2393623648)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -432,7 +435,9 @@ Check "are_we_pgo_yet.md" file in the repo to check the PGO status in a project.
 
 Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 
-* Linux kernel: [GitHub docs](https://github.com/llvm/llvm-project/blob/main/bolt/docs/OptimizingLinux.md)
+* Linux kernel:
+  - [Phoronix article](https://www.phoronix.com/news/Linux-BOLT-5p-Performance)
+  - [GitHub docs](https://github.com/llvm/llvm-project/blob/main/bolt/docs/OptimizingLinux.md)
 * Rustc:
   - [Rustc itself (GitHub PR)](https://github.com/rust-lang/rust/pull/116352)
   - [LLVM in Rustc (Reddit)](https://www.reddit.com/r/rust/comments/y4w2kr/llvm_used_by_rustc_is_now_optimized_with_bolt_on/)

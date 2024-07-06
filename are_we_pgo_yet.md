@@ -161,6 +161,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * pylyzer: https://github.com/mtshiba/pylyzer/discussions/80
 * datadog-static-analyzer: https://github.com/DataDog/datadog-static-analyzer/discussions/377
 * farm: https://github.com/orgs/farm-fe/discussions/1419
+* mako: https://github.com/umijs/mako/issues/1380
 
 ## Build systems
 
@@ -333,6 +334,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * bbolt-rs: https://github.com/ambaxter/bbolt-rs/issues/2
 * Chroma: https://github.com/chroma-core/chroma/issues/2296
 * CloudberryDB: https://github.com/orgs/cloudberrydb/discussions/461
+* limbo: https://github.com/penberg/limbo/issues/78
 
 ## Logging
 
@@ -506,6 +508,12 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * tach: https://www.reddit.com/r/rust/comments/1div01p/comment/l9i3pdg/
 * html5ever: https://github.com/servo/html5ever/issues/545
 * lady-deirdre: https://github.com/Eliah-Lakhin/lady-deirdre/issues/5
+* musli: https://github.com/udoprog/musli/discussions/166#discussion-6903244
+* OpenRadioss: https://github.com/orgs/OpenRadioss/discussions/393
+* amber: https://github.com/dalance/amber/issues/343
+* prisma-engines: https://github.com/prisma/prisma-engines/issues/4943
+* verus: https://github.com/verus-lang/verus/discussions/1210
+* ntpd-rs: https://github.com/pendulum-project/ntpd-rs/discussions/1522
 
 ## PGO in distributions
 
