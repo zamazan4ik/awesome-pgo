@@ -162,6 +162,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * datadog-static-analyzer: https://github.com/DataDog/datadog-static-analyzer/discussions/377
 * farm: https://github.com/orgs/farm-fe/discussions/1419
 * mako: https://github.com/umijs/mako/issues/1380
+* swc: https://github.com/swc-project/swc/discussions/9228
+* Tensorboard: https://github.com/tensorflow/tensorboard/issues/6881
 
 ## Build systems
 
@@ -514,6 +516,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * prisma-engines: https://github.com/prisma/prisma-engines/issues/4943
 * verus: https://github.com/verus-lang/verus/discussions/1210
 * ntpd-rs: https://github.com/pendulum-project/ntpd-rs/discussions/1522
+* ieee80211-rs: https://github.com/Frostie314159/ieee80211-rs/issues/3
+* AWS Secret Manager Agent: https://github.com/aws/aws-secretsmanager-agent/discussions/9
 
 ## PGO in distributions
 

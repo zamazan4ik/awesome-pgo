@@ -300,6 +300,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * musli: [GitHub discussion](https://github.com/udoprog/musli/discussions/166#discussion-6903244)
 * limbo: [GitHub comment](https://github.com/penberg/limbo/issues/78#issue-2393613784)
 * amber: [GitHub comment](https://github.com/dalance/amber/issues/343#issue-2393623648)
+* OpenRadioss: [GitHub comment](https://github.com/orgs/OpenRadioss/discussions/393#discussioncomment-9976967)
+* ieee80211-rs: [GitHub comment](https://github.com/Frostie314159/ieee80211-rs/issues/3#issue-2396647036)
 
 ## Projects with already integrated PGO into their build scripts
 

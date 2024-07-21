@@ -13,3 +13,8 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Add a chapter about starting LTO/PGO/PLO journey
 * Make PGO benchmark for <https://github.com/apache/arrow-rs> - benchmarks are done, they are saved on a local machine. Need to be published to the upstream
 * Enable LTO for benchmarks too (related mainly for Rust ecosystem)
+* PGO documentation for libraries: https://github.com/Frostie314159/ieee80211-rs?tab=readme-ov-file#optimization
+* Perform PGO benchmarks for https://github.com/clarkmcc/cel-rust
+* Perform PGO benchmarks for https://github.com/mwlon/pcodec/blob/main/pco_cli/README.md#bench
+* Question about PGO was being moderated for months in OVH Cloud
+* Propose PGO to https://git.deuxfleurs.fr/Deuxfleurs/garage
