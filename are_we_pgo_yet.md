@@ -95,6 +95,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Bend: https://github.com/HigherOrderCO/Bend/issues/517
 * Amber: https://github.com/Ph0enixKM/Amber/discussions/147
 * Vlang: https://github.com/vlang/v/issues/7024
+* c3c: https://github.com/c3lang/c3c/discussions/1262
 
 ## Developer tooling
 
@@ -518,6 +519,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ntpd-rs: https://github.com/pendulum-project/ntpd-rs/discussions/1522
 * ieee80211-rs: https://github.com/Frostie314159/ieee80211-rs/issues/3
 * AWS Secret Manager Agent: https://github.com/aws/aws-secretsmanager-agent/discussions/9
+* jiff: https://github.com/BurntSushi/jiff/discussions/27
 
 ## PGO in distributions
 
