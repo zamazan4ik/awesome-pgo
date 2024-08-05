@@ -349,6 +349,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Hayabusa: https://github.com/Yamato-Security/hayabusa/discussions/1247
 * Loki: https://github.com/grafana/loki/issues/11939
 * angle-grinder: https://github.com/rcoh/angle-grinder/discussions/203
+* vrl: https://github.com/vectordotdev/vrl/discussions/977
 
 ## Machine learning
 
@@ -520,6 +521,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * ieee80211-rs: https://github.com/Frostie314159/ieee80211-rs/issues/3
 * AWS Secret Manager Agent: https://github.com/aws/aws-secretsmanager-agent/discussions/9
 * jiff: https://github.com/BurntSushi/jiff/discussions/27
+* Pumpkin: https://github.com/Snowiiii/Pumpkin/issues/11
+* swimos: https://github.com/swimos/swim-rust/issues/696
+* pulldown-latex: https://github.com/carloskiki/pulldown-latex/issues/6
 
 ## PGO in distributions
 

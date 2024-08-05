@@ -303,6 +303,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * OpenRadioss: [GitHub comment](https://github.com/orgs/OpenRadioss/discussions/393#discussioncomment-9976967)
 * ieee80211-rs: [GitHub comment](https://github.com/Frostie314159/ieee80211-rs/issues/3#issue-2396647036)
 * jiff, chrono, time: [GitHub discussion](https://github.com/BurntSushi/jiff/discussions/27#discussion-6965143)
+* pulldown-latex: [GitHub comment](https://github.com/carloskiki/pulldown-latex/issues/6#issue-2447849419)
+* vrl: [GitHub discussion](https://github.com/vectordotdev/vrl/discussions/977#discussion-7014828)
 
 ## Projects with already integrated PGO into their build scripts
 

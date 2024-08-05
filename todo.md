@@ -20,3 +20,4 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Propose PGO to https://git.deuxfleurs.fr/Deuxfleurs/garage
 * Propose LTO and PGO for https://pnut.sh/
 * Perform PGO benchmarks on https://github.com/pydantic/jiter - https://github.com/pydantic/jiter/issues/123
+* Of course, I found ICE in Clang 18 during PGOing Redpanda :D - https://github.com/llvm/llvm-project/issues/101902
