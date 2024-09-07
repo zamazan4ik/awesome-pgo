@@ -84,6 +84,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [typos](https://github.com/crate-ci/typos): [GitHub issue](https://github.com/crate-ci/typos/issues/827#issue-1888263250)
 * [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
 * pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
+* ctags: [GitHub comment](https://github.com/universal-ctags/ctags/issues/3849#issuecomment-2295323143)
 
 ### Operating systems
 
@@ -121,7 +122,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Redis](https://redis.io/): See "redis.md" file in the repo
 * [SQLite](https://www.sqlite.org/index.html):
   - See "sqlite.md" file in the repo for the detailed report
-  - [SQLite forum discussion](https://sqlite.org/forum/forumpost/d26f4eba26)
+  - [SQLite forum discussion](https://sqlite.org/forum/forumpost/19870fae957d8c1a)
   - [sqlite-parquet-vtable PGO results](https://github.com/cldellow/sqlite-parquet-vtable/blob/master/README.md#building-release)
 * [YDB](https://ydb.tech/): [GitHub issue](https://github.com/ydb-platform/ydb/issues/140#issuecomment-1483943715)
 * [FoundationDB](https://www.foundationdb.org/): [GitHub issue](https://github.com/apple/foundationdb/issues/1334)
@@ -146,6 +147,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Dolt: [Blog](https://www.dolthub.com/blog/2024-02-02-profile-guided-optimization/)
 * bbolt-rs: [GitHub comment](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885)
 * libmdbx: [GitFlic issue](https://gitflic.ru/project/erthink/libmdbx/issue/14) (in Russian)
+* candystore: [GitHub comment](https://github.com/sweet-security/candystore/issues/7#issue-2509793489)
 
 ### Logging
 
@@ -305,6 +307,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * jiff, chrono, time: [GitHub discussion](https://github.com/BurntSushi/jiff/discussions/27#discussion-6965143)
 * pulldown-latex: [GitHub comment](https://github.com/carloskiki/pulldown-latex/issues/6#issue-2447849419)
 * vrl: [GitHub discussion](https://github.com/vectordotdev/vrl/discussions/977#discussion-7014828)
+* Picodrive: [Habr comment](https://habr.com/ru/articles/138132/comments/#comment_4607641) (in Russian. 2x performance improvement)
+* harper: [GitHub discussion](https://github.com/elijah-potter/harper/discussions/141#discussion-7142973)
+* wildcard: [GitHub comment](https://github.com/cloudflare/wildcard/issues/7#issue-2510199025)
 
 ## Projects with already integrated PGO into their build scripts
 

@@ -82,7 +82,7 @@ Good modern compilers nowadays perform many [optimizations](https://learn.micros
 * Devirtualization
 * Hot/cold code splitting
 * Link-Time Optimization (LTO) (if you are brave enough to use it! Just joking - it works good-enough nowadays)
-* And many other funny things!
+* And many other funny [things](https://www.youtube.com/watch?v=7GHXDEIMGIY)!
 
 Inlining is a special thing here since it influences a lot on other compiler optimizations since it gives a *context* to other optimizations - that's why it's so special.
 
@@ -1825,6 +1825,8 @@ So PGO doesn't replace algorithmic stuff. Let your compiler do "dirty" things wh
 TL;DR: No, you should not.
 
 Any of these optimizations can (and with a high chance will) improve application performance. However, in every case, there are billion of reasons why it can be worse or better: application-specific bugs triggered by LTO, too small performance wins from PGO, too huge build times with PGO and PLO enabled, etc. Every optimization has its pros and cons. Enabling all these optimizations blindly for the whole software on your favorite server is not the smartest idea.
+
+TODO: When do I need to integrate PGO? I mean at what stage of a project do I need to think about PGO and other things
 
 I hope one day the ecosystem will be ready, and using PGO for release builds will be as easy and common as using `-O3` now is. Now it's not the case, so please - in each case compare the benefits from enabling PGO with the costs for enabling PGO for a project. If the expected costs are bigger - just do nothing (and wait for a bit more for a better PGO future).
 

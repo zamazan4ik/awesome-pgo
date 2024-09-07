@@ -165,6 +165,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * mako: https://github.com/umijs/mako/issues/1380
 * swc: https://github.com/swc-project/swc/discussions/9228
 * Tensorboard: https://github.com/tensorflow/tensorboard/issues/6881
+* Web Infra: https://github.com/orgs/web-infra-dev/discussions/19
+* wildcard: https://github.com/cloudflare/wildcard/issues/7
 
 ## Build systems
 
@@ -210,6 +212,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Tock: https://github.com/tock/tock/discussions/3850
 * Asterinas: https://github.com/asterinas/asterinas/issues/760
 * rt-thread: https://github.com/RT-Thread/rt-thread/discussions/8877
+* CharlotteOS: https://github.com/charlotte-os/cbof/discussions/147
 
 ## Virtual machines and emulators
 
@@ -338,6 +341,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Chroma: https://github.com/chroma-core/chroma/issues/2296
 * CloudberryDB: https://github.com/orgs/cloudberrydb/discussions/461
 * limbo: https://github.com/penberg/limbo/issues/78
+* candystore: https://github.com/sweet-security/candystore/issues/7
+* sqlean: https://github.com/nalgeon/sqlean/issues/137
+* SlateDB: https://github.com/slatedb/slatedb/issues/187
 
 ## Logging
 
@@ -350,6 +356,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Loki: https://github.com/grafana/loki/issues/11939
 * angle-grinder: https://github.com/rcoh/angle-grinder/discussions/203
 * vrl: https://github.com/vectordotdev/vrl/discussions/977
+* lmnr: https://github.com/lmnr-ai/lmnr/issues/10
 
 ## Machine learning
 
@@ -382,6 +389,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * rumqttd: https://github.com/bytebeamio/rumqtt/discussions/717
 * Akasa: https://github.com/akasamq/akasa/issues/3
 * Iggy-rs: https://github.com/orgs/iggy-rs/discussions/990
+* Fluvio: https://github.com/orgs/infinyon/discussions/4169
 
 ## Proxies
 
@@ -524,6 +532,11 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Pumpkin: https://github.com/Snowiiii/Pumpkin/issues/11
 * swimos: https://github.com/swimos/swim-rust/issues/696
 * pulldown-latex: https://github.com/carloskiki/pulldown-latex/issues/6
+* Supabase projects (like `pg_replicate` and `pg_graphql`): https://github.com/orgs/supabase/discussions/28584
+* verso: https://github.com/versotile-org/verso/issues/129
+* harper: https://github.com/elijah-potter/harper/discussions/141
+* posixutils-rs: https://github.com/rustcoreutils/posixutils-rs/discussions/197
+* fumble: https://github.com/bornacvitanic/fumble/issues/7
 
 ## PGO in distributions
 
