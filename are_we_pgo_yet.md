@@ -194,6 +194,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Defold: https://github.com/defold/defold/issues/8193
 * wgpu: https://github.com/gfx-rs/wgpu/discussions/4692
 * glslang: https://github.com/KhronosGroup/glslang/issues/3400
+* Ferrumc: https://github.com/ferrumc-rs/ferrumc/issues/15
 
 ## Operating systems
 
@@ -344,6 +345,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * candystore: https://github.com/sweet-security/candystore/issues/7
 * sqlean: https://github.com/nalgeon/sqlean/issues/137
 * SlateDB: https://github.com/slatedb/slatedb/issues/187
+* possum: https://github.com/anacrolix/possum/issues/5
 
 ## Logging
 
@@ -357,6 +359,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * angle-grinder: https://github.com/rcoh/angle-grinder/discussions/203
 * vrl: https://github.com/vectordotdev/vrl/discussions/977
 * lmnr: https://github.com/lmnr-ai/lmnr/issues/10
+* SimKube: https://github.com/acrlabs/simkube/discussions/131
 
 ## Machine learning
 
@@ -537,6 +540,10 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * harper: https://github.com/elijah-potter/harper/discussions/141
 * posixutils-rs: https://github.com/rustcoreutils/posixutils-rs/discussions/197
 * fumble: https://github.com/bornacvitanic/fumble/issues/7
+* GQL: https://github.com/AmrDeveloper/GQL/discussions/116
+* radix-trie: https://github.com/michaelsproul/rust_radix_trie/issues/75
+* pingora: https://github.com/cloudflare/pingora/discussions/379
+* tex-fmt: https://github.com/WGUNDERWOOD/tex-fmt/issues/22
 
 ## PGO in distributions
 

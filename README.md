@@ -310,6 +310,10 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Picodrive: [Habr comment](https://habr.com/ru/articles/138132/comments/#comment_4607641) (in Russian. 2x performance improvement)
 * harper: [GitHub discussion](https://github.com/elijah-potter/harper/discussions/141#discussion-7142973)
 * wildcard: [GitHub comment](https://github.com/cloudflare/wildcard/issues/7#issue-2510199025)
+* GQL: [GitHub discussion](https://github.com/AmrDeveloper/GQL/discussions/116#discussion-7165051)
+* trie-hard, radix-trie: [GitHub comment](https://github.com/michaelsproul/rust_radix_trie/issues/75#issue-2523191327)
+* pingora: [GitHub discussion](https://github.com/cloudflare/pingora/discussions/379#discussion-7174584)
+* tex-fmt: [GitHub comment](https://github.com/WGUNDERWOOD/tex-fmt/issues/22#issue-2523375103)
 
 ## Projects with already integrated PGO into their build scripts
 

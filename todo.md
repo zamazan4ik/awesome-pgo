@@ -27,3 +27,5 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * SlateDB build time (db_bench): 25s without LTO vs 1 min with LTO (lto = true)
 * Write about next step in PGO advertisment - Go ecosystem and why exactly this PL
 * Estimating PGO efficiency without benchmarks - no such tools but some ideas like metrics, ML, questionaries like "Are you Fabris Bellard?" )
+* https://app.radicle.xyz/nodes/seed.radicle.xyz/rad:z3gqcJUoA1n9HaHKufZs5FCSGazv5 - I don't know how to create an issue for the project
+* Suggest PGO to https://github.com/paxdotdev/pax projects (compiler, LSP server, formatter, etc.)
