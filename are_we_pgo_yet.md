@@ -346,6 +346,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * sqlean: https://github.com/nalgeon/sqlean/issues/137
 * SlateDB: https://github.com/slatedb/slatedb/issues/187
 * possum: https://github.com/anacrolix/possum/issues/5
+* Trieve: https://github.com/devflowinc/trieve/issues/2336
 
 ## Logging
 
@@ -544,6 +545,12 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * radix-trie: https://github.com/michaelsproul/rust_radix_trie/issues/75
 * pingora: https://github.com/cloudflare/pingora/discussions/379
 * tex-fmt: https://github.com/WGUNDERWOOD/tex-fmt/issues/22
+* pax: https://github.com/paxdotdev/pax/discussions/270
+* sail: https://github.com/lakehq/sail/issues/193
+* kaspa: https://github.com/kaspanet/rusty-kaspa/issues/558
+* Stalwart Mail Server: https://github.com/stalwartlabs/mail-server/discussions/757
+* whitebox-tools: https://github.com/jblindsay/whitebox-tools/discussions/431
+* Dune: https://github.com/adam-mcdaniel/dune/issues/93
 
 ## PGO in distributions
 

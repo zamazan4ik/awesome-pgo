@@ -28,4 +28,13 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Write about next step in PGO advertisment - Go ecosystem and why exactly this PL
 * Estimating PGO efficiency without benchmarks - no such tools but some ideas like metrics, ML, questionaries like "Are you Fabris Bellard?" )
 * https://app.radicle.xyz/nodes/seed.radicle.xyz/rad:z3gqcJUoA1n9HaHKufZs5FCSGazv5 - I don't know how to create an issue for the project
-* Suggest PGO to https://github.com/paxdotdev/pax projects (compiler, LSP server, formatter, etc.)
+* Check LTO and PGO for https://github.com/spiraldb/vortex
+* Check PGO state in https://www.illumos.org/ . Maybe create one more "PGO all the packages" issue at their forum/bug tracker
+* https://github.com/ferrumc-rs/ferrumc/issues/15#issuecomment-2348951292 - another comment that don't understand PGO's value for applications performance in general
+* Add PGO integration example - SVT-AV1: https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/CMakeLists.txt?ref_type=heads#L262
+* Check PGO for https://github.com/adam-mcdaniel/dune/commit/c056b4c08782050262abc5c34e4391f2d387507e + suggest LTO
+* Write a dedicated "Call for action" about using LTO for binaries: share thoughts, performance numbers, plans, suggestions, etc. Because of I'm tired with creating issues like "Enable LTO" on GitHub
+* Some Cargo commands already enabled LTO: https://github.com/kbknapp/cargo-outdated/blob/master/Cargo.toml#L48
+* Cargo extensions don't usually enable LTO for some reason. One of them - increased "installation" time for users since they compile extensions locally on their machines
+* LTO increased build time for Buck: https://github.com/facebook/buck2/blob/main/Cargo.toml#L416 - 50s to 84s with ThinLTO
+* Add PGO request to https://sourceforge.net/projects/sdcc/ . Build the compiler with PGO and implement PGO for the compiler
