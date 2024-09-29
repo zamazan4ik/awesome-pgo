@@ -385,6 +385,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SentencePiece: https://github.com/google/sentencepiece/issues/961
 * lace: https://github.com/promised-ai/lace/issues/172
 * rust-tokenizers: https://github.com/guillaume-be/rust-tokenizers/issues/103
+* tensorzero: https://github.com/tensorzero/tensorzero/discussions/328
 
 ## Message brokers
 
@@ -551,10 +552,17 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Stalwart Mail Server: https://github.com/stalwartlabs/mail-server/discussions/757
 * whitebox-tools: https://github.com/jblindsay/whitebox-tools/discussions/431
 * Dune: https://github.com/adam-mcdaniel/dune/issues/93
+* grex: https://github.com/pemistahl/grex/discussions/274
+* rust-lexical: https://github.com/Alexhuszagh/rust-lexical/issues/152
+* serde-brief: https://github.com/FlixCoder/serde-brief/issues/5
 
 ## PGO in distributions
 
 * SailfishOS: https://forum.sailfishos.org/t/using-profile-guided-optimization-pgo-and-post-link-optimization-plo-for-sailfish/17949
+
+## PGO in Python ecosystem
+
+* https://github.com/scientific-python/faster-scientific-python-ideas/issues/10
 
 ## PGO in Go ecosystem
 

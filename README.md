@@ -314,6 +314,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * trie-hard, radix-trie: [GitHub comment](https://github.com/michaelsproul/rust_radix_trie/issues/75#issue-2523191327)
 * pingora: [GitHub discussion](https://github.com/cloudflare/pingora/discussions/379#discussion-7174584)
 * tex-fmt: [GitHub comment](https://github.com/WGUNDERWOOD/tex-fmt/issues/22#issue-2523375103)
+* grex: [GitHub discussion](https://github.com/pemistahl/grex/discussions/274#discussion-7199364)
+* rust-lexical: [GitHub comment](https://github.com/Alexhuszagh/rust-lexical/issues/152#issue-2531817274)
+* serde-broef: [GitHub comment](https://github.com/FlixCoder/serde-brief/issues/5#issue-2554875146)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -362,6 +365,7 @@ Below you can find some examples of where and how PGO is integrated into differe
 * hck: [Justfile](https://github.com/sstadick/hck/blob/master/justfile#L27)
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268)
 * Dolt: [Blog](https://www.dolthub.com/blog/2024-04-19-golang-pgo-builds-using-github-actions/)
+* SVT-AV1: [CMake script](https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/CMakeLists.txt?ref_type=heads#L262)
 
 ## Project-specific documentation about PGO
 
@@ -377,6 +381,8 @@ Here we collect projects where PGO is described as an optimization option in the
   - https://llvm.org/docs/AdvancedBuilds.html
 * Rustc: https://rustc-dev-guide.rust-lang.org/building/optimized-build.html#profile-guided-optimization
 * tsv-utils: https://github.com/eBay/tsv-utils/blob/master/docs/BuildingWithLTO.md
+* SVT-AV1: https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/Docs/CommonQuestions.md#why-build-with-pgo
+* ieee80211-rs: https://github.com/Frostie314159/ieee80211-rs?tab=readme-ov-file#optimization
 
 ## PGO support in programming languages and compilers
 
