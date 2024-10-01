@@ -96,6 +96,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Amber: https://github.com/Ph0enixKM/Amber/discussions/147
 * Vlang: https://github.com/vlang/v/issues/7024
 * c3c: https://github.com/c3lang/c3c/discussions/1262
+* Crystal: https://forum.crystal-lang.org/t/implement-profile-guided-optimization-pgo-for-crystal-lang/7234
+* cel-rust: https://github.com/clarkmcc/cel-rust/issues/83
 
 ## Developer tooling
 
@@ -347,6 +349,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SlateDB: https://github.com/slatedb/slatedb/issues/187
 * possum: https://github.com/anacrolix/possum/issues/5
 * Trieve: https://github.com/devflowinc/trieve/issues/2336
+* feldera: https://github.com/feldera/feldera/issues/2613
 
 ## Logging
 

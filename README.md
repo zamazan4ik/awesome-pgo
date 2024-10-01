@@ -70,6 +70,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [tfcompile](https://www.tensorflow.org/xla/tfcompile): [GitHub comment](https://github.com/tensorflow/tensorflow/issues/60944#issuecomment-1637143591)
 * [SWI-Prolog](https://www.swi-prolog.org): [GitHub comment](https://github.com/macports/macports-ports/pull/20918#issuecomment-1767875432)
 * Sage: [GitHub issue](https://github.com/adam-mcdaniel/sage/issues/70)
+* cel-rust: [GitHub issue](https://github.com/clarkmcc/cel-rust/issues/83#issue-2558045355)
 
 ### Developer tooling
 
@@ -156,7 +157,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Rsyslog](https://www.rsyslog.com/): [GitHub comment](https://github.com/rsyslog/rsyslog/issues/5048#issuecomment-1631807664)
 * Some logs parsing routines: [Blog](https://andre.arko.net/2022/03/13/parsing-logs-faster-with-rust-revisited/)
 
-## Proxy
+### Proxy
 
 * Envoy: [GitHub comment](https://github.com/envoyproxy/envoy/issues/25500#issuecomment-1724584679)
 * HAProxy:
@@ -317,6 +318,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * grex: [GitHub discussion](https://github.com/pemistahl/grex/discussions/274#discussion-7199364)
 * rust-lexical: [GitHub comment](https://github.com/Alexhuszagh/rust-lexical/issues/152#issue-2531817274)
 * serde-broef: [GitHub comment](https://github.com/FlixCoder/serde-brief/issues/5#issue-2554875146)
+* dune: [GitHub comment](https://github.com/adam-mcdaniel/dune/issues/93#issuecomment-2384900535)
 
 ## Projects with already integrated PGO into their build scripts
 
