@@ -98,6 +98,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * c3c: https://github.com/c3lang/c3c/discussions/1262
 * Crystal: https://forum.crystal-lang.org/t/implement-profile-guided-optimization-pgo-for-crystal-lang/7234
 * cel-rust: https://github.com/clarkmcc/cel-rust/issues/83
+* cairo-vm: https://github.com/lambdaclass/cairo-vm/discussions/1849
+* scarb: https://github.com/software-mansion/scarb/issues/1640
 
 ## Developer tooling
 
@@ -169,6 +171,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Tensorboard: https://github.com/tensorflow/tensorboard/issues/6881
 * Web Infra: https://github.com/orgs/web-infra-dev/discussions/19
 * wildcard: https://github.com/cloudflare/wildcard/issues/7
+* gitui: https://github.com/extrawurst/gitui/discussions/2385
 
 ## Build systems
 
@@ -216,6 +219,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Asterinas: https://github.com/asterinas/asterinas/issues/760
 * rt-thread: https://github.com/RT-Thread/rt-thread/discussions/8877
 * CharlotteOS: https://github.com/charlotte-os/cbof/discussions/147
+* DragonOS: https://github.com/DragonOS-Community/DragonOS/discussions/956
+* Theseus: https://github.com/theseus-os/Theseus/discussions/1109
 
 ## Virtual machines and emulators
 
@@ -558,6 +563,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * grex: https://github.com/pemistahl/grex/discussions/274
 * rust-lexical: https://github.com/Alexhuszagh/rust-lexical/issues/152
 * serde-brief: https://github.com/FlixCoder/serde-brief/issues/5
+* arrow-rs: https://github.com/apache/arrow-rs/discussions/6500
+* optiprism: https://github.com/optiprism-io/optiprism/discussions/292
 
 ## PGO in distributions
 

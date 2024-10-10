@@ -20,8 +20,29 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * https://github.com/ferrumc-rs/ferrumc/issues/15#issuecomment-2348951292 - another comment that don't understand PGO's value for applications performance in general
 * Add PGO request to https://sourceforge.net/projects/sdcc/ . Build the compiler with PGO and implement PGO for the compiler
 * Add PGO request to https://github.com/FalkorDB/FalkorDB/ + https://github.com/FalkorDB/FalkorDB-core-rs
-* Suggest PGO for https://github.com/phiresky/ripgrep-all/blob/master/Cargo.toml
 * Golang Conf 2024, a talk about PGO in Go - https://www.youtube.com/watch?v=FyZJlPMBFm8 , talk to the speaker about their PGO way in Go
-* Rework wording in https://github.com/Kobzol/cargo-pgo/issues/60 - add to the article about influence of such "wrong" docs
+* Rework wording in https://github.com/Kobzol/cargo-pgo/issues/60 + https://github.com/Kobzol/cargo-pgo/pull/61 - add to the article about influence of such "wrong" docs
 * CachyOS optimizes more packages with PGO: https://www.phoronix.com/news/CachyOS-September-2024 - mention Phoronix too in the article
 * Add about MLGO for regalloc: https://groups.google.com/g/llvm-dev/c/7jxuvu3WPl0 + https://github.com/google/ml-compiler-opt/blob/main/docs/regalloc-demo/demo.md + https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1494741-cachyos-optimizing-more-packages-with-pgo-for-up-to-~10-better-performance?p=1494782#post1494782 . In the article already there is some information about MLGO - extend it
+* Add to the article - https://www.reddit.com/r/cpp/comments/1fsj7a1/comment/lplvd07/
+* Add https://pythonspeed.com/ to the article as a meta-idea
+* Write about an idea of performance-oriented community and meetup initiatives
+* Write about different benchmarks types: micro-bench, end-to-end bench, etc. and how they are suitable for PGO
+* Update rinja docs: https://www.reddit.com/r/rust/comments/1ftx5iv/comment/lpy5v01/ - https://github.com/rinja-rs/rinja/pull/188
+* Added documentation about PGO to a library: https://github.com/FlixCoder/serde-brief/pull/6
+* AutoFDO + Propeller for the Linux kernel: https://www.phoronix.com/news/Linux-AutoFDO-Prop-v2
+* AutoFDO regressions between LLVM releases: https://github.com/google/autofdo/issues/181#issuecomment-2270557096
+* Proprietary tooling and PGO: https://community.intel.com/t5/Intel-oneAPI-DPC-C-Compiler/Boost-Performance-with-Hardware-Counter-Assisted-Profile-Guided/m-p/1635106/highlight/true#M4128
+* https://github.com/spiceai/spiceai - suggest PGO
+* closed the PGO issue even if they ARE interested in it (but not now): https://github.com/FuelLabs/fuel-core/issues/1369#issuecomment-2391410543
+* Write to the author https://www.manning.com/books/latency about LTO, PGO and Pythonspeed resources
+* Add LTO and PGO requests for https://github.com/greenbone/openvas-scanner/tree/main/rust (for PGO perform benches)
+* Rinja example: PGO optimized e2e bench (https://github.com/mitsuhiko/minijinja/pull/588#issuecomment-2387957123) but failed in microbenchmarks: https://gist.github.com/zamazan4ik/c61ccdb86372bdc1ee7ab305381e2e28
+* Another comment about "fixing the code" instead of PGO: https://github.com/optiprism-io/optiprism/discussions/292#discussioncomment-10878781
+* Write RocksDB as a pretty common multilanguage example for using PGO (RocksDB in C++, the layer above in anything)
+* After several rounds of optimizations PGO efficiency can become less: https://github.com/WGUNDERWOOD/tex-fmt/issues/22#issuecomment-2401824584
+* Performance matters talk - https://www.youtube.com/watch?v=r-TLSBdHe1A (also I need to check the StrangeLoop conference)
+* Perform PGO benches for https://github.com/tonbo-io/tonbo/tree/main/benches - blocked by https://github.com/tonbo-io/tonbo/issues/185
+* Student's work in the PGO-like domains: http://mcst.ru/sites/default/files/u11/Master_2023_Levchenko.pdf (warn: in Russian)
+* Sometimes people doesn't want to keep issues open... https://github.com/espruino/Espruino/issues/2392
+* Write that PLO optimizers are not a replacement for PGO - it's an addition (also insert a citation from the BOLT paper from "abstract"). Perform some "PGO vs BOLT" + "PGO + BOLT vs PGO" + "BOLT vs PGO + BOLT" on SQLite

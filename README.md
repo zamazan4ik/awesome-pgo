@@ -71,6 +71,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [SWI-Prolog](https://www.swi-prolog.org): [GitHub comment](https://github.com/macports/macports-ports/pull/20918#issuecomment-1767875432)
 * Sage: [GitHub issue](https://github.com/adam-mcdaniel/sage/issues/70)
 * cel-rust: [GitHub issue](https://github.com/clarkmcc/cel-rust/issues/83#issue-2558045355)
+* cairo-vm: [GitHub comment](https://github.com/lambdaclass/cairo-vm/discussions/1849#discussion-7300615)
+* scarb: [GitHub comment](https://github.com/software-mansion/scarb/issues/1640#issue-2579167876)
 
 ### Developer tooling
 
@@ -86,6 +88,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
 * pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
 * ctags: [GitHub comment](https://github.com/universal-ctags/ctags/issues/3849#issuecomment-2295323143)
+* gitui: [GitHub comment](https://github.com/extrawurst/gitui/discussions/2385#discussion-7291784)
 
 ### Operating systems
 
@@ -317,8 +320,11 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * tex-fmt: [GitHub comment](https://github.com/WGUNDERWOOD/tex-fmt/issues/22#issue-2523375103)
 * grex: [GitHub discussion](https://github.com/pemistahl/grex/discussions/274#discussion-7199364)
 * rust-lexical: [GitHub comment](https://github.com/Alexhuszagh/rust-lexical/issues/152#issue-2531817274)
-* serde-broef: [GitHub comment](https://github.com/FlixCoder/serde-brief/issues/5#issue-2554875146)
+* serde-brief: [GitHub comment](https://github.com/FlixCoder/serde-brief/issues/5#issue-2554875146)
 * dune: [GitHub comment](https://github.com/adam-mcdaniel/dune/issues/93#issuecomment-2384900535)
+* Multiple Jinja engines (`rinja`, `minijinja`, `tera`, `liquid`, `handlebars`, `askama`): [GitHub comment](https://github.com/mitsuhiko/minijinja/pull/588#issuecomment-2387957123)
+* arrow-rs: [GitHub discussion](https://github.com/apache/arrow-rs/discussions/6500#discussion-7269000)
+* ion (from RedoxOS): [Benchmark results](https://gist.github.com/zamazan4ik/ef06054d7e3a8e29c018b715457b1ec2)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -385,6 +391,7 @@ Here we collect projects where PGO is described as an optimization option in the
 * tsv-utils: https://github.com/eBay/tsv-utils/blob/master/docs/BuildingWithLTO.md
 * SVT-AV1: https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/Docs/CommonQuestions.md#why-build-with-pgo
 * ieee80211-rs: https://github.com/Frostie314159/ieee80211-rs?tab=readme-ov-file#optimization
+* serde-brief: https://github.com/FlixCoder/serde-brief/blob/main/docs/pgo.md
 
 ## PGO support in programming languages and compilers
 
