@@ -39,10 +39,20 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Add LTO and PGO requests for https://github.com/greenbone/openvas-scanner/tree/main/rust (for PGO perform benches)
 * Rinja example: PGO optimized e2e bench (https://github.com/mitsuhiko/minijinja/pull/588#issuecomment-2387957123) but failed in microbenchmarks: https://gist.github.com/zamazan4ik/c61ccdb86372bdc1ee7ab305381e2e28
 * Another comment about "fixing the code" instead of PGO: https://github.com/optiprism-io/optiprism/discussions/292#discussioncomment-10878781
-* Write RocksDB as a pretty common multilanguage example for using PGO (RocksDB in C++, the layer above in anything)
+* Write RocksDB as a pretty common multilanguage example for using PGO (e.g. RocksDB in C++, the layer above in anything)
 * After several rounds of optimizations PGO efficiency can become less: https://github.com/WGUNDERWOOD/tex-fmt/issues/22#issuecomment-2401824584
 * Performance matters talk - https://www.youtube.com/watch?v=r-TLSBdHe1A (also I need to check the StrangeLoop conference)
 * Perform PGO benches for https://github.com/tonbo-io/tonbo/tree/main/benches - blocked by https://github.com/tonbo-io/tonbo/issues/185
 * Student's work in the PGO-like domains: http://mcst.ru/sites/default/files/u11/Master_2023_Levchenko.pdf (warn: in Russian)
 * Sometimes people doesn't want to keep issues open... https://github.com/espruino/Espruino/issues/2392
-* Write that PLO optimizers are not a replacement for PGO - it's an addition (also insert a citation from the BOLT paper from "abstract"). Perform some "PGO vs BOLT" + "PGO + BOLT vs PGO" + "BOLT vs PGO + BOLT" on SQLite
+* Write that PLO optimizers are not a replacement for PGO - it's an addition (also insert a citation from the BOLT paper from "abstract"). Perform some "PGO vs BOLT" + "PGO + BOLT vs PGO" + "BOLT vs PGO + BOLT" on SQLite - add these benches to the article
+* A request example of enabling PGO for a tool with PGO support in the upstream
+* 3rd party repos for PGO-optimized stuff for more boring projects like Fedora: https://discussion.fedoraproject.org/t/fedora-llvm-team-llvm-pgo-optimized/84361
+* OS maintainers have more desire to enable PGO if an upstream project supports it: https://discord.com/channels/862292009423470592/1060577525929103510/1295008340652326934
+* Mention Rust performance book in the article
+* Add to the article: https://github.com/llvm/llvm-project/issues/57501
+* Think about a talk about "LTO, PGO and PLO for Python native-based libs" for Python conferences. Also, the idea can be applicable for other langs like Ruby, etc.
+* Suggest PGO to https://github.com/CrunchyData/pg_parquet
+* Suggest PGO to https://github.com/jank-lang/jank/blob/main/compiler%2Bruntime/src/cpp/jank/runtime/core/munge.cpp
+* After some time PGO issues can be closed: https://github.com/apache/horaedb/issues/1051
+* Write to Ferrocene support - https://github.com/ferrocene/ferrocene/issues/22 . Add to the article as an example that proprietary companies don't care much about public feedback mechanisms

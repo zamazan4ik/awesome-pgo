@@ -60,7 +60,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * D:
   - DMD: [GitHub issue](https://github.com/dlang/dmd/pull/13791#issue-1164476335)
   - LDC: [GitHub comment](https://github.com/ldc-developers/ldc/discussions/4524#discussioncomment-7537608), [this](https://johanengelen.github.io/ldc/2016/07/15/Profile-Guided-Optimization-with-LDC.html) and [this](https://johanengelen.github.io/ldc/2016/04/13/PGO-in-LDC-virtual-calls.html) articles
-* Julia: [GitHub PR](https://github.com/JuliaLang/julia/pull/45641#issue-1268010204)
+* Julia:
+  - [GitHub PR](https://github.com/JuliaLang/julia/pull/45641#issue-1268010204)
+  - [Another GitHub PR](https://github.com/JuliaLang/julia/pull/54107#issue-2246969986)
 * [PHP](https://www.php.net/):
   - [Alibaba post](https://www.alibabacloud.com/forum/read-539)
   - [Phoronix benchmarks](https://www.phoronix.com/news/Clear-Linux-PHP7-PGO-Opt)
@@ -89,6 +91,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
 * ctags: [GitHub comment](https://github.com/universal-ctags/ctags/issues/3849#issuecomment-2295323143)
 * gitui: [GitHub comment](https://github.com/extrawurst/gitui/discussions/2385#discussion-7291784)
+* fennec: [GitHub comment](https://github.com/carthage-software/fennec/issues/2#issue-2616299119)
 
 ### Operating systems
 
@@ -152,6 +155,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * bbolt-rs: [GitHub comment](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885)
 * libmdbx: [GitFlic issue](https://gitflic.ru/project/erthink/libmdbx/issue/14) (in Russian)
 * candystore: [GitHub comment](https://github.com/sweet-security/candystore/issues/7#issue-2509793489)
+* canopydb (also `redb`, `sled`, `sanakirja`): [GitHub comment](https://github.com/arthurprs/canopydb/issues/3#issue-2600735606)
 
 ### Logging
 
@@ -325,6 +329,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Multiple Jinja engines (`rinja`, `minijinja`, `tera`, `liquid`, `handlebars`, `askama`): [GitHub comment](https://github.com/mitsuhiko/minijinja/pull/588#issuecomment-2387957123)
 * arrow-rs: [GitHub discussion](https://github.com/apache/arrow-rs/discussions/6500#discussion-7269000)
 * ion (from RedoxOS): [Benchmark results](https://gist.github.com/zamazan4ik/ef06054d7e3a8e29c018b715457b1ec2)
+* cosmic-text: [GitHub discussion](https://github.com/pop-os/cosmic-text/discussions/322#discussion-7311037)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -342,6 +347,7 @@ Below you can find some examples of where and how PGO is integrated into differe
   - Pyston: [README](https://github.com/pyston/pyston#building)
 * Go: [Bash script](https://github.com/golang/go/blob/master/src/cmd/compile/profile.sh)
 * Swift: [CMake script](https://github.com/apple/swift/blob/main/CMakeLists.txt#L364)
+* Julia: [Makefiles](https://github.com/JuliaLang/julia/tree/master/contrib/pgo-lto-bolt)
 * V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * ChakraCore: [Scripts](https://github.com/chakra-core/ChakraCore/tree/master/Build/scripts/pgo)
 * Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)
@@ -484,6 +490,7 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * NodeJS: [Blog](https://aaupov.github.io/blog/2020/10/08/bolt-nodejs)
 * Chromium: [Blog](https://aaupov.github.io/blog/2022/11/12/bolt-chromium)
 * MySQL, MongoDB, memcached, Verilator: [Paper](https://people.ucsc.edu/~hlitz/papers/ocolos.pdf)
+* PostgreSQL: [Blog](https://vondra.me/posts/playing-with-bolt-and-postgres/)
 * ast-grep: [GitHub issue](https://github.com/ast-grep/ast-grep/discussions/738)
 * Symbolicator: [GitHub issue](https://github.com/getsentry/symbolicator/issues/1334)
 * Pango: [Gnome blog](https://blogs.gnome.org/chergert/2024/03/21/bolting-libraries/)
@@ -491,6 +498,7 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
 * bbolt-rs: [GitHub comment](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885)
 * resvg: [GitHub comment](https://github.com/RazrFalcon/resvg/issues/765#issue-2314946307)
+* julia: [GitHub PR](https://github.com/JuliaLang/julia/pull/54107#issue-2246969986)
 
 ## Projects with already integrated BOLT into their build scripts
 
@@ -566,8 +574,10 @@ Here we track LLVM BOLT enablement across various projects in various OS-specifi
 
 Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
 
-* Fedora: [Bugzilla](https://bugzilla.redhat.com/show_bug.cgi?id=2249353)
-* RedHat: [JIRA](https://issues.redhat.com/browse/RHEL-16308)
+* Fedora:
+  - [Bugzilla](https://bugzilla.redhat.com/show_bug.cgi?id=2249353)
+  - [Fedora forum](https://discussion.fedoraproject.org/t/expand-usage-of-profile-guided-optimization-pgo-and-llvm-bolt-across-fedora-packages/133724)
+* RedHat: [JIRA about llvm-bolt addition](https://issues.redhat.com/browse/RHEL-16308)
 * ClearLinux: [GitHub issue](https://github.com/clearlinux/distribution/issues/2996)
 * CachyOS ([Website](https://cachyos.org/)): according to the search over its GitHub repositories - they are trying to integrate BOLT as much as possible
 * OpenSUSE: Cannot create an account to create a corresponding issue

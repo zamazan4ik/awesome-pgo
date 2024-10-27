@@ -100,6 +100,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * cel-rust: https://github.com/clarkmcc/cel-rust/issues/83
 * cairo-vm: https://github.com/lambdaclass/cairo-vm/discussions/1849
 * scarb: https://github.com/software-mansion/scarb/issues/1640
+* jank: https://github.com/jank-lang/jank/discussions/114
+* faeyne_lang: https://github.com/nevakrien/Faeyne_lang/issues/1
 
 ## Developer tooling
 
@@ -172,6 +174,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Web Infra: https://github.com/orgs/web-infra-dev/discussions/19
 * wildcard: https://github.com/cloudflare/wildcard/issues/7
 * gitui: https://github.com/extrawurst/gitui/discussions/2385
+* fennec: https://github.com/carthage-software/fennec/issues/2
 
 ## Build systems
 
@@ -221,6 +224,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * CharlotteOS: https://github.com/charlotte-os/cbof/discussions/147
 * DragonOS: https://github.com/DragonOS-Community/DragonOS/discussions/956
 * Theseus: https://github.com/theseus-os/Theseus/discussions/1109
+* Haiku: https://discuss.haiku-os.org/t/extending-of-profile-guided-optimization-pgo-usage-in-haiku/15694
 
 ## Virtual machines and emulators
 
@@ -230,6 +234,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * CrosVM: https://issuetracker.google.com/issues/297890486
 * Cloud Hypervisor: https://github.com/cloud-hypervisor/cloud-hypervisor/issues/5768
 * Hocus: https://github.com/hocus-dev/hocus/issues/141
+* OpenVMM: https://github.com/microsoft/openvmm/issues/107
+* SVSM: https://github.com/coconut-svsm/svsm/discussions/489
 
 ## Databases
 
@@ -355,6 +361,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * possum: https://github.com/anacrolix/possum/issues/5
 * Trieve: https://github.com/devflowinc/trieve/issues/2336
 * feldera: https://github.com/feldera/feldera/issues/2613
+* canopydb: https://github.com/arthurprs/canopydb/issues/3
 
 ## Logging
 
@@ -565,6 +572,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * serde-brief: https://github.com/FlixCoder/serde-brief/issues/5
 * arrow-rs: https://github.com/apache/arrow-rs/discussions/6500
 * optiprism: https://github.com/optiprism-io/optiprism/discussions/292
+* cosmic-text: https://github.com/pop-os/cosmic-text/discussions/322
 
 ## PGO in distributions
 

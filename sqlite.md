@@ -4081,3 +4081,33 @@ The results:
 * (just for reference) PGO instrumented: https://gist.github.com/zamazan4ik/e3cee54868ddf24251474ea63eb33079
 
 As we see, on Elbrus PGO helps to improve SQLite performance as well.
+
+An additional round of benchmarks waw requested for comparing PGO and LLVM BOLT efficiency for SQLite.
+
+## Test environment
+
+* Fedora 40
+* Linux kernel 6.10.12
+* AMD Ryzen 9 5900x
+* 48 Gib RAM
+* SSD Samsung 980 Pro 2 Tib
+* Clang 18 (from the Fedora repositories). I use Clang just because I prefer LLVM-based tooling
+* SQLite version: "Speedtest1 for SQLite 3.46.1 2024-08-13 09:16:08 c9c2ab54ba1f5f46360f1b4f35d8"
+* Disabled Turbo boost
+
+I use the amalgamated SQLite version (simply because it's easier to compile). The default set of build flags is the following: `clang speedtest1.c sqlite3.c -DNDEBUG=1 -DSQLITE_ENABLE_MEMSYS5 -O3 -flto -lpthread -ldl -lm -o speedtest_clang`. The PGO and BOLT training sets are the same - Speedtest workload. Speedtest was started in all cases with `taskset -c 0 ./speedtest_clang --shrink-memory --reprepare --stats --heap 10000000 64 --size 200`. `taskset -c 0` is used to reduce the OS CPU scheduler noise (as much as I can guarantee).
+
+Results:
+
+* Release (as a baseline): https://gist.github.com/zamazan4ik/ca67147dc438c8f61fc8f7d53e59a128
+* PGO optimized: https://gist.github.com/zamazan4ik/c62736b4a8ba6e59f22b0f949206faed
+* BOLT optimized: https://gist.github.com/zamazan4ik/f3f4da8123a202e3e4401c62c1b39ee6
+* PGO + BOLT optimized: https://gist.github.com/zamazan4ik/77da0e61d3279b3c35206c0f6a4b3490
+* (just for reference): PGO instrumented: https://gist.github.com/zamazan4ik/52cfdedac74b8eb9f99eaef47962e94c
+* (just for reference): BOLT instrumented: https://gist.github.com/zamazan4ik/17bccf71b83fecb522645d8b601c30d8
+* (just for reference): PGO optimized but BOLT instrumented: https://gist.github.com/zamazan4ik/e24caad537bda118bd8b5d8fe4705cac
+
+Conclusion:
+* At least in the SQLite case, "PGO + BOLT" is the most performant configuration, "PGO" is slower than "PGO + BOLT", and "BOLT" is slower than "PGO" and "PGO + BOLT"
+* BOLT has higher instrumentation overhead compared to instrumentation PGO
+* PGO optimization step also helps to reduce the BOLT instrumentation overhead

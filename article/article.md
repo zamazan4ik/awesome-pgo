@@ -423,6 +423,7 @@ As we've discussed above, Instrumentation PGO works by inserting into your code 
 | prettyplease | 1.5 Mib | 2.6 Mib | 1.6 Mib | 1.7x | Rust |
 | Bend | 2.5 Mib | 6.2 Mib | 2.7 Mib | 2.5x | Rust |
 | resvg | 3.1 Mib | 7.8 Mib | 4.8 Mib | 2.5x | Rust |
+| fennec | 9.5 Mib | 147 Mib | 60 Mib | 15.5x | Rust |
 
 So in regular scenarios, you should not expect a *huge* binary size increase (however, it depends on your "huge" definition that is context-dependent). For cases like web backends disk space usually is not a problem at all since modern disks are cheap enough. In other domains like embedded with limited storage it can become a problem. Also, you can meet some very niche limitations like a [limit](https://issues.fuchsia.dev/issues/42070037) for the Zircon Boot Image (ZBI) in Fuchsia - just be ready for that.
 
