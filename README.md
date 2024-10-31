@@ -451,6 +451,8 @@ Here we collect and track PGO integrations into build systems:
 * CMake: No support yet ([GitLab issue](https://gitlab.kitware.com/cmake/cmake/-/issues/19273))
 * Meson: Supports (`b_pgo` in the [docs](https://mesonbuild.com/Builtin-options.html)).
 * SCons: No support yet ([GitHub discussion](https://github.com/SCons/scons/discussions/4437))
+* YPKG (Solus): The addition of the `profile` key the in the `package.yml` format will perform an automatic PGO build [docs](https://help.getsol.us/docs/packaging/package.yml#packaging-step-keys-optional). ([Example](https://github.com/getsolus/packages/commit/b13be2af05c05384efd82895bf53d8b5d5de2be8))
+* boulder (Serpent OS): The addition of the `workload` key in the `stone.yaml` format will perform an automatic PGO build TODO: no docs available?
 
 ### Sampling PGO (AutoFDO) support
 
@@ -546,6 +548,7 @@ So here I will try to collect information about the PGO status across the Linux 
   - Alma Linux: [yes](https://git.almalinux.org/rpms/gcc/src/branch/c8/SPECS/gcc.spec#L1164)
   - NixOS: [no](https://github.com/NixOS/nixpkgs/pull/112928)
   - OpenSUSE: [yes](https://build.opensuse.org/package/view_file/openSUSE:Factory/gcc12/gcc12.spec), see line `2414`
+  - Solus: [yes](https://github.com/getsolus/packages/blob/main/packages/g/gcc/package.yml)
 * Clang:
   - Binaries from LLVM are already PGO-optimized (according to the [note](https://apt.llvm.org/) about using "stage2" build - it's PGO optimized build)
   - RedHat (CentOS Stream): [no](https://bugzilla.redhat.com/show_bug.cgi?id=2224925)
@@ -554,10 +557,15 @@ So here I will try to collect information about the PGO status across the Linux 
   - Rocky Linux: [no](https://bugs.rockylinux.org/view.php?id=1618)
   - NixOS: [no](https://github.com/NixOS/nixpkgs/issues/208188)
   - Arch Linux: sent an email to the Clang maintainer in Arch Linux - no response yet
+  - Solus: [yes](https://github.com/getsolus/packages/blob/main/packages/l/llvm/package.yml)
 * Rustc:
   - Fedora: [yes](https://src.fedoraproject.org/rpms/rust/blob/rawhide/f/rust.spec#_773)
+  - Solus: [yes](https://github.com/getsolus/packages/blob/main/packages/r/rust/package.yml)
 * CPython:
   - Fedora: [yes](https://src.fedoraproject.org/rpms/python3.11/blob/f38/f/python3.11.spec#_73). Also, check [this](https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/2H4ZDRR326XAZ2EPCQKTNRMQYG5YZQ2K/) discussion. I guess other RedHat-based distro builds are the same for this package (however I didn't check it but Rocky Linux is the [same](https://git.rockylinux.org/staging/rpms/python3.11/-/blame/r8/SPECS/python3.11.spec#L70)).
+  - Solus: [yes](https://github.com/getsolus/packages/blob/main/packages/py/python3/package.yml)
+* LDC:
+  - Solus: [yes](https://github.com/getsolus/packages/blob/main/packages/l/ldc/package.yml)
 
 ## BOLT adoption across Linux distros
 
@@ -565,12 +573,15 @@ Here we track LLVM BOLT enablement across various projects in various OS-specifi
 
 * Clang:
   - [Gentoo bugtracker](https://bugs.gentoo.org/907931)
+  - Solus: [disabled](https://github.com/getsolus/packages/blob/main/packages/l/llvm/package.yml) Due to: https://github.com/llvm/llvm-project/issues/111530
 * GCC: TODO
 * Rustc:
   - Fedora: no
   - RedHat: no
 * CPython: TODO
-* Pyston: TODO  
+* Pyston: TODO
+* LDC:
+  - Solus: [yes](https://github.com/getsolus/packages/blob/main/packages/l/ldc/package.yml)
 
 Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
 
