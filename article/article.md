@@ -1178,14 +1178,14 @@ At least in the cases above, nothing too critical except the `pylyzer` case. For
 What about binary size increase from instrumentation?
 
 | Application | Release size | Instrumented size | BOLT optimized size | Instrumented to Release ratio | Language |
-|---|---|---|---|---|
+|---|---|---|---|---|---|
 | Symbolicator | 27 Mib | 136 Mib | 33 Mib | ~5x | Rust |
 | pylyzer | 27 Mib | 126 Mib | 37 Mib | ~4.7x | Rust |
 | angle-grinder | 45 Mib | 69 Mib | 47 Mib | 1.53x | Rust |
 | prettyplease | 1.6 Mib | 15 Mib | 4.3 Mib | 9.4x | Rust |
 | bbolt-rs | 1.3 Mib | 14 Mib | 4.3 Mib | 10.8x | Rust |
 | CreuSAT | 623 Kib | 9.2 Mib | 4.1 Mib | 14.7x | Rust |
-| Bend | 4.6 Mib | 20 Mib | 8.6 Mib | Rust |
+| Bend | 4.6 Mib | 20 Mib | 8.6 Mib | ~4.3x | Rust |
 | resvg | 4.8 Mib | 20 Mib | 8.7 Mib | ~4.1x | Rust |
 
 The binary size increase is bigger compared to PGO instrumentation. Mostly this is due to a [limitation](https://github.com/Kobzol/cargo-pgo?tab=readme-ov-file#bolt--pgo) with stripping binary - you can get some linking errors if you strip your binary during the BOLT instrumentation phase. Except that, nothing criminal. Remember one more thing - you can try to avoid the slowdown and binary size increase with using BOLT with Sampling instead of Instrumentation.
