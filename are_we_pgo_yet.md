@@ -175,6 +175,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * wildcard: https://github.com/cloudflare/wildcard/issues/7
 * gitui: https://github.com/extrawurst/gitui/discussions/2385
 * fennec: https://github.com/carthage-software/fennec/issues/2
+* zizmor: https://github.com/woodruffw/zizmor/issues/80
 
 ## Build systems
 
@@ -203,6 +204,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * wgpu: https://github.com/gfx-rs/wgpu/discussions/4692
 * glslang: https://github.com/KhronosGroup/glslang/issues/3400
 * Ferrumc: https://github.com/ferrumc-rs/ferrumc/issues/15
+* DirectX Shader Compiler: https://github.com/microsoft/DirectXShaderCompiler/discussions/6996
 
 ## Operating systems
 
@@ -422,6 +424,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * g3: https://github.com/bytedance/g3/issues/126
 * Angie: https://github.com/webserver-llc/angie/issues/51
 * Nginx VTS: https://github.com/vozlt/nginx-module-vts/issues/283
+* cblt: https://github.com/evgenyigumnov/cblt/issues/9
 
 ## Other
 
@@ -573,6 +576,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * arrow-rs: https://github.com/apache/arrow-rs/discussions/6500
 * optiprism: https://github.com/optiprism-io/optiprism/discussions/292
 * cosmic-text: https://github.com/pop-os/cosmic-text/discussions/322
+* gimli: https://github.com/gimli-rs/gimli/discussions/754
 
 ## PGO in distributions
 

@@ -97,6 +97,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 * [Linux kernel](https://kernel.org/):
   - [Paper](https://web.eecs.umich.edu/~takh/papers/ugur-one-profile-fits-all-osr-2022.pdf)
+  - [Google results with Sampling PGO](https://lore.kernel.org/lkml/20241026051410.2819338-1-xur@google.com/T/#m4de6024f74f8f593b413689d08c0e49c0a75487c)
   - [Microsoft presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
   - [ASOS (Application Specific Operating System)](http://scis.scichina.com/en/2018/092102.pdf)
   - [TCP Stream perf](https://lpc.events/event/7/contributions/798/attachments/661/1214/LTO_PGO_and_AutoFDO_-_Plumbers_2020_-_Tolvanen_Wendling_Desaulniers.pdf)
@@ -330,6 +331,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * arrow-rs: [GitHub discussion](https://github.com/apache/arrow-rs/discussions/6500#discussion-7269000)
 * ion (from RedoxOS): [Benchmark results](https://gist.github.com/zamazan4ik/ef06054d7e3a8e29c018b715457b1ec2)
 * cosmic-text: [GitHub discussion](https://github.com/pop-os/cosmic-text/discussions/322#discussion-7311037)
+* gimli: [GitHub discussion](https://github.com/gimli-rs/gimli/discussions/754#discussion-7376841)
 
 ## Projects with already integrated PGO into their build scripts
 

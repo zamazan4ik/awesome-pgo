@@ -55,4 +55,14 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Suggest PGO to https://github.com/CrunchyData/pg_parquet
 * Suggest PGO to https://github.com/jank-lang/jank/blob/main/compiler%2Bruntime/src/cpp/jank/runtime/core/munge.cpp
 * After some time PGO issues can be closed: https://github.com/apache/horaedb/issues/1051
-* Write to Ferrocene support - https://github.com/ferrocene/ferrocene/issues/22 . Add to the article as an example that proprietary companies don't care much about public feedback mechanisms
+* Write to Ferrocene support - https://github.com/ferrocene/ferrocene/issues/22 . Add to the article as an example that proprietary companies don't care much about public feedback mechanisms. If I won't get an answer before November 10 - write to office@ferrous-systems.com directly - update the article according to the answer from Ferrocene
+* Ask Tinygo (https://github.com/tinygo-org/tinygo) about PGO support in the compiler and for the compiler itself
+* Add PGO request to https://docs.yscope.com/clp/main/dev-guide/components-core/
+* TikTok videos about PGO, huh? :D
+* Update article according to the comment: https://github.com/zamazan4ik/awesome-pgo/issues/8
+* PGO profile reproducibility question: https://discourse.llvm.org/t/pgo-profile-reproducibility/82861
+* Add https://discussion.fedoraproject.org/t/expand-usage-of-profile-guided-optimization-pgo-and-llvm-bolt-across-fedora-packages/133724/6 and https://kwk.github.io/pgo-experiment/ links to the article
+* Add to the article that Google drops GCC support: https://www.mail-archive.com/gcc@gcc.gnu.org/msg102804.html
+* LLVM BOLT and kernel: https://md.archlinux.org/s/maQL1mmOT
+* Add https://cachyos.org/blog/2411-kernel-autofdo/ to the article
+* CachyOS optimizations: https://discord.com/channels/862292009423470592/873309651364610118/1305227583696404510
