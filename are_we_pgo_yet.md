@@ -425,6 +425,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Angie: https://github.com/webserver-llc/angie/issues/51
 * Nginx VTS: https://github.com/vozlt/nginx-module-vts/issues/283
 * cblt: https://github.com/evgenyigumnov/cblt/issues/9
+* flusso: https://github.com/DioCrafts/flusso/issues/9
 
 ## Other
 

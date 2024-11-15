@@ -138,7 +138,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Memcached](https://memcached.org/): [GitHub issue](https://github.com/memcached/memcached/issues/1054)
 * [DragonflyDB](https://www.dragonflydb.io/): [GitHub comment](https://github.com/dragonflydb/dragonfly/issues/592#issuecomment-1616777005)
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
-* [ScyllaDB](https://www.scylladb.com/): [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
+* [ScyllaDB](https://www.scylladb.com/):
+  - [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
+  - From a private conversation with [Konstantin Osipov](kostja), PGO for ScyllaDB Enterprise builds achieves 5-7% performance boost, sometimes up to 10%
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)
 * [Databend](https://databend.rs/): [GitHub issue](https://github.com/datafuselabs/databend/issues/9387#issuecomment-1566210063)
 * [Skytable](https://octave.skytable.io/): [GitHub issue](https://github.com/skytable/skytable/issues/300)
@@ -332,6 +334,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * ion (from RedoxOS): [Benchmark results](https://gist.github.com/zamazan4ik/ef06054d7e3a8e29c018b715457b1ec2)
 * cosmic-text: [GitHub discussion](https://github.com/pop-os/cosmic-text/discussions/322#discussion-7311037)
 * gimli: [GitHub discussion](https://github.com/gimli-rs/gimli/discussions/754#discussion-7376841)
+* osmgraph: [GitHub comment](https://github.com/NoahSchiro/osmgraph/issues/24#issue-2657255442)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -382,6 +385,7 @@ Below you can find some examples of where and how PGO is integrated into differe
 * oha: [GitHub PR](https://github.com/hatoo/oha/pull/268)
 * Dolt: [Blog](https://www.dolthub.com/blog/2024-04-19-golang-pgo-builds-using-github-actions/)
 * SVT-AV1: [CMake script](https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/CMakeLists.txt?ref_type=heads#L262)
+* ScyllaDB: from a private conversation with [Konstantin Osipov](kostja) - PGO is enabled for ScyllaDB Enterprise builds
 
 ## Project-specific documentation about PGO
 

@@ -794,8 +794,6 @@ One of the biggest issues with GraalVM right now is its adoption across the Java
 
 What about GraalVM PGO efficiency? Honestly, I don't know. I have no hands-on experience with it on real applications. All found public benchmarks for GraalVM PGO also too simple and synthetic to consider them seriously (IMHO). I opened a [request](https://github.com/oracle/graal/discussions/7988) in the upstream for sharing more benchmarks - maybe eventually the collection will be bigger. According to my not-so-deep research, in many cases, GraalVM Native Image + PGO still performs worse than usual JIT from the peak performance perspective.
 
-By the way, GraalVM supports AoT compilation mode for Python, Ruby, R, Javascript (and maybe something). So you can try to apply GraalVM-flavoured PGO on them too (not many people tried to do such things so bugs should be expected).
-
 ### Kotlin
 
 [Kotlin Native](https://kotlinlang.org/docs/native-overview.html) has [no](https://youtrack.jetbrains.com/issue/KT-63357/Native-Profile-Guided-Optimization-PGO-support#focus=Comments-27-8353088.0-0) PGO support and Kotlin dev team has no plans to implement it in the near future. So if you want to use PGO with Kotlin - you will need to patch the Kotlin compiler. Another option is using GraalVM since it supports PGO (see Java section for more details). Anyway, using GraalVM instead of Kotlin Native [is not a new thing](https://www.reddit.com/r/Kotlin/comments/172sul9/whats_position_of_kotlin_native_in_the_kotlin/) in the community.

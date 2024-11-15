@@ -66,3 +66,5 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * LLVM BOLT and kernel: https://md.archlinux.org/s/maQL1mmOT
 * Add https://cachyos.org/blog/2411-kernel-autofdo/ to the article
 * CachyOS optimizations: https://discord.com/channels/862292009423470592/873309651364610118/1305227583696404510
+* Lightweight PGO: https://groups.google.com/g/llvm-dev/c/r03Z6JoN7d4 . Was mentioned in https://rocm.docs.amd.com/projects/llvm-project/en/latest/LLVM/llvm/html/InstrProfileFormat.html
+* Add my PGO slides to the awesome PGO repo
