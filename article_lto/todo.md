@@ -106,7 +106,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Another article doesn't recommend LTO: https://tech.dreamleaves.org/trimming-down-a-rust-binary-in-half/
 * People still don't know about LTO: https://github.com/mr-adult/JFC/issues/2#issuecomment-2442816728 + https://github.com/supreetsingh10/lyricist/issues/1#issuecomment-2454878919 + https://github.com/agentic-labs/lsproxy/issues/61#issuecomment-2457848586 + https://github.com/MuongKimhong/BaCE/issues/1#issuecomment-2460528962 + https://github.com/theiskaa/mdp/issues/7#issuecomment-2467361983
 * Good example that even if you have documentation - people don't read it: https://github.com/Abdenasser/neohtop/issues/2 (no blame for people)
-* CLion and LTO by default: https://youtrack.jetbrains.com/issue/CPP-41883/Enable-Link-Time-Optimization-LTO-in-C-project-templates
 * Not updated tools are not LTO optimized without changing defaults: https://github.com/Keats/dbmigrate (like this and maaaany others)
 * Add conduwuit examples as a Rust project with many dedicated profiles: https://github.com/girlbossceo/conduwuit/blob/main/Cargo.toml#L537
 * Random people are happy from LTO performance boost: https://github.com/IncognitoBin/IncognitoBin/issues/8#issuecomment-2454837707
@@ -116,12 +115,12 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Why I propose to use lto = true instead of lto = "fat" or lto = "thin". Fat vs Thin LTO vs an abstraction over them
 * Write about Tauri, their guideleines and the uselessness of them since people ignore them. Do they need some `cargo tauri optimize`? :) Here I can collect data from my GitHub issues and show to the Tauri team to convince them about some changes in their advertisment/ a default template profile or smth else
 * People badly learns from issues: https://github.com/evgenyigumnov/cblt/issues/5 and https://github.com/evgenyigumnov/rustsn/issues/53
-* https://gitee.com/lyupaanastasia/llvm-adlt/tree/master - seems like LTO for 3rd party shared libs
 * Disabled LTO due to some bug: https://github.com/pathwaycom/pathway/blob/main/external/timely-dataflow/Cargo.toml#L14
 * Fyrox Full LTO - 17 Gib RAM in peak
 * `debug = true` makes a huge impact on RAM usage with LTO
 * Rust cannot override LTO settings for deps: https://doc.rust-lang.org/cargo/reference/profiles.html#overrides
 * LTO enabled on CI level, not build scripts: https://github.com/PyO3/maturin/pull/2344 that leads to https://src.fedoraproject.org/rpms/maturin/blob/rawhide/f/maturin.spec - LTO won't be enabled on CI level in downstreams
 * Mention LTO, memory usage and RAM limits like https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
-* Size improvement is enough: https://github.com/cdump/evmole/issues/18#issuecomment-2510645056
+* Size improvement is enough: https://github.com/cdump/evmole/issues/18#issuecomment-2510645056 and sometimes is not: https://github.com/sched-ext/scx/issues/1010#issuecomment-2511341123
 * Not all people care about build times: https://github.com/PRQL/prql/issues/5031#issuecomment-2510283063
+* LTO build issues: https://github.com/meilisearch/meilisearch/issues/2718
