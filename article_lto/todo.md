@@ -5,19 +5,13 @@ Here we collect various TODOs about LTO to cover in the repository:
 * LTO proposal for Swift: https://forums.swift.org/t/pitch-support-lto-for-swift/67379
 * LTO statistics - extract and write about it in the articale: zamazan4ik/lto-statistics repo
 * LTO example in cargo-* extensions: https://github.com/kbknapp/cargo-outdated/blob/master/Cargo.toml#L48
-* Perform LTO tests for https://github.com/martinvonz/jj/discussions/4463#discussioncomment-10673044: Release build - 1m 33s, lto = true - 2m 41s, lto = thin - 1m 39s
 * Write a dedicated "Call for action" about using LTO for binaries: share thoughts, performance numbers, plans, suggestions, etc. Because of I'm tired with creating issues like "Enable LTO" on GitHub
 * Cargo extensions don't usually enable LTO for some reason. One of them - increased "installation" time for users since they compile extensions locally on their machines
-* LTO increased build time for Buck: https://github.com/facebook/buck2/blob/main/Cargo.toml#L416 - 50s to 84s with ThinLTO
 * Yet another Cargo profile with LTO - https://github.com/n0-computer/iroh/blob/main/Cargo.toml#L24
 * https://github.com/FalkorDB/FalkorDB/issues/742 - not only me make requests about LTO
 * Fat and ThinLTO difference resulting size: https://github.com/rustsec/rustsec/issues/1247#issuecomment-2356247000 (need to be rechecked) . I also got the same result with `jj` - https://github.com/martinvonz/jj/discussions/4463#discussioncomment-10673633
-* Projects are switching from Fat to Thin LTO due to build times: https://github.com/neon-mmd/websurfx/issues/516
 * A slowdown from LTO: https://github.com/rust-lang/rust/issues/48371 + https://github.com/rust-lang/rust/issues/47745
 * GCC LTO: LTO and WHOPR - https://stackoverflow.com/questions/64954525/does-gcc-have-thin-lto
-* LTO and the binary size for embedded: https://discourse.llvm.org/t/clang-lld-thin-lto-footprint-and-run-time-performance-outperformed-by-gcc-ld/78997
-* https://llvm.org/devmtg/2016-11/Slides/Amini-Johnson-ThinLTO.pdf - original slides
-* https://convolv.es/guides/lto/ (+ comments here: https://news.ycombinator.com/item?id=38215535) - a good article about LTO
 * Incremental PGO support across compilers: https://www.phoronix.com/news/GCC-Incremental-LTO-Patches . What about other compilers?
 * SlateDB build time (db_bench): 25s without LTO vs 1 min with LTO (lto = true)
 * Cross-language LTO limitations: https://github.com/gyscos/zstd-rs/blob/main/Cargo.toml#L47
@@ -33,11 +27,8 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Discussions about enabling LTO by default: https://github.com/rust-lang/cargo/issues/11298 (also there are some Rust Zulip threads) + https://github.com/rust-lang/cargo/issues/11298#issuecomment-1949953946
 * Add about CMake LTO state - ask AlexFails about it
 * Check other build systems for LTO switches
-* https://github.com/distcc/distcc/issues/495 - distributed thin lto in distcc
 * Distributed build systems and LTO - GL HF
-* Distributed and incremental ThinLTO - https://blog.llvm.org/2016/06/thinlto-scalable-and-incremental-lto.html
 * https://gist.github.com/MaskRay/24f4e2eed208b9d8b0a3752575a665d4
-* ThinLTO CppCon video from Teresa: https://www.youtube.com/watch?v=p9nH2vZ2mNo
 * Some black voodoo thin lto magic about linking order: https://reviews.llvm.org/D130229
 * Rustc and Thin Local LTO description: https://blog.rust-lang.org/inside-rust/2020/06/29/lto-improvements.html
 * Check other langs like D for different LTO support: https://blog.rust-lang.org/inside-rust/2020/06/29/lto-improvements.html
@@ -62,7 +53,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * A good comment about LTO and hidden UBs: https://github.com/FreeCAD/FreeCAD/issues/6698#issuecomment-1977945753
 * Duckstation offers LTO only in the README file: https://github.com/stenzek/duckstation?tab=readme-ov-file#building-1 and is enabled in all corresponding build scripts
 * Typical uncovered errors with LTO: https://github.com/aseprite/aseprite/issues/4413#issue-2237029279
-* Split Dwarf and LTO limitations: https://github.com/CleverRaven/Cataclysm-DDA/pull/74067#issuecomment-2132435397 + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88389 + https://discourse.llvm.org/t/lto-thinlto-and-split-dwarf/70927
 * OpenRCT2 enables LTO only for certain build configs: https://github.com/search?q=repo%3AOpenRCT2%2FOpenRCT2%20IPO_ENABLED_BUILDS&type=code (and disables them in CI sometimes - https://github.com/OpenRCT2/OpenRCT2/pull/22695)
 * Some people are against "advanced" optimization options in their build scripts: https://github.com/qbittorrent/qBittorrent/pull/16813 since they can be enabled in the corresponding distro-specific recipes . But LTO can be enabled here: https://github.com/qbittorrent/qBittorrent/blob/master/.github/workflows/ci_windows.yaml
 * Performance improvement from LTO: https://github.com/netdata/netdata/issues/15338#issuecomment-1630287811
@@ -72,7 +62,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Not only me enables LTO in their builds: https://github.com/aome510/spotify-player/issues/149#issue-1602209595
 * Ask why LTO was disabled for the project: https://github.com/curlpipe/ox/commit/1a49d02af34414cceaa4ae27fd2c9eeda15b2fa2#diff-2e9d962a08321605940b5a657135052fbcef87b5e360662bb527c96d9a615542
 * Another example of disabled LTO in a project: https://github.com/doukutsu-rs/doukutsu-rs/commit/ef1c2a59307ff4df500d38a88d5ac249daf31304
-* Last checkpoint - https://github.com/espanso/espanso (included)
 * Another good example of tweaking the compiler settings for better optimizations: https://github.com/foresterre/cargo-msrv/issues/505
 * Another LTO issue that was not investigated and just switched off LTO for a project: https://github.com/redlib-org/redlib/issues/50#issuecomment-1939755101
 * Not always developers tend to enable optimizations for all things: https://github.com/starkware-libs/cairo/issues/6471#issuecomment-2402154301
@@ -80,7 +69,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://github.com/qarmin/czkawka - an example when LTO is disabled in configs but is enabled (via sed hacks) in CI
 * Suggest ThinLTO to Ruffle instead of disabling LTO at all: https://github.com/search?q=repo%3Aruffle-rs%2Fruffle+thinlto&type=code
 * Pacman update about LTO: https://github.com/wez/wezterm/issues/4987#issuecomment-1935829222
-* Tauri recommendations includes LTO: https://v1.tauri.app/v1/guides/building/app-size/#rust-build-time-optimizations
 * Funny notes about broken LTO on different compilers: https://github.com/pop-os/xz-utils/blob/6509762f03584bf9e3ac9a42d0a8484cbb7ca926/ChangeLog#L3151
 * Lack of confidence in LTO: https://github.com/mohanson/gameboy/issues/43#issuecomment-2403730081
 * An interesting issue about ThinLTO (but not with Fat) and incremental error: https://github.com/DioxusLabs/dioxus/issues/2874
@@ -99,7 +87,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Suggest an idea to IDE to enable LTO by default in project templates (as it's already done in VS for MSVC - /GL + /LTCG is enabled by default for the Release profile)
 * People create forks with enabled LTO: https://github.com/timvisee/ffsend/issues/173#issuecomment-2142185616
 * Ask different IDEs about defaulting to enabled LTO in their project templates (like VS already does): CLion, Qt Creator at least
-* Ask different build systems about defaulting to LTO: CMake, Meson, Bazel, etc.
 * https://github.com/whitequark/superlinker/issues/4 - yet another spam reporter, lol
 * https://github.com/whitequark/superlinker/issues/4#issuecomment-2440023708 - such a funny person!
 * https://github.com/rust-lang/cargo/issues/14719 - enable LTO for Cargo
@@ -110,17 +97,14 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Add conduwuit examples as a Rust project with many dedicated profiles: https://github.com/girlbossceo/conduwuit/blob/main/Cargo.toml#L537
 * Random people are happy from LTO performance boost: https://github.com/IncognitoBin/IncognitoBin/issues/8#issuecomment-2454837707
 * LTO and transitive dependencies (and cross-language LTO)
-* We don't enable LTO because of parity with other tool (WAT): https://github.com/Shnatsel/wondermagick/issues/5#issuecomment-2457866538
 * A trick for enabling LTO only for one subproject in Rust ecosystem: https://www.reddit.com/r/rust/comments/w4pzd2/rust_cargo_workspace_how_to_specify_different/
 * Why I propose to use lto = true instead of lto = "fat" or lto = "thin". Fat vs Thin LTO vs an abstraction over them
 * Write about Tauri, their guideleines and the uselessness of them since people ignore them. Do they need some `cargo tauri optimize`? :) Here I can collect data from my GitHub issues and show to the Tauri team to convince them about some changes in their advertisment/ a default template profile or smth else
 * People badly learns from issues: https://github.com/evgenyigumnov/cblt/issues/5 and https://github.com/evgenyigumnov/rustsn/issues/53
 * Disabled LTO due to some bug: https://github.com/pathwaycom/pathway/blob/main/external/timely-dataflow/Cargo.toml#L14
-* Fyrox Full LTO - 17 Gib RAM in peak
 * `debug = true` makes a huge impact on RAM usage with LTO
 * Rust cannot override LTO settings for deps: https://doc.rust-lang.org/cargo/reference/profiles.html#overrides
 * LTO enabled on CI level, not build scripts: https://github.com/PyO3/maturin/pull/2344 that leads to https://src.fedoraproject.org/rpms/maturin/blob/rawhide/f/maturin.spec - LTO won't be enabled on CI level in downstreams
-* Mention LTO, memory usage and RAM limits like https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
 * Size improvement is enough: https://github.com/cdump/evmole/issues/18#issuecomment-2510645056 and sometimes is not: https://github.com/sched-ext/scx/issues/1010#issuecomment-2511341123
 * Not all people care about build times: https://github.com/PRQL/prql/issues/5031#issuecomment-2510283063
 * LTO build issues: https://github.com/meilisearch/meilisearch/issues/2718
