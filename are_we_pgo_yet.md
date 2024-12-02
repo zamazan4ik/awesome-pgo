@@ -102,6 +102,9 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * scarb: https://github.com/software-mansion/scarb/issues/1640
 * jank: https://github.com/jank-lang/jank/discussions/114
 * faeyne_lang: https://github.com/nevakrien/Faeyne_lang/issues/1
+* slang: https://github.com/shader-slang/slang/discussions/5632
+* D2: https://github.com/terrastruct/d2/discussions/2234
+* TinyGo: https://github.com/orgs/tinygo-org/discussions/4643
 
 ## Developer tooling
 
@@ -378,6 +381,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * vrl: https://github.com/vectordotdev/vrl/discussions/977
 * lmnr: https://github.com/lmnr-ai/lmnr/issues/10
 * SimKube: https://github.com/acrlabs/simkube/discussions/131
+* axosyslog: https://github.com/axoflow/axosyslog/issues/383
+* clp: https://github.com/y-scope/clp/issues/616
 
 ## Machine learning
 

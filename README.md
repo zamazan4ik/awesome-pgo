@@ -102,6 +102,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [ASOS (Application Specific Operating System)](http://scis.scichina.com/en/2018/092102.pdf)
   - [TCP Stream perf](https://lpc.events/event/7/contributions/798/attachments/661/1214/LTO_PGO_and_AutoFDO_-_Plumbers_2020_-_Tolvanen_Wendling_Desaulniers.pdf)
   - [Phoronix post](https://www.phoronix.com/news/Clang-PGO-For-Linux-Next)
+  - [Another Phoronix article](https://www.phoronix.com/news/Kbuild-Clang-AutoFDO-Linux-6.13)
   - Yet another attempt to PGO Linux kernel: http://coolypf.com/kpgo.htm
   - [Gentoo Wiki](https://wiki.gentoo.org/wiki/Kernel/Optimization#Performance)
   - Optimizing Linux kernel with Clang. An [article](https://habr.com/ru/companies/ruvds/articles/696236/)(in Russian) and [results](https://github.com/h0tc0d3/linux_pgo)

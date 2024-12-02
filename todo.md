@@ -68,3 +68,17 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * CachyOS optimizations: https://discord.com/channels/862292009423470592/873309651364610118/1305227583696404510
 * Lightweight PGO: https://groups.google.com/g/llvm-dev/c/r03Z6JoN7d4 . Was mentioned in https://rocm.docs.amd.com/projects/llvm-project/en/latest/LLVM/llvm/html/InstrProfileFormat.html
 * Add my PGO slides to the awesome PGO repo
+* Add PGO request to https://github.com/heroseh/hcc
+* LLVM-based projects don't enable PGO even for already PGO-enabled things: https://github.com/pizlonator/llvm-project-deluge
+* https://documentation.ubuntu.com/server/explanation/performance/perf-pgo/
+* Run PGO benches here: https://github.com/nurmohammed840/nio/tree/main/benchmarks
+* data-driven schedulers for preventing problems like this: https://github.com/sched-ext/scx/issues/376
+* Manual inlining stuff here and there: https://github.com/FyroxEngine/Fyrox/issues/192#issuecomment-933926278
+* Perform PGO benchmarks for Mistral: https://github.com/EricLBuehler/mistral.rs/tree/master/mistralrs-bench
+* https://lwn.net/Articles/993828/ - Linux kernel with BOLT
+* AutoFDO removes GCC support: https://www.mail-archive.com/gcc@gcc.gnu.org/msg102858.html
+* https://github.com/orgs/tinygo-org/discussions/4643 - tinygo and PGO
+* Link all PGO slides to awesome-pgo (people are asking for that at conferences)
+* Sharing PGO profiles between distributions: https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1509316-clang-autofdo-propeller-optimization-support-merged-for-linux-6-13?p=1509355#post1509355
+* Add PGO request to https://github.com/orioledb/orioledb
+* An example of optimizing software manually (https://github.com/rust-lang/rust-analyzer/issues/17491) instead of doing PGO: https://github.com/rust-lang/rust-analyzer/issues/9412
