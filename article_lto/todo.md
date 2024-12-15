@@ -87,3 +87,19 @@ Here we collect various TODOs about LTO to cover in the repository:
 * LTO enabled on CI level, not build scripts: https://github.com/PyO3/maturin/pull/2344 that leads to https://src.fedoraproject.org/rpms/maturin/blob/rawhide/f/maturin.spec - LTO won't be enabled on CI level in downstreams
 * Size improvement is enough: https://github.com/cdump/evmole/issues/18#issuecomment-2510645056 and sometimes is not: https://github.com/sched-ext/scx/issues/1010#issuecomment-2511341123
 * Not all people care about build times: https://github.com/PRQL/prql/issues/5031#issuecomment-2510283063
+* Add LTO to default examples like https://github.com/zellij-org/rust-plugin-example
+* Power of small optimizations: https://maksimkita.com/blog/power-of-small-optimizations.html
+* LTO helps even to Rust projects with a small amount of deps: https://github.com/PiaCOS/treels/pull/2
+* Exact build times, binary size and match it with other code metrics - all of that and much more can be done with Rust Crater . That's why I didn't perform detailed time measurements during the LTO experiment
+* Some of the ideas can be taken by other people or in some way like GSoC from Rust Foundation
+* An example of "strong" min-sized profile for Rust: https://github.com/johnthagen/min-sized-rust/blob/main/Cargo.toml#L9 . Maybe we need to add a dedicated one for Cargo too?
+* LTO affects non-cached installations like https://github.com/LukeMathWalker/cargo-chef?tab=readme-ov-file#without-the-pre-built-image
+* Discuss enabling LTO for prebuilt Cargo artifacts - it exists but I don't remember the exact name for this one right now
+* What about creating an "build mode" for CI systems (like Jenkins/TeamCity plugins, GitHub actions for various build systems, etc.) that could enable on their level? Crazy idea but why not?
+* Rust survey mechanism: https://github.com/rust-lang/surveys/blob/main/README.md
+* Need to investigate further: LTO support by default in Zig: https://github.com/ziglang/zig/issues/2845
+* Binary size in Rust paper: https://dl.acm.org/doi/pdf/10.1145/3519941.3535075
+* LTO overhead for Debug profiles: https://gitlab.com/wireshark/wireshark/-/merge_requests/3735
+* Incremental LTCG is not compatible with ASAN: https://developercommunity.visualstudio.com/t/starting-application-with-address-sanitizer-in-rel/1537669 - and ofc issue was closed due to other bugs :DDDD
+* Performance advisory database - report "slow" programs and send them a corresponding issue/PR
+* Rustc non-LTO vs LTO metrics by perf.rust-lang.org - asked Kobzol about it

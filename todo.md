@@ -82,3 +82,15 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Sharing PGO profiles between distributions: https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1509316-clang-autofdo-propeller-optimization-support-merged-for-linux-6-13?p=1509355#post1509355
 * Add PGO request to https://github.com/orioledb/orioledb
 * An example of optimizing software manually (https://github.com/rust-lang/rust-analyzer/issues/17491) instead of doing PGO: https://github.com/rust-lang/rust-analyzer/issues/9412
+* Add PGO request:
+https://github.com/fortress-build/nervemq/issues/35
+* Tell people more what PGO does in practice: https://github.com/tursodatabase/limbo/issues/78#issuecomment-2212339234
+* Add PGO request: https://github.com/carthage-software/mago
+* Good optimize/overhead decision: https://github.com/DioxusLabs/dioxus/blob/main/Cargo.toml#L252
+* Improvements from LTO were not huge: https://github.com/ricott1/rebels-in-the-sky/issues/24#issuecomment-2537146655
+* Nikita Popov's talk about "Rust loves LLVM": https://www.youtube.com/watch?v=Kqz-umsAnk8
+* https://github.com/floooh/fips/blob/3d05e74bc2f07a0b31138eed795e0a7d0368f753/CHANGELOG.md?plain=1#L194 - LTO enabled by default for VS projects in some build systems too
+* People forget to enable a dedicated Release profile: https://github.com/Asurar0/mikomikagi/issues/2#issuecomment-2538506225
+* RustWeek talk idea: "PGO future in Rust - possible ways"
+* An additional source of uncertainity possibly due to PGO: https://github.com/rust-lang/rustc-perf/issues/1592 that limits local reproduction (that's why PGO profiles should be public as well - write an idea about this)
+* PGO for data structures could prevent this in theory but we not there yet: https://github.com/rust-lang/rustc_codegen_cranelift/commit/5d516f9e118d6527947ca5deb3d76bbc4fa0f8a1
