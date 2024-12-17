@@ -103,3 +103,10 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Incremental LTCG is not compatible with ASAN: https://developercommunity.visualstudio.com/t/starting-application-with-address-sanitizer-in-rel/1537669 - and ofc issue was closed due to other bugs :DDDD
 * Performance advisory database - report "slow" programs and send them a corresponding issue/PR
 * Rustc non-LTO vs LTO metrics by perf.rust-lang.org - asked Kobzol about it
+* Issues are closed before the fix is merged: https://github.com/jm530ob/litelens-tui/issues/1
+* Rustc perf improvement: https://rust-lang.github.io/rust-project-goals/2025h1/perf-improvements.html
+* Rustc perf doesn't test continuosly cranelift backend
+* LTO linker plugin comment in mold: https://github.com/rui314/mold/blob/main/src/lto-unix.cc#L1
+* Issues like https://github.com/sponkurtus2/GemFetch/issues/1 are more educational than useful for a project in practice - https://github.com/sponkurtus2/GemFetch/issues/1#issuecomment-2548933054
+* Enable LTO by default for Rust projects in Debian: https://salsa.debian.org/rust-team/rust/-/merge_requests/41
+* Discussions over LTO: https://gitlab.com/sequoia-pgp/sequoia-chameleon-gnupg/-/issues/73
