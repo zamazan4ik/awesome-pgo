@@ -94,3 +94,8 @@ https://github.com/fortress-build/nervemq/issues/35
 * RustWeek talk idea: "PGO future in Rust - possible ways"
 * An additional source of uncertainity possibly due to PGO: https://github.com/rust-lang/rustc-perf/issues/1592 that limits local reproduction (that's why PGO profiles should be public as well - write an idea about this)
 * PGO for data structures could prevent this in theory but we not there yet: https://github.com/rust-lang/rustc_codegen_cranelift/commit/5d516f9e118d6527947ca5deb3d76bbc4fa0f8a1
+* https://developers.redhat.com/articles/2023/11/07/how-i-experimented-pgo-enabled-llvm-fedora
+* Propeller integration in CachyOS for Linux kernel: https://github.com/CachyOS/linux-cachyos/pull/359
+* People are asking for PGO/PLO optimized binaries: https://www.reddit.com/r/cpp/comments/1hjhcwr/are_there_any_prebuilt_pgoboltoptimized_version/
+* A person never used PGO (it's written in the article) - I am here to change it: https://deterministic.space/high-performance-rust.html
+* Add another Ruby compiler: https://blog.llvm.org/posts/2024-12-03-minimalistic-ruby-compiler/ - AoT way is still important nowadays!

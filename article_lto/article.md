@@ -87,6 +87,10 @@ TODO: Cross-language LTO limitations: https://github.com/gyscos/zstd-rs/blob/mai
 TODO: Rust LTO state
 TODO: OS distributions LTO state
 
+### OS distributions
+
+
+
 ## LTO for applications
 
 ## LTO for libraries
@@ -167,6 +171,7 @@ TODO: talk here about Fat vs Thin LTO, pros and cons of each
 ### Documentation
 
 TODO: Tauri recommendations includes LTO: https://v1.tauri.app/v1/guides/building/app-size/#rust-build-time-optimizations
+
 
 ### Build systems
 

@@ -108,5 +108,39 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Rustc perf doesn't test continuosly cranelift backend
 * LTO linker plugin comment in mold: https://github.com/rui314/mold/blob/main/src/lto-unix.cc#L1
 * Issues like https://github.com/sponkurtus2/GemFetch/issues/1 are more educational than useful for a project in practice - https://github.com/sponkurtus2/GemFetch/issues/1#issuecomment-2548933054
-* Enable LTO by default for Rust projects in Debian: https://salsa.debian.org/rust-team/rust/-/merge_requests/41
+* Enable LTO by default for Rust projects in Debian: https://salsa.debian.org/rust-team/rust/-/merge_requests/41 + https://salsa.debian.org/rust-team/debcargo/-/issues/67
 * Discussions over LTO: https://gitlab.com/sequoia-pgp/sequoia-chameleon-gnupg/-/issues/73
+* Recommended using cross-lang LTO too by Ubuntu: https://documentation.ubuntu.com/rockcraft/en/latest/common/craft-parts/reference/plugins/rust_plugin/#performance-tuning
+* Default build flags for Rust in Fedora: https://pagure.io/fedora-rust/rust-packaging/blob/main/f/macros.d/macros.rust
+* Cargo logic around LTO: https://github.com/rust-lang/cargo/blob/master/src/cargo/core/compiler/mod.rs#L1423 + https://github.com/rust-lang/cargo/blob/master/src/cargo/core/compiler/lto.rs ( + https://github.com/rust-lang/rust/blob/master/compiler/rustc_session/src/config.rs#L2441 in the Rustc compiler)
+* LTO disabled without known (at least from the Git history) reasons: https://github.com/search?q=repo%3Avlcn-io%2Fcr-sqlite+lto&type=commits - https://github.com/vlcn-io/cr-sqlite/discussions/446
+* Enable LTO for Rust in Pacman: https://gitlab.archlinux.org/pacman/pacman/-/merge_requests/131
+* Please fix the defaults: https://gitlab.com/sequoia-pgp/sequoia-chameleon-gnupg/-/issues/73#note_1932630360
+* Asked about OpenSuse defaults in the Telegram chat - waiting for the answer
+* "Funny" bugs with LTO in Rustc + LLVM: https://github.com/rust-lang/rust/issues/110256
+* LTO + CSIR PGO bug: https://github.com/llvm/llvm-project/issues/112103
+* LTO issues in LLVM label: https://github.com/llvm/llvm-project/issues?q=is%3Aissue%20state%3Aopen%20%20label%3ALTO%20 (non-exhaustive)
+* LTO issues in GCC: https://gcc.gnu.org/bugzilla/buglist.cgi?quicksearch=LTO&list_id=455896
+* Fedora question about LTO by default for Rust: https://discussion.fedoraproject.org/t/link-time-optimization-lto-for-rust-packages-by-default-in-fedora/140086
+* OpenSUSE question about LTO for Rust: https://www.reddit.com/r/openSUSE/comments/1hh4qe4/linktime_optimization_lto_by_default_for_rust/
+* Disable LTO for archs with weak hardware: https://discussion.fedoraproject.org/t/fedora-riscv-should-we-disable-lto-gcc-already-disabled-for-clang/96582
+* Enabled LTO for Python packages written in Rust: https://github.com/deliro/moka-py/blob/master/Cargo.toml#L16
+* Reproducible builds site: https://reproducible-builds.org/
+* Fat LTO vs Thin LTO vs codegen units: https://github.com/llMBQll/OmniLED/issues/2#issuecomment-2557879321
+* https://github.com/pgcentralfoundation/pgrx/issues/1954#issuecomment-2564291777 - unfortunately, users don't know which flags they need to tweak and where
+* Turned off LTO in a project: https://github.com/Astrabit-ST/Luminol/commit/d59e77f9044ba1e737c51bdbc4e71e141889c8a8
+* Nice Cargo profiles for different cases: https://github.com/serpent-os/tools/blob/main/Cargo.toml#L67
+* People forget to enable release things: https://github.com/ffimnsr/mk-rs/issues/1#issuecomment-2564574816
+* Change from Thin to Fat LTO: https://github.com/alexpasmantier/television/issues/185 + https://github.com/alexpasmantier/television/pull/191
+* Mention codegen-units option and experiments with that like https://github.com/kpouer/Maurice/issues/18
+* LTO evangelizer, heh: https://github.com/emilsharkov/bukvalno/issues/1#issuecomment-2564913477
+* Suggestion accepted, issue closed, LTO still is not enabled: https://github.com/baehyunsol/ragit/issues/1#issuecomment-2475325970
+* Rust vs Zig from unsafe perspective: https://zackoverflow.dev/writing/unsafe-rust-vs-zig/ - mention it in the article from the "different languages point of view have different limitations"
+* Disable LTO for CI stuff: https://github.com/roc-lang/roc/issues/1036#issuecomment-787009192
+* Rust, slow compilation and possible solutions: https://corrode.dev/blog/tips-for-faster-rust-compile-times/
+* LTO was enabled, codegen-units are not (even with the provided benchmarks): https://github.com/emilsharkov/bukvalno/issues/1
+* Yet another "cleaner" tool: https://github.com/the-lean-crate/criner
+* People disables LTO on early project stages: https://github.com/the-lean-crate/criner/blob/a075e734dede8e1de5fe1652ec86f42da0162c41/Cargo.toml#L44
+* People already think about switching from Thin to Full: https://github.com/roc-lang/roc/blob/cb762688de61db4de6f7d6061e6db352789ae708/Cargo.toml#L252
+* https://deterministic.space/high-performance-rust.html - another site with performance recommendations for Rust
+* Compile time is an important topic for Rust: https://corrode.dev/blog/tips-for-faster-rust-compile-times/#tweak-codegen-options-and-compiler-flags

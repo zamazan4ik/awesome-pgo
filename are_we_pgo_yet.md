@@ -467,7 +467,6 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Sui: https://github.com/MystenLabs/sui/discussions/13603
 * hurl: https://github.com/Orange-OpenSource/hurl/issues/1918
 * fd: https://github.com/sharkdp/fd/discussions/1384
-* Thalassa: https://github.com/a-croco-stolyarov/thalassa/issues/1
 * [dust](https://github.com/bootandy/dust): didn't test since PGO build is broken while enabling LTO on Linux machine
 * broot: https://github.com/Canop/broot/issues/741
 * Massa: https://github.com/massalabs/massa/discussions/4407
