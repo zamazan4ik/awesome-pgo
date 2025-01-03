@@ -99,3 +99,23 @@ https://github.com/fortress-build/nervemq/issues/35
 * People are asking for PGO/PLO optimized binaries: https://www.reddit.com/r/cpp/comments/1hjhcwr/are_there_any_prebuilt_pgoboltoptimized_version/
 * A person never used PGO (it's written in the article) - I am here to change it: https://deterministic.space/high-performance-rust.html
 * Add another Ruby compiler: https://blog.llvm.org/posts/2024-12-03-minimalistic-ruby-compiler/ - AoT way is still important nowadays!
+* A nice article about compiler myths: https://sbaziotis.com/compilers/common-misconceptions-about-compilers.html
+* Create a discussion about PGO in https://github.com/DragonRuby/lightstorm/discussions
+* RAM tricks for BOLT: https://github.com/llvm/llvm-project/issues/61711#issuecomment-2566911099
+* Add PGO request to https://github.com/mila411/pilgrimage
+* PGO write profile and timeout: https://github.com/chimera-linux/cports/commit/81dd2a368e39993c2cb12d5be8ec06f1b7663908
+* PGO network access can be a problem: https://github.com/chimera-linux/cports/blob/d8e3510901aca1c3843edaf7b3f33d62ed598a55/main/thunderbird/template.py#L171
+* An example of how PGO could be enabled in OS package scripts: https://github.com/chimera-linux/cports/commit/3fdfa1a46ee61ca6fcb6d7a9573e49302309e247
+* An example of less popular OS: https://aros.sourceforge.io/ where PGO won't be enabled soon (since PGO has pretty high entrance level right now)
+* If documentation contains instructions about PGO usage it doesn't mean that PGO improves the project: https://github.com/vozlt/nginx-module-vts/pull/288#issuecomment-2567264150
+* Learned (data-driven!) performance models for compilers: https://proceedings.mlsys.org/paper_files/paper/2021/file/6bcfac823d40046dca25ef6d6d59cc3f-Paper.pdf
+* Add https://reviews.llvm.org/D54175 to the article to CS PGO part
+* Add https://research.facebook.com/publications/vespa-static-profiling-for-binary-optimization/ to the article
+* Add https://storage.googleapis.com/pub-tools-public-publication-data/pdf/578a590c3d797cd5d3fcd98f39657819997d9932.pdf to the article
+* Add rustc: supports, but marked unstable: [commit](https://github.com/rust-lang/rust/commit/a17193dbb931ea0c8b66d82f640385bce8b4929a), [unstable book](https://doc.rust-lang.org/beta/unstable-book/compiler-flags/profile_sample_use.html) to the article
+* Write about  -fdebug-info-for-profiling and -funique-internal-linkage-names: https://reviews.llvm.org/D25435 + https://reviews.llvm.org/D73307
+* "Note the use of the -b flag. This tells Perf to use the Last Branch Record (LBR) to record call chains. While this is not strictly required, it provides better call information, which improves the accuracy of the profile data." - write that it's not clear how important the `-b` flag is in practice
+* Add https://postgrespro.com/list/thread-id/2634776 to the repo
+* Add https://llvm.org/devmtg/2024-04/slides/TechnicalTalks/Xiao-EnablingHW-BasedPGO.pdf
+* LLVM Profi: https://reviews.llvm.org/D109860?id=
+* https://arxiv.org/abs/2202.06728 - add to the article

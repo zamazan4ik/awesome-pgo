@@ -461,16 +461,6 @@ Here we collect and track PGO integrations into build systems:
 * YPKG (Solus): The addition of the `profile` key the in the `package.yml` format will perform an automatic PGO build [docs](https://help.getsol.us/docs/packaging/package.yml#packaging-step-keys-optional). ([Example](https://github.com/getsolus/packages/commit/b13be2af05c05384efd82895bf53d8b5d5de2be8))
 * boulder (Serpent OS): The addition of the `workload` key in the `stone.yaml` format will perform an automatic PGO build TODO: no docs available?
 
-### Sampling PGO (AutoFDO) support
-
-Here we collect information about supporting PGO via sampling across different compilers.
-
-* C and C++:
-  - GCC: supports
-  - Clang: supports
-* Rust:
-  - rustc: supports, but marked unstable: [commit](https://github.com/rust-lang/rust/commit/a17193dbb931ea0c8b66d82f640385bce8b4929a), [unstable book](https://doc.rust-lang.org/beta/unstable-book/compiler-flags/profile_sample_use.html)
-
 ## Are we PGO yet?
 
 Check "are_we_pgo_yet.md" file in the repo to check the PGO status in a project.
@@ -530,14 +520,6 @@ Just a list of BOLT-related issues in different projects. So you can estimate th
 * NodeJS: [GitHub issue](https://github.com/nodejs/node/issues/50379)
 * LDC: [GitHub issue](https://github.com/ldc-developers/ldc/issues/4228)
 * GCC: [Bugzilla](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=112492)
-
-## LTO, PGO, BOLT, etc and provided by someone binaries
-
-Well, it's hard to say, is your binary already LTO/PGO optimized or not. It depends on multiple factors like upstream support for LTO/PGO, maintainers willing to enable these optimizations, etc. Usually, the most obvious way to check it - just ask the question "Is the binary LTO/PGO optimized?" from the binary author (a person who built the binary). It could be your colleague (if you build programs on your own), build scripts from CI, maintainers from your favorite OS/repository (if you use provided by repos binaries), software developers (if you use downloaded from a site "official" binaries). Do not hesitate to ask!
-
-### PGO adoption across projects
-
-PGO usually is **not** enabled by the upstream developers due to a lack of support for sample load or a lack of resources for the multi-stage build. So please ask maintainers explicitly about PGO support addition.
 
 ### PGO adoption across Linux distros
 
@@ -615,53 +597,6 @@ Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
 * MinGW repo: [GitHub issue](https://github.com/msys2/MINGW-packages/issues/19273)
 * CBL-Mariner: [GitHub discussion](https://github.com/microsoft/CBL-Mariner/discussions/8072)
 
-### Other optimization techniques like BOLT
-
-BOLT and others certainly are not enabled by default anywhere right now. So if you see a performance improvement from it - contact the upstream.
-
-## Beyond PGO (could be covered here later as well)
-
-* AutoFDO:
-  - [Paper](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45290.pdf)
-  - [GitHub](https://github.com/google/autofdo)
-* BOLT:
-  - [Original paper](https://research.facebook.com/publications/bolt-a-practical-binary-optimizer-for-data-centers-and-beyond/)
-  - [VESPA](https://research.facebook.com/publications/vespa-static-profiling-for-binary-optimization/)
-  - [GitHub](https://github.com/llvm/llvm-project/blob/main/bolt/README.md)
-* Propeller
-  - [Propeller: A Profile Guided, Relinking Optimizer for
-Warehouse-Scale Applications](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/578a590c3d797cd5d3fcd98f39657819997d9932.pdf)
-
-## Traps
-
-The biggest problem is "How to collect a good profile?". There are multiple ways to do this:
-- Prepare a reference workload. It could be quite difficult to create and maintain (since during the time it could become more and more different from your actual workload). However, for some loads like compilers load is usually predictable (compiling programs) so this way is good enough in this case. For other cases like databases the workload could hugely depend on the actual input from your users and users can change their queries for some reason. So be careful.
-- Collect profile from your actual production. It could be difficult to do with a usual PGO since it requires an instrumentation, and instrumentation binaries could work too slowly. If it's your case - you could try to use AutoFDO since it has a low overhead due to the underlying `perf` nature. But it also has its own limitations (usually Linux-only, less efficient than usual PGO, could be more buggy). E.g. Google uses AutoFDO for profiling all their services and has a lot of automation around sampling profiles at their scale, storing them, integration into CI pipelines, etc. But all this tooling is closed-source so you need to implement it from the scratch.
-
-In my opinion, usually you should start with simple PGO via Instrumentation mode, especially if you upgrade your binaries seldomly. And only if Instrumentation starts to hurt you - start thinking about AutoFDO.
-
-Another issue could be reproducibility. Since you are injecting some information from runtime (some execution counters based on your sample workload) you get more variables that could influence your binary. In this case, you need to store somewhere in VCS your sample workload, probably collected profiles based on this workload, etc.
-
-Other pitfalls include the following things:
-
-* PGO
-  - Requires multiple builds (at least two stages, in Context-Sensitive LLVM PGO ([CSPGO](https://reviews.llvm.org/D54175)) - three stages)
-  - Instrumented binaries work too slowly, so rarely could be used in production -> you need to prepare a "sample" workload
-  - For services sometimes PGO reports are not flushed to the disk properly, so you need to do it manually like [here](https://github.com/scylladb/scylladb/pull/10808/files#diff-bf1eacd22947b4daf9f4c2639427b8593d489f093eb1acfbba3e4cc1c9b0288bR427)
-  - Reproducibility issues - could be important for some use cases even more than performance
-  - Bugs. E.g. LLVM issues when PGO is combined with LTO - [GitHub issue](https://github.com/llvm/llvm-project/issues/57501)
-* AutoFDO
-  - Huge memory consumption during profile conversion: [GitHub issue](https://github.com/google/autofdo/issues/162)
-  - Supports only `perf`, so cannot be used with other profilers from different like Windows/macOS (support for other profilers could be implemented manually)
-  - "Support" from Google is at least questionable: no regular releases, compilation [issues](https://github.com/google/autofdo/issues/157)
-* Bolt
-  - Huge memory usage during build: [GitHub issue](https://github.com/llvm/llvm-project/issues/61711)
-  - For better results, you need hardware/software with [LBR](https://lwn.net/Articles/680985/)/[BRS](https://lwn.net/Articles/877245/) support
-  - There are a lot of bugs - be careful
-* Propeller:
-  - Too Google-oriented - could be hard to use outside of Google
-  - Relies on the latest compiler developments, also unstable
-
 ## Useful links
 
 * Implementation details of different PGO approaches in Clang: [Youtube](https://www.youtube.com/watch?v=GBtQrYx_Jbc), [slides](https://llvm.org/devmtg/2020-09/slides/PGO_Instrumentation.pdf)
@@ -673,13 +608,6 @@ Other pitfalls include the following things:
 * Overview of all kinds of PGO in LLVM: [link](https://aaupov.github.io/blog/2023/07/09/pgo)
 * MSVC insights about PGO (a video from 2012): [Microsoft learn](https://learn.microsoft.com/en-us/shows/c9-goingnative/c9goingnative-12-c-build-2012-inside-profile-guided-optimization)
 
-## Communities
-
-Here is the *incomplete* community list where you can find PGO-related advice with higher probability:
-
-* Gentoo (chats, forums)
-* ClearLinux (chats, forums)
-
 ## Related projects
 
 * [Awesome Machine learning in compilers](https://github.com/zwang4/awesome-machine-learning-in-compilers)
@@ -688,10 +616,6 @@ Here is the *incomplete* community list where you can find PGO-related advice wi
 * Phoronix Test Suite (PTS) integration with PGO: [GitHub](https://github.com/phoronix-test-suite/phoronix-test-suite/blob/master/pts-core/modules/pgo.php)
 * An [article](https://thenewstack.io/how-to-use-bolt-binary-optimization-and-layout-tool/) about BOLT
 * Nvidia paper about PGO in gamedev: [Publication](https://research.nvidia.com/publication/2021-07_cooperative-profile-guided-optimization)
-
-## Where PGO did not help (according to my tests)
-
-* [Catboost](https://catboost.ai/) - I think this is due to the highly math-oriented nature of this. I did a test on `fit` and `calc` modes (training and evaluation, respectively) on `epsilon` dataset. In the `calc` mode PGO for some reason made things even worse. Maybe, PGO could help in other modes but I didn't test it (yet).
 
 ## Contribute
 

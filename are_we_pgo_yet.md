@@ -105,6 +105,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * slang: https://github.com/shader-slang/slang/discussions/5632
 * D2: https://github.com/terrastruct/d2/discussions/2234
 * TinyGo: https://github.com/orgs/tinygo-org/discussions/4643
+* Lightstorm: https://github.com/DragonRuby/lightstorm/discussions/12
 
 ## Developer tooling
 

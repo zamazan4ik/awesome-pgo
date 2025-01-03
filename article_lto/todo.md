@@ -144,3 +144,10 @@ Here we collect various TODOs about LTO to cover in the repository:
 * People already think about switching from Thin to Full: https://github.com/roc-lang/roc/blob/cb762688de61db4de6f7d6061e6db352789ae708/Cargo.toml#L252
 * https://deterministic.space/high-performance-rust.html - another site with performance recommendations for Rust
 * Compile time is an important topic for Rust: https://corrode.dev/blog/tips-for-faster-rust-compile-times/#tweak-codegen-options-and-compiler-flags
+* Perform LTO tests for https://github.com/cloudflare/quiche/tree/master/h3i
+* Ohh... https://github.com/chimera-linux/cports/blob/master/main/llvm/template.py#L67 - strange possibly LTO-triggered errors
+* Enabling LTO earlier in the application delivery pipeline brings benefits for all downstream users of this application, including maintainers
+* Fedora question about LTO for Rust is unanswered - time to ask it on Reddit: https://discussion.fedoraproject.org/t/link-time-optimization-lto-for-rust-packages-by-default-in-fedora/140086
+* People can switch from Thin to Fat LTO: https://github.com/NikitaRevenco/patchy/issues/1
+* Some people prefer a dedicated profile for LTO: https://github.com/TornaxO7/shady/issues/33#issuecomment-2569185762
+* https://postgrespro.com/list/thread-id/2634776 - LTO for PostgreSQL gives +10% on math at least
