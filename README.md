@@ -608,6 +608,23 @@ Meta-issues about PGO and LLVM BOLT usage in different OSs and package managers:
 * Overview of all kinds of PGO in LLVM: [link](https://aaupov.github.io/blog/2023/07/09/pgo)
 * MSVC insights about PGO (a video from 2012): [Microsoft learn](https://learn.microsoft.com/en-us/shows/c9-goingnative/c9goingnative-12-c-build-2012-inside-profile-guided-optimization)
 
+## My talks about PGO
+
+I spent some time on giving talks about PGO at different conferences. Multiple times people were asking me to share slides/videos. Here they are.
+
+Few notes about them:
+
+* None of this talks contains all the material from this repository since it's impossible to cover all PGO nuances during a talk at a conference. That's why reading the [article](https://github.com/zamazan4ik/awesome-pgo/blob/main/article/article.md) is highly recommended anyway.
+* You can see that multiple talks have the same or almost the same content. That's fine since different conferences usually have different people that didn't listen talks from other conferences. For you it means that you don't need to watch / listen all the presentations. But if you want - you are welcome!
+
+* TechSpot 2024 "Performance meetup" (Warsaw, Poland), “Profile-Guided Optimization (PGO): 101” ([video](https://www.youtube.com/watch?v=80QJllNxyps), [slides](https://docs.google.com/presentation/d/14y6JOZwdVXsZdunEA2SoN8_91syvNJp9uVEkqiES3U4/edit?usp=sharing))
+* Winglang Community Meeting March 2024 (Online), “Profile-Guided Optimization (PGO) for Winglang” ([slides](https://docs.google.com/presentation/d/1vqFpeQGRa0zuTtb3mnYqCJOTVQ2-1O5wgpaCSyt50NA/edit?usp=sharing))
+* Tech Internals Conf 2024 (Cyprus), “Profile-Guided Optimization (PGO): (Ab)using it for fun and profit” ([video](https://www.youtube.com/watch?v=69H9bRTeld8), [slides](https://docs.google.com/presentation/d/1kvE7YdD6HFQ5Pjzd-dB3EMw770JqKl35Dtlep6sZzT4/edit?usp=sharing))
+* OxidizeConf 2024 (Berlin, Germany), “Profile-Guided Optimization (PGO) in Rust - 101” ([video](https://www.youtube.com/watch?v=1RmNfO84z_M), [slides](https://docs.google.com/presentation/d/1elkwp08DilEgMgIlZxL93V-wnuLI9n__iKaJjWpQjOk/edit?usp=sharing))
+* RustFest 2024 (Zurich, Switzerland), “Profile-Guided Optimization (PGO) in Rust: unknown parts” ([slides](https://docs.google.com/presentation/d/1XW761gf5m9BzGdZ5PIKx3-FODJdhpF5L7X2mxeUliZc/edit?usp=sharing))
+* p99conf 2024 (Online), “Profile-Guided Optimization (PGO): (Ab)using it for Fun and Profit” ([video](https://www.p99conf.io/session/__trashed-2/), [slides](https://docs.google.com/presentation/d/1ChM_BPTSGGGIIqGQIuFLT5gntcWNxVgq-pqMSrlJa58/edit?usp=sharing))
+* RustLab 2024 (Florence, Italy), “Profile-Guided Optimization (PGO) for Rust applications: Practical Guide” ([video](https://www.youtube.com/watch?v=_EpALMNXM24), [slides](https://docs.google.com/presentation/d/1UtHjeUSenp5ICIqYOArG_Q1kQLvNwb9Sk-E708DhPyk/edit?usp=sharing))
+
 ## Related projects
 
 * [Awesome Machine learning in compilers](https://github.com/zwang4/awesome-machine-learning-in-compilers)

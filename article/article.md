@@ -1212,9 +1212,11 @@ Wanna more materials about BOLT? Of course, I have something to share with you:
 
 ### Propeller
 
-TODO: Do I have any benchmarks? I guess putting from the official Google papers is fine here
+TODO: Do I have any benchmarks? I guess putting from the official Google papers is fine here but lack of other efficiency evidence should be mentioned
 TODO: interest in Propeller: https://issues.fuchsia.dev/issues/42162813 + https://issuetracker.google.com/issues/200184657
 TODO: LBR limitation: https://issuetracker.google.com/issues/200184657#comment14
+TODO: Propeller cannot optimize RISC-V: https://github.com/google/llvm-propeller/issues/269
+TODO: https://github.com/google/llvm-propeller/issues/86#issuecomment-2471347955 - Propeller and aarch64 support
 
 Additional links to read:
 

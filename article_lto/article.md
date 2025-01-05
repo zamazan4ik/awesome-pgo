@@ -85,11 +85,21 @@ TODO: Cross-language LTO limitations: https://github.com/gyscos/zstd-rs/blob/mai
 ## Current LTO state in different ecosystems
 
 TODO: Rust LTO state
-TODO: OS distributions LTO state
 
 ### OS distributions
 
+TODO: add information about C++ LTO in distributions
 
+However, if a distribution enables LTO for C or C++ programs, it doesn't mean that LTO is enabled for other applications that are written in other LTO-supported technologies. Since during the last few years I closely was working with the Rust ecosystem, let's check Rust:
+
+* Debian: No ([Debian's Salsa merge request](https://salsa.debian.org/rust-team/rust/-/merge_requests/41) + linked discussions in this merge request)
+* OpenSUSE: No ([Reddit post](https://www.reddit.com/r/openSUSE/comments/1hh4qe4/linktime_optimization_lto_by_default_for_rust/))
+* Fedora: No ([Reddit post](https://www.reddit.com/r/Fedora/comments/1hrzx70/linktime_optimization_lto_for_rust_packages_by/), [Fedora Discussion](https://discussion.fedoraproject.org/t/link-time-optimization-lto-for-rust-packages-by-default-in-fedora/140086))
+* Arch Linux: No ([GitLab merge request](https://gitlab.archlinux.org/pacman/pacman/-/merge_requests/131))
+
+TODO: write more about the reasons why LTO can be ignored my maintainers in OSs
+
+As you see, for Rust LTO is not enabled by distributions by default. I hope one day the sitaution will change.
 
 ## LTO for applications
 
@@ -147,11 +157,14 @@ Rust has **far better** ecosystem tooling support compared to other languages. I
 
 Rust has [rustc-perf](https://github.com/rust-lang/rustc-perf) - a tool + the [website](https://perf.rust-lang.org/) where you can **continuosly** track the Rustc compiler performance. Fun fact: the performance-oriented tool also has [disabled](https://github.com/rust-lang/rustc-perf/blob/master/Cargo.toml) LTO. Of course, I understand possible reasons behind that like "we don't care here too much about performance", "it wastes our CI time for almost nothing, etc." but I see it as a bit of irony, isn't it? :D
 
+There are already some discussions about changing Cargo defaults: a lengthy [talk](https://github.com/rust-lang/cargo/issues/4122) about stripping binaries in the Release mode by default (and the [solution](https://github.com/rust-lang/cargo/commit/fbf9251b4d3ddfc63ad0760ac121211a6c48a2d9)), 
+
+From my perspective, this awesome infrastructure still can be improved in different directions. E.g. even if `rustc-perf` [supports](https://github.com/rust-lang/rustc-perf/pull/2010) testing multiple Rustc backends (LLVM and Cranelift) but on CI only the LLVM backend is tested continuosly. If Cranelift becomes popular in the future - it will be nice to test it too. [Here](https://rust-lang.github.io/rust-project-goals/2025h1/perf-improvements.html) you can read more about already accepted changes to the tool.
+
 TODO: difficult committee structures that it needs additional explanations - https://www.reddit.com/r/cpp/comments/1h0ximn/comment/lz7j2rx/
 TODO: a committee over standardization processes? https://www.incits.org/home/ was mentioned on the isocpp.org
 TODO: Rust Binary size working group links to cover in the article: https://github.com/rust-lang/wg-binary-size/issues/3 + others
-TODO: Cargo links: https://github.com/rust-lang/cargo/issues/784 + https://github.com/rust-lang/cargo/issues/4122 - lengthy discussions about changing the defaults. More can be found in the Rust Zulip
-TODO: Rust ecosystem tooling: https://github.com/rust-lang/crater + https://perf.rust-lang.org/
+TODO: Cargo links: https://github.com/rust-lang/cargo/issues/784#issuecomment-410365426 + https://github.com/rust-lang/cargo/issues/4122 - lengthy discussions about changing the defaults. More can be found in the Rust Zulip
 TODO: Rust perfbot and binary sizes: https://github.com/rust-lang/rustc-perf/issues/1888 + https://github.com/rust-lang/rustc-perf/issues/145 + https://github.com/rust-lang/rustc-perf/pull/1772
 TODO: Rust dev team has other priorities for various reasons: Rust main pain points in other places (since Rust is already "fast-enough by default")
 TODO: The C++ ecosystem performance Question
@@ -160,7 +173,8 @@ TODO: Does rustc-perf test Cranelift? Asked Bjorn about that, waiting for the an
 
 ### People awareness
 
-TODO: People still don't know about LTO in 2024: https://github.com/hyprwm/Hyprland/pull/5874#issuecomment-2094785202
+One of the interesting reasons of why LTO is not enabled in project... people just don't know about LTO! Even if LTO is available in compilers for decades, many [people](https://github.com/theiskaa/mdp/issues/7#issuecomment-2467361983) [still](https://github.com/mr-adult/JFC/issues/2#issuecomment-2442816728) [don't](https://github.com/supreetsingh10/lyricist/issues/1#issuecomment-2454878919) [know](https://github.com/agentic-labs/lsproxy/issues/61#issuecomment-2457848586) [about](https://github.com/MuongKimhong/BaCE/issues/1#issuecomment-2460528962) LTO - here I shared just *some* evidences, not all of them.
+
 TODO: Lack of confidence in LTO: https://github.com/mohanson/gameboy/issues/43#issuecomment-2403730081
 TODO: Write about Tauri, their guideleines and the uselessness of them since people ignore them. Do they need some `cargo tauri optimize`? :) Here I can collect data from my GitHub issues and show to the Tauri team to convince them about some changes in their advertisment/ a default template profile or smth else
 
@@ -168,9 +182,18 @@ TODO: Write about Tauri, their guideleines and the uselessness of them since peo
 
 TODO: talk here about Fat vs Thin LTO, pros and cons of each
 
+Since we have more than one major LTO type, one of the first questions comes to a mind - which one should I use? Here we step into a semi-holywar topic. Short answer: *it depends* (as usual, huh).
+
+My personal view on this question is the following. By default, **Fat LTO** should be used by applications since it results in better final optimizations (see the "Fat vs Thin LTO" section above). My logic here is pretty simple. Our aim with the Release build is to provide as much as possible optimized binary as we can achieve with other constraints (like build resources). Why? Because you know, "optimize once, run optimized everywhere" (on over 100500 billions of devices. hehe). It means for Release we enable only the most efficieint from the resulting optimizations LTO kind - it's Fat LTO.
+
+Only if for some reason Fat LTO doesn't work in your case - too long build times even for the dedicated "Please enable all heavy optimizations to bless our users" build profile; you don't have enough RAM on your build machines and you cannot upgrade them; you met a bug only with Fat LTO (and this bug in the compiler since otherwise you need to fix your code/build scripts/build wrappers); you need to use distributed LTO (like Google) - only in this case use Thin LTO.
+
+I know that many people can disagree with me. I heard in many discussions that ThinLTO should be used by default since it's faster to compile with Thin LTO than with Fat LTO, requires less RAM during the build, etc. Since all of these arguments are valid, I still prefer to deliver to users (or get if I am a user) as optimized binary as possible even if it requires more resources during the compilation. I value users experience more than CI experience, and I hope all of you think the same.
+
 ### Documentation
 
 TODO: Tauri recommendations includes LTO: https://v1.tauri.app/v1/guides/building/app-size/#rust-build-time-optimizations
+
 
 
 ### Build systems
@@ -223,6 +246,10 @@ We can try to use a similar way but for open source ecosystems: create a tool fo
 
 TODO: We don't enable LTO because of parity with other tool (WAT): https://github.com/Shnatsel/wondermagick/issues/5#issuecomment-2457866538
 TODO: Strange optimization level changes in a C project: https://github.com/ravachol/kew/discussions/169
+
+Few times I met a bit interesting pattern about resolving my LTO-related issues. People say "Yeah, thanks a lot for the suggestion!" and... close the issue (like [this](https://github.com/baehyunsol/ragit/issues/1#issuecomment-2475325970))! Sometimes LTO is not enabled at all, sometimes it's enabled but not committed (so an issue is closed **before** merging into a master/main branch).
+
+I don't know why people doing it but please - if you are going to enable LTO, close an issue after merging LTO into your main branch. If you don't plan to enable LTO - just say it in the issue and then close the issue as "Not planned". It brings more transparency for all of us. Thanks!
 
 ## Other issues
 

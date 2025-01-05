@@ -77,7 +77,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://github.com/whitequark/superlinker/issues/4#issuecomment-2440023708 - such a funny person!
 * https://github.com/rust-lang/cargo/issues/14719 - enable LTO for Cargo
 * Another article doesn't recommend LTO: https://tech.dreamleaves.org/trimming-down-a-rust-binary-in-half/
-* People still don't know about LTO: https://github.com/mr-adult/JFC/issues/2#issuecomment-2442816728 + https://github.com/supreetsingh10/lyricist/issues/1#issuecomment-2454878919 + https://github.com/agentic-labs/lsproxy/issues/61#issuecomment-2457848586 + https://github.com/MuongKimhong/BaCE/issues/1#issuecomment-2460528962 + https://github.com/theiskaa/mdp/issues/7#issuecomment-2467361983
 * Good example that even if you have documentation - people don't read it: https://github.com/Abdenasser/neohtop/issues/2 (no blame for people)
 * Random people are happy from LTO performance boost: https://github.com/IncognitoBin/IncognitoBin/issues/8#issuecomment-2454837707
 * LTO and transitive dependencies (and cross-language LTO)
@@ -134,7 +133,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Change from Thin to Fat LTO: https://github.com/alexpasmantier/television/issues/185 + https://github.com/alexpasmantier/television/pull/191
 * Mention codegen-units option and experiments with that like https://github.com/kpouer/Maurice/issues/18
 * LTO evangelizer, heh: https://github.com/emilsharkov/bukvalno/issues/1#issuecomment-2564913477
-* Suggestion accepted, issue closed, LTO still is not enabled: https://github.com/baehyunsol/ragit/issues/1#issuecomment-2475325970
 * Rust vs Zig from unsafe perspective: https://zackoverflow.dev/writing/unsafe-rust-vs-zig/ - mention it in the article from the "different languages point of view have different limitations"
 * Disable LTO for CI stuff: https://github.com/roc-lang/roc/issues/1036#issuecomment-787009192
 * Rust, slow compilation and possible solutions: https://corrode.dev/blog/tips-for-faster-rust-compile-times/
@@ -144,10 +142,10 @@ Here we collect various TODOs about LTO to cover in the repository:
 * People already think about switching from Thin to Full: https://github.com/roc-lang/roc/blob/cb762688de61db4de6f7d6061e6db352789ae708/Cargo.toml#L252
 * https://deterministic.space/high-performance-rust.html - another site with performance recommendations for Rust
 * Compile time is an important topic for Rust: https://corrode.dev/blog/tips-for-faster-rust-compile-times/#tweak-codegen-options-and-compiler-flags
-* Perform LTO tests for https://github.com/cloudflare/quiche/tree/master/h3i
 * Ohh... https://github.com/chimera-linux/cports/blob/master/main/llvm/template.py#L67 - strange possibly LTO-triggered errors
 * Enabling LTO earlier in the application delivery pipeline brings benefits for all downstream users of this application, including maintainers
 * Fedora question about LTO for Rust is unanswered - time to ask it on Reddit: https://discussion.fedoraproject.org/t/link-time-optimization-lto-for-rust-packages-by-default-in-fedora/140086
 * People can switch from Thin to Fat LTO: https://github.com/NikitaRevenco/patchy/issues/1
 * Some people prefer a dedicated profile for LTO: https://github.com/TornaxO7/shady/issues/33#issuecomment-2569185762
 * https://postgrespro.com/list/thread-id/2634776 - LTO for PostgreSQL gives +10% on math at least
+* Some new projects already use optimized profiles: https://github.com/sponkurtus2/appInstalleR/blob/bdac86fbf26d6fecf3d20e6389a43e3719d5e29c/Cargo.toml#L18
