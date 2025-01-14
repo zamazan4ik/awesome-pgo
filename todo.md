@@ -119,3 +119,7 @@ https://github.com/fortress-build/nervemq/issues/35
 * Add https://llvm.org/devmtg/2024-04/slides/TechnicalTalks/Xiao-EnablingHW-BasedPGO.pdf
 * LLVM Profi: https://reviews.llvm.org/D109860?id=
 * https://arxiv.org/abs/2202.06728 - add to the article
+* https://israelo.io/blog/pgo/ - add to the article
+* https://engineering.grab.com/profile-guided-optimisation - add to the README
+* https://theyahya.com/posts/go-pgo/ - add to the article
+* https://blazinglyfast.net/ - performance challenges is a good thing to have!

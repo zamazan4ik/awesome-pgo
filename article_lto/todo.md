@@ -65,7 +65,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Find why LTO was disabled for Dioxus CLI: https://github.com/DioxusLabs/dioxus/commit/f2cd6b8af65fc4c8f1e9f109884a2e8696986f15
 * LTO recommendation for building with in systemd: https://github.com/pop-os/systemd/blob/master_jammy/docs/DISTRO_PORTING.md?plain=1#L42
 * Fedora defaults to Fat LTO (ELF + bitcode) with Clang: https://discussion.fedoraproject.org/t/f41-change-proposal-llvm-19-system-wide/118552
-* Add Kew project as a C-based project example that was fine with enabling LTO
 * LTO and Ring: https://github.com/briansmith/ring/issues/1444
 * ThinLTO and lld bugs: https://github.com/rust-lang/rust/issues/84395
 * LTO and JIT issues: https://github.com/jank-lang/jank/blob/main/compiler%2Bruntime/CMakeLists.txt#L19
@@ -73,7 +72,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Suggest an idea to IDE to enable LTO by default in project templates (as it's already done in VS for MSVC - /GL + /LTCG is enabled by default for the Release profile)
 * People create forks with enabled LTO: https://github.com/timvisee/ffsend/issues/173#issuecomment-2142185616
 * Ask different IDEs about defaulting to enabled LTO in their project templates (like VS already does): CLion, Qt Creator at least
-* https://github.com/whitequark/superlinker/issues/4 - yet another spam reporter, lol
 * https://github.com/whitequark/superlinker/issues/4#issuecomment-2440023708 - such a funny person!
 * https://github.com/rust-lang/cargo/issues/14719 - enable LTO for Cargo
 * Another article doesn't recommend LTO: https://tech.dreamleaves.org/trimming-down-a-rust-binary-in-half/
@@ -83,7 +81,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * People badly learns from issues: https://github.com/evgenyigumnov/cblt/issues/5 and https://github.com/evgenyigumnov/rustsn/issues/53
 * Disabled LTO due to some bug: https://github.com/pathwaycom/pathway/blob/main/external/timely-dataflow/Cargo.toml#L14
 * Rust cannot override LTO settings for deps: https://doc.rust-lang.org/cargo/reference/profiles.html#overrides
-* LTO enabled on CI level, not build scripts: https://github.com/PyO3/maturin/pull/2344 that leads to https://src.fedoraproject.org/rpms/maturin/blob/rawhide/f/maturin.spec - LTO won't be enabled on CI level in downstreams
 * Size improvement is enough: https://github.com/cdump/evmole/issues/18#issuecomment-2510645056 and sometimes is not: https://github.com/sched-ext/scx/issues/1010#issuecomment-2511341123
 * Not all people care about build times: https://github.com/PRQL/prql/issues/5031#issuecomment-2510283063
 * Add LTO to default examples like https://github.com/zellij-org/rust-plugin-example
@@ -102,26 +99,19 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Incremental LTCG is not compatible with ASAN: https://developercommunity.visualstudio.com/t/starting-application-with-address-sanitizer-in-rel/1537669 - and ofc issue was closed due to other bugs :DDDD
 * Performance advisory database - report "slow" programs and send them a corresponding issue/PR
 * Rustc non-LTO vs LTO metrics by perf.rust-lang.org - asked Kobzol about it
-* Issues are closed before the fix is merged: https://github.com/jm530ob/litelens-tui/issues/1
 * Rustc perf improvement: https://rust-lang.github.io/rust-project-goals/2025h1/perf-improvements.html
 * Rustc perf doesn't test continuosly cranelift backend
 * LTO linker plugin comment in mold: https://github.com/rui314/mold/blob/main/src/lto-unix.cc#L1
 * Issues like https://github.com/sponkurtus2/GemFetch/issues/1 are more educational than useful for a project in practice - https://github.com/sponkurtus2/GemFetch/issues/1#issuecomment-2548933054
-* Enable LTO by default for Rust projects in Debian: https://salsa.debian.org/rust-team/rust/-/merge_requests/41 + https://salsa.debian.org/rust-team/debcargo/-/issues/67
 * Discussions over LTO: https://gitlab.com/sequoia-pgp/sequoia-chameleon-gnupg/-/issues/73
-* Recommended using cross-lang LTO too by Ubuntu: https://documentation.ubuntu.com/rockcraft/en/latest/common/craft-parts/reference/plugins/rust_plugin/#performance-tuning
 * Default build flags for Rust in Fedora: https://pagure.io/fedora-rust/rust-packaging/blob/main/f/macros.d/macros.rust
-* Cargo logic around LTO: https://github.com/rust-lang/cargo/blob/master/src/cargo/core/compiler/mod.rs#L1423 + https://github.com/rust-lang/cargo/blob/master/src/cargo/core/compiler/lto.rs ( + https://github.com/rust-lang/rust/blob/master/compiler/rustc_session/src/config.rs#L2441 in the Rustc compiler)
 * LTO disabled without known (at least from the Git history) reasons: https://github.com/search?q=repo%3Avlcn-io%2Fcr-sqlite+lto&type=commits - https://github.com/vlcn-io/cr-sqlite/discussions/446
 * Enable LTO for Rust in Pacman: https://gitlab.archlinux.org/pacman/pacman/-/merge_requests/131
 * Please fix the defaults: https://gitlab.com/sequoia-pgp/sequoia-chameleon-gnupg/-/issues/73#note_1932630360
-* Asked about OpenSuse defaults in the Telegram chat - waiting for the answer
 * "Funny" bugs with LTO in Rustc + LLVM: https://github.com/rust-lang/rust/issues/110256
 * LTO + CSIR PGO bug: https://github.com/llvm/llvm-project/issues/112103
 * LTO issues in LLVM label: https://github.com/llvm/llvm-project/issues?q=is%3Aissue%20state%3Aopen%20%20label%3ALTO%20 (non-exhaustive)
 * LTO issues in GCC: https://gcc.gnu.org/bugzilla/buglist.cgi?quicksearch=LTO&list_id=455896
-* Fedora question about LTO by default for Rust: https://discussion.fedoraproject.org/t/link-time-optimization-lto-for-rust-packages-by-default-in-fedora/140086
-* OpenSUSE question about LTO for Rust: https://www.reddit.com/r/openSUSE/comments/1hh4qe4/linktime_optimization_lto_by_default_for_rust/
 * Disable LTO for archs with weak hardware: https://discussion.fedoraproject.org/t/fedora-riscv-should-we-disable-lto-gcc-already-disabled-for-clang/96582
 * Enabled LTO for Python packages written in Rust: https://github.com/deliro/moka-py/blob/master/Cargo.toml#L16
 * Reproducible builds site: https://reproducible-builds.org/
@@ -130,22 +120,22 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Turned off LTO in a project: https://github.com/Astrabit-ST/Luminol/commit/d59e77f9044ba1e737c51bdbc4e71e141889c8a8
 * Nice Cargo profiles for different cases: https://github.com/serpent-os/tools/blob/main/Cargo.toml#L67
 * People forget to enable release things: https://github.com/ffimnsr/mk-rs/issues/1#issuecomment-2564574816
-* Change from Thin to Fat LTO: https://github.com/alexpasmantier/television/issues/185 + https://github.com/alexpasmantier/television/pull/191
 * Mention codegen-units option and experiments with that like https://github.com/kpouer/Maurice/issues/18
 * LTO evangelizer, heh: https://github.com/emilsharkov/bukvalno/issues/1#issuecomment-2564913477
 * Rust vs Zig from unsafe perspective: https://zackoverflow.dev/writing/unsafe-rust-vs-zig/ - mention it in the article from the "different languages point of view have different limitations"
-* Disable LTO for CI stuff: https://github.com/roc-lang/roc/issues/1036#issuecomment-787009192
 * Rust, slow compilation and possible solutions: https://corrode.dev/blog/tips-for-faster-rust-compile-times/
 * LTO was enabled, codegen-units are not (even with the provided benchmarks): https://github.com/emilsharkov/bukvalno/issues/1
 * Yet another "cleaner" tool: https://github.com/the-lean-crate/criner
-* People disables LTO on early project stages: https://github.com/the-lean-crate/criner/blob/a075e734dede8e1de5fe1652ec86f42da0162c41/Cargo.toml#L44
-* People already think about switching from Thin to Full: https://github.com/roc-lang/roc/blob/cb762688de61db4de6f7d6061e6db352789ae708/Cargo.toml#L252
 * https://deterministic.space/high-performance-rust.html - another site with performance recommendations for Rust
 * Compile time is an important topic for Rust: https://corrode.dev/blog/tips-for-faster-rust-compile-times/#tweak-codegen-options-and-compiler-flags
 * Ohh... https://github.com/chimera-linux/cports/blob/master/main/llvm/template.py#L67 - strange possibly LTO-triggered errors
-* Enabling LTO earlier in the application delivery pipeline brings benefits for all downstream users of this application, including maintainers
-* Fedora question about LTO for Rust is unanswered - time to ask it on Reddit: https://discussion.fedoraproject.org/t/link-time-optimization-lto-for-rust-packages-by-default-in-fedora/140086
-* People can switch from Thin to Fat LTO: https://github.com/NikitaRevenco/patchy/issues/1
 * Some people prefer a dedicated profile for LTO: https://github.com/TornaxO7/shady/issues/33#issuecomment-2569185762
 * https://postgrespro.com/list/thread-id/2634776 - LTO for PostgreSQL gives +10% on math at least
 * Some new projects already use optimized profiles: https://github.com/sponkurtus2/appInstalleR/blob/bdac86fbf26d6fecf3d20e6389a43e3719d5e29c/Cargo.toml#L18
+* https://github.com/tedsteen/nes-bundler/blob/199ef528aea95f764927e75c7abafbc470310d24/Cargo.toml#L31 - "LTO is not worth it in RELEASE profile". Wut?
+* That was an oversight - https://github.com/matze/splat/issues/2#issuecomment-2574987186
+* Heavy optimizations (longer compile times) against fast prototyping thought
+* Stripped binaries is frequently the reason for the binary size improvements - https://github.com/Automattic/harper/discussions/141#discussioncomment-11768520
+* Some people prefer just integrating into a Release profile: https://github.com/EricLBuehler/diffusion-rs/issues/29#issuecomment-2576642637
+* LTO progress in Gentoo: https://www.gentoo.org/news/2025/01/05/new-year.html
+* https://github.com/GyulyVGC/sniffnet/issues/670#issuecomment-2577412007 - for some people it's not enough
