@@ -123,3 +123,4 @@ https://github.com/fortress-build/nervemq/issues/35
 * https://engineering.grab.com/profile-guided-optimisation - add to the README
 * https://theyahya.com/posts/go-pgo/ - add to the article
 * https://blazinglyfast.net/ - performance challenges is a good thing to have!
+* Temporal PGO materials: https://discourse.llvm.org/t/rfc-temporal-profiling-extension-for-irpgo/68068/8?u=zamazan4ik

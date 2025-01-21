@@ -88,7 +88,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * LTO helps even to Rust projects with a small amount of deps: https://github.com/PiaCOS/treels/pull/2
 * Exact build times, binary size and match it with other code metrics - all of that and much more can be done with Rust Crater . That's why I didn't perform detailed time measurements during the LTO experiment
 * Some of the ideas can be taken by other people or in some way like GSoC from Rust Foundation
-* An example of "strong" min-sized profile for Rust: https://github.com/johnthagen/min-sized-rust/blob/main/Cargo.toml#L9 . Maybe we need to add a dedicated one for Cargo too?
 * LTO affects non-cached installations like https://github.com/LukeMathWalker/cargo-chef?tab=readme-ov-file#without-the-pre-built-image
 * Discuss enabling LTO for prebuilt Cargo artifacts - it exists but I don't remember the exact name for this one right now
 * What about creating an "build mode" for CI systems (like Jenkins/TeamCity plugins, GitHub actions for various build systems, etc.) that could enable on their level? Crazy idea but why not?
@@ -125,7 +124,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Rust vs Zig from unsafe perspective: https://zackoverflow.dev/writing/unsafe-rust-vs-zig/ - mention it in the article from the "different languages point of view have different limitations"
 * Rust, slow compilation and possible solutions: https://corrode.dev/blog/tips-for-faster-rust-compile-times/
 * LTO was enabled, codegen-units are not (even with the provided benchmarks): https://github.com/emilsharkov/bukvalno/issues/1
-* Yet another "cleaner" tool: https://github.com/the-lean-crate/criner
 * https://deterministic.space/high-performance-rust.html - another site with performance recommendations for Rust
 * Compile time is an important topic for Rust: https://corrode.dev/blog/tips-for-faster-rust-compile-times/#tweak-codegen-options-and-compiler-flags
 * Ohh... https://github.com/chimera-linux/cports/blob/master/main/llvm/template.py#L67 - strange possibly LTO-triggered errors
@@ -139,3 +137,13 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Some people prefer just integrating into a Release profile: https://github.com/EricLBuehler/diffusion-rs/issues/29#issuecomment-2576642637
 * LTO progress in Gentoo: https://www.gentoo.org/news/2025/01/05/new-year.html
 * https://github.com/GyulyVGC/sniffnet/issues/670#issuecomment-2577412007 - for some people it's not enough
+* https://github.com/the-lean-crate/criner?tab=readme-ov-file#the-lean-crate-initiative - "Lean crate initiative"
+* https://github.com/tomsjansons/ridi-router/issues/60#issuecomment-2593888324 - Release for dev purposes
+* Small binary size and performance improvements are still welcomed: https://github.com/ranjeethmahankali/ftag/issues/27#issuecomment-2601113810
+* Check later this PR: https://github.com/katanemo/archgw/pull/370
+* Started reporting build times too: https://github.com/mitsuhiko/systemfd/issues/33 , https://github.com/ddoemonn/ur-commit-mentor/issues/1 , https://github.com/rotmh/cargo-unify/issues/1 , https://github.com/BlankZhu/rustant-film/issues/3
+* Not supported things like https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-flive-patching - and reference GCC docs as a good source for other interesting LTO details
+* Write about difference between Clang and GCC docs for LTO. As an example: unified LTO docs - https://www.phoronix.com/news/LLVM-Unified-LTO-Front-End + https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774 . Research the whole thread for more insights about different LTO modes
+* ThinLTO vs Full LTO: https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774/52
+* Reason for Thin LTO instead of Thin: https://opensource.axo.dev/cargo-dist/book/workspaces/simple-guide.html#the-dist-profile + https://github.com/axodotdev/cargo-dist/issues/118#issuecomment-1442132862
+* "Seems like it suits most apps" about cargo-dist defaults: https://github.com/rotmh/cargo-unify/issues/1#issuecomment-2602426458

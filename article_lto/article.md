@@ -2,6 +2,15 @@
 
 Plot:
 
+4 main parts:
+
+* Theory about LTO
+* LTO pieces of advice
+* My LTO journey
+* Q&A
+* Fun stories
+* End
+
 1) Intro
 2) What is LTO - a few words with many links
 3) LTO issues in: different programming languages, different build systems
@@ -196,9 +205,12 @@ TODO: People is okay with switching from Fat to Thin LTO: https://github.com/hls
 
 ### Documentation
 
-TODO: Tauri recommendations includes LTO: https://v1.tauri.app/v1/guides/building/app-size/#rust-build-time-optimizations
+What if we simply write more documentation about recommended compiler options like LTO? Sure, we can - as an example we have Tauri [documentation page](https://v2.tauri.app/concept/size/) about recommended Cargo switches for building Tauri-based apps. The problem is obvious - people don't read documentation! We won't discuss it in this article - let's just assume that this a sad true. As an evidence, [check](https://github.com/issues?q=is%3Aissue+author%3Azamazan4ik+archived%3Afalse+tauri+lto) my LTO issues for Tauri projects. Here we see a pattern - people didn't know about LTO (and other recommended options) before my issue but after pointing to the right piece of the documentation, they quickly copy&paste the recommended options into their projects. At least there was no need to explain in detail each option - people tend to believe to framework authors more than to a random stranger from GitHub since, with high chances, framework devs know more about their product (and recommended configuration for it) than me.
 
+In ideal world, we can automate 
 
+TODO: Tauri recommendations includes LTO: https://v2.tauri.app/concept/size/
+TODO: An example of "strong" min-sized profile for Rust: https://github.com/johnthagen/min-sized-rust/blob/main/Cargo.toml#L9 . Maybe we need to add a dedicated one for Cargo too?
 
 ### Build systems
 
@@ -225,9 +237,24 @@ TODO: Ask different build systems about defaulting to LTO: CMake, Meson, Bazel, 
 TODO: Wanna more insanity? What about cross-language LTO with a proprietary module? ;)
 TODO: Cargo logic around LTO: https://github.com/rust-lang/cargo/blob/master/src/cargo/core/compiler/mod.rs#L1423 + https://github.com/rust-lang/cargo/blob/master/src/cargo/core/compiler/lto.rs ( + https://github.com/rust-lang/rust/blob/master/compiler/rustc_session/src/config.rs#L2441 in the Rustc compiler)
 
+### External tooling
+
+If we cannot modify a build system behavior directly, we can try to external tooling for that - in our case we can with tools enable LTO in project in a (semi-)automatic way.
+
+I don't know about other ecosystems much but in Rust for Cargo it's [very popular](https://github.com/rust-unofficial/awesome-rust?tab=readme-ov-file#build-system) to write small extensions. Regarding tweaking compilation options we have several tools like [cargo-wizard](https://github.com/Kobzol/cargo-wizard) and [cargo-kit](https://github.com/trinhminhtriet/cargo-kit).
+
+However, even if we have these helpers, and information about such tools is [published](https://www.reddit.com/r/rust/comments/1bbcdzs/cargowizard_configure_your_cargo_project_for_max/) on one of the most popular news channel for Rust - Rust's subreddit - we still see that almost no new Rust project use optimized settings. I see multiple reasons for that:
+
+* People simply don't know about these tools. Not all engineers read Reddit (or any other information source like conferences) for various reasons: they are not interested enough, they don't have time, they don't have colleagues who read Reddit, a language barrier, etc. But they still are developers, and they are responsible for technical decisions here and there.
+* They don't care about optimization too much, so convincing them to spend their time to figure out right tools, how to run them properly, etc. is a problem. And it's not only their fault since minds of these people can (and likely are) busy with other things - the simply don't have enough time to dig into their nuances.
+
+So even if we have and advertize tools like `cargo-wizard` - it's **not enough for the whole community** to bring optimizations into a new level. I am not saying that these tools are useless - not at all! For people who already explicitly started to care about optimizing software such helpers can save time: instead of researching a zillion of existing options they can run a helper, click several times, and get a good improvement for their apps. I encourage you to develop similar things for other ecosystems!
+
 ### IDE level
 
-TODO: CLion and LTO by default: https://youtrack.jetbrains.com/issue/CPP-41883/Enable-Link-Time-Optimization-LTO-in-C-project-templates - no one cares
+One day an idea came to my mind. If most developers nowadays use different IDEs to work with a code (including creating new projects), what if we will enable LTO on the IDE level? IDEs usually some kind of "project templates", which include different project settings like compilation flags. We can try to enable LTO for Release profiles in such default project templates, and all new projects will get LTO automatically! So if we cannot change defaults on build systems level, we at least can try to tweak their defaults on an IDE level. In theory, it sounds at least partially as a clever idea.
+
+So I made a quick research, and found that Visual Studio already [enables](https://gitlab.kitware.com/cmake/cmake/-/issues/17720) LTO (VS calls it "WholeProgramOptimization" but it's just a different name) by default for Release builds! I was surprised (in a good way) by this! Unfortunately, other IDEs are pretty conservative in this area, and they rely on build systems current default, without huge additions from IDE devs developers. I created several issues for popular C++ IDEs ([one](https://youtrack.jetbrains.com/issue/CPP-41883/Enable-Link-Time-Optimization-LTO-in-C-project-templates) for CLion, [another](https://bugreports.qt.io/browse/QTCREATORBUG-32330) for Qt Creator). And as you can expect, they don't care. If you are an IDE developer/product owner/any other decision-making person - please consider this option. However, I am almost 100% sure that nothing will be changed in this area.
 
 ### Distributed builds and LTO
 
@@ -235,13 +262,15 @@ For especially large applications for speeding-up the compilation process it's p
 
 Here we are not interested in distributed builds itself - there are many materials in the Internet about this topic. We need to understand only a simple concept of how these builds work. We "simply" divide compilation process into N parts (like multiple translation units for C and C++ or multiple crates for Rust), where each part is remotely compiled on another build machine. Then all compiled parts are sent to one machine, where the final binary is linked.
 
-TODO: https://github.com/llvm/llvm-project/issues?q=is%3Aissue%20distributed%20lto%20
+Full LTO cannot be run in a distributed way since, as we already know, it cannot be parallelized. Thin LTO is a different thing since it's by design splits workload into N parts, so we can try to perform each part of ThinLTO on different build machines.
 
-TODO: https://github.com/distcc/distcc/issues/495 - distributed thin lto in distcc and https://github.com/fastbuild/fastbuild/issues/1030 for fastbuild
-TODO: distributed thin lto for Rust: https://internals.rust-lang.org/t/distributed-thinlto-support-in-rustc/22157
-TODO: add distributed LTO request to sccache: https://github.com/mozilla/sccache/discussions/categories/ideas
+At the moment, I know only two compilers that support running Thin LTO in a distributed way: for C and C++ it's Clang ([blog](https://blog.llvm.org/2016/06/thinlto-scalable-and-incremental-lto.html)), for Rust it's Rustc([a forum discussion](https://internals.rust-lang.org/t/distributed-thinlto-support-in-rustc/22157)) (for Rust) - both are LLVM-based. As you see, even in the supported compilers this possibility is almost undocumented and hidden from "regular" compiler users - we definitely need here documentation improvements like minimally required [compiler versions](https://github.com/facebook/buck2/issues/323#issuecomment-1618952582) to use it. And this support [is not error-free](https://github.com/llvm/llvm-project/issues?q=is%3Aissue%20distributed%20lto%20) as well.
 
-If you are interested in Distributed LTO support for other programming languages/build systems/distributed build software - please check them on your own (and create an issue if the functionality is missing).
+Despite compiler support, we also need to support distributed LTO in our **distributed** build systems since a build system needs to pass proper compiler switches to compiler invocations, perform final merging in a proper way, etc. I found that only Bazel and Buck2 support this scenario out of the box. I am not surprised since their major users - Google and Meta correspondingly - use extensively LTO in their optimization pipelines, and for their use cases they need distributed builds as well. Unfortunately, other distributed build systems doesn't support this scenario yet: DistCC [issue](https://github.com/distcc/distcc/issues/495), FASTbuild [issue](https://github.com/fastbuild/fastbuild/issues/1030) and [PR](https://github.com/fastbuild/fastbuild/pull/1054), SCCache [question](https://github.com/mozilla/sccache/discussions/2317).
+
+If you are interested in Distributed LTO support for other programming languages/build systems/distributed build software - please check them on your own (and create an issue if the functionality is missing). If you have questions regarding distributed Thin LTO implementation in LLVM, don't hesitate to ping Teresa Johnson ;)
+
+TODO: insert a link to Sony's slides about DTLTO efficiency - https://discourse.llvm.org/uploads/short-url/A2a3LQ12a2Wzy75ZY36OB2ueOeJ.pdf
 
 ## Changes in ecosystems at scale
 
@@ -272,6 +301,12 @@ TODO: People disable LTO on early project stages: https://github.com/the-lean-cr
 TODO: Enabling LTO earlier in the application delivery pipeline brings benefits for all downstream users of this application, including maintainers
 TODO: Cargo defaults are for developers, not for users: https://github.com/YaLTeR/niri/discussions/968#discussioncomment-11818902 - and maintainers should be more responsible for these things
 TODO: LTO enabled on CI level, not build scripts: https://github.com/PyO3/maturin/pull/2344 that leads to https://src.fedoraproject.org/rpms/maturin/blob/rawhide/f/maturin.spec - LTO won't be enabled on CI level in downstreams
+
+### If you are so LTO-oriented, why your projects don't enable LTO
+
+TODO: reference by Rust projects
+
+TL;DR - I am too lazy for enabling these optimizations for unmaintained projects
 
 ## Stories
 
