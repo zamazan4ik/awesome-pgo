@@ -124,3 +124,6 @@ https://github.com/fortress-build/nervemq/issues/35
 * https://theyahya.com/posts/go-pgo/ - add to the article
 * https://blazinglyfast.net/ - performance challenges is a good thing to have!
 * Temporal PGO materials: https://discourse.llvm.org/t/rfc-temporal-profiling-extension-for-irpgo/68068/8?u=zamazan4ik
+* gcov-tool bugs about PGO profiles: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117090 + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110678 + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=118607
+* https://perforator.tech/docs/en/guides/autofdo - open-source continuous profiling platform
+* https://github.com/yandex/perforator/issues/4#issuecomment-2624654257 - +10% improvement on large prod envs

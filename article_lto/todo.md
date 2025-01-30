@@ -145,5 +145,10 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Not supported things like https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-flive-patching - and reference GCC docs as a good source for other interesting LTO details
 * Write about difference between Clang and GCC docs for LTO. As an example: unified LTO docs - https://www.phoronix.com/news/LLVM-Unified-LTO-Front-End + https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774 . Research the whole thread for more insights about different LTO modes
 * ThinLTO vs Full LTO: https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774/52
-* Reason for Thin LTO instead of Thin: https://opensource.axo.dev/cargo-dist/book/workspaces/simple-guide.html#the-dist-profile + https://github.com/axodotdev/cargo-dist/issues/118#issuecomment-1442132862
-* "Seems like it suits most apps" about cargo-dist defaults: https://github.com/rotmh/cargo-unify/issues/1#issuecomment-2602426458
+* Reason for Thin LTO instead of Fat about cargo-dist defaults: https://opensource.axo.dev/cargo-dist/book/workspaces/simple-guide.html#the-dist-profile + https://github.com/axodotdev/cargo-dist/issues/118#issuecomment-1442132862
+* "Seems like it suits most apps": https://github.com/rotmh/cargo-unify/issues/1#issuecomment-2602426458
+* Small CG1 addition to existing LTO improves things too: https://github.com/andrewdavidmackenzie/pigg/issues/818
+* https://github.com/andrewdavidmackenzie/pigg/pull/819 - build speed-up from CG1
+* https://github.com/koto-lang/koto/discussions/405#discussioncomment-11914832
+* https://github.com/dbry/WavPack/pull/103#discussion_r626374911 - LTO can break UB-dependent code
+* lto = true and lto = fat confusion: https://github.com/daemyn/dwarf-rs/issues/1#issuecomment-2624323227
