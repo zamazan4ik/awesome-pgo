@@ -152,3 +152,4 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://github.com/koto-lang/koto/discussions/405#discussioncomment-11914832
 * https://github.com/dbry/WavPack/pull/103#discussion_r626374911 - LTO can break UB-dependent code
 * lto = true and lto = fat confusion: https://github.com/daemyn/dwarf-rs/issues/1#issuecomment-2624323227
+* Sometimes people enable LTO in quite surprising locations: https://github.com/umi-eng/adapter/blob/main/.cargo/config.toml
