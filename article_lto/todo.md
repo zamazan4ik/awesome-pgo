@@ -153,3 +153,11 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://github.com/dbry/WavPack/pull/103#discussion_r626374911 - LTO can break UB-dependent code
 * lto = true and lto = fat confusion: https://github.com/daemyn/dwarf-rs/issues/1#issuecomment-2624323227
 * Sometimes people enable LTO in quite surprising locations: https://github.com/umi-eng/adapter/blob/main/.cargo/config.toml
+* Improvements are not so impressive for everyone: https://github.com/anacrolix/possum/issues/5#issuecomment-2628762228
+* Remove cargo-kit mention due to potential DMCA abuser
+* PGO for HPC: https://www.phoronix.com/news/PGO-Optimizations-HPC-3p
+* People don't have time for LTO: https://github.com/nalgeon/sqlean/issues/137
+* https://github.com/smallauncher/smallauncher/issues/1 - codegen-units = 1 small improvement
+* People forget to enable LTO: https://github.com/spirali/twinsong/issues/1#issuecomment-2674202278
+* Balance between various factors in LTO: https://github.com/ikatson/rqbit/pull/283#issuecomment-2503508671 (+ LTO results - https://github.com/ikatson/rqbit/pull/283#issue-2687630404 )
+* Fuzzing issues with LTO can happen too: https://github.com/rust-fuzz/cargo-fuzz/issues/384

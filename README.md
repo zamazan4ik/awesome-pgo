@@ -336,6 +336,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * cosmic-text: [GitHub discussion](https://github.com/pop-os/cosmic-text/discussions/322#discussion-7311037)
 * gimli: [GitHub discussion](https://github.com/gimli-rs/gimli/discussions/754#discussion-7376841)
 * osmgraph: [GitHub comment](https://github.com/NoahSchiro/osmgraph/issues/24#issue-2657255442)
+* fontc: [GitHub comment](https://github.com/googlefonts/fontc/issues/1359#issue-2933926348)
 
 ## Projects with already integrated PGO into their build scripts
 

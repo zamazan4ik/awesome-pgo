@@ -126,3 +126,5 @@ https://github.com/fortress-build/nervemq/issues/35
 * Temporal PGO materials: https://discourse.llvm.org/t/rfc-temporal-profiling-extension-for-irpgo/68068/8?u=zamazan4ik
 * gcov-tool bugs about PGO profiles: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117090 + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110678 + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=118607
 * Consumes too much RAM? Just add more swap :))) https://github.com/google/autofdo/issues/162#issuecomment-2627337220
+* For some people almost 2x performance improvement is not worth it: https://github.com/crate-ci/typos/issues/827#issuecomment-2668988450
+* -O3 efficiency is in question in practice: https://www.phoronix.com/news/Ubuntu-No-O3-Easier-ARM64

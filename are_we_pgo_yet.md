@@ -106,6 +106,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * D2: https://github.com/terrastruct/d2/discussions/2234
 * TinyGo: https://github.com/orgs/tinygo-org/discussions/4643
 * Lightstorm: https://github.com/DragonRuby/lightstorm/discussions/12
+* Typescript (Go): https://github.com/microsoft/typescript-go/issues/657
 
 ## Developer tooling
 
@@ -583,6 +584,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * optiprism: https://github.com/optiprism-io/optiprism/discussions/292
 * cosmic-text: https://github.com/pop-os/cosmic-text/discussions/322
 * gimli: https://github.com/gimli-rs/gimli/discussions/754
+* fontc: https://github.com/googlefonts/fontc/issues/1359
 
 ## PGO in distributions
 
