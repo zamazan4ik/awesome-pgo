@@ -161,3 +161,7 @@ Here we collect various TODOs about LTO to cover in the repository:
 * People forget to enable LTO: https://github.com/spirali/twinsong/issues/1#issuecomment-2674202278
 * Balance between various factors in LTO: https://github.com/ikatson/rqbit/pull/283#issuecomment-2503508671 (+ LTO results - https://github.com/ikatson/rqbit/pull/283#issue-2687630404 )
 * Fuzzing issues with LTO can happen too: https://github.com/rust-fuzz/cargo-fuzz/issues/384
+* People don't want to slowdown `cargo install` with LTO: https://github.com/rerun-io/rerun/issues/9339#issuecomment-2742767254
+* People don't care about LTO if they don't provide binaries: https://github.com/rust-fuzz/cargo-fuzz/issues/405#issuecomment-2751721972
+* Binary is large because of Rust: https://github.com/icann/icann-rdap/issues/117#issuecomment-2751856737 :D
+* DTLTO for Linux kernel from Google: https://www.phoronix.com/news/Distributed-ThinkLTO-Linux-Kern

@@ -87,7 +87,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [Uncrustify](https://uncrustify.sourceforge.net/): [GitHub issue](https://github.com/uncrustify/uncrustify/issues/4045)
 * Android tooling like `dex2oat`: [Medium](https://medium.com/androiddevelopers/pgo-for-native-android-applications-1a48a99e95d0)
 * [typos](https://github.com/crate-ci/typos): [GitHub issue](https://github.com/crate-ci/typos/issues/827#issue-1888263250)
-* [Rust Analyzer](https://rust-analyzer.github.io/): [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
+* [Rust Analyzer](https://rust-analyzer.github.io/):
+  - [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
+  - [Another GitHub comment](https://github.com/rust-lang/rust-analyzer/pull/19585#issuecomment-2804752547)
 * pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
 * ctags: [GitHub comment](https://github.com/universal-ctags/ctags/issues/3849#issuecomment-2295323143)
 * gitui: [GitHub comment](https://github.com/extrawurst/gitui/discussions/2385#discussion-7291784)

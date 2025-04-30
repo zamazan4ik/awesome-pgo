@@ -128,3 +128,10 @@ https://github.com/fortress-build/nervemq/issues/35
 * Consumes too much RAM? Just add more swap :))) https://github.com/google/autofdo/issues/162#issuecomment-2627337220
 * For some people almost 2x performance improvement is not worth it: https://github.com/crate-ci/typos/issues/827#issuecomment-2668988450
 * -O3 efficiency is in question in practice: https://www.phoronix.com/news/Ubuntu-No-O3-Easier-ARM64
+* BOLT and out-of-tree patches for ARM is not a convinient thing for maintainers: https://github.com/rust-lang/rust/pull/133807#issuecomment-2517844630
+* Add PGO request to https://github.com/ferronweb/ferron
+* Tooling can prevent enabling PGO: https://github.com/rust-cross/cargo-zigbuild/issues/315 + https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-2802294024
+* Not significant 20% perf but later the same improvement becomes significant: https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298277389 + https://github.com/rust-lang/rust-analyzer/pull/19595#issuecomment-2807206942
+* BOLT vs PGO example: https://github.com/rust-lang/rust/pull/139648
+* PGO in Uber: https://www.uber.com/en-PL/blog/automating-efficiency-of-go-programs-with-pgo/
+* Add PGO request to https://github.com/arkflow-rs/arkflow
