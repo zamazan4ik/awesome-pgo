@@ -181,6 +181,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * gitui: https://github.com/extrawurst/gitui/discussions/2385
 * fennec: https://github.com/carthage-software/fennec/issues/2
 * zizmor: https://github.com/woodruffw/zizmor/issues/80
+* pyrefly: https://github.com/facebook/pyrefly/issues/349
+* mago: https://github.com/carthage-software/mago/discussions/4
 
 ## Build systems
 
@@ -385,6 +387,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * SimKube: https://github.com/acrlabs/simkube/discussions/131
 * axosyslog: https://github.com/axoflow/axosyslog/issues/383
 * clp: https://github.com/y-scope/clp/issues/616
+* arkflow: https://github.com/arkflow-rs/arkflow/discussions/292
 
 ## Machine learning
 
@@ -410,6 +413,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * lace: https://github.com/promised-ai/lace/issues/172
 * rust-tokenizers: https://github.com/guillaume-be/rust-tokenizers/issues/103
 * tensorzero: https://github.com/tensorzero/tensorzero/discussions/328
+* SpiceAI: https://github.com/spiceai/spiceai/issues/6003
 
 ## Message brokers
 
@@ -433,6 +437,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Nginx VTS: https://github.com/vozlt/nginx-module-vts/issues/283
 * cblt: https://github.com/evgenyigumnov/cblt/issues/9
 * flusso: https://github.com/DioCrafts/flusso/issues/9
+* Ferron: https://github.com/ferronweb/ferron/issues/36
+* pgdog: https://github.com/pgdogdev/pgdog/issues/190
 
 ## Other
 
@@ -585,6 +591,8 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * cosmic-text: https://github.com/pop-os/cosmic-text/discussions/322
 * gimli: https://github.com/gimli-rs/gimli/discussions/754
 * fontc: https://github.com/googlefonts/fontc/issues/1359
+* trailbase: https://github.com/trailbaseio/trailbase/discussions/68
+* cocoindex: https://github.com/cocoindex-io/cocoindex/issues/553
 
 ## PGO in distributions
 

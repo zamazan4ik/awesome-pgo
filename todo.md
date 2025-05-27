@@ -12,7 +12,7 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Propose PGO to https://git.deuxfleurs.fr/Deuxfleurs/garage - write why proposing to such places is a bit more difficult
 * Perform PGO benchmarks on https://github.com/pydantic/jiter - https://github.com/pydantic/jiter/issues/123 + https://github.com/pydantic/jiter/issues/123#issuecomment-2255594560
 * Check Rust no_std programs - how do they work with PGO? https://github.com/Amanieu/minicov - here can be some useful info about the topic
-* Suggest PGO to https://github.com/phiresky/sqlite-zstd
+* Suggest PGO to https://github.com/phiresky/sqlite-zstd - highly-likely it won't be done but anyway
 * Write about next step in PGO advertisment - Go ecosystem and why exactly this PL
 * Estimating PGO efficiency without benchmarks - no such tools but some ideas like metrics, ML, questionaries like "Are you Fabris Bellard?"
 * https://app.radicle.xyz/nodes/seed.radicle.xyz/rad:z3gqcJUoA1n9HaHKufZs5FCSGazv5 - I don't know how to create an issue for the project
@@ -22,11 +22,8 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Add PGO request to https://github.com/FalkorDB/FalkorDB/ + https://github.com/FalkorDB/FalkorDB-core-rs
 * Golang Conf 2024, a talk about PGO in Go - https://www.youtube.com/watch?v=FyZJlPMBFm8 , talk to the speaker about their PGO way in Go
 * Rework wording in https://github.com/Kobzol/cargo-pgo/issues/60 + https://github.com/Kobzol/cargo-pgo/pull/61 - add to the article about influence of such "wrong" docs
-* CachyOS optimizes more packages with PGO: https://www.phoronix.com/news/CachyOS-September-2024 - mention Phoronix too in the article
 * Add about MLGO for regalloc: https://groups.google.com/g/llvm-dev/c/7jxuvu3WPl0 + https://github.com/google/ml-compiler-opt/blob/main/docs/regalloc-demo/demo.md + https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1494741-cachyos-optimizing-more-packages-with-pgo-for-up-to-~10-better-performance?p=1494782#post1494782 . In the article already there is some information about MLGO - extend it
-* Add to the article - https://www.reddit.com/r/cpp/comments/1fsj7a1/comment/lplvd07/
 * Add https://pythonspeed.com/ to the article as a meta-idea
-* Write about an idea of performance-oriented community and meetup initiatives
 * Write about different benchmarks types: micro-bench, end-to-end bench, etc. and how they are suitable for PGO
 * Update rinja docs: https://www.reddit.com/r/rust/comments/1ftx5iv/comment/lpy5v01/ - https://github.com/rinja-rs/rinja/pull/188
 * Added documentation about PGO to a library: https://github.com/FlixCoder/serde-brief/pull/6
@@ -82,16 +79,12 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Sharing PGO profiles between distributions: https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1509316-clang-autofdo-propeller-optimization-support-merged-for-linux-6-13?p=1509355#post1509355
 * Add PGO request to https://github.com/orioledb/orioledb
 * An example of optimizing software manually (https://github.com/rust-lang/rust-analyzer/issues/17491) instead of doing PGO: https://github.com/rust-lang/rust-analyzer/issues/9412
-* Add PGO request:
-https://github.com/fortress-build/nervemq/issues/35
 * Tell people more what PGO does in practice: https://github.com/tursodatabase/limbo/issues/78#issuecomment-2212339234
-* Add PGO request: https://github.com/carthage-software/mago
 * Good optimize/overhead decision: https://github.com/DioxusLabs/dioxus/blob/main/Cargo.toml#L252
 * Improvements from LTO were not huge: https://github.com/ricott1/rebels-in-the-sky/issues/24#issuecomment-2537146655
 * Nikita Popov's talk about "Rust loves LLVM": https://www.youtube.com/watch?v=Kqz-umsAnk8
 * https://github.com/floooh/fips/blob/3d05e74bc2f07a0b31138eed795e0a7d0368f753/CHANGELOG.md?plain=1#L194 - LTO enabled by default for VS projects in some build systems too
 * People forget to enable a dedicated Release profile: https://github.com/Asurar0/mikomikagi/issues/2#issuecomment-2538506225
-* RustWeek talk idea: "PGO future in Rust - possible ways"
 * An additional source of uncertainity possibly due to PGO: https://github.com/rust-lang/rustc-perf/issues/1592 that limits local reproduction (that's why PGO profiles should be public as well - write an idea about this)
 * PGO for data structures could prevent this in theory but we not there yet: https://github.com/rust-lang/rustc_codegen_cranelift/commit/5d516f9e118d6527947ca5deb3d76bbc4fa0f8a1
 * https://developers.redhat.com/articles/2023/11/07/how-i-experimented-pgo-enabled-llvm-fedora
@@ -99,39 +92,23 @@ https://github.com/fortress-build/nervemq/issues/35
 * People are asking for PGO/PLO optimized binaries: https://www.reddit.com/r/cpp/comments/1hjhcwr/are_there_any_prebuilt_pgoboltoptimized_version/
 * A person never used PGO (it's written in the article) - I am here to change it: https://deterministic.space/high-performance-rust.html
 * Add another Ruby compiler: https://blog.llvm.org/posts/2024-12-03-minimalistic-ruby-compiler/ - AoT way is still important nowadays!
-* A nice article about compiler myths: https://sbaziotis.com/compilers/common-misconceptions-about-compilers.html
-* Create a discussion about PGO in https://github.com/DragonRuby/lightstorm/discussions
-* RAM tricks for BOLT: https://github.com/llvm/llvm-project/issues/61711#issuecomment-2566911099
-* Add PGO request to https://github.com/mila411/pilgrimage
 * PGO write profile and timeout: https://github.com/chimera-linux/cports/commit/81dd2a368e39993c2cb12d5be8ec06f1b7663908
 * PGO network access can be a problem: https://github.com/chimera-linux/cports/blob/d8e3510901aca1c3843edaf7b3f33d62ed598a55/main/thunderbird/template.py#L171
 * An example of how PGO could be enabled in OS package scripts: https://github.com/chimera-linux/cports/commit/3fdfa1a46ee61ca6fcb6d7a9573e49302309e247
 * An example of less popular OS: https://aros.sourceforge.io/ where PGO won't be enabled soon (since PGO has pretty high entrance level right now)
 * If documentation contains instructions about PGO usage it doesn't mean that PGO improves the project: https://github.com/vozlt/nginx-module-vts/pull/288#issuecomment-2567264150
 * Learned (data-driven!) performance models for compilers: https://proceedings.mlsys.org/paper_files/paper/2021/file/6bcfac823d40046dca25ef6d6d59cc3f-Paper.pdf
-* Add https://reviews.llvm.org/D54175 to the article to CS PGO part
 * Add https://research.facebook.com/publications/vespa-static-profiling-for-binary-optimization/ to the article
 * Add https://storage.googleapis.com/pub-tools-public-publication-data/pdf/578a590c3d797cd5d3fcd98f39657819997d9932.pdf to the article
 * Add rustc: supports, but marked unstable: [commit](https://github.com/rust-lang/rust/commit/a17193dbb931ea0c8b66d82f640385bce8b4929a), [unstable book](https://doc.rust-lang.org/beta/unstable-book/compiler-flags/profile_sample_use.html) to the article
 * Write about  -fdebug-info-for-profiling and -funique-internal-linkage-names: https://reviews.llvm.org/D25435 + https://reviews.llvm.org/D73307
 * "Note the use of the -b flag. This tells Perf to use the Last Branch Record (LBR) to record call chains. While this is not strictly required, it provides better call information, which improves the accuracy of the profile data." - write that it's not clear how important the `-b` flag is in practice
-* Add https://postgrespro.com/list/thread-id/2634776 to the repo
 * Add https://llvm.org/devmtg/2024-04/slides/TechnicalTalks/Xiao-EnablingHW-BasedPGO.pdf
 * LLVM Profi: https://reviews.llvm.org/D109860?id=
-* https://arxiv.org/abs/2202.06728 - add to the article
 * https://israelo.io/blog/pgo/ - add to the article
-* https://engineering.grab.com/profile-guided-optimisation - add to the README
 * https://theyahya.com/posts/go-pgo/ - add to the article
-* https://blazinglyfast.net/ - performance challenges is a good thing to have!
-* Temporal PGO materials: https://discourse.llvm.org/t/rfc-temporal-profiling-extension-for-irpgo/68068/8?u=zamazan4ik
-* gcov-tool bugs about PGO profiles: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117090 + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110678 + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=118607
 * Consumes too much RAM? Just add more swap :))) https://github.com/google/autofdo/issues/162#issuecomment-2627337220
 * For some people almost 2x performance improvement is not worth it: https://github.com/crate-ci/typos/issues/827#issuecomment-2668988450
-* -O3 efficiency is in question in practice: https://www.phoronix.com/news/Ubuntu-No-O3-Easier-ARM64
-* BOLT and out-of-tree patches for ARM is not a convinient thing for maintainers: https://github.com/rust-lang/rust/pull/133807#issuecomment-2517844630
-* Add PGO request to https://github.com/ferronweb/ferron
 * Tooling can prevent enabling PGO: https://github.com/rust-cross/cargo-zigbuild/issues/315 + https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-2802294024
 * Not significant 20% perf but later the same improvement becomes significant: https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298277389 + https://github.com/rust-lang/rust-analyzer/pull/19595#issuecomment-2807206942
 * BOLT vs PGO example: https://github.com/rust-lang/rust/pull/139648
-* PGO in Uber: https://www.uber.com/en-PL/blog/automating-efficiency-of-go-programs-with-pgo/
-* Add PGO request to https://github.com/arkflow-rs/arkflow

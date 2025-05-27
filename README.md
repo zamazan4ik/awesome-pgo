@@ -94,6 +94,8 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * ctags: [GitHub comment](https://github.com/universal-ctags/ctags/issues/3849#issuecomment-2295323143)
 * gitui: [GitHub comment](https://github.com/extrawurst/gitui/discussions/2385#discussion-7291784)
 * fennec: [GitHub comment](https://github.com/carthage-software/fennec/issues/2#issue-2616299119)
+* ruff: [GitHub comment](https://github.com/astral-sh/ruff/issues/7055#issuecomment-2797120365)
+* mago: [GitHub comment](https://github.com/carthage-software/mago/discussions/4#discussion-7376488)
 
 ### Operating systems
 
@@ -120,7 +122,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 
 * [PostgreSQL](https://www.postgresql.org/):
   - See "postgresql_results.md" file in the repo.
-  - [Mailing list thread](https://www.postgresql.org/message-id/flat/CAGjvy28Srze%2B-QGhUEEWsrpZA-8gMn_kf43dt7v_iUs%3Do-y2EQ%40mail.gmail.com)
+  - [Mailing list thread](https://postgrespro.com/list/thread-id/2634776)
 * [MariaDB](https://mariadb.org/):
   - [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
   - [ClearLinux benchmarks](https://clearlinux.org/news-blogs/profile-guided-optimization-mariadb-benchmarks)
@@ -162,6 +164,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * libmdbx: [GitFlic issue](https://gitflic.ru/project/erthink/libmdbx/issue/14) (in Russian)
 * candystore: [GitHub comment](https://github.com/sweet-security/candystore/issues/7#issue-2509793489)
 * canopydb (also `redb`, `sled`, `sanakirja`): [GitHub comment](https://github.com/arthurprs/canopydb/issues/3#issue-2600735606)
+* TalariaDB (closed source): [Grab engineering blog](https://engineering.grab.com/profile-guided-optimisation)
 
 ### Logging
 
@@ -180,6 +183,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Nginx: see "nginx.md" file in the repo
 * Rathole: [GitHub discussion](https://github.com/rapiz1/rathole/discussions/287)
 * httpd: see "httpd.md" file in the repo
+* Ferron: [GitHub comment](https://github.com/ferronweb/ferron/issues/36#issuecomment-2851646994)
 
 ### Other
 
@@ -339,6 +343,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * gimli: [GitHub discussion](https://github.com/gimli-rs/gimli/discussions/754#discussion-7376841)
 * osmgraph: [GitHub comment](https://github.com/NoahSchiro/osmgraph/issues/24#issue-2657255442)
 * fontc: [GitHub comment](https://github.com/googlefonts/fontc/issues/1359#issue-2933926348)
+* Trailbase: [GitHub comment](https://github.com/trailbaseio/trailbase/discussions/68#discussioncomment-13263460)
 
 ## Projects with already integrated PGO into their build scripts
 

@@ -165,3 +165,10 @@ Here we collect various TODOs about LTO to cover in the repository:
 * People don't care about LTO if they don't provide binaries: https://github.com/rust-fuzz/cargo-fuzz/issues/405#issuecomment-2751721972
 * Binary is large because of Rust: https://github.com/icann/icann-rdap/issues/117#issuecomment-2751856737 :D
 * DTLTO for Linux kernel from Google: https://www.phoronix.com/news/Distributed-ThinkLTO-Linux-Kern
+* Developers care about compilation time of their programs on user machines: https://github.com/iced-rs/comet/issues/3#issuecomment-2843784783
+* Performance improvements from LTO for small apps: https://github.com/tsowell/wiremix/issues/1#issuecomment-2846168920
+* Cross-lang LTO availability: https://github.com/gyscos/zstd-rs/blob/main/Cargo.toml#L47
+* LTO bugs are everywhere: https://github.com/rust-lang/rust/issues/141306
+* Big build time increase due to LTO but people is still ok with it: https://github.com/spiceai/spiceai/pull/5709#issuecomment-2851907092
+* People closes issues berfore actually resolving them: https://github.com/NLnetLabs/rotonda/issues/118 + https://github.com/iwe-org/iwe/issues/8#issuecomment-2909541815
+* LTO, huge software installation and weak computers - it could be problem
