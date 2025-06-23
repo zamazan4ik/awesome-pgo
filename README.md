@@ -46,6 +46,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - ScyllaDB benchmarks: [GitHub issue](https://github.com/scylladb/scylladb/issues/10985)
   - Clang on Windows: [Phoronix post](https://www.phoronix.com/news/LLVM-PGO-Windows-Build)
   - Fedora experiments: [GitHub repo](https://github.com/kwk/pgo-experiment//?tab=readme-ov-file#step6)
+  - `llvm-mingw` benches: [GitHub comment](https://github.com/mstorsjo/llvm-mingw/pull/503#issue-3140215955)
 * [GCC](https://gcc.gnu.org/):
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
@@ -96,6 +97,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * fennec: [GitHub comment](https://github.com/carthage-software/fennec/issues/2#issue-2616299119)
 * ruff: [GitHub comment](https://github.com/astral-sh/ruff/issues/7055#issuecomment-2797120365)
 * mago: [GitHub comment](https://github.com/carthage-software/mago/discussions/4#discussion-7376488)
+* verus: [GitHub comment](https://github.com/verus-lang/verus/discussions/1210#discussioncomment-13288329)
 
 ### Operating systems
 

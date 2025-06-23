@@ -172,3 +172,9 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Big build time increase due to LTO but people is still ok with it: https://github.com/spiceai/spiceai/pull/5709#issuecomment-2851907092
 * People closes issues berfore actually resolving them: https://github.com/NLnetLabs/rotonda/issues/118 + https://github.com/iwe-org/iwe/issues/8#issuecomment-2909541815
 * LTO, huge software installation and weak computers - it could be problem
+* LTO as a dedicated profile: https://github.com/greenbone/openvas-scanner/issues/1922#issuecomment-2921989125
+* Small improvements are still improvements, and people care about it: https://github.com/ReagentX/imessage-exporter/discussions/542#discussioncomment-13369335
+* Rust compiler support: https://kobzol.github.io/rust/rustc/2025/06/09/why-doesnt-rust-care-more-about-compiler-performance.html
+* Why does binary size matter? https://github.com/facebookincubator/fastmod/issues/57#issuecomment-2978333044
+* LTO can be enabled even in such places: https://github.com/tombi-toml/tombi/blob/43eddc6a0e6c8662078e10cd83d02035913e7d92/xtask/src/command/dist.rs#L32
+* https://github.com/fish-shell/fish-shell/commit/d9381d1ab60c3d428088be64dfb80e7f1a878e88 - people think that codegen-units = 1 isn't worth for some cases

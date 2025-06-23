@@ -12,28 +12,22 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Propose PGO to https://git.deuxfleurs.fr/Deuxfleurs/garage - write why proposing to such places is a bit more difficult
 * Perform PGO benchmarks on https://github.com/pydantic/jiter - https://github.com/pydantic/jiter/issues/123 + https://github.com/pydantic/jiter/issues/123#issuecomment-2255594560
 * Check Rust no_std programs - how do they work with PGO? https://github.com/Amanieu/minicov - here can be some useful info about the topic
-* Suggest PGO to https://github.com/phiresky/sqlite-zstd - highly-likely it won't be done but anyway
 * Write about next step in PGO advertisment - Go ecosystem and why exactly this PL
 * Estimating PGO efficiency without benchmarks - no such tools but some ideas like metrics, ML, questionaries like "Are you Fabris Bellard?"
-* https://app.radicle.xyz/nodes/seed.radicle.xyz/rad:z3gqcJUoA1n9HaHKufZs5FCSGazv5 - I don't know how to create an issue for the project
 * Check PGO state in https://www.illumos.org/ . Maybe create one more "PGO all the packages" issue at their forum/bug tracker
 * https://github.com/ferrumc-rs/ferrumc/issues/15#issuecomment-2348951292 - another comment that don't understand PGO's value for applications performance in general
 * Add PGO request to https://sourceforge.net/projects/sdcc/ . Build the compiler with PGO and implement PGO for the compiler
 * Add PGO request to https://github.com/FalkorDB/FalkorDB/ + https://github.com/FalkorDB/FalkorDB-core-rs
 * Golang Conf 2024, a talk about PGO in Go - https://www.youtube.com/watch?v=FyZJlPMBFm8 , talk to the speaker about their PGO way in Go
-* Rework wording in https://github.com/Kobzol/cargo-pgo/issues/60 + https://github.com/Kobzol/cargo-pgo/pull/61 - add to the article about influence of such "wrong" docs
 * Add about MLGO for regalloc: https://groups.google.com/g/llvm-dev/c/7jxuvu3WPl0 + https://github.com/google/ml-compiler-opt/blob/main/docs/regalloc-demo/demo.md + https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1494741-cachyos-optimizing-more-packages-with-pgo-for-up-to-~10-better-performance?p=1494782#post1494782 . In the article already there is some information about MLGO - extend it
 * Add https://pythonspeed.com/ to the article as a meta-idea
 * Write about different benchmarks types: micro-bench, end-to-end bench, etc. and how they are suitable for PGO
 * Update rinja docs: https://www.reddit.com/r/rust/comments/1ftx5iv/comment/lpy5v01/ - https://github.com/rinja-rs/rinja/pull/188
 * Added documentation about PGO to a library: https://github.com/FlixCoder/serde-brief/pull/6
 * AutoFDO + Propeller for the Linux kernel: https://www.phoronix.com/news/Linux-AutoFDO-Prop-v2
-* AutoFDO regressions between LLVM releases: https://github.com/google/autofdo/issues/181#issuecomment-2270557096
 * Proprietary tooling and PGO: https://community.intel.com/t5/Intel-oneAPI-DPC-C-Compiler/Boost-Performance-with-Hardware-Counter-Assisted-Profile-Guided/m-p/1635106/highlight/true#M4128
-* https://github.com/spiceai/spiceai - suggest PGO
-* closed the PGO issue even if they ARE interested in it (but not now): https://github.com/FuelLabs/fuel-core/issues/1369#issuecomment-2391410543
 * Write to the author https://www.manning.com/books/latency about LTO, PGO and Pythonspeed resources
-* Add LTO and PGO requests for https://github.com/greenbone/openvas-scanner/tree/main/rust (for PGO perform benches)
+* Add PGO request for https://github.com/greenbone/openvas-scanner/tree/main/rust (for PGO perform benches)
 * Rinja example: PGO optimized e2e bench (https://github.com/mitsuhiko/minijinja/pull/588#issuecomment-2387957123) but failed in microbenchmarks: https://gist.github.com/zamazan4ik/c61ccdb86372bdc1ee7ab305381e2e28
 * Another comment about "fixing the code" instead of PGO: https://github.com/optiprism-io/optiprism/discussions/292#discussioncomment-10878781
 * Write RocksDB as a pretty common multilanguage example for using PGO (e.g. RocksDB in C++, the layer above in anything)
@@ -41,7 +35,6 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Performance matters talk - https://www.youtube.com/watch?v=r-TLSBdHe1A (also I need to check the StrangeLoop conference)
 * Perform PGO benches for https://github.com/tonbo-io/tonbo/tree/main/benches - blocked by https://github.com/tonbo-io/tonbo/issues/185
 * Student's work in the PGO-like domains: http://mcst.ru/sites/default/files/u11/Master_2023_Levchenko.pdf (warn: in Russian)
-* Sometimes people doesn't want to keep issues open... https://github.com/espruino/Espruino/issues/2392
 * Write that PLO optimizers are not a replacement for PGO - it's an addition (also insert a citation from the BOLT paper from "abstract"). Perform some "PGO vs BOLT" + "PGO + BOLT vs PGO" + "BOLT vs PGO + BOLT" on SQLite - add these benches to the article
 * A request example of enabling PGO for a tool with PGO support in the upstream
 * 3rd party repos for PGO-optimized stuff for more boring projects like Fedora: https://discussion.fedoraproject.org/t/fedora-llvm-team-llvm-pgo-optimized/84361
@@ -49,10 +42,7 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Mention Rust performance book in the article
 * Add to the article: https://github.com/llvm/llvm-project/issues/57501
 * Think about a talk about "LTO, PGO and PLO for Python native-based libs" for Python conferences. Also, the idea can be applicable for other langs like Ruby, etc.
-* Suggest PGO to https://github.com/CrunchyData/pg_parquet
-* Suggest PGO to https://github.com/jank-lang/jank/blob/main/compiler%2Bruntime/src/cpp/jank/runtime/core/munge.cpp
-* After some time PGO issues can be closed: https://github.com/apache/horaedb/issues/1051
-* Write to Ferrocene support - https://github.com/ferrocene/ferrocene/issues/22 . Add to the article as an example that proprietary companies don't care much about public feedback mechanisms. If I won't get an answer before November 10 - write to office@ferrous-systems.com directly - update the article according to the answer from Ferrocene
+* Write to Ferrocene support - https://github.com/ferrocene/ferrocene/issues/22 . Add to the article as an example that proprietary companies don't care much about public feedback mechanisms. If I won't get an answer before November 10 - write to office@ferrous-systems.com directly - update the article according to the answer from Ferrocene. I've a reply from them - talk about it in the article.
 * Ask Tinygo (https://github.com/tinygo-org/tinygo) about PGO support in the compiler and for the compiler itself
 * Add PGO request to https://docs.yscope.com/clp/main/dev-guide/components-core/
 * TikTok videos about PGO, huh? :D
@@ -112,3 +102,13 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Tooling can prevent enabling PGO: https://github.com/rust-cross/cargo-zigbuild/issues/315 + https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-2802294024
 * Not significant 20% perf but later the same improvement becomes significant: https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298277389 + https://github.com/rust-lang/rust-analyzer/pull/19595#issuecomment-2807206942
 * BOLT vs PGO example: https://github.com/rust-lang/rust/pull/139648
+* https://github.com/WGUNDERWOOD/tex-fmt/issues/22#issuecomment-2401824584 - PGO stopped to help after some performance improvements in a project
+* PGO won't be added to langs like MUMPS, heh: https://gitlab.com/Reference-Standard-M/rsm/-/blob/main/runtime/run.c?ref_type=heads
+* Add PGO request to https://github.com/trynova/nova (and suggest enabling CG1 in an addition to LTO)
+* Add PGO request to https://github.com/veryl-lang/veryl
+* PGO slowly comes to compilers: https://github.com/llvm/llvm-project/pull/136098
+* LLVM MinGW results for PGO: https://github.com/mstorsjo/llvm-mingw/pull/503#issue-3140215955
+* Continuous instrumentation PGO in Clang: https://clang.llvm.org/docs/UsersManual.html#cmdoption-fprofile-continuous
+* Use custom compiler versus a system one to speedup the builds: https://github.com/mstorsjo/llvm-mingw/pull/503#issue-3140215955
+* PGO feature parity between LLVM-based compilers - start this discussion with Rustc devs
+* Write about Deepwiki: https://deepwiki.com/zamazan4ik/awesome-pgo
