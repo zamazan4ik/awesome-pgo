@@ -112,3 +112,16 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Use custom compiler versus a system one to speedup the builds: https://github.com/mstorsjo/llvm-mingw/pull/503#issue-3140215955
 * PGO feature parity between LLVM-based compilers - start this discussion with Rustc devs
 * Write about Deepwiki: https://deepwiki.com/zamazan4ik/awesome-pgo
+* TursoDB another performance report: https://github.com/tursodatabase/turso/issues/78#issuecomment-3015109684
+* Check PGO results on Wasmi: https://github.com/wasmi-labs/wasmi/pull/1449#issuecomment-2771943238
+* PGO for Rustc on macOS - start the conversation again about enabling it
+* https://github.com/zamazan4ik/awesome-pgo/blob/main/are_we_pgo_yet.md - this page often cannot be opened on GitHub since it's too large, lol
+* Documentation about recommended steps with an engine before game release: https://github.com/bevyengine/bevy/issues/4586 . similar thing exists with Ratatui
+* Even giants and optimization nerds like Google have missing oppotunities for optimization with LTO/PGO for many years: https://issues.fuchsia.dev/issues/42120900?pli=1
+* Bake - https://github.com/SanderMertens/bake?tab=readme-ov-file#installation - build system by default installs Debug version of the application...
+* Report PGO results for Flecs later on GitHub to make them publicly-available (copy them from Discord)
+* Flecs dev has an interesting idea about "domain-specific PGO" for collecting some runtime statistics for its ECS to improve performance - https://discord.com/channels/633826290415435777/715447777605320724/1389637330641485996 I was confused since he also used PGO abbreviation for it :)
+* https://github.com/SanderMertens/bake by default is installed in a debug mode since it gives nicer stack traces
+* GCC has its own Temporal PGO way before LLVM: https://gcc.gnu.org/onlinedocs/gcc-15.1.0/gcc/Optimize-Options.html#index-fprofile-reorder-functions + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=120928#c2
+* People don't need aging tickets to track PGO for some reason: https://github.com/neondatabase/neon/issues/4649#issuecomment-3083685375
+* Memory-oriented PGO for TCMalloc: https://github.com/valexey/tcmalloc_hot_cold . Can we propose something similar for other allocators like mimalloc?

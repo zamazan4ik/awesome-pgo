@@ -423,6 +423,7 @@ Just a list of PGO-related issues in different projects. So you can estimate the
 * Akasa: https://github.com/akasamq/akasa/issues/3
 * Iggy-rs: https://github.com/orgs/iggy-rs/discussions/990
 * Fluvio: https://github.com/orgs/infinyon/discussions/4169
+* RobustMQ: https://github.com/robustmq/robustmq/issues/1204
 
 ## Proxies
 

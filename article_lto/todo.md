@@ -178,3 +178,18 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Why does binary size matter? https://github.com/facebookincubator/fastmod/issues/57#issuecomment-2978333044
 * LTO can be enabled even in such places: https://github.com/tombi-toml/tombi/blob/43eddc6a0e6c8662078e10cd83d02035913e7d92/xtask/src/command/dist.rs#L32
 * https://github.com/fish-shell/fish-shell/commit/d9381d1ab60c3d428088be64dfb80e7f1a878e88 - people think that codegen-units = 1 isn't worth for some cases
+* External tooling limitation for custom profiles: https://github.com/project-robius/robrix/issues/482#issuecomment-3002291999 Do I need to create a feature request for custom profile support?
+* Limited resource availability: https://github.com/quickwit-oss/quickwit/issues/5813#issuecomment-2995841734
+* Sometimes you need to resurrect topics: https://github.com/zed-industries/zed/discussions/21450#discussioncomment-13609291
+* People cannot add two simple lines with LTO: https://github.com/Migorithm/duva/issues/462#issuecomment-3016741784
+* Even so hyped companies like OpenAI can miss optimization opportunities: https://github.com/openai/codex/issues/1411#issuecomment-3016099036
+* People sometimes is confused from LTO results due to ThinLTO stuff: https://github.com/EmbarkStudios/cargo-deny/issues/701
+* LTO for things like malware :D https://www.techzine.eu/blogs/security/132626/memory-safe-malware-rust-challenges-security-researchers/
+* https://github.com/greenbone/openvas-scanner/issues/1922#issuecomment-2921989125 - LTO as a dedicated profile
+* Even if docs exist - people dont' knpw about it: https://github.com/CyberTimon/RapidRAW/issues/47#issuecomment-3057878762
+* https://github.com/rust-lang/rust/issues/121124 - LTO issues in Rustc on specific platforms
+* "Serious profile" can have different names: https://github.com/afnanenayet/diffsitter/blob/main/Cargo.toml#L129
+* Even for quite popular apps (1k stars at the moment) LTO is not enabled even if we have instructions: https://github.com/braden-w/whispering/issues/574
+* Comments about build time and LTO: https://github.com/deuxfleurs-org/garage/blob/3f4ab3a4a38e382fc54c15580862af55b0257848/Cargo.toml#L149
+* Reputation can be a hard thing to fight with: https://github.com/axboe/liburing/discussions/1047#discussioncomment-8374809
+* "Is this necessary for client app?" https://github.com/mayocream/koharu/issues/1#issuecomment-2820146259
