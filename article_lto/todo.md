@@ -193,3 +193,5 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Comments about build time and LTO: https://github.com/deuxfleurs-org/garage/blob/3f4ab3a4a38e382fc54c15580862af55b0257848/Cargo.toml#L149
 * Reputation can be a hard thing to fight with: https://github.com/axboe/liburing/discussions/1047#discussioncomment-8374809
 * "Is this necessary for client app?" https://github.com/mayocream/koharu/issues/1#issuecomment-2820146259
+* https://github.com/microsoft/wassette/pull/106/files#r2260669955 - Copilot and thin LTO :)))
+* https://github.com/numaproj/numaflow/blob/53f8c182f42a7c34ce7133991e7764bb2eae5921/rust/Cargo.toml#L50 - another build time increase report (12s -> 133s just from enabling FatLTO)
