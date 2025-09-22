@@ -144,8 +144,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://github.com/greenbone/openvas-scanner/issues/1922#issuecomment-2921989125 - LTO as a dedicated profile
 * "Serious profile" can have different names: https://github.com/afnanenayet/diffsitter/blob/main/Cargo.toml#L129
 * Reputation can be a hard thing to fight with: https://github.com/axboe/liburing/discussions/1047#discussioncomment-8374809
-<<<<<<< HEAD
-=======
 * "Is this necessary for client app?" https://github.com/mayocream/koharu/issues/1#issuecomment-2820146259
 * https://github.com/microsoft/wassette/pull/106/files#r2260669955 - Copilot and thin LTO :)))
 * https://github.com/numaproj/numaflow/blob/53f8c182f42a7c34ce7133991e7764bb2eae5921/rust/Cargo.toml#L50 - another build time increase report (12s -> 133s just from enabling FatLTO)
@@ -159,4 +157,3 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Linker error if LLVM version mismatches: "Unknown attribute kind (103) (Producer: 'LLVM21.1.1-rust-1.92.0-nightly' Reader: 'LLVM 20.1.8')"
 * LTO-related issues in Rustc: https://github.com/rust-lang/rust/issues?q=is%3Aissue%20state%3Aopen%20label%3AA-LTO
 * LTO performance degradation in Rustc - an example: https://github.com/rust-lang/rust/issues/146497
->>>>>>> b883d75 (doc: add more TODOs, mostly LTO-related)
