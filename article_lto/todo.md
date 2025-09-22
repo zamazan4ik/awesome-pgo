@@ -144,3 +144,19 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://github.com/greenbone/openvas-scanner/issues/1922#issuecomment-2921989125 - LTO as a dedicated profile
 * "Serious profile" can have different names: https://github.com/afnanenayet/diffsitter/blob/main/Cargo.toml#L129
 * Reputation can be a hard thing to fight with: https://github.com/axboe/liburing/discussions/1047#discussioncomment-8374809
+<<<<<<< HEAD
+=======
+* "Is this necessary for client app?" https://github.com/mayocream/koharu/issues/1#issuecomment-2820146259
+* https://github.com/microsoft/wassette/pull/106/files#r2260669955 - Copilot and thin LTO :)))
+* https://github.com/numaproj/numaflow/blob/53f8c182f42a7c34ce7133991e7764bb2eae5921/rust/Cargo.toml#L50 - another build time increase report (12s -> 133s just from enabling FatLTO)
+* Ratatui docs PR regarding LTO and other stuff: https://github.com/ratatui/ratatui-website/pull/931
+* Another wasn't aware of LTO option even if the documentation exists: https://github.com/gethopp/hopp/issues/35#issuecomment-3227066199
+* Switching from ThinLTO to FatLTO is a great improvement: https://github.com/spinel-coop/rv/pull/54#issue-3359893040
+* "Switch to ThinLTO since reduces build time for the same performance gains" - is it really true for the project? https://github.com/louis-e/arnis/commit/028ef4bd50e26e244e68f69844cf330930f26bfb
+* Cross-language LTO: https://github.com/rui314/mold/issues/181 (mold discussion) + https://github.com/jeremy-rifkin/wyrm (GCC GIMPLE to LLVM IR converter) + https://users.rust-lang.org/t/compiling-rust-and-c-in-the-same-llvm-codegen-unit/121577/11?u=zamazan4ik (people is not happy about matching the exact versions) + https://github.com/RediSearch/RediSearch/pull/6815 (people is already interested in cross-lang LTO)
+* Few questions regarding linker-based LTO in Rustc: https://users.rust-lang.org/t/questions-regarding-linker-plugin-based-lto/134070
+* https://users.rust-lang.org/t/dramatic-increase-in-compile-time-with-fat-lto-in-release-build-causes-and-troubleshooting/99539 - full LTO is too slow. So many slowdowns everywhere... - https://github.com/rust-lang/rust/issues/88580
+* Linker error if LLVM version mismatches: "Unknown attribute kind (103) (Producer: 'LLVM21.1.1-rust-1.92.0-nightly' Reader: 'LLVM 20.1.8')"
+* LTO-related issues in Rustc: https://github.com/rust-lang/rust/issues?q=is%3Aissue%20state%3Aopen%20label%3AA-LTO
+* LTO performance degradation in Rustc - an example: https://github.com/rust-lang/rust/issues/146497
+>>>>>>> b883d75 (doc: add more TODOs, mostly LTO-related)

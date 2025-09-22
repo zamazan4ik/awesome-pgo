@@ -116,6 +116,10 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Check PGO results on Wasmi: https://github.com/wasmi-labs/wasmi/pull/1449#issuecomment-2771943238
 * PGO for Rustc on macOS - start the conversation again about enabling it
 * https://github.com/zamazan4ik/awesome-pgo/blob/main/are_we_pgo_yet.md - this page often cannot be opened on GitHub since it's too large, lol
+<<<<<<< HEAD
+=======
+* Documentation about recommended steps with an engine before game release: https://github.com/bevyengine/bevy/issues/4586.
+>>>>>>> b883d75 (doc: add more TODOs, mostly LTO-related)
 * Even giants and optimization nerds like Google have missing oppotunities for optimization with LTO/PGO for many years: https://issues.fuchsia.dev/issues/42120900?pli=1
 * Bake - https://github.com/SanderMertens/bake?tab=readme-ov-file#installation - build system by default installs Debug version of the application...
 * Report PGO results for Flecs later on GitHub to make them publicly-available (copy them from Discord)
