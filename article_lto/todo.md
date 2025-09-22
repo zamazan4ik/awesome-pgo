@@ -19,8 +19,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Enable LTO for benchmarks too (related mainly for the Rust ecosystem) - discuss it in the article
 * Different LTO modes for different build profiles: https://github.com/kellnr/kellnr/blob/main/Cargo.toml#L84
 * ThinLTO by default in CachyOS: https://github.com/CachyOS/linux-cachyos/pull/304
-* Interesting LTO surprises in Cargo: https://github.com/rust-lang/cargo/issues/14612 + https://github.com/rust-lang/cargo/issues/14575 + https://github.com/rust-lang/cargo/issues/9672 + https://github.com/rust-lang/cargo/issues/7491
-* Is Cargo itself built with LTO?
 * Different places for LTO to be enabled: in project build scripts, user machines, OS distributions, etc.
 * Discussions about enabling LTO by default: https://github.com/rust-lang/cargo/issues/11298 (also there are some Rust Zulip threads) + https://github.com/rust-lang/cargo/issues/11298#issuecomment-1949953946
 * Add about CMake LTO state - ask AlexFails about it
@@ -37,28 +35,17 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Increases build time (for a small project, lol): https://github.com/torymur/sqlite-repr/issues/4#issuecomment-2391470436
 * Some people enable even more optimizations after LTO report: https://github.com/markcda/r2proto3/issues/1
 * Another disabled LTO due to compilation time concerns: https://github.com/cargo-bins/cargo-quickinstall/pull/122#issuecomment-1381560915
-* LTO sometimes reduces compilation time (@foxtran story)
 * C++ Wesnoth example with LTO: added to the scripts, not enabled by default: https://github.com/search?q=repo%3Awesnoth%2Fwesnoth+ENABLE_LTO&type=code + some issues with LTO: https://github.com/search?q=repo%3Awesnoth%2Fwesnoth+ENABLE_LTO&type=issues
-* Write a note about too shitty system OOM for LTO and why systemd-oomd (and similar things) are important - at least no freezing system
 * A crash from enabling LTO for a Swift program: https://github.com/swiftlang/swift/issues/67520
 * Sometimes enabling LTO leads to lenghty discussions: https://github.com/hyprwm/Hyprland/pull/5874
 * Difficult relationships between LTO and Qt: https://github.com/RPCS3/rpcs3/issues/12013#issuecomment-1126979045 (and people even implement this as a prevention: https://github.com/RPCS3/rpcs3/pull/12018)
-* A good comment about LTO and hidden UBs: https://github.com/FreeCAD/FreeCAD/issues/6698#issuecomment-1977945753
-* Duckstation offers LTO only in the README file: https://github.com/stenzek/duckstation?tab=readme-ov-file#building-1 and is enabled in all corresponding build scripts
-* Typical uncovered errors with LTO: https://github.com/aseprite/aseprite/issues/4413#issue-2237029279
 * Some people are against "advanced" optimization options in their build scripts: https://github.com/qbittorrent/qBittorrent/pull/16813 since they can be enabled in the corresponding distro-specific recipes . But LTO can be enabled here: https://github.com/qbittorrent/qBittorrent/blob/master/.github/workflows/ci_windows.yaml
-* Performance improvement from LTO: https://github.com/netdata/netdata/issues/15338#issuecomment-1630287811
-* Tor saves 14% binary size for Arti (Tor)
-* 10% speed improvements from ThinLTO: https://github.com/MaterializeInc/materialize/blob/main/Cargo.toml#L250
 * Not only me enables LTO in their builds: https://github.com/aome510/spotify-player/issues/149#issue-1602209595
 * Ask why LTO was disabled for the project: https://github.com/curlpipe/ox/commit/1a49d02af34414cceaa4ae27fd2c9eeda15b2fa2#diff-2e9d962a08321605940b5a657135052fbcef87b5e360662bb527c96d9a615542
 * Another example of disabled LTO in a project: https://github.com/doukutsu-rs/doukutsu-rs/commit/ef1c2a59307ff4df500d38a88d5ac249daf31304
 * Another good example of tweaking the compiler settings for better optimizations: https://github.com/foresterre/cargo-msrv/issues/505
-* Another LTO issue that was not investigated and just switched off LTO for a project: https://github.com/redlib-org/redlib/issues/50#issuecomment-1939755101
 * Not always developers tend to enable optimizations for all things: https://github.com/starkware-libs/cairo/issues/6471#issuecomment-2402154301
 * Another example of LTO-related issue in a program. Result - just disable LTO without further investigation: https://github.com/metalbear-co/mirrord/issues/906
-* https://github.com/qarmin/czkawka - an example when LTO is disabled in configs but is enabled (via sed hacks) in CI
-* Suggest ThinLTO to Ruffle instead of disabling LTO at all: https://github.com/search?q=repo%3Aruffle-rs%2Fruffle+thinlto&type=code
 * Pacman update about LTO: https://github.com/wez/wezterm/issues/4987#issuecomment-1935829222
 * Funny notes about broken LTO on different compilers: https://github.com/pop-os/xz-utils/blob/6509762f03584bf9e3ac9a42d0a8484cbb7ca926/ChangeLog#L3151
 * An interesting issue about ThinLTO (but not with Fat) and incremental error: https://github.com/DioxusLabs/dioxus/issues/2874
@@ -94,8 +81,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Rust survey mechanism: https://github.com/rust-lang/surveys/blob/main/README.md
 * Need to investigate further: LTO support by default in Zig: https://github.com/ziglang/zig/issues/2845
 * Binary size in Rust paper: https://dl.acm.org/doi/pdf/10.1145/3519941.3535075
-* LTO overhead for Debug profiles: https://gitlab.com/wireshark/wireshark/-/merge_requests/3735
-* Incremental LTCG is not compatible with ASAN: https://developercommunity.visualstudio.com/t/starting-application-with-address-sanitizer-in-rel/1537669 - and ofc issue was closed due to other bugs :DDDD
 * Performance advisory database - report "slow" programs and send them a corresponding issue/PR
 * Rustc non-LTO vs LTO metrics by perf.rust-lang.org - asked Kobzol about it
 * Rustc perf improvement: https://rust-lang.github.io/rust-project-goals/2025h1/perf-improvements.html
@@ -103,7 +88,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * LTO linker plugin comment in mold: https://github.com/rui314/mold/blob/main/src/lto-unix.cc#L1
 * Issues like https://github.com/sponkurtus2/GemFetch/issues/1 are more educational than useful for a project in practice - https://github.com/sponkurtus2/GemFetch/issues/1#issuecomment-2548933054
 * Discussions over LTO: https://gitlab.com/sequoia-pgp/sequoia-chameleon-gnupg/-/issues/73
-* Default build flags for Rust in Fedora: https://pagure.io/fedora-rust/rust-packaging/blob/main/f/macros.d/macros.rust
 * LTO disabled without known (at least from the Git history) reasons: https://github.com/search?q=repo%3Avlcn-io%2Fcr-sqlite+lto&type=commits - https://github.com/vlcn-io/cr-sqlite/discussions/446
 * Enable LTO for Rust in Pacman: https://gitlab.archlinux.org/pacman/pacman/-/merge_requests/131
 * Please fix the defaults: https://gitlab.com/sequoia-pgp/sequoia-chameleon-gnupg/-/issues/73#note_1932630360
@@ -124,74 +108,39 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Rust vs Zig from unsafe perspective: https://zackoverflow.dev/writing/unsafe-rust-vs-zig/ - mention it in the article from the "different languages point of view have different limitations"
 * Rust, slow compilation and possible solutions: https://corrode.dev/blog/tips-for-faster-rust-compile-times/
 * LTO was enabled, codegen-units are not (even with the provided benchmarks): https://github.com/emilsharkov/bukvalno/issues/1
-* https://deterministic.space/high-performance-rust.html - another site with performance recommendations for Rust
 * Compile time is an important topic for Rust: https://corrode.dev/blog/tips-for-faster-rust-compile-times/#tweak-codegen-options-and-compiler-flags
 * Ohh... https://github.com/chimera-linux/cports/blob/master/main/llvm/template.py#L67 - strange possibly LTO-triggered errors
 * Some people prefer a dedicated profile for LTO: https://github.com/TornaxO7/shady/issues/33#issuecomment-2569185762
-* https://postgrespro.com/list/thread-id/2634776 - LTO for PostgreSQL gives +10% on math at least
 * Some new projects already use optimized profiles: https://github.com/sponkurtus2/appInstalleR/blob/bdac86fbf26d6fecf3d20e6389a43e3719d5e29c/Cargo.toml#L18
 * https://github.com/tedsteen/nes-bundler/blob/199ef528aea95f764927e75c7abafbc470310d24/Cargo.toml#L31 - "LTO is not worth it in RELEASE profile". Wut?
-* That was an oversight - https://github.com/matze/splat/issues/2#issuecomment-2574987186
 * Heavy optimizations (longer compile times) against fast prototyping thought
 * Stripped binaries is frequently the reason for the binary size improvements - https://github.com/Automattic/harper/discussions/141#discussioncomment-11768520
 * Some people prefer just integrating into a Release profile: https://github.com/EricLBuehler/diffusion-rs/issues/29#issuecomment-2576642637
 * LTO progress in Gentoo: https://www.gentoo.org/news/2025/01/05/new-year.html
 * https://github.com/GyulyVGC/sniffnet/issues/670#issuecomment-2577412007 - for some people it's not enough
-* https://github.com/the-lean-crate/criner?tab=readme-ov-file#the-lean-crate-initiative - "Lean crate initiative"
 * https://github.com/tomsjansons/ridi-router/issues/60#issuecomment-2593888324 - Release for dev purposes
 * Small binary size and performance improvements are still welcomed: https://github.com/ranjeethmahankali/ftag/issues/27#issuecomment-2601113810
 * Check later this PR: https://github.com/katanemo/archgw/pull/370
-* Started reporting build times too: https://github.com/mitsuhiko/systemfd/issues/33 , https://github.com/ddoemonn/ur-commit-mentor/issues/1 , https://github.com/rotmh/cargo-unify/issues/1 , https://github.com/BlankZhu/rustant-film/issues/3
 * Not supported things like https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-flive-patching - and reference GCC docs as a good source for other interesting LTO details
 * Write about difference between Clang and GCC docs for LTO. As an example: unified LTO docs - https://www.phoronix.com/news/LLVM-Unified-LTO-Front-End + https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774 . Research the whole thread for more insights about different LTO modes
-* ThinLTO vs Full LTO: https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774/52
-* Reason for Thin LTO instead of Fat about cargo-dist defaults: https://opensource.axo.dev/cargo-dist/book/workspaces/simple-guide.html#the-dist-profile + https://github.com/axodotdev/cargo-dist/issues/118#issuecomment-1442132862
 * "Seems like it suits most apps": https://github.com/rotmh/cargo-unify/issues/1#issuecomment-2602426458
-* Small CG1 addition to existing LTO improves things too: https://github.com/andrewdavidmackenzie/pigg/issues/818
-* https://github.com/andrewdavidmackenzie/pigg/pull/819 - build speed-up from CG1
 * https://github.com/koto-lang/koto/discussions/405#discussioncomment-11914832
-* https://github.com/dbry/WavPack/pull/103#discussion_r626374911 - LTO can break UB-dependent code
-* lto = true and lto = fat confusion: https://github.com/daemyn/dwarf-rs/issues/1#issuecomment-2624323227
 * Sometimes people enable LTO in quite surprising locations: https://github.com/umi-eng/adapter/blob/main/.cargo/config.toml
-* Improvements are not so impressive for everyone: https://github.com/anacrolix/possum/issues/5#issuecomment-2628762228
-* Remove cargo-kit mention due to potential DMCA abuser
 * PGO for HPC: https://www.phoronix.com/news/PGO-Optimizations-HPC-3p
-* People don't have time for LTO: https://github.com/nalgeon/sqlean/issues/137
-* https://github.com/smallauncher/smallauncher/issues/1 - codegen-units = 1 small improvement
-* People forget to enable LTO: https://github.com/spirali/twinsong/issues/1#issuecomment-2674202278
 * Balance between various factors in LTO: https://github.com/ikatson/rqbit/pull/283#issuecomment-2503508671 (+ LTO results - https://github.com/ikatson/rqbit/pull/283#issue-2687630404 )
 * Fuzzing issues with LTO can happen too: https://github.com/rust-fuzz/cargo-fuzz/issues/384
-* People don't want to slowdown `cargo install` with LTO: https://github.com/rerun-io/rerun/issues/9339#issuecomment-2742767254
-* People don't care about LTO if they don't provide binaries: https://github.com/rust-fuzz/cargo-fuzz/issues/405#issuecomment-2751721972
-* Binary is large because of Rust: https://github.com/icann/icann-rdap/issues/117#issuecomment-2751856737 :D
 * DTLTO for Linux kernel from Google: https://www.phoronix.com/news/Distributed-ThinkLTO-Linux-Kern
 * Developers care about compilation time of their programs on user machines: https://github.com/iced-rs/comet/issues/3#issuecomment-2843784783
-* Performance improvements from LTO for small apps: https://github.com/tsowell/wiremix/issues/1#issuecomment-2846168920
 * Cross-lang LTO availability: https://github.com/gyscos/zstd-rs/blob/main/Cargo.toml#L47
-* LTO bugs are everywhere: https://github.com/rust-lang/rust/issues/141306
 * Big build time increase due to LTO but people is still ok with it: https://github.com/spiceai/spiceai/pull/5709#issuecomment-2851907092
-* People closes issues berfore actually resolving them: https://github.com/NLnetLabs/rotonda/issues/118 + https://github.com/iwe-org/iwe/issues/8#issuecomment-2909541815
-* LTO, huge software installation and weak computers - it could be problem
 * LTO as a dedicated profile: https://github.com/greenbone/openvas-scanner/issues/1922#issuecomment-2921989125
 * Small improvements are still improvements, and people care about it: https://github.com/ReagentX/imessage-exporter/discussions/542#discussioncomment-13369335
 * Rust compiler support: https://kobzol.github.io/rust/rustc/2025/06/09/why-doesnt-rust-care-more-about-compiler-performance.html
-* Why does binary size matter? https://github.com/facebookincubator/fastmod/issues/57#issuecomment-2978333044
 * LTO can be enabled even in such places: https://github.com/tombi-toml/tombi/blob/43eddc6a0e6c8662078e10cd83d02035913e7d92/xtask/src/command/dist.rs#L32
-* https://github.com/fish-shell/fish-shell/commit/d9381d1ab60c3d428088be64dfb80e7f1a878e88 - people think that codegen-units = 1 isn't worth for some cases
 * External tooling limitation for custom profiles: https://github.com/project-robius/robrix/issues/482#issuecomment-3002291999 Do I need to create a feature request for custom profile support?
-* Limited resource availability: https://github.com/quickwit-oss/quickwit/issues/5813#issuecomment-2995841734
-* Sometimes you need to resurrect topics: https://github.com/zed-industries/zed/discussions/21450#discussioncomment-13609291
 * People cannot add two simple lines with LTO: https://github.com/Migorithm/duva/issues/462#issuecomment-3016741784
 * Even so hyped companies like OpenAI can miss optimization opportunities: https://github.com/openai/codex/issues/1411#issuecomment-3016099036
-* People sometimes is confused from LTO results due to ThinLTO stuff: https://github.com/EmbarkStudios/cargo-deny/issues/701
 * LTO for things like malware :D https://www.techzine.eu/blogs/security/132626/memory-safe-malware-rust-challenges-security-researchers/
 * https://github.com/greenbone/openvas-scanner/issues/1922#issuecomment-2921989125 - LTO as a dedicated profile
-* Even if docs exist - people dont' knpw about it: https://github.com/CyberTimon/RapidRAW/issues/47#issuecomment-3057878762
-* https://github.com/rust-lang/rust/issues/121124 - LTO issues in Rustc on specific platforms
 * "Serious profile" can have different names: https://github.com/afnanenayet/diffsitter/blob/main/Cargo.toml#L129
-* Even for quite popular apps (1k stars at the moment) LTO is not enabled even if we have instructions: https://github.com/braden-w/whispering/issues/574
-* Comments about build time and LTO: https://github.com/deuxfleurs-org/garage/blob/3f4ab3a4a38e382fc54c15580862af55b0257848/Cargo.toml#L149
 * Reputation can be a hard thing to fight with: https://github.com/axboe/liburing/discussions/1047#discussioncomment-8374809
-* "Is this necessary for client app?" https://github.com/mayocream/koharu/issues/1#issuecomment-2820146259
-* https://github.com/microsoft/wassette/pull/106/files#r2260669955 - Copilot and thin LTO :)))
-* https://github.com/numaproj/numaflow/blob/53f8c182f42a7c34ce7133991e7764bb2eae5921/rust/Cargo.toml#L50 - another build time increase report (12s -> 133s just from enabling FatLTO)

@@ -2,12 +2,15 @@
 
 Plot:
 
-4 main parts:
+Main parts:
 
-* Theory about LTO
+* A bit of theory about LTO - mostly links to other articles
+* Why LTO is useful nowadays?
+* LTO issues from different perspectives: compilers, applications, programming languages, etc.
 * LTO pieces of advice
 * My LTO journey
 * Q&A
+* What we can do better together for LTO (and other similar things)?
 * Fun stories
 * End
 
@@ -30,7 +33,7 @@ Link-Time Optimization aka LTO is a compiler optimization technique that allows 
 TODO: LTO kinds: Fat and Thin, add links to the corresponding talks, papers, presentations, etc.
 
 TODO: naming differences between LTO, WPO, [Interprocedural optimizations](https://en.wikipedia.org/wiki/Interprocedural_optimization)
-TODO: Fat LTO vs ThinLTO: https://discourse.llvm.org/t/clang-lld-thin-lto-footprint-and-run-time-performance-outperformed-by-gcc-ld/78997/6
+TODO: Fat LTO vs ThinLTO: https://discourse.llvm.org/t/clang-lld-thin-lto-footprint-and-run-time-performance-outperformed-by-gcc-ld/78997/6 + ThinLTO vs Full LTO: https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774/52
 
 * https://llvm.org/devmtg/2016-11/Slides/Amini-Johnson-ThinLTO.pdf - original slides
 * https://convolv.es/guides/lto/ (+ comments here: https://news.ycombinator.com/item?id=38215535) - a good article about LTO
@@ -41,23 +44,43 @@ TODO: Fat LTO vs ThinLTO: https://discourse.llvm.org/t/clang-lld-thin-lto-footpr
 * GCC docs about LTO internals: https://gcc.gnu.org/onlinedocs/gccint/LTO.html
 * GCC LTO-related sources: https://github.com/gcc-mirror/gcc/tree/master/gcc/lto
 
+## LTO benefits
+
+TODO: Performance improvement from LTO: https://github.com/netdata/netdata/issues/15338#issuecomment-1630287811
+TODO: Tor saves 14% binary size for Arti (Tor)
+TODO: 10% speed improvements from ThinLTO: https://github.com/MaterializeInc/materialize/blob/main/Cargo.toml#L250
+TODO: https://postgrespro.com/list/thread-id/2634776 - LTO for PostgreSQL gives +10% on math at least
+TODO: Why does binary size matter? https://github.com/facebookincubator/fastmod/issues/57#issuecomment-2978333044
+TODO: Binary is large because of Rust: https://github.com/icann/icann-rdap/issues/117#issuecomment-2751856737
+TODO: Performance improvements from LTO for small apps: https://github.com/tsowell/wiremix/issues/1#issuecomment-2846168920
+TODO: Improvements are not so impressive for everyone: https://github.com/anacrolix/possum/issues/5#issuecomment-2628762228
+
 ## LTO issues
 
 TODO: Increased build time, memory consumption, compiler bugs, software bugs
 
+TODO: cover two separate issues - ThinLTO vs FatLTO
+TODO: People sometimes is confused from LTO results due to ThinLTO stuff: https://github.com/EmbarkStudios/cargo-deny/issues/701
+
 ### Increased build times
 
-TODO: usually, it's 1.5x - 2x build time increase from Fat LTO. As an example: https://github.com/meilisearch/meilisearch/pull/5106#issue-2711334231 + https://github.com/martinvonz/jj/discussions/4463#discussioncomment-10673633
+TODO: usually, it's 1.5x - 2x build time increase from Fat LTO. As an example: https://github.com/meilisearch/meilisearch/pull/5106#issue-2711334231 + https://github.com/martinvonz/jj/discussions/4463#discussioncomment-10673633 + https://github.com/numaproj/numaflow/blob/53f8c182f42a7c34ce7133991e7764bb2eae5921/rust/Cargo.toml#L50 - another build time increase report (12s -> 133s just from enabling FatLTO)
 TODO: less deps you have - smaller overhead will be in practice
 TODO: Projects are switching from Fat to Thin LTO due to build times: https://github.com/neon-mmd/websurfx/issues/516
 TODO: ThinLTO also increases build time - https://github.com/facebook/buck2/blob/main/Cargo.toml#L416 - 50s to 84s with ThinLTO
 TODO: insert a meme about an electricity bill due to enabled LTO :D
 TODO: Build time concerns from Fat LTO: https://github.com/shadps4-emu/shadPS4/pull/1636#issuecomment-2538866412
+TODO: Comments about build time and LTO: https://github.com/deuxfleurs-org/garage/blob/3f4ab3a4a38e382fc54c15580862af55b0257848/Cargo.toml#L149
+TODO: LTO sometimes reduces compilation time (@foxtran story)
+TODO: Suggest ThinLTO to Ruffle instead of disabling LTO at all: https://github.com/search?q=repo%3Aruffle-rs%2Fruffle+thinlto&type=code
+TODO: LTO overhead for Debug profiles: https://gitlab.com/wireshark/wireshark/-/merge_requests/3735
+TODO: Limited build resource availability: https://github.com/quickwit-oss/quickwit/issues/5813#issuecomment-2995841734
 
 ### Increased memory consumption
 
 TODO: Fyrox Full LTO - 17 Gib RAM in peak
 TODO: Mention LTO, memory usage and RAM limits like https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
+TODO: Write a note about too shitty system OOM for LTO and why systemd-oomd (and similar things) are important - at least no freezing system
 TODO: Funny scripts about memory calculation for parallel LTO jobs: https://github.com/swiftlang/swift/blob/main/utils/build_swift/build_swift/defaults.py#L87 + https://github.com/swiftlang/swift/blob/main/utils/build_swift/build_swift/defaults.py#L102
 
 Since the compiler needs to perform some optimizations on **whole** program, it consequently needs to store many corresponding information in memory to work with it. It leads to the increased memory consumption. I don't know a good way to estimate how much of RAM LTO will take for a random project since it can depend on multiple factors like a compiler (different compilers have different LTO implementations), a compiler version (since LTO implementations can vary between commits/releases from the performance perspective too), etc.
@@ -65,6 +88,11 @@ Since the compiler needs to perform some optimizations on **whole** program, it 
 Is there any difference between compilers from the memory perspective? I think they are but I didn't perform such measurements yet. The same applies to different compiler versions - the in theory is also "yes" but I suppose the chance of getting troubles from incresed memory consumption with LTO after the compiler upgrade are too low. Though, I didn't check it too.
 
 ### Bugs
+
+#### C++
+
+TODO: Incremental LTCG is not compatible with ASAN: https://developercommunity.visualstudio.com/t/starting-application-with-address-sanitizer-in-rel/1537669 - and ofc issue was closed due to other bugs :DDDD
+TODO: https://github.com/dbry/WavPack/pull/103#discussion_r626374911 - LTO can break UB-dependent code
 
 #### Rust
 
@@ -81,6 +109,8 @@ More can be checked by [this](https://github.com/rust-lang/rust/issues?q=is%3Ais
 TODO: Dylib-lto Cargo feature available only as unstable: https://doc.rust-lang.org/beta/unstable-book/compiler-flags/dylib-lto.html
 TODO: Funny cross-language LTO debugging on Windows: https://users.rust-lang.org/t/cross-language-lto-doesnt-really-work-on-windows/118805
 TODO: LTO build issues: https://github.com/meilisearch/meilisearch/issues/2718
+TODO: LTO bugs are everywhere: https://github.com/rust-lang/rust/issues/141306
+TODO: https://github.com/rust-lang/rust/issues/121124 - LTO issues in Rustc on specific platforms
 
 ### Decreased performance
 
@@ -101,11 +131,11 @@ TODO: Rust LTO state
 TODO: add information about C++ LTO in distributions
 TODO: Recommended using cross-lang LTO too by Ubuntu: https://documentation.ubuntu.com/rockcraft/en/latest/common/craft-parts/reference/plugins/rust_plugin/#performance-tuning
 
-However, if a distribution enables LTO for C or C++ programs, it doesn't mean that LTO is enabled for other applications that are written in other LTO-supported technologies. Since during the last few years I closely was working with the Rust ecosystem, let's check Rust:
+However, if a distribution enables LTO for C or C++ programs, it doesn't mean that LTO is enabled for other applications that are written in other LTO-supported technologies. Since during the last few years I was working closely with the Rust ecosystem, let's check Rust-based apps:
 
 * Debian: No ([Debian's Salsa merge request](https://salsa.debian.org/rust-team/rust/-/merge_requests/41) + [issue](https://salsa.debian.org/rust-team/debcargo/-/issues/67))
 * OpenSUSE: No ([Reddit post](https://www.reddit.com/r/openSUSE/comments/1hh4qe4/linktime_optimization_lto_by_default_for_rust/))
-* Fedora: No ([Reddit post](https://www.reddit.com/r/Fedora/comments/1hrzx70/linktime_optimization_lto_for_rust_packages_by/), [Fedora Discussion](https://discussion.fedoraproject.org/t/link-time-optimization-lto-for-rust-packages-by-default-in-fedora/140086))
+* Fedora: No ([Reddit post](https://www.reddit.com/r/Fedora/comments/1hrzx70/linktime_optimization_lto_for_rust_packages_by/), [Fedora Discussion](https://discussion.fedoraproject.org/t/link-time-optimization-lto-for-rust-packages-by-default-in-fedora/140086), [Build macros for Rust](https://pagure.io/fedora-rust/rust-packaging/blob/main/f/macros.d/macros.rust))
 * Arch Linux: No ([GitLab merge request](https://gitlab.archlinux.org/pacman/pacman/-/merge_requests/131))
 
 TODO: write more about the reasons why LTO can be ignored my maintainers in OSs
@@ -114,9 +144,16 @@ As you see, for Rust LTO is not enabled by distributions by default. I hope one 
 
 ## LTO for applications
 
+TODO: LTO, huge software installation and weak computers - it could be problem
+
 ## LTO for libraries
 
 TODO: LTO for native libraries with bindings
+
+## LTO integration pitfalls and traps
+
+TODO: Duckstation offers LTO only in the README file: https://github.com/stenzek/duckstation?tab=readme-ov-file#building-1 and is enabled in all corresponding build scripts
+TODO: https://github.com/qarmin/czkawka - an example when LTO is disabled in configs but is enabled (via sed hacks) in CI
 
 ## LTO integration guideline
 
@@ -136,6 +173,9 @@ TODO: LTO bugs in compilers - enumerate all of them here like Rustc bugs (LTO + 
 ### Uncovered issues
 
 TODO: More build issues with LTO - https://github.com/FreeCAD/FreeCAD/issues/13173
+TODO: A good comment about LTO and hidden UBs: https://github.com/FreeCAD/FreeCAD/issues/6698#issuecomment-1977945753
+TODO: Typical uncovered errors with LTO: https://github.com/aseprite/aseprite/issues/4413#issue-2237029279
+TODO: Another LTO issue that was not investigated and just switched off LTO for a project: https://github.com/redlib-org/redlib/issues/50#issuecomment-1939755101
 
 ## LTO by default
 
@@ -168,7 +208,7 @@ Rust has **far better** ecosystem tooling support compared to other languages. I
 
 Rust has [rustc-perf](https://github.com/rust-lang/rustc-perf) - a tool + the [website](https://perf.rust-lang.org/) where you can **continuosly** track the Rustc compiler performance. Fun fact: the performance-oriented tool also has [disabled](https://github.com/rust-lang/rustc-perf/blob/master/Cargo.toml) LTO. Of course, I understand possible reasons behind that like "we don't care here too much about performance", "it wastes our CI time for almost nothing, etc." but I see it as a bit of irony, isn't it? :D
 
-There are already some discussions about changing Cargo defaults: a lengthy [talk](https://github.com/rust-lang/cargo/issues/4122) about stripping binaries in the Release mode by default (and the [solution](https://github.com/rust-lang/cargo/commit/fbf9251b4d3ddfc63ad0760ac121211a6c48a2d9)), 
+There are already some discussions about changing Cargo defaults: a lengthy [talk](https://github.com/rust-lang/cargo/issues/4122) about stripping binaries in the Release mode by default (and the [solution](https://github.com/rust-lang/cargo/commit/fbf9251b4d3ddfc63ad0760ac121211a6c48a2d9)),
 
 From my perspective, this awesome infrastructure still can be improved in different directions. E.g. even if `rustc-perf` [supports](https://github.com/rust-lang/rustc-perf/pull/2010) testing multiple Rustc backends (LLVM and Cranelift) but on CI only the LLVM backend is tested continuosly. If Cranelift becomes popular in the future - it will be nice to test it too. [Here](https://rust-lang.github.io/rust-project-goals/2025h1/perf-improvements.html) you can read more about already accepted changes to the tool.
 
@@ -181,6 +221,7 @@ TODO: Rust dev team has other priorities for various reasons: Rust main pain poi
 TODO: The C++ ecosystem performance Question
 TODO: I am too tired of continuous battling with people for free so don't expect much activity from me here
 TODO: Does rustc-perf test Cranelift? Asked Bjorn about that, waiting for the answer . If not, I can create an issue for rustc-perf
+TODO: Interesting LTO surprises in Cargo: https://github.com/rust-lang/cargo/issues/14612 + https://github.com/rust-lang/cargo/issues/14575 + https://github.com/rust-lang/cargo/issues/9672 + https://github.com/rust-lang/cargo/issues/7491
 
 ### People awareness
 
@@ -188,6 +229,8 @@ One of the interesting reasons of why LTO is not enabled in project... people ju
 
 TODO: Lack of confidence in LTO: https://github.com/mohanson/gameboy/issues/43#issuecomment-2403730081
 TODO: Write about Tauri, their guideleines and the uselessness of them since people ignore them. Do they need some `cargo tauri optimize`? :) Here I can collect data from my GitHub issues and show to the Tauri team to convince them about some changes in their advertisment/ a default template profile or smth else
+TODO: lto = true and lto = fat confusion: https://github.com/daemyn/dwarf-rs/issues/1#issuecomment-2624323227
+TODO: "Is this necessary for client app?" https://github.com/mayocream/koharu/issues/1#issuecomment-2820146259
 
 ### Which LTO mode should be used by default?
 
@@ -202,15 +245,26 @@ Only if for some reason Fat LTO doesn't work in your case - too long build times
 I know that many people can disagree with me. I heard in many discussions that ThinLTO should be used by default since it's faster to compile with Thin LTO than with Fat LTO, requires less RAM during the build, etc. Since all of these arguments are valid, I still prefer to deliver to users (or get if I am a user) as optimized binary as possible even if it requires more resources during the compilation. I value users experience more than CI experience, and I hope all of you think the same.
 
 TODO: People is okay with switching from Fat to Thin LTO: https://github.com/hlsxx/tukai/issues/8#issuecomment-2577047640 + https://github.com/NikitaRevenco/patchy/issues/1 + https://github.com/roc-lang/roc/blob/cb762688de61db4de6f7d6061e6db352789ae708/Cargo.toml#L252 + https://github.com/alexpasmantier/television/issues/185 + https://github.com/alexpasmantier/television/pull/191
+TODO: https://github.com/microsoft/wassette/pull/106/files#r2260669955 - Copilot and thin LTO :)))
 
 ### Documentation
 
-What if we simply write more documentation about recommended compiler options like LTO? Sure, we can - as an example we have Tauri [documentation page](https://v2.tauri.app/concept/size/) about recommended Cargo switches for building Tauri-based apps. The problem is obvious - people don't read documentation! We won't discuss it in this article - let's just assume that this a sad true. As an evidence, [check](https://github.com/issues?q=is%3Aissue+author%3Azamazan4ik+archived%3Afalse+tauri+lto) my LTO issues for Tauri projects. Here we see a pattern - people didn't know about LTO (and other recommended options) before my issue but after pointing to the right piece of the documentation, they quickly copy&paste the recommended options into their projects. At least there was no need to explain in detail each option - people tend to believe to framework authors more than to a random stranger from GitHub since, with high chances, framework devs know more about their product (and recommended configuration for it) than me.
+What if we simply write more documentation about recommended compiler options like LTO? Sure, we can - as an example we have Tauri [documentation page](https://v2.tauri.app/concept/size/) about recommended Cargo switches for building Tauri-based apps. The problem is obvious - people don't read documentation! We won't discuss it in this article - let's just assume that this a sad true. Here we see a pattern - people didn't know about LTO (and other recommended options) before my issue but after pointing to the right piece of the documentation, they quickly copy&paste the recommended options into their projects. At least there was no need to explain in detail each option - people tend to believe to framework authors more than to a random stranger from GitHub since, with high chances, framework devs know more about their product (and recommended configuration for it) than me.
 
-In ideal world, we can automate 
+In ideal world, we can automate
 
 TODO: Tauri recommendations includes LTO: https://v2.tauri.app/concept/size/
 TODO: An example of "strong" min-sized profile for Rust: https://github.com/johnthagen/min-sized-rust/blob/main/Cargo.toml#L9 . Maybe we need to add a dedicated one for Cargo too?
+TODO: Add some examples of Tauri apps without LTO from my issues
+TODO: Even for quite popular apps (1k stars at the moment) LTO is not enabled even if we have instructions: https://github.com/braden-w/whispering/issues/574
+TODO: Ratatui request - similar thing exists with Ratatui - https://github.com/ratatui/ratatui-website/issues/930
+TODO: Bevy prerelease actions - Documentation about recommended steps with an engine before game release: https://github.com/bevyengine/bevy/issues/4586
+TODO: https://deterministic.space/high-performance-rust.html - another site with performance recommendations for Rust
+TODO:  https://github.com/the-lean-crate/criner?tab=readme-ov-file#the-lean-crate-initiative - "Lean crate initiative"
+TODO: Even if docs exist - people dont' know about it: https://github.com/CyberTimon/RapidRAW/issues/47#issuecomment-3057878762
+TODO: Sometimes you need to resurrect topics: https://github.com/zed-industries/zed/discussions/21450#discussioncomment-13609291
+TODO: People forget to enable LTO: https://github.com/spirali/twinsong/issues/1#issuecomment-2674202278
+TODO: That was an oversight - https://github.com/matze/splat/issues/2#issuecomment-2574987186
 
 ### Build systems
 
@@ -238,6 +292,8 @@ TODO: Wanna more insanity? What about cross-language LTO with a proprietary modu
 TODO: Cargo logic around LTO: https://github.com/rust-lang/cargo/blob/master/src/cargo/core/compiler/mod.rs#L1423 + https://github.com/rust-lang/cargo/blob/master/src/cargo/core/compiler/lto.rs ( + https://github.com/rust-lang/rust/blob/master/compiler/rustc_session/src/config.rs#L2441 in the Rustc compiler)
 
 ### External tooling
+
+TODO: Reason for Thin LTO instead of Fat about cargo-dist defaults: https://opensource.axo.dev/cargo-dist/book/workspaces/simple-guide.html#the-dist-profile + https://github.com/axodotdev/cargo-dist/issues/118#issuecomment-1442132862
 
 If we cannot modify a build system behavior directly, we can try to external tooling for that - in our case we can with tools enable LTO in project in a (semi-)automatic way.
 
@@ -301,18 +357,32 @@ TODO: People disable LTO on early project stages: https://github.com/the-lean-cr
 TODO: Enabling LTO earlier in the application delivery pipeline brings benefits for all downstream users of this application, including maintainers
 TODO: Cargo defaults are for developers, not for users: https://github.com/YaLTeR/niri/discussions/968#discussioncomment-11818902 - and maintainers should be more responsible for these things
 TODO: LTO enabled on CI level, not build scripts: https://github.com/PyO3/maturin/pull/2344 that leads to https://src.fedoraproject.org/rpms/maturin/blob/rawhide/f/maturin.spec - LTO won't be enabled on CI level in downstreams
+TODO: People don't want to slowdown `cargo install` with LTO: https://github.com/rerun-io/rerun/issues/9339#issuecomment-2742767254
+TODO: People don't care about LTO if they don't provide binaries: https://github.com/rust-fuzz/cargo-fuzz/issues/405#issuecomment-2751721972
+TODO: People don't have time for LTO: https://github.com/nalgeon/sqlean/issues/137
 
-### If you are so LTO-oriented, why your projects don't enable LTO
+### If you are so huge LTO fanboy, why your projects don't enable LTO?
 
-TODO: reference by Rust projects
+TODO: reference by Rust projects like Telegram bots
 
 TL;DR - I am too lazy for enabling these optimizations for unmaintained projects
+
+### What about other optimizations like `codegen-units = 1`?
+
+TODO: tell a story about similarity between LTO and CG1?
+TODO: https://github.com/smallauncher/smallauncher/issues/1 - codegen-units = 1 small improvement
+TODO: Small CG1 addition to existing LTO improves things too: https://github.com/andrewdavidmackenzie/pigg/issues/818 + https://github.com/andrewdavidmackenzie/pigg/pull/819 - build speed-up from CG1
+TODO: https://github.com/fish-shell/fish-shell/commit/d9381d1ab60c3d428088be64dfb80e7f1a878e88 - people think that codegen-units = 1 isn't worth for some cases
 
 ## Stories
 
 TODO: https://github.com/whitequark/superlinker/issues/4 - yet another spam reporter, lol
 
 Here I collected some stories that I met during the short LTO journey. I found them interesting enough to share with you.
+
+### Issue close policy
+
+TODO: People closes issues berfore actually resolving them: https://github.com/NLnetLabs/rotonda/issues/118 + https://github.com/iwe-org/iwe/issues/8#issuecomment-2909541815
 
 ### Random-driven optimization flags
 
@@ -340,9 +410,9 @@ As a small conclusion. Don't expect from project's authors the most optimized ve
 
 ### Enabling LTO to my respect
 
-One day I routinely [created](https://github.com/GoldenStack/stupidfs/issues/1) yet another LTO-related issue in a project that I found interesting for some cybersec-related experiments. The author of the projected decided to perform a quick due diligence of my activity and kindly asked - why am I doing all of these LTO things. I assume (just an assumption) that they initially thought that I am a simple possibly AI-driven spammer, hehe. Actually, that's compltely fine - people want to know background of my activity, and I'm happy to share my incentives. However, later I got a bit diappointing [answer](https://github.com/GoldenStack/stupidfs/issues/1#issuecomment-2588496816) - the person enabled LTO and `codegen-units = 1` option due to "out of respect for your incredible dedication". I am happy to see that my work is recognized as valuable but please - don't enable things only due to a respect for someone. In this thread, I provided at least one such an argument - the binary size reduction, and I was ready to do performance benchmarks if it was required.
+One day I routinely [created](https://github.com/GoldenStack/stupidfs/issues/1) yet another LTO-related issue in a project that I found interesting for some cybersec-related experiments. The author of the projected decided to perform a quick due diligence of my activity and kindly asked - why am I doing all of these LTO things. I assume (just an assumption!) that they initially thought that I am a simple possibly AI-driven spammer, hehe. Actually, that's completely fine - people want to know background of my activity, and I'm happy to share my incentives. However, later I got a bit disappointing [answer](https://github.com/GoldenStack/stupidfs/issues/1#issuecomment-2588496816) - the person enabled LTO and `codegen-units = 1` option due to "out of respect for your incredible dedication". I am happy to see that my work is recognized as valuable but please - don't enable things only due to a respect for someone. In this thread, I provided at least one such an argument - the binary size reduction, and I was ready to do performance benchmarks if it was required.
 
-We are technical people here, and I highly encourage you making *technical* decisions based **only** on *technical* arguments. If for good technical reasons you cannot enable LTO but you value my work - please, don't enable LTO. It will make things only worse. I hope that in this case we just have a little misunderstanding, the `stupidfs` author truly believes that enabling LTO brings positive value to users.
+We are technical people here, and I highly encourage you making *technical* decisions based **only** on *technical* arguments - or at least try to do so. If for good technical reasons you cannot enable LTO but you value my work - please, don't enable LTO. It will make things only worse. I hope that in this case we just have a little misunderstanding, and the `stupidfs`'s author truly believes that enabling LTO brings positive value to users of the filesystem.
 
 ### Schrodinger's LTO
 
@@ -350,12 +420,22 @@ Few times I met a bit interesting pattern about resolving my LTO-related issues.
 
 I don't know the exact reason why people doing it - I suppose they simply forget about LTO (since forgetting non-important things is a common thing for humans) but please - if you are going to enable LTO, close an issue after merging LTO into your main branch. If you don't plan to enable LTO - just say it in the issue and then close the issue as "Not planned". It brings much more transparency for all of us. Thanks in advance!
 
+### A DMCA abuser
+
+TODO: write a story about DMCA abuser and it affected me
+TODO: Remove cargo-kit mention due to potential DMCA abuser
+
 ## Other issues
 
 TODO: people are not aware of LTO
-
 
 ## Current developments in the LTO area
 
 TODO: New LTO modes: https://www.phoronix.com/news/NVIDIA-GCC-flto-locality
 TODO: https://gitee.com/lyupaanastasia/llvm-adlt/tree/master - seems like LTO for 3rd party shared libs from Huawei
+
+## Why do I do all of these?
+
+TODO: describe motivation part
+TODO: describe the way and background thoughts about LTO stuff
+TODO: Started reporting build times too: https://github.com/mitsuhiko/systemfd/issues/33 , https://github.com/ddoemonn/ur-commit-mentor/issues/1 , https://github.com/rotmh/cargo-unify/issues/1 , https://github.com/BlankZhu/rustant-film/issues/3
