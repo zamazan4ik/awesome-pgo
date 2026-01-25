@@ -125,3 +125,6 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * GCC has its own Temporal PGO way before LLVM: https://gcc.gnu.org/onlinedocs/gcc-15.1.0/gcc/Optimize-Options.html#index-fprofile-reorder-functions + https://gcc.gnu.org/bugzilla/show_bug.cgi?id=120928#c2
 * People don't need aging tickets to track PGO for some reason: https://github.com/neondatabase/neon/issues/4649#issuecomment-3083685375
 * Memory-oriented PGO for TCMalloc: https://github.com/valexey/tcmalloc_hot_cold . Can we propose something similar for other allocators like mimalloc? Mimalloc: https://github.com/microsoft/mimalloc/issues/1129 What about jemalloc?
+* Cranelift and PGO - what is the situation?
+* PGO for GPU: https://www.dontknow.de/about-me/ + https://link.springer.com/chapter/10.1007/978-3-032-06343-4_7
+* IR + CSIR PGO show better numbers than FE PGO: https://github.com/yugabyte/yugabyte-db/commit/fb06613a1664b34e80a86cc7483f4606b33f989d

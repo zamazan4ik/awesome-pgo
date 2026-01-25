@@ -507,7 +507,9 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * prettyplease: [GitHub comment](https://github.com/dtolnay/prettyplease/issues/74#issue-2292685589)
 * bbolt-rs: [GitHub comment](https://github.com/ambaxter/bbolt-rs/issues/2#issue-2291476885)
 * resvg: [GitHub comment](https://github.com/RazrFalcon/resvg/issues/765#issue-2314946307)
-* julia: [GitHub PR](https://github.com/JuliaLang/julia/pull/54107#issue-2246969986)
+* julia:
+  - [GitHub PR](https://github.com/JuliaLang/julia/pull/54107#issue-2246969986)
+  - [Official blog](https://julialang.org/blog/2025/10/julia-1.12-highlights/#building_julia_and_llvm_using_the_binary_optimization_and_layout_tool_bolt)
 
 ## Projects with already integrated BOLT into their build scripts
 

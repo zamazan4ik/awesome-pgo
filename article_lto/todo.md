@@ -156,4 +156,13 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://users.rust-lang.org/t/dramatic-increase-in-compile-time-with-fat-lto-in-release-build-causes-and-troubleshooting/99539 - full LTO is too slow. So many slowdowns everywhere... - https://github.com/rust-lang/rust/issues/88580
 * Linker error if LLVM version mismatches: "Unknown attribute kind (103) (Producer: 'LLVM21.1.1-rust-1.92.0-nightly' Reader: 'LLVM 20.1.8')"
 * LTO-related issues in Rustc: https://github.com/rust-lang/rust/issues?q=is%3Aissue%20state%3Aopen%20label%3AA-LTO
-* LTO performance degradation in Rustc - an example: https://github.com/rust-lang/rust/issues/146497
+* LTO performance degradation in Rustc (it's really tricky one!) - an example: https://github.com/rust-lang/rust/issues/146497
+* https://www.phoronix.com/forums/forum/phoronix/latest-phoronix-articles/1580347-wild-a-very-fast-linker-written-in-rust-aims-to-outperform-mold-linker?p=1580357#post1580357 - linker-based LTO is not widely used nowadays
+* https://users.rust-lang.org/t/questions-regarding-linker-plugin-based-lto/134070 - a topic about linker-based LTO
+* https://github.com/atuinsh/atuin/issues/326#issuecomment-1126701188 - other people also care about binary size improvements from LTO
+* LTO is not worth its overhead: https://github.com/mierak/rmpc/pull/589#issuecomment-3223225690
+* https://github.com/google/magika/pull/1244#discussion_r2524648140 - Gemini lies about LTO
+* https://www.phoronix.com/news/Linux-Rust-LTO-Inline-Coming - difficulties with cross-lang LTO in the Linux kernel
+* https://github.com/glide-wm/glide/issues/68#issuecomment-3736633131 - people afraid of LTO since it sometimes has (had) bugs
+* https://blog.rust-lang.org/2025/12/19/what-do-people-love-about-rust/ - "performance availability" should include LTO too!
+* https://gist.github.com/zamazan4ik/6be63330d2c97b510fdfc6b7aa7988c5?permalink_comment_id=5953818#gistcomment-5953818 - such a funny "LTO" comment :)
