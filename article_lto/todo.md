@@ -166,3 +166,11 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://github.com/glide-wm/glide/issues/68#issuecomment-3736633131 - people afraid of LTO since it sometimes has (had) bugs
 * https://blog.rust-lang.org/2025/12/19/what-do-people-love-about-rust/ - "performance availability" should include LTO too!
 * https://gist.github.com/zamazan4ik/6be63330d2c97b510fdfc6b7aa7988c5?permalink_comment_id=5953818#gistcomment-5953818 - such a funny "LTO" comment :)
+* LTO performance improvements with numbers - https://github.com/1jehuang/mermaid-rs-renderer/issues/13#issue-3854096676
+* https://github.com/linuxmobile/oxicord/commit/410f26cbb3a315b3f5fb3051a8fc00437995feda#diff-2e9d962a08321605940b5a657135052fbcef87b5e360662bb527c96d9a615542 - why do people tune Release profile for faster builds? Is it for cargo install-only things or people just use Release builds during the development phase?
+* cc-rs and LTO propagation - what is the state?
+* LTO-uncovered bugs in Flang: https://github.com/llvm/llvm-project/pull/177944
+* https://github.com/lucasgelfond/zerobrew/pull/34 + https://github.com/vyrti - great to see another Zaitsev who cares about LTO!
+* Different people, different decisions like "debug" option for Release binaries - https://github.com/raphamorim/rio/blob/45c9297aecfd37337a2372e2cab74e3b6cf153b9/Cargo.toml#L85
+* People doesn't use even self-documented optimization opportunities (vibe-coding, yep!) - https://github.com/rust-works/succinctly/blob/main/docs/optimizations/targets.md + https://github.com/rust-works/succinctly/blob/main/Cargo.toml
+* https://x.com/avelinorun/status/2016110646362861707 - even tweeting about LTO-based PRs? lol :D
