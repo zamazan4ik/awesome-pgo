@@ -174,3 +174,11 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Different people, different decisions like "debug" option for Release binaries - https://github.com/raphamorim/rio/blob/45c9297aecfd37337a2372e2cab74e3b6cf153b9/Cargo.toml#L85
 * People doesn't use even self-documented optimization opportunities (vibe-coding, yep!) - https://github.com/rust-works/succinctly/blob/main/docs/optimizations/targets.md + https://github.com/rust-works/succinctly/blob/main/Cargo.toml
 * https://x.com/avelinorun/status/2016110646362861707 - even tweeting about LTO-based PRs? lol :D
+* https://github.com/uutils/coreutils/pull/9004#issuecomment-3795994445
+* LTO performance regressions:
+ - https://github.com/rust-lang/rust/issues/148670
+* https://github.com/pier-cli/pier/pull/98 - sometimes it takes some time to merge a one-liner :)
+* cross-lang full-lto bug in LLVM strikes once again - https://github.com/llvm/llvm-project/issues/57501#issuecomment-3844869663
+* Some interesting stuff about LTO internals at LLVM - https://gist.github.com/MaskRay/24f4e2eed208b9d8b0a3752575a665d4#distributed-thinlto
+* ThinLTO lost once again - https://github.com/block/goose/pull/6586#discussion_r2764048912
+* tikv and LTO - https://github.com/tikv/tikv/issues/4163#issuecomment-475057061

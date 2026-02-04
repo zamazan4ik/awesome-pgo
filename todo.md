@@ -128,3 +128,9 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Cranelift and PGO - what is the situation?
 * PGO for GPU: https://www.dontknow.de/about-me/ + https://link.springer.com/chapter/10.1007/978-3-032-06343-4_7
 * IR + CSIR PGO show better numbers than FE PGO: https://github.com/yugabyte/yugabyte-db/commit/fb06613a1664b34e80a86cc7483f4606b33f989d
+* https://go.dev/wiki/PGO-Tools - add a PR about Yandex.Perforator usage for Go in PGO
+* Ask Parca for BOLT support for other non-Go languages
+* PGO with CGO + Rust: hehe - https://users.rust-lang.org/t/pgo-with-go-cgo/88723
+* PGO for AMD GPU: https://www.phoronix.com/news/AMD-LLVM-Device-Side-PGO-ROCm
+* PGO for released binaries for MariaDB: https://jira.mariadb.org/browse/MDBF-738
+* "I'm unable to get -fcs-profile-generate to work" - https://github.com/official-stockfish/Stockfish/pull/5355#issuecomment-2148243127
