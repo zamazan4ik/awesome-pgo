@@ -182,3 +182,8 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Some interesting stuff about LTO internals at LLVM - https://gist.github.com/MaskRay/24f4e2eed208b9d8b0a3752575a665d4#distributed-thinlto
 * ThinLTO lost once again - https://github.com/block/goose/pull/6586#discussion_r2764048912
 * tikv and LTO - https://github.com/tikv/tikv/issues/4163#issuecomment-475057061
+* https://github.com/llvm/llvm-project/issues/179800 - ThinLTO and FatLTO mixing doesn't work :(
+* GCC LTO support in LLD: https://github.com/llvm/llvm-project/pull/157175
+* Cargo "false" and "off" behavior differences (wut?) - https://doc.rust-lang.org/cargo/reference/profiles.html#lto + codegen-units dependency
+* Rustc and Cargo have different meanings for "false" and "off" regarding LTO - https://doc.rust-lang.org/rustc/codegen-options/index.html#lto
+* Track this interesting issue about LTO and Rust standard library - seems like LTO is not applied to Rust standard lib (but needs confirmation) - https://github.com/rust-lang/rust/issues/152262

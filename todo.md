@@ -134,3 +134,4 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * PGO for AMD GPU: https://www.phoronix.com/news/AMD-LLVM-Device-Side-PGO-ROCm
 * PGO for released binaries for MariaDB: https://jira.mariadb.org/browse/MDBF-738
 * "I'm unable to get -fcs-profile-generate to work" - https://github.com/official-stockfish/Stockfish/pull/5355#issuecomment-2148243127
+* PGO and build.rs scripts - https://github.com/rust-lang/cargo/issues/6375#issuecomment-3078195738
