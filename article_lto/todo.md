@@ -187,3 +187,9 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Cargo "false" and "off" behavior differences (wut?) - https://doc.rust-lang.org/cargo/reference/profiles.html#lto + codegen-units dependency
 * Rustc and Cargo have different meanings for "false" and "off" regarding LTO - https://doc.rust-lang.org/rustc/codegen-options/index.html#lto
 * Track this interesting issue about LTO and Rust standard library - seems like LTO is not applied to Rust standard lib (but needs confirmation) - https://github.com/rust-lang/rust/issues/152262
+* https://www.phoronix.com/news/Mesa-No-Build-LTO - hehe, yet another project in C without LTO due to bugs :) including funny comments on this thread on Phoronix
+* Some interesting links about LTO to read:
+ - https://discourse.llvm.org/t/supporting-regular-and-thin-lto-with-a-single-lto-bitcode-format/58060
+ - about Unified LTO: https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774 + https://github.com/llvm/llvm-project/commit/a1ca3af31eeec61cfb9d619f55b655b0eb0b9494
+ - https://lists.llvm.org/pipermail/llvm-dev/2018-April/122469.html
+* https://github.com/kurama/dealve-tui/issues/2#issuecomment-3864788474 - should've use recommended options from the start
