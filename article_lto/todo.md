@@ -193,3 +193,12 @@ Here we collect various TODOs about LTO to cover in the repository:
  - about Unified LTO: https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774 + https://github.com/llvm/llvm-project/commit/a1ca3af31eeec61cfb9d619f55b655b0eb0b9494
  - https://lists.llvm.org/pipermail/llvm-dev/2018-April/122469.html
 * https://github.com/kurama/dealve-tui/issues/2#issuecomment-3864788474 - should've use recommended options from the start
+* https://github.com/emilk/eframe_template/issues/163#issuecomment-2349152137 - yes another "why don't use just Cargo defaults" in a GUI template for egui this time
+* https://github.com/vxpm/lazuli/issues/27 - sometimes FatLTO is disabled in favor of ThinLTO due to some bugs
+* ThinLTO is not that bad! https://github.com/1jehuang/mermaid-rs-renderer/issues/13#issuecomment-3943423234
+* Lie about "LTO makes your WASM binary larger": https://github.com/emilk/eframe_template/issues/163#issuecomment-2349152137
+* https://github.com/kas-gui/kas/issues/671 - LTO by default for Kas framework
+* https://github.com/slint-ui/slint-rust-template/issues/37 - LTO by default for Slint template
+* Enabling stripping by default can be a bit dangerous - https://github.com/slint-ui/slint-rust-template/issues/37#issuecomment-3950253044
+* https://www.phoronix.com/news/LLVM-DTLTO-Distributed-Thin - upstreaming DT LTO to LLVM
+* https://github.com/debba/tabularis/issues/51#issuecomment-3990653274 - yet another person didn't know about Tauri recommendations

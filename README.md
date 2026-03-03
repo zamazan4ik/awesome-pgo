@@ -146,6 +146,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [DragonflyDB](https://www.dragonflydb.io/): [GitHub comment](https://github.com/dragonflydb/dragonfly/issues/592#issuecomment-1616777005)
 * [YugabyteDB](https://www.yugabyte.com/): [GitHub commit](https://github.com/yugabyte/yugabyte-db/commit/34cb791ed9d3d5f8ae9a9b9e9181a46485e1981d)
 * [ScyllaDB](https://www.scylladb.com/):
+  - [Blog](https://www.scylladb.com/2024/12/18/why-were-moving-to-a-source-available-license/) ("Achieve up to 50% higher throughput and 33% lower latency via profile-guided optimization")
   - [GitHub PR](https://github.com/scylladb/scylladb/pull/10808)
   - From a private conversation with [Konstantin Osipov](kostja), PGO for ScyllaDB Enterprise builds achieves 5-7% performance boost, sometimes up to 10%
 * [GreptimeDB](https://greptime.com/product/db): [GitHub issue](https://github.com/GreptimeTeam/greptimedb/issues/1218)

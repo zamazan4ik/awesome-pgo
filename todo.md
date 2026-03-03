@@ -136,3 +136,6 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * "I'm unable to get -fcs-profile-generate to work" - https://github.com/official-stockfish/Stockfish/pull/5355#issuecomment-2148243127
 * PGO and build.rs scripts - https://github.com/rust-lang/cargo/issues/6375#issuecomment-3078195738
 * https://github.com/llvm/llvm-project/issues/179660 - dumping PGO profiles from .so libraries
+* Add PGO request to this DB: https://github.com/serenedb/serenedb
+* How PGO and BOLT can be used for optimizing Clang for specific projects: https://github.com/ClickHouse/ClickHouse/pull/96991 + https://github.com/ClickHouse/ClickHouse/pull/96991#issuecomment-3904437983 about compilation speed improvement
+* MariaDB booth, FOSDEM 2026 and PGO story :)
