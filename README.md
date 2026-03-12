@@ -114,6 +114,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - Optimizing Linux kernel with Clang. An [article](https://habr.com/ru/companies/ruvds/articles/696236/)(in Russian) and [results](https://github.com/h0tc0d3/linux_pgo)
   - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results for 3rd party applications(tested on Redis and PostgreSQL). Further testing is needed. One possible idea - PGO was not applied right with GCC due to some .gcda find path issues. The test must be repeated with GCC and Clang.
 * Windows: 5-20% improvement according to the [presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
+* Android: [Google Blog](https://android-developers.googleblog.com/2026/03/BoostingAndroid%20PerformanceIntroducingAutoFDO.html)
 
 ### Virtual machines
 
@@ -365,6 +366,7 @@ Below you can find some examples of where and how PGO is integrated into differe
 * Go: [Bash script](https://github.com/golang/go/blob/master/src/cmd/compile/profile.sh)
 * Swift: [CMake script](https://github.com/apple/swift/blob/main/CMakeLists.txt#L364)
 * Julia: [Makefiles](https://github.com/JuliaLang/julia/tree/master/contrib/pgo-lto-bolt)
+* Vlang: [Script](https://github.com/vlang/v/commit/a75cd076edd6fa3d69a4cced153c04bc4e9d3ba7)
 * V8: [Bazel flag](https://github.com/v8/v8/blob/main/BUILD.gn#L184)
 * ChakraCore: [Scripts](https://github.com/chakra-core/ChakraCore/tree/master/Build/scripts/pgo)
 * Chromium: [Script](https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/main/compiler/pgo/BUILD.gn)

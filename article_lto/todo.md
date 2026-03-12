@@ -202,3 +202,5 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Enabling stripping by default can be a bit dangerous - https://github.com/slint-ui/slint-rust-template/issues/37#issuecomment-3950253044
 * https://www.phoronix.com/news/LLVM-DTLTO-Distributed-Thin - upstreaming DT LTO to LLVM
 * https://github.com/debba/tabularis/issues/51#issuecomment-3990653274 - yet another person didn't know about Tauri recommendations
+* https://github.com/AhoyISki/duat/blob/master/Cargo.toml#L72 - how accessible to users is this configuration?
+* FatLTO and CU1 - why do we need both? Good question! https://github.com/fossasia/badgemagic-rs/issues/115#issuecomment-4018521343
