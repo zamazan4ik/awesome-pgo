@@ -204,3 +204,9 @@ Here we collect various TODOs about LTO to cover in the repository:
 * https://github.com/debba/tabularis/issues/51#issuecomment-3990653274 - yet another person didn't know about Tauri recommendations
 * https://github.com/AhoyISki/duat/blob/master/Cargo.toml#L72 - how accessible to users is this configuration?
 * FatLTO and CU1 - why do we need both? Good question! https://github.com/fossasia/badgemagic-rs/issues/115#issuecomment-4018521343
+* https://github.com/Quantica-Foundation/quantica-lang/blob/main/Cargo.toml#L25 - LTO in Dev profile
+* https://blog.rust-lang.org/2026/03/20/rust-challenges/ - build times once again (be careful about messing dev build times and release build times)
+* Another ThinLTO vs FatLTO performance bench: https://github.com/foundry-rs/starknet-foundry/pull/4226#issue-4108211176
+* Cargo binstall discussion - https://github.com/rust-lang/cargo/issues/13994
+* Would be nice if people will close issues AFTER fixing them, not before :) https://github.com/JustRoccat/rs-pug/issues/1
+* LTO by default in Ubuntu for Rust packages: https://discourse.ubuntu.com/t/link-time-optimization-lto-by-default-for-rust-packages-in-ubuntu/80114

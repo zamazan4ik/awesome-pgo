@@ -139,3 +139,4 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * Add PGO request to this DB: https://github.com/serenedb/serenedb
 * How PGO and BOLT can be used for optimizing Clang for specific projects: https://github.com/ClickHouse/ClickHouse/pull/96991 + https://github.com/ClickHouse/ClickHouse/pull/96991#issuecomment-3904437983 about compilation speed improvement
 * MariaDB booth, FOSDEM 2026 and PGO story :)
+* https://github.com/Eden-CI/PGO
