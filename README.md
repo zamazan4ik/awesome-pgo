@@ -348,6 +348,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * osmgraph: [GitHub comment](https://github.com/NoahSchiro/osmgraph/issues/24#issue-2657255442)
 * fontc: [GitHub comment](https://github.com/googlefonts/fontc/issues/1359#issue-2933926348)
 * Trailbase: [GitHub comment](https://github.com/trailbaseio/trailbase/discussions/68#discussioncomment-13263460)
+* RustQC: [Docs](https://seqeralabs.github.io/RustQC/getting-started/installation/#extra-performance)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -418,6 +419,7 @@ Here we collect projects where PGO is described as an optimization option in the
 * SVT-AV1: https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/Docs/CommonQuestions.md#why-build-with-pgo
 * ieee80211-rs: https://github.com/Frostie314159/ieee80211-rs?tab=readme-ov-file#optimization
 * serde-brief: https://github.com/FlixCoder/serde-brief/blob/main/docs/pgo.md
+* RustQC: https://seqeralabs.github.io/RustQC/getting-started/installation/#extra-performance
 
 ## PGO support in programming languages and compilers
 
