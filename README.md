@@ -349,6 +349,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * fontc: [GitHub comment](https://github.com/googlefonts/fontc/issues/1359#issue-2933926348)
 * Trailbase: [GitHub comment](https://github.com/trailbaseio/trailbase/discussions/68#discussioncomment-13263460)
 * RustQC: [Docs](https://seqeralabs.github.io/RustQC/getting-started/installation/#extra-performance)
+* Redpanda: [Blog](https://www.redpanda.com/blog/supercharging-streaming-profile-guided-optimization)
 
 ## Projects with already integrated PGO into their build scripts
 
