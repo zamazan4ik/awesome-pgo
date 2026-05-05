@@ -210,3 +210,10 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Cargo binstall discussion - https://github.com/rust-lang/cargo/issues/13994
 * Would be nice if people will close issues AFTER fixing them, not before :) https://github.com/JustRoccat/rs-pug/issues/1
 * LTO by default in Ubuntu for Rust packages: https://discourse.ubuntu.com/t/link-time-optimization-lto-by-default-for-rust-packages-in-ubuntu/80114
+* Sometimes LTO tasks are closed as completed without enabled LTO :) https://github.com/IohannRabeson/tmignore-rs/pull/59
+* LTO build time and memory consumpion overhead estimates: https://github.com/kanidm/kanidm/blob/edf50b9dad45376bff55b1d342fe1434ad9b15c9/Cargo.toml#L42
+* Example of different LTO modes for different use cases: https://github.com/pando85/kaniop/blob/0b5d9d5e29da7dcb11c2acd9c9ee23e7ea4e0bcb/Cargo.toml#L66
+* Even (LLM-empowered?) article about LTO in Rust: https://removepaywalls.com/https://medium.com/@trivajay259/the-lto-evangelist-what-a-single-github-user-taught-me-about-optimization-community-and-073eee32c68b
+* Nix and OOM due to LTO and CU1 in Codex :) https://github.com/numtide/llm-agents.nix/commit/6ed1e1c357b77c63e56574f51c207230e874f2e5
+* https://github.com/zed-industries/zed/commit/572c59eec4225c790f98597ad4255d880aa98793 - FullLTO in Zed means ThinLTO? :)
+* LTOmaxxing

@@ -374,57 +374,6 @@ TODO: https://github.com/smallauncher/smallauncher/issues/1 - codegen-units = 1 
 TODO: Small CG1 addition to existing LTO improves things too: https://github.com/andrewdavidmackenzie/pigg/issues/818 + https://github.com/andrewdavidmackenzie/pigg/pull/819 - build speed-up from CG1
 TODO: https://github.com/fish-shell/fish-shell/commit/d9381d1ab60c3d428088be64dfb80e7f1a878e88 - people think that codegen-units = 1 isn't worth for some cases
 
-## Stories
-
-TODO: https://github.com/whitequark/superlinker/issues/4 - yet another spam reporter, lol
-
-Here I collected some stories that I met during the short LTO journey. I found them interesting enough to share with you.
-
-### Issue close policy
-
-TODO: People closes issues berfore actually resolving them: https://github.com/NLnetLabs/rotonda/issues/118 + https://github.com/iwe-org/iwe/issues/8#issuecomment-2909541815
-
-### Random-driven optimization flags
-
-TODO: Strange optimization level changes in a C project: https://github.com/ravachol/kew/discussions/169
-
-Sometimes I enable LTO not only for Rust apps but for other programming languages too. One day I found quite interesting project to play with - a terminal-based music player, [Kew](https://github.com/ravachol/kew). Since the project is written in C, I quickly jumped to the build scripts (a Makefile, in this case) and checked the optimization options. Of course, LTO was not enabled - that's fine - I can report it as usual. But the more interesting thing was that by default Kew was compiled with `-O1`. I know "-O2 vs -O3" battles but didn't see before using `-O1` by default.
-
-Since I spent/wasted a couple of years as a C++ engineer, I was almost 100% sure - the reason for was some kind of error, highly likely it's a Undefined Behavior (UB), one of the sweetest toys for C and C++ devs. I quickly [raised](https://github.com/ravachol/kew/discussions/169) the question, and the author [confirmed](https://github.com/ravachol/kew/discussions/169#discussioncomment-10845724) it. Many devs still believe that it's not their fault - it's just a buggy compiler. Well, sometimes it's true but in 99.9(9)% cases the root cause lays somewhere in your code - and [sanitizers](https://github.com/google/sanitizers) are your best friends for such scenarios. I must admit that at my first paid job we did similar things for some projects - we disabled strict aliasing rules because otherwise our C++ codebase blown up in runtime randomly. Unfortunately, the responsible for these projects developers simply didn't know about sanitizers so they disabled optimizations and prayed to C++ Gods for forgiveness. By the way, for making prayers more powerful, we didn't update our C++ toolchains :)
-
-Luckily enough, the Kew's authors are sane folks, and after a quick testing they enabled `-O2` + LTO (Fat LTO, more precisely). I hope later they will integrate builds with sanitizers into a CI system, and at least some bugs will be catched earlier. If you met a similar case with a 3rd party application or even with your own - please, start with investigating the actual problem with code. Disabling optimizations is not a robust solution since with any code change, compiler update, etc. your code has a chance to become broken even with a disabled optimization.
-
-### Performance parity with other projects
-
-After creating yet another LTO issue, I met an interesting [argument](https://github.com/Shnatsel/wondermagick/issues/5#issuecomment-2457866538) on why LTO shouldn't be enabled for a project. Since the project has an aim to replace ImageMagick, the project should be compiled with the same options as ImageMagick compiled in the wild.
-
-Oh... I see multiple issues with this argument. ImageMagick and WonderMagick are written in different langs, so they use different compilers, even if we are talking about LLVM-based Clang and Rustc. These two compilers are different: they perform different optimizations under-the-hood (in some places Rust can optimize more, in other places - Clang), and you as a developer is out of control of all of these things. If we are talking about "how ImageMagick is compiled in the wild" I can assume that we still have GCC as a major compiler for C and C++ programs in major distributions. There are distributions that are trying moving to the LLVM-based ecosystem but for now it's mostly exception than a rule. So you are trying to compare GCC and LLVM-based Rustc - they differ **much** more, as you can guess :) Yep, in Rust we have `gcc-rs` but no one uses it seriosly at the moment. Maybe things will change later - who knows, personally I don't care much about this question. For making things more difficult: all distributions are using slightly different compiler flags. Some of them use more modern instruction set versions, some of them are not, etc. So about which exactly "wilderness" we are talking about?
-
-Also, if we still want to use "almost the same" compiler options for performance comparisons, we can do a simple thing - just create a dedicated Cargo profile for comparisons with ImageMagick like `[profile.imagemagick-like]` where you can maintain as close as possible to ImageMagick options. But for the Release profile - the profile that is used by actual users - we can enable as much optimizations as possible. In this way, we will deliver the most optimized version to the users **and** will be able to compare our solution with the ImageMagick's baseline. That's it!
-
-The second argument about non-important binary size nowadays is also isn't strong enough since I don't see a reason to have larger binary if we can have it smaller. Just extrapolate this way of thinking a bit further, and you will get pretty soon to the point "Electron-based apps are fine since storage is cheap-enough nowadays". I strongly believe that the Rust community should care about binary size too since this topic is still important for several domains like embedded (yeah, ImageMagick-like projects are used in such domains too) or network-constrained environments, where the Internet connection is too slow but you need to transfer a binary in any way.
-
-By the way, I can agree with the third argument that LTO effects on performance **sometimes** can be unpredictable. Since I respect and like good technical arguments, I quickly made benchmarks and [didn't find](https://github.com/Shnatsel/wondermagick/issues/5#issuecomment-2457927232) performance improvements or regressions from enabling LTO for `wondermagick`. Unfortunately, only the binary size improvement wasn't enough to convince the author to enable LTO, and the issue was closed.
-
-As a small conclusion. Don't expect from project's authors the most optimized versions of their programs - they can have various reasons to not enable them. If in your case some missing flags are important - change them, recompile and enjoy using a more optimized version of your favorite app.
-
-### Enabling LTO to my respect
-
-One day I routinely [created](https://github.com/GoldenStack/stupidfs/issues/1) yet another LTO-related issue in a project that I found interesting for some cybersec-related experiments. The author of the projected decided to perform a quick due diligence of my activity and kindly asked - why am I doing all of these LTO things. I assume (just an assumption!) that they initially thought that I am a simple possibly AI-driven spammer, hehe. Actually, that's completely fine - people want to know background of my activity, and I'm happy to share my incentives. However, later I got a bit disappointing [answer](https://github.com/GoldenStack/stupidfs/issues/1#issuecomment-2588496816) - the person enabled LTO and `codegen-units = 1` option due to "out of respect for your incredible dedication". I am happy to see that my work is recognized as valuable but please - don't enable things only due to a respect for someone. In this thread, I provided at least one such an argument - the binary size reduction, and I was ready to do performance benchmarks if it was required.
-
-We are technical people here, and I highly encourage you making *technical* decisions based **only** on *technical* arguments - or at least try to do so. If for good technical reasons you cannot enable LTO but you value my work - please, don't enable LTO. It will make things only worse. I hope that in this case we just have a little misunderstanding, and the `stupidfs`'s author truly believes that enabling LTO brings positive value to users of the filesystem.
-
-### Schrodinger's LTO
-
-Few times I met a bit interesting pattern about resolving my LTO-related issues. People say "Yeah, thanks a lot for the suggestion!" and... close the issue (like [this](https://github.com/baehyunsol/ragit/issues/1#issuecomment-2475325970))! Sometimes LTO is not enabled at all, sometimes it's enabled but not committed (so an issue is closed **before** merging into a master/main branch).
-
-I don't know the exact reason why people doing it - I suppose they simply forget about LTO (since forgetting non-important things is a common thing for humans) but please - if you are going to enable LTO, close an issue after merging LTO into your main branch. If you don't plan to enable LTO - just say it in the issue and then close the issue as "Not planned". It brings much more transparency for all of us. Thanks in advance!
-
-### A DMCA abuser
-
-TODO: write a story about DMCA abuser and it affected me
-TODO: Remove cargo-kit mention due to potential DMCA abuser
-
 ## Other issues
 
 TODO: people are not aware of LTO
