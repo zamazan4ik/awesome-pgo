@@ -114,7 +114,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - Optimizing Linux kernel with Clang. An [article](https://habr.com/ru/companies/ruvds/articles/696236/)(in Russian) and [results](https://github.com/h0tc0d3/linux_pgo)
   - From my experience and tests, PGO with Linux kernel could be tricky to perform and does not bring huge results for 3rd party applications(tested on Redis and PostgreSQL). Further testing is needed. One possible idea - PGO was not applied right with GCC due to some .gcda find path issues. The test must be repeated with GCC and Clang.
 * Windows: 5-20% improvement according to the [presentation](https://lpc.events/event/7/contributions/771/attachments/630/1193/Exploring_Profile_Guided_Optimization_of_the_Linux_Kernel.pdf)
-* Android: [Google Blog](https://android-developers.googleblog.com/2026/03/BoostingAndroid%20PerformanceIntroducingAutoFDO.html)
+* Android:
+  - [Google Blog](https://android-developers.googleblog.com/2026/03/BoostingAndroid%20PerformanceIntroducingAutoFDO.html)
+  - [Rust Binder - kernel commit](https://lore.kernel.org/rust-for-linux/20260331-autofdo-v2-1-eb5c5964820d@google.com/)
 
 ### Virtual machines
 
@@ -350,6 +352,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Trailbase: [GitHub comment](https://github.com/trailbaseio/trailbase/discussions/68#discussioncomment-13263460)
 * RustQC: [Docs](https://seqeralabs.github.io/RustQC/getting-started/installation/#extra-performance)
 * Redpanda: [Blog](https://www.redpanda.com/blog/supercharging-streaming-profile-guided-optimization)
+* epanet-rs: [GitHub comment](https://github.com/Vitens/epanet-rs/issues/17#issue-4329862920)
 
 ## Projects with already integrated PGO into their build scripts
 
