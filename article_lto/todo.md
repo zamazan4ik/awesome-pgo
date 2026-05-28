@@ -217,3 +217,14 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Nix and OOM due to LTO and CU1 in Codex :) https://github.com/numtide/llm-agents.nix/commit/6ed1e1c357b77c63e56574f51c207230e874f2e5
 * https://github.com/zed-industries/zed/commit/572c59eec4225c790f98597ad4255d880aa98793 - FullLTO in Zed means ThinLTO? :)
 * LTOmaxxing
+* Add about Dylib LTO in Rustc and its unstable nature
+* Interesting issue with CU1 vs CU2 on some platforms - https://github.com/ryanhcode/sable/pull/67
+* Yet another person didn't know about Ratatui recommended settings: https://github.com/chojs23/concord/issues/7#issuecomment-4412208990
+* Yet another person didn't know about LTO: https://github.com/TrystanScottLambert/dog/issues/40#issuecomment-4447196705
+* https://github.com/mohanson/gameboy/issues/43#issuecomment-2403730081 - "Therefore, I will not enable lto in this project unless the llvm and rust teams are confident enough to enable lto by default."
+* https://github.com/tonbo-io/ursula/blob/bd44b518f1345209f06de549d950896d6cf4bf80/Cargo.toml#L24 - wonderful comment about LTO performance decrease and lack of profiled builds
+* https://github.com/facebook/pyrefly/pull/1844 - issues with compiler OOM from serious companies like Meta
+* https://github.com/pyca/cryptography/pull/8883 + https://github.com/pyca/cryptography/pull/8811 - well...
+* LTO makes things more than 2x build time worse: https://github.com/firecrawl/pdf-inspector/issues/95#issue-4512734454
+* Optimied settings in Release profile due to cargo install : https://github.com/museslabs/phonto/pull/30#issuecomment-4536801109
+* Preliminary FatLTO for Rust results from Ubuntu: https://discourse.ubuntu.com/t/link-time-optimization-lto-by-default-for-rust-packages-in-ubuntu/80114/5

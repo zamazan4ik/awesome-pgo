@@ -143,3 +143,10 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * https://github.com/Vitruves/nail-parquet/issues/1#issuecomment-4295793895 - delivering PGO is not easy, and it limits PGO adoption
 * https://eklitzke.org/fdebug-info-for-profiling - usefullness of -fdebug-info-for-profiling for SPGO
 * https://www.phoronix.com/news/NVIDIA-AutoFDO-Tool-For-GCC - Nvidia tooling for AutoFDO
+* https://learn.microsoft.com/en-us/visualstudio/releases/2026/release-notes-insiders - SPGO in MSVC
+* Not all benches are actually good for PGO tests - https://github.com/istio/ztunnel/issues/1899#issuecomment-4407197262
+* Interesting LLM-powered PGO case - https://github.com/dora-rs/dora/issues/331 + https://github.com/dora-rs/dora/issues/331#issuecomment-4503143768
+* Boot-time PGO for Linux? :D https://github.com/tbird20d/boot-time-wizard
+* People don't understand that optimizations can be done without cargo-pgo ? Clarify it: https://github.com/rustls/rustls/issues/1823#issuecomment-4555549979
+* https://changkun.de/research/talks/gopgo.pdf - PGO practices in Go
+* https://www.graalvm.org/latest/reference-manual/native-image/optimizations-and-performance/PGO/ - check updated PGO docs from GraalVM

@@ -92,6 +92,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
   - [Another GitHub comment](https://github.com/rust-lang/rust-analyzer/pull/19585#issuecomment-2804752547)
 * pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
+* Pyrefly: [GitHub comment](https://github.com/facebook/pyrefly/issues/349#issuecomment-4524704971)
 * ctags: [GitHub comment](https://github.com/universal-ctags/ctags/issues/3849#issuecomment-2295323143)
 * gitui: [GitHub comment](https://github.com/extrawurst/gitui/discussions/2385#discussion-7291784)
 * fennec: [GitHub comment](https://github.com/carthage-software/fennec/issues/2#issue-2616299119)
@@ -353,6 +354,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * RustQC: [Docs](https://seqeralabs.github.io/RustQC/getting-started/installation/#extra-performance)
 * Redpanda: [Blog](https://www.redpanda.com/blog/supercharging-streaming-profile-guided-optimization)
 * epanet-rs: [GitHub comment](https://github.com/Vitens/epanet-rs/issues/17#issue-4329862920)
+* dora: [GitHub issue](https://github.com/dora-rs/dora/issues/331)
 
 ## Projects with already integrated PGO into their build scripts
 
