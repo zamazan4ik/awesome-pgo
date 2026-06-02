@@ -150,3 +150,6 @@ For now, the list is clear, and I am happy with that. But the article has nearly
 * People don't understand that optimizations can be done without cargo-pgo ? Clarify it: https://github.com/rustls/rustls/issues/1823#issuecomment-4555549979
 * https://changkun.de/research/talks/gopgo.pdf - PGO practices in Go
 * https://www.graalvm.org/latest/reference-manual/native-image/optimizations-and-performance/PGO/ - check updated PGO docs from GraalVM
+* https://aaupov.github.io/assets/csspgo-rfc-email.html - CSSPGO email
+* https://discourse.llvm.org/t/up-to-date-instructions-for-using-csspgo/70892 - no instructions about CSSPGO :)
+* https://github.com/surrealdb/surrealdb/issues/1547#issuecomment-4587211374 - Mr PGO :DDDD

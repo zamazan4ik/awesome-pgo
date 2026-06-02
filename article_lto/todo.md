@@ -228,3 +228,4 @@ Here we collect various TODOs about LTO to cover in the repository:
 * LTO makes things more than 2x build time worse: https://github.com/firecrawl/pdf-inspector/issues/95#issue-4512734454
 * Optimied settings in Release profile due to cargo install : https://github.com/museslabs/phonto/pull/30#issuecomment-4536801109
 * Preliminary FatLTO for Rust results from Ubuntu: https://discourse.ubuntu.com/t/link-time-optimization-lto-by-default-for-rust-packages-in-ubuntu/80114/5
+* https://github.com/iii-hq/iii/pull/1726/changes#r3335779966 - "We care about performance, not size -> enable opt-level=s" :D

@@ -172,6 +172,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * candystore: [GitHub comment](https://github.com/sweet-security/candystore/issues/7#issue-2509793489)
 * canopydb (also `redb`, `sled`, `sanakirja`): [GitHub comment](https://github.com/arthurprs/canopydb/issues/3#issue-2600735606)
 * TalariaDB (closed source): [Grab engineering blog](https://engineering.grab.com/profile-guided-optimisation)
+* SurrealDB: [GitHub comment](https://github.com/surrealdb/surrealdb/issues/1547#issuecomment-4585804199)
 
 ### Logging
 
@@ -355,6 +356,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * Redpanda: [Blog](https://www.redpanda.com/blog/supercharging-streaming-profile-guided-optimization)
 * epanet-rs: [GitHub comment](https://github.com/Vitens/epanet-rs/issues/17#issue-4329862920)
 * dora: [GitHub issue](https://github.com/dora-rs/dora/issues/331)
+* Blender: [Blender conference talk](https://conference.blender.org/2025/presentations/4032/)
 
 ## Projects with already integrated PGO into their build scripts
 
@@ -412,20 +414,20 @@ Below you can find some examples of where and how PGO is integrated into differe
 
 Here we collect projects where PGO is described as an optimization option in the documentation:
 
-* ClickHouse: https://clickhouse.com/docs/en/operations/optimizing-performance/profile-guided-optimization
-* Databend: https://databend.rs/doc/contributing/pgo
-* Vector: https://vector.dev/docs/administration/tuning/pgo/
-* Nebula: https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/
-* GCC: Official [docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
+* ClickHouse: [Docs](https://clickhouse.com/docs/en/operations/optimizing-performance/profile-guided-optimization)
+* Databend: [Docs](https://docs.databend.com/developer/community/contributor/pgo)
+* Vector: [Docs](https://vector.dev/docs/administration/tuning/pgo/)
+* Nebula: [Docs](https://docs.nebula-graph.io/3.5.0/8.service-tuning/enable_autofdo_for_nebulagraph/)
+* GCC: Official [Docs](https://gcc.gnu.org/install/build.html), section "Building with profile feedback" (even AutoFDO build is supported)
 * Clang:
-  - https://llvm.org/docs/HowToBuildWithPGO.html
-  - https://llvm.org/docs/AdvancedBuilds.html
-* Rustc: https://rustc-dev-guide.rust-lang.org/building/optimized-build.html#profile-guided-optimization
-* tsv-utils: https://github.com/eBay/tsv-utils/blob/master/docs/BuildingWithLTO.md
-* SVT-AV1: https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/Docs/CommonQuestions.md#why-build-with-pgo
-* ieee80211-rs: https://github.com/Frostie314159/ieee80211-rs?tab=readme-ov-file#optimization
-* serde-brief: https://github.com/FlixCoder/serde-brief/blob/main/docs/pgo.md
-* RustQC: https://seqeralabs.github.io/RustQC/getting-started/installation/#extra-performance
+  - [Docs](https://llvm.org/docs/HowToBuildWithPGO.html)
+  - [Advanced docs](https://llvm.org/docs/AdvancedBuilds.html)
+* Rustc: [Docs](https://rustc-dev-guide.rust-lang.org/building/optimized-build.html#profile-guided-optimization)
+* tsv-utils: [Docs](https://github.com/eBay/tsv-utils/blob/master/docs/BuildingWithLTO.md)
+* SVT-AV1: [Docs](https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/Docs/CommonQuestions.md#why-build-with-pgo)
+* ieee80211-rs: [Readme section](https://github.com/Frostie314159/ieee80211-rs?tab=readme-ov-file#optimization)
+* serde-brief: [Docs](https://github.com/FlixCoder/serde-brief/blob/main/docs/pgo.md)
+* RustQC: [Docs](https://seqeralabs.github.io/RustQC/getting-started/installation/#extra-performance)
 
 ## PGO support in programming languages and compilers
 
