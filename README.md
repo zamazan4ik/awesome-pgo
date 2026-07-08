@@ -47,6 +47,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - Clang on Windows: [Phoronix post](https://www.phoronix.com/news/LLVM-PGO-Windows-Build)
   - Fedora experiments: [GitHub repo](https://github.com/kwk/pgo-experiment//?tab=readme-ov-file#step6)
   - `llvm-mingw` benches: [GitHub comment](https://github.com/mstorsjo/llvm-mingw/pull/503#issue-3140215955)
+* [Flang](https://flang.llvm.org/): [LLVM Discourse comment](https://discourse.llvm.org/t/rfc-flang-cmake-perf-training-optimize-flang-with-pgo-and-bolt/90884/11)
 * [GCC](https://gcc.gnu.org/):
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
   - [NixOS experiments](https://github.com/NixOS/nixpkgs/pull/112928#issuecomment-778508138)
@@ -86,6 +87,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [lld](https://lld.llvm.org/): [GitHub issue](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1607953028)
 * [clang-format](https://clang.llvm.org/docs/ClangFormat.html): [GitHub comment](https://github.com/llvm/llvm-project/issues/63486#issuecomment-1617008106)
 * [Uncrustify](https://uncrustify.sourceforge.net/): [GitHub issue](https://github.com/uncrustify/uncrustify/issues/4045)
+* CMake: [GitLab comment](https://gitlab.kitware.com/cmake/cmake/-/work_items/25356#note_1838767)
 * Android tooling like `dex2oat`: [Medium](https://medium.com/androiddevelopers/pgo-for-native-android-applications-1a48a99e95d0)
 * [typos](https://github.com/crate-ci/typos): [GitHub issue](https://github.com/crate-ci/typos/issues/827#issue-1888263250)
 * [Rust Analyzer](https://rust-analyzer.github.io/):

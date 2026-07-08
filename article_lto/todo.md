@@ -229,3 +229,6 @@ Here we collect various TODOs about LTO to cover in the repository:
 * Optimied settings in Release profile due to cargo install : https://github.com/museslabs/phonto/pull/30#issuecomment-4536801109
 * Preliminary FatLTO for Rust results from Ubuntu: https://discourse.ubuntu.com/t/link-time-optimization-lto-by-default-for-rust-packages-in-ubuntu/80114/5
 * https://github.com/iii-hq/iii/pull/1726/changes#r3335779966 - "We care about performance, not size -> enable opt-level=s" :D
+* https://github.com/symbolica-dev/symbolica/commit/10c56239c6a6cae956bf7e52a4ee157f5b794711 - Symbolica 6% speedup from LTO
+* https://github.com/react/react/commit/7e71552e4924150e3a62837f060f0337b44c57d2 - React compiler rewritten in Rust and already enabled LTO
+*
