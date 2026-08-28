@@ -47,6 +47,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - Clang on Windows: [Phoronix post](https://www.phoronix.com/news/LLVM-PGO-Windows-Build)
   - Fedora experiments: [GitHub repo](https://github.com/kwk/pgo-experiment//?tab=readme-ov-file#step6)
   - `llvm-mingw` benches: [GitHub comment](https://github.com/mstorsjo/llvm-mingw/pull/503#issue-3140215955)
+  - `emsdk` benchmarks: [GitHub comment](https://github.com/emscripten-core/emscripten/issues/19671#issuecomment-5437667712)
 * [Flang](https://flang.llvm.org/): [LLVM Discourse comment](https://discourse.llvm.org/t/rfc-flang-cmake-perf-training-optimize-flang-with-pgo-and-bolt/90884/11)
 * [GCC](https://gcc.gnu.org/):
   - [ArchLinux bugtracker](https://bugs.archlinux.org/task/56856). Numbers for GCC 3.3 - could be outdated.
@@ -371,6 +372,7 @@ Below you can find some examples of where and how PGO is integrated into differe
 * Clang:
   - [Docs](https://llvm.org/docs/HowToBuildWithPGO.html)
   - [MinGW build script](https://github.com/msys2/MINGW-packages/commit/4dd91d1d4dfef17f1f451c3a8f59303be855e4b5)
+  - [Emscripten build script](https://github.com/emscripten-core/emscripten/issues/19671#issuecomment-5439159356)
 * Python:
   - CPython: [README](https://github.com/python/cpython#profile-guided-optimization)
   - Pyston: [README](https://github.com/pyston/pyston#building)
