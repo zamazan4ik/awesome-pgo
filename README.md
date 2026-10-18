@@ -132,6 +132,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * [PostgreSQL](https://www.postgresql.org/):
   - See "postgresql_results.md" file in the repo.
   - [Mailing list thread](https://postgrespro.com/list/thread-id/2634776)
+* pgdog: [GitHub comment](https://github.com/pgdogdev/pgdog/issues/190#issuecomment-6255919704)
 * [MariaDB](https://mariadb.org/):
   - [Official MariaDB article](https://mariadb.com/files/MariaDBEnteprise-Profile-GuidedOptimization-20150401_0.pdf)
   - [ClearLinux benchmarks](https://clearlinux.org/news-blogs/profile-guided-optimization-mariadb-benchmarks)
