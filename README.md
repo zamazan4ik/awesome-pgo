@@ -95,7 +95,9 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
   - [GitHub comment](https://github.com/rust-lang/rust-analyzer/issues/9412#issuecomment-1298188709)
   - [Another GitHub comment](https://github.com/rust-lang/rust-analyzer/pull/19585#issuecomment-2804752547)
 * pylyzer: [GitHub discussion](https://github.com/mtshiba/pylyzer/discussions/80#discussion-6500001)
-* Pyrefly: [GitHub comment](https://github.com/facebook/pyrefly/issues/349#issuecomment-4524704971)
+* Pyrefly:
+  - [GitHub comment](https://github.com/facebook/pyrefly/issues/349#issuecomment-4524704971)
+  - [Commit message](https://github.com/meta/pyrefly/commit/c7a8e3a518242f7c8a0535efe97ef79088e4ea45)
 * ctags: [GitHub comment](https://github.com/universal-ctags/ctags/issues/3849#issuecomment-2295323143)
 * gitui: [GitHub comment](https://github.com/extrawurst/gitui/discussions/2385#discussion-7291784)
 * fennec: [GitHub comment](https://github.com/carthage-software/fennec/issues/2#issue-2616299119)
@@ -528,6 +530,7 @@ Here I collect all results by applying LLVM BOLT to the projects (with numbers).
 * julia:
   - [GitHub PR](https://github.com/JuliaLang/julia/pull/54107#issue-2246969986)
   - [Official blog](https://julialang.org/blog/2025/10/julia-1.12-highlights/#building_julia_and_llvm_using_the_binary_optimization_and_layout_tool_bolt)
+* Pyrefly: [Commit message](https://github.com/meta/pyrefly/commit/c7a8e3a518242f7c8a0535efe97ef79088e4ea45)
 
 ## Projects with already integrated BOLT into their build scripts
 
