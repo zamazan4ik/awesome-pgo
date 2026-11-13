@@ -78,6 +78,7 @@ Here I collect links to the articles/benchmarks/etc. with PGO on multiple projec
 * cel-rust: [GitHub issue](https://github.com/clarkmcc/cel-rust/issues/83#issue-2558045355)
 * cairo-vm: [GitHub comment](https://github.com/lambdaclass/cairo-vm/discussions/1849#discussion-7300615)
 * scarb: [GitHub comment](https://github.com/software-mansion/scarb/issues/1640#issue-2579167876)
+* QuickJS: [GitHub comment](https://github.com/quickjs-ng/quickjs/discussions/1915#discussioncomment-19598484)
 
 ### Developer tooling
 
